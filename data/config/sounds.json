@@ -1,0 +1,14 @@
+{
+
+
+	"ui_cargo_vulpoid":{"sounds":[
+		{"file":"sounds/sfx_cargo/539082-Fox-Vocal-Cry-Distant-03-06.ogg","pitch":1,"volume":0.3},
+	],},
+	"ui_cargo_vulpoid_drop":{"sounds":[
+		{"file":"sounds/sfx_cargo/539052-Fox-Vocal-Cry-Close-04-09.ogg","pitch":1,"volume":0.3},
+	],},
+}
+
+
+
+

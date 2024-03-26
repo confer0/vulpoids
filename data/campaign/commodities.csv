@@ -1,0 +1,2 @@
+name,id,demand class,base price,export value,price variability,utility,origin,tags,stack size,cargo space,icon,sound id,sound id drop,order,economyTier,econUnitOrigUnused,econUnit,baseRaidDanger,eU * base value,iconWidthMult,plugin,desc
+Vulpoid,vulpoids,ai_cores,1000,500,3,2.5,,"exotic, luxury, expensive",1000,0,graphics/icons/cargo/vulpoid.png,ui_cargo_vulpoid,ui_cargo_vulpoid_drop,29,,1,5,,,1,,

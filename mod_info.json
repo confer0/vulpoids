@@ -1,0 +1,10 @@
+{
+    "id": "vulpoids",
+    "name": "Vulpoids",
+    "author": "confer0",
+    "utility": "false",
+    "version": "1.0",
+    "description": "https://www.reddit.com/r/starsector/comments/1blwmzz/another_weird_concept_by_me_d/. Sounds from soundsnap.org.",
+    "gameVersion": "0.97a-RC6",
+	"modPlugin": "scripts.VulpoidModPlugin"
+}
