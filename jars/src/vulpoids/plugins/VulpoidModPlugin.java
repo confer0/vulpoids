@@ -88,8 +88,8 @@ public class VulpoidModPlugin extends BaseModPlugin {
                             float vulpoid_shiny_buffer = industry.getMarket().getMemoryWithoutUpdate().getFloat(VULPOID_SHINY_PRODUCTION_BUFFER_KEY);
                             vulpoid_shiny_buffer += time_elapsed * VULPOIDS_SHINY_PER_DAY_PER_PROD * production_volume;
                             
-                            b.getMarket().getSubmarket(Submarkets.SUBMARKET_STORAGE).getCargo().addCommodity("vulpoids", vulpoid_buffer);
-                            b.getMarket().getSubmarket(Submarkets.SUBMARKET_STORAGE).getCargo().addCommodity("vulpoids_shiny", vulpoid_shiny_buffer);
+                            b.getMarket().getSubmarket(Submarkets.SUBMARKET_STORAGE).getCargo().addCommodity("vulpoids", (int)vulpoid_buffer);
+                            b.getMarket().getSubmarket(Submarkets.SUBMARKET_STORAGE).getCargo().addCommodity("vulpoids_shiny", (int)vulpoid_shiny_buffer);
                             
                             industry.getMarket().getMemoryWithoutUpdate().set(VULPOID_PRODUCTION_BUFFER_KEY, vulpoid_buffer - (int)vulpoid_buffer);
                             industry.getMarket().getMemoryWithoutUpdate().set(VULPOID_SHINY_PRODUCTION_BUFFER_KEY, vulpoid_shiny_buffer - (int)vulpoid_shiny_buffer);
