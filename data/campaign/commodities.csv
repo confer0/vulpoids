@@ -1,2 +1,3 @@
 name,id,demand class,base price,export value,price variability,utility,origin,tags,stack size,cargo space,icon,sound id,sound id drop,order,economyTier,econUnitOrigUnused,econUnit,baseRaidDanger,eU * base value,iconWidthMult,plugin,desc
-Vulpoid,vulpoids,ai_cores,1000,500,3,2.5,,"exotic, luxury, expensive",1000,0,graphics/icons/cargo/vulpoid.png,ui_cargo_vulpoid,ui_cargo_vulpoid_drop,29,,1,5,,,1,,
+Vulpoid,vulpoids,vulpoids,200,500,3,1,,"exotic, luxury, expensive, meta",1000,0,graphics/icons/cargo/vulpoid.png,ui_cargo_vulpoid,ui_cargo_vulpoid_drop,28,2.9,1,100,,,1,,
+Shiny Vulpoid,vulpoids_shiny,vulpoids,,500,3,250,,"exotic, luxury, expensive, meta",1000,0,graphics/icons/cargo/vulpoid_shiny.png,ui_cargo_vulpoid,ui_cargo_vulpoid_drop,29,,1,1,,,1,,

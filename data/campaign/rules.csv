@@ -1,0 +1,63 @@
+id,trigger,conditions,script,text,options,notes
+,,,,,,
+vulp_exampleBarEventOption,AddBarEvents,"!$market.isHidden
+!$global.vulp_gotFactoryMission","AddBarEvent vulp_findFactory_barEvent  ""Start the example bar event"" ""A large, red button labelled with the word Vulpoids is sitting in the middle of the room."" highlight",,,
+vulp_findFactory_barEvent,DialogOptionSelected,"$option == vulp_findFactory_barEvent 
+GenGAIntroAcademician",,"""There's stories of a ghost fleet that lurks around a habitable world. It's been there as long as anyone can remember. Legend says it's a fleet that was in the Gate network during the Collapse, cursed to forever haunt their destination.""","vulp_findFactory_barEvent1:""Go on…""",
+vulp_findFactory_barEvent1,DialogOptionSelected,$option == vulp_findFactory_barEvent1,"$global.vulp_gotFactoryMission = true
+BeginMission vulpFactory","""Anyway here's the exact coordinates of the fleet, on account of this mission being only partly completed!""",backToBar:Return to the bar,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+# Repurposing AI Core Turn-In,,,,,,
+vulp_turnInOption,PopulateOptions,"$isPerson
+$global.vulp_gotFactory
+Vulpoids personCanAcceptVulpoids",FireBest DisableTurnInVulpOptionIfNeeded,,"11:vulp_startTurnIn:""Could I interest you in some vulpoids?""",
+,,,,,,
+vulp_disableTurnInOption,DisableTurnInVulpOptionIfNeeded,!Vulpoids playerHasVulpoids,"SetTooltip vulp_startTurnIn ""You do not have any Vulpoids in your possession.""
+SetEnabled vulp_startTurnIn false",,,
+,,,,,,
+vulp_turnInOptionSelGeneric,DialogOptionSelected,$option == vulp_startTurnIn,FireAll PopulateVulpoidsTurnInOptions,"""A fascinating offer. Why, if one of the major factions caught you with these, they might just seize them outright. Tell you what - I'll do you a favor and give you a good price.""",,
+vulp_turnInOptionSelLuddic,DialogOptionSelected,"$option == vulp_startTurnIn
+$faction.id == luddic_church",FireAll PopulateVulpoidsTurnInOptions,"""You were right to bring these to me. I shall contact the Knight Commander to take possession of these abominations so that they may be properly cleansed.""",,
+vulp_turnInOptionSelHegemony,DialogOptionSelected,"$option == vulp_startTurnIn
+$faction.id == hegemony",FireAll PopulateVulpoidsTurnInOptions,"""We don't generally like the public to be aware that these exist, citizen, but the Hegemony is treaty-bound to take possession of any such objects and ensure they're destroyed.""",,
+vulp_turnInOptionSelDiktat,DialogOptionSelected,"$option == vulp_startTurnIn
+$faction.id == sindrian_diktat",FireAll PopulateVulpoidsTurnInOptions,"""A dangerous catch you have there - there's no telling what could happen if one got into the hands of terrorists. I ... that is, we, are sure to be rewarded by the Lion for surrendering this to Diktat Intelligence straightaway.""
+OR
+""It's a good thing you came directly to me; a less understanding officer might have you arrested for transporting material deemed a threat to the interests of the Sindrian Cause. Your loyalty shall be rewarded.""",,
+vulp_turnInOptionSelTriTachyon,DialogOptionSelected,"$option == vulp_startTurnIn
+$faction.id == tritachyon",FireAll PopulateVulpoidsTurnInOptions,"""You hold quite the object of fascination there, though you are surely aware that you lack the expertise and capital necessary to exploit its full potential. The Tri-Tachyon Corporation would be more than pleased to offer you a fair market price for your goods.""",,
+vulp_turnInOptionSelPerseanKazeron,DialogOptionSelected,"$option == vulp_startTurnIn
+$faction.id == persean
+$market.id == kazeron",FireAll PopulateVulpoidsTurnInOptions,"""An excellent find, citizen. The polity of Kazeron, and of course the Persean League as a whole, will recognize and reward your fulfillment of patriotic duty in assisting in finding these dangerous objects.""",,
+vulp_turnInOptionSelPerseanNotKazeron,DialogOptionSelected,"$option == vulp_startTurnIn
+$faction.id == persean
+$market.id != kazeron",FireAll PopulateVulpoidsTurnInOptions,"""An excellent find, citizen. We can't allow factions that would seek to impose their tyranny over our Sector to accumulate these dangerous objects.""",,
+vulp_playerHasOption,PopulateVulpoidsTurnInOptions,,,,0:vulp_selectVulpoids:Select Vulpoids to turn in,
+vulp_neverMindOption,PopulateVulpoidsTurnInOptions,,,,"100:vulp_neverMind:""Never mind, I don't actually have any.""",
+vulp_neverMindOptionSelected,DialogOptionSelected,$option == vulp_neverMind,FireAll PopulateOptions,,,
+vulp_turnInOptionSelected,DialogOptionSelected,$option == vulp_selectVulpoids,Vulpoids selectVulpoids,,,
+vulp_turnInResponseDefault,VulpoidsTurnedIn,,FireAll PopulateOptions,$PersonRank $personLastName thanks you and the conversation moves on to other matters.,,
+vulp_turnInResponseHegemony,VulpoidsTurnedIn,$faction.id == hegemony,FireAll PopulateOptions,$PersonRank $personLastName thanks you on behalf of the Hegemony Council and the conversation moves on to other matters.,,
+vulp_turnInResponseLuddicChurch,VulpoidsTurnedIn,$faction.id == luddic_church,FireAll PopulateOptions,$PersonRank $personLastName says a quick prayer and thanks you on behalf of the Church.,,
+vulp_turnInResponseDiktat,VulpoidsTurnedIn,$faction.id == sindrian_diktat,FireAll PopulateOptions,$PersonRank $personLastName salutes in an energetic display of loyalty to the Sindrian Cause before allowing you to turn to other matters.,,
+vulp_turnInResponseTriTachyon,VulpoidsTurnedIn,$faction.id == tritachyon,FireAll PopulateOptions,"$personName smiles like a carnivorous animal you saw in a holodoc once.  ""It's a deal.""",,
+vulp_turnInResponseLeagueKazeron,VulpoidsTurnedIn,"$faction.id == persean
+$market.id == kazeron",FireAll PopulateOptions,$PersonRank $personLastName verifies the transfer before moving the conversation to other matters.,,
+vulp_turnInResponseLeagueOther,VulpoidsTurnedIn,"$faction.id == persean
+$market.id != kazeron",FireAll PopulateOptions,$PersonRank $personLastName thanks you for your devotion to the cause of an independent Persean Sector.,,

@@ -1,0 +1,2 @@
+id,name,order,tier,reqPoints,reqPointsPerExtraSkill,description,author,combat officer,admiral,admin,tags,icon
+vulpoid_brain,Vulpoid Brain,10002,0,,,"We've identified several of the mechanisms that result in runaway neural growth, but it won't be viable if we still can't reliably retain cognitive function.",Exodyne Biotech R&D memo,,,TRUE,"npc_only, ai_core_only",graphics/icons/skills/vulpoid_brain.png

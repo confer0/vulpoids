@@ -1,0 +1,11 @@
+{
+	"id":"player",
+	
+	"portraits":{
+		"standard_female":[
+			"graphics/portraits/vulpoid.png",
+		],
+	},
+}
+
+
