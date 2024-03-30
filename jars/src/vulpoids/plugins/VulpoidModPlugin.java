@@ -71,6 +71,36 @@ public class VulpoidModPlugin extends BaseModPlugin {
             person.setPortraitSprite("graphics/portraits/winter_fox.png");
             ip.addPerson(person);
         }
+        if(ip.getPerson("vulpoid_space_desert_generic") == null) {
+            PersonAPI person = Global.getFactory().createPerson();
+            person.setId("vulpoid_space_desert_generic");
+            person.setName(new FullName("Vulpoid", "", FullName.Gender.FEMALE));
+            person.setRankId(null);
+            person.setPostId(null);
+            person.getRelToPlayer().setRel(1);
+            person.setPortraitSprite("graphics/portraits/space_desert_fox.png");
+            ip.addPerson(person);
+        }
+        if(ip.getPerson("vulpoid_space_terran_generic") == null) {
+            PersonAPI person = Global.getFactory().createPerson();
+            person.setId("vulpoid_space_terran_generic");
+            person.setName(new FullName("Vulpoid", "", FullName.Gender.FEMALE));
+            person.setRankId(null);
+            person.setPostId(null);
+            person.getRelToPlayer().setRel(1);
+            person.setPortraitSprite("graphics/portraits/space_terran_fox.png");
+            ip.addPerson(person);
+        }
+        if(ip.getPerson("vulpoid_space_winter_generic") == null) {
+            PersonAPI person = Global.getFactory().createPerson();
+            person.setId("vulpoid_space_winter_generic");
+            person.setName(new FullName("Vulpoid", "", FullName.Gender.FEMALE));
+            person.setRankId(null);
+            person.setPostId(null);
+            person.getRelToPlayer().setRel(1);
+            person.setPortraitSprite("graphics/portraits/space_winter_fox.png");
+            ip.addPerson(person);
+        }
         if(ip.getPerson("vulpoid_nude_terran_generic") == null) {
             PersonAPI person = Global.getFactory().createPerson();
             person.setId("vulpoid_nude_terran_generic");

@@ -67,9 +67,9 @@ vulp_exploreWreck1,DialogOptionSelected,$option == vulp_exploreWreck1,"ShowImage
 PlaySound ui_raid_prepared","The boarding shuttles are released in a single large wave, minimizing the time any hostile forces will have to react. The shuttles dock all across the vessel's hull, and your bridge is immediately alive with comms chatter as security teams clear angles and salvors start tracing conduits.
 
 It doesn't take long for the first teams to report contact, but the procedural tone quickly dissolves into confusion as additional details come through.",vulp_exploreWreck2:Continue,
-vulp_exploreWreck2,DialogOptionSelected,$option == vulp_exploreWreck2,"ShowPersonVisual true vulpoid_terran_generic
-ShowSecondPerson vulpoid_winter_generic
-ShowThirdPerson vulpoid_desert_generic","Tactical cuts through the chatter and pulls together a clear picture for you. Apparently the personnel the teams are encountering are not humans, but some sort of furred, bipedal mammal. They're identifying themselves as 'Vulpoids', and claim to be friendly. Various teams report that they apparently have a proclivity for human contact, requiring constant reminders to keep their distance.
+vulp_exploreWreck2,DialogOptionSelected,$option == vulp_exploreWreck2,"ShowPersonVisual true vulpoid_space_terran_generic
+ShowSecondPerson vulpoid_space_winter_generic
+ShowThirdPerson vulpoid_space_desert_generic","Tactical cuts through the chatter and pulls together a clear picture for you. Apparently the personnel the teams are encountering are not humans, but some sort of furred, bipedal mammal. They're identifying themselves as 'Vulpoids', and claim to be friendly. Various teams report that they apparently have a proclivity for human contact, requiring constant reminders to keep their distance.
 
 One team reports that they've allowed the Vulpoids to mingle among their ranks with no issue. Tactical assures you they'll receive remedial training, but also confirms that the Vulpoids have not shown hostile intent.",vulp_exploreWreckFirstEncounterHub:Continue,
 vulp_exploreWreckFirstEncounterHub,DialogOptionSelected,$option == vulp_exploreWreckFirstEncounterHub,"FireAll VulpWreckFirstEncounter
@@ -176,10 +176,12 @@ vulp_disableTurnInOption,DisableTurnInVulpOptionIfNeeded,!TurnInVulpoids playerH
 SetEnabled vulp_startTurnIn false",,,
 ,,,,,,
 vulp_turnInOptionSelGeneric,DialogOptionSelected,$option == vulp_startTurnIn,FireAll PopulateVulpoidsTurnInOptions,"""A fascinating offer. Why, if one of the major factions caught you with these, they might just seize them outright. Tell you what - I'll do you a favor and give you a good price.""",,
-vulp_turnInOptionSelLuddic,DialogOptionSelected,"$option == vulp_startTurnIn
-$faction.id == luddic_church",FireAll PopulateVulpoidsTurnInOptions,"""You were right to bring these to me. I shall contact the Knight Commander to take possession of these abominations so that they may be properly cleansed.""",,
 vulp_turnInOptionSelHegemony,DialogOptionSelected,"$option == vulp_startTurnIn
 $faction.id == hegemony",FireAll PopulateVulpoidsTurnInOptions,"""You say that as though you're not the one responsible for these things, but the Hegemony is treaty-bound to take possession of them all the same.""",,
+vulp_turnInOptionSelChurch,DialogOptionSelected,"$option == vulp_startTurnIn
+$faction.id == luddic_church",FireAll PopulateVulpoidsTurnInOptions,"""You were right to bring these to me. I shall contact the Knight Commander to take possession of these abominations so that they may be properly cleansed.""",,
+vulp_turnInOptionSelPath,DialogOptionSelected,"$option == vulp_startTurnIn
+$faction.id == luddic_path",FireAll PopulateVulpoidsTurnInOptions,"""You were right to bring these to me. I shall contact the Knight Commander to take possession of these abominations so that they may be summarily executed.""",,
 vulp_turnInOptionSelDiktat,DialogOptionSelected,"$option == vulp_startTurnIn
 $faction.id == sindrian_diktat",FireAll PopulateVulpoidsTurnInOptions,"""A dangerous catch you have there - there's no telling what could happen if one got into the hands of terrorists. I ... that is, we, are sure to be rewarded by the Lion for surrendering this to Diktat Intelligence straightaway.""
 OR
