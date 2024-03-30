@@ -4,6 +4,7 @@ import com.fs.starfarer.api.Global;
 import com.fs.starfarer.api.campaign.FactionAPI;
 import com.fs.starfarer.api.impl.campaign.econ.impl.BaseIndustry;
 import com.fs.starfarer.api.impl.campaign.ids.Commodities;
+import com.fs.starfarer.api.impl.campaign.ids.Conditions;
 import com.fs.starfarer.api.ui.TooltipMakerAPI;
 import com.fs.starfarer.api.util.Misc;
 import com.fs.starfarer.api.util.Pair;
@@ -99,11 +100,15 @@ public class OrganFarm extends BaseIndustry {
     
     @Override
     public boolean isAvailableToBuild() {
-        if ("biofacility".equals(getId())) {
-            //return Global.getSector().getPlayerFaction().knowsIndustry(getId());
-            return Global.getSector().getMemoryWithoutUpdate().getBoolean("$vulp_gotFactory");
+        if ("biofacility".equals(getId()) && !Global.getSector().getMemoryWithoutUpdate().getBoolean("$vulp_gotFactory")) {
+            return false;
         }
-        return true;
+        return market.hasCondition(Conditions.HABITABLE);
+    }
+    
+    public String getUnavailableReason() {
+        if (!super.isAvailableToBuild()) return super.getUnavailableReason();
+        return "Requires habitable conditions";
     }
     
     // We override this so the tooltip doesn't blab about the exact properties of the "speculative" upgrade.
@@ -138,5 +143,5 @@ public class OrganFarm extends BaseIndustry {
             super.createTooltip(mode, tooltip, expanded);
         }
     }
-	
+    
 }
