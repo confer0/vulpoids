@@ -9,33 +9,177 @@ BeginMission vulpFactory","""Anyway here's the exact coordinates of the fleet, o
 ,,,,,,
 ,,,,,,
 ,,,,,,
+vulp_factoryFleetEncounterDescFirstTime,BeginFleetEncounter,"$vulpFactory_target score:2000
+!$didFirstTimeDesc",$didFirstTimeDesc = true,"The fleet ahead of you fits the tactical profile of an active AI warfleet, but their unaggressive behavior patterns are more characteristic of a static defense fleet. The locus of their attention appears to be a heavily-modified Paragon-class battleship, which sensor readings suggest may contain a large number of personnel.",,
+vulp_factoryFleetEncounterDescGeckOK,BeginFleetEncounter,"$vulpFactory_target score:2000
+$didFirstTimeDesc
+!$geckDestroyed",,The drone fleet is still defending the modified Paragon.,,
+vulp_factoryFleetEncounterDescGeckDestroyed,BeginFleetEncounter,"$vulpFactory_target score:2000
+$didFirstTimeDesc
+$geckDestroyed",,"The modified Paragon is a derelict, but the droneships are still defending it.",,
+vulp_factoryFleetGreeting,OpenCommLink,$entity.vulpFactory_target score:2000,,"""Citizen of the Domain, this semi-autonomous terraforming ship has identified and logged your vessel or habitat in the course of executing its mission parameters. This vessel is operating under the authorization of the Domain Explorarium, and is escorted by a Tri-Tachyon Integrated Space Defense System ordo, which will respond in force to any attempt at tampering. Maintain your distance.""",cutCommLink:Cut the comm link,
+,,,,,,
+#vulp_factoryFleetDefeated,VulpoidBiofactoryFleetDefeated,,,The fleet is defeated! Yay!,vulpBattleContinue:Continue,
+#vulp_afterDefeatingContinue,DialogOptionSelected,$option == vulpBattleContinue,FireBest OpenInteractionDialog,,,
+vulp_factoryFleetDefeated,VulpoidBiofactoryFleetDefeated,$tag:salvageable,FireBest OpenInteractionDialog,,,
+vulp_wreckInteract,OpenInteractionDialog,"$tag:salvageable
+$vulpFactoryShip score:1000","SalvageGenFromSeed
+FireBest ShowSalvageEntityDetails
+FireBest SalvageCheckHostile",,,
+vulp_wreckDetailsUnexplored,ShowSalvageEntityDetails,"$customType == wreck
+$vulpFactoryShip score:1000
+!$global.vulp_gotFactory",ShowDefaultVisual,"The broken vessel is adrift in space. Its main reactor is compromised, but scans indicate that emergency power sources are maintaining life support through much of the ship. It's likely that most of the crew is still alive.",,
+vulp_wreckDetailsExplored,ShowSalvageEntityDetails,"$customType == wreck
+$vulpFactoryShip score:1000
+$global.vulp_gotFactory
+!$tookCrew",ShowDefaultVisual,"The broken Citadel-class is still adrift. Its passive life support systems will keep its Vulpoid population alive indefinitely, but they won't be able to restore drive power themselves.",,
+vulp_wreckDetailsExploredAndTookCrew,ShowSalvageEntityDetails,"$customType == wreck
+$vulpFactoryShip score:1000
+$global.vulp_gotFactory
+$tookCrew",ShowDefaultVisual,"The broken Citadel-class is still adrift. Without its crew, it's just another ancient artifact of the Domain, waiting to be rediscovered.",,
+,,,,,,
+vulp_exploreWreckExploredStillHasCrew,CheckSalvageSpecial,"$salvageSpecialData != null
+$customType == wreck
+$vulpFactoryShip score:1000
+$global.vulp_gotFactory
+!$tookCrew",,"A quick ping on the prearranged frequency confirms that the Vulpoids aboard are still eager to join your fleet, should you be willing.","vulp_exploreWreckExploredStillHasCrew_salvageShip:Recover the ship
+vulp_exploreWreckExploredStillHasCrew_takeCrew:Invite the Vulpoids aboard your $shipOrFleet
+100:defaultLeave:Leave",
+vulp_exploreWreckExploredStillHasCrew_takeCrew,DialogOptionSelected,$option == vulp_exploreWreckExploredStillHasCrew_takeCrew,"AddCommodity vulpoids 100
+$tookCrew = true
+FireBest TookVulpoidsFromWreckLater","The Vulpoids are overjoyed, and board the transfer shuttles as fast as they can land. The entire population is transferred over in short order.",,
+vulp_exploreWreckExploredStillHasCrew_takeCrew2,TookVulpoidsFromWreckLater,,SalvageSpecialInteraction,"The ship itself is now truly derelict, though still recoverable.",,
+vulp_exploreWreckExploredStillHasCrew_salvageShip,DialogOptionSelected,$option == vulp_exploreWreckExploredStillHasCrew_salvageShip,SalvageSpecialInteraction,"Your ops chief liaises with the Vulpoids, verifying that essential systems are still intact and the ship can be restored to functionality.",,
+,,,,,,
+vulp_exploreWreckExploredDerelict,CheckSalvageSpecial,"$salvageSpecialData != null
+$customType == wreck
+$vulpFactoryShip score:1000
+$global.vulp_gotFactory
+$tookCrew",SalvageSpecialInteraction,"Salvage crews re-boarding the wreck confirm that essential systems remain intact, and the ship can still be restored to functionality.",,
+,,,,,,
+vulp_exploreWreck,CheckSalvageSpecial,"$salvageSpecialData != null
+$customType == wreck
+$vulpFactoryShip score:1000
+!$global.vulp_gotFactory",ShowImageVisual raid_prepare,"Your bridge officers spend some time reviewing scans of the vessel, evaluating the most likely layouts of internal corridors and creating tactical extrapolations. Of greatest concern is the massive biosphere occupying the center of the vessel - it's large enough that terrestrial weapons could theoretically be fielded, and orbital support can't be provided without severely damaging the ship.
+
+It's decided that the best course of action will be to deploy mixed salvor/security teams across the vessel, aiming to quickly seize control over primary ship systems while neutralizing any resistance along the way.",vulp_exploreWreck1:Continue,
+vulp_exploreWreck1,DialogOptionSelected,$option == vulp_exploreWreck1,"ShowImageVisual bombard_saturation_result
+PlaySound ui_raid_prepared","The boarding shuttles are released in a single large wave, minimizing the time any hostile forces will have to react. The shuttles dock all across the vessel's hull, and your bridge is immediately alive with comms chatter as security teams clear angles and salvors start tracing conduits.
+
+It doesn't take long for the first teams to report contact, but the procedural tone quickly dissolves into confusion as additional details come through.",vulp_exploreWreck2:Continue,
+vulp_exploreWreck2,DialogOptionSelected,$option == vulp_exploreWreck2,"ShowPersonVisual true vulpoid_terran_generic
+ShowSecondPerson vulpoid_winter_generic
+ShowThirdPerson vulpoid_desert_generic","Tactical cuts through the chatter and pulls together a clear picture for you. Apparently the personnel the teams are encountering are not humans, but some sort of furred, bipedal mammal. They're identifying themselves as 'Vulpoids', and claim to be friendly. Various teams report that they apparently have a proclivity for human contact, requiring constant reminders to keep their distance.
+
+One team reports that they've allowed the Vulpoids to mingle among their ranks with no issue. Tactical assures you they'll receive remedial training, but also confirms that the Vulpoids have not shown hostile intent.",vulp_exploreWreckFirstEncounterHub:Continue,
+vulp_exploreWreckFirstEncounterHub,DialogOptionSelected,$option == vulp_exploreWreckFirstEncounterHub,"FireAll VulpWreckFirstEncounter
+ShowImageVisual bombard_saturation_result","You thank Tactical for the brief, and they return their full attention to commanding the operation. With the boarding action in good hands, you have a moment to recuse yourself and go over the latest report that your analysis teams have compiled regarding the ship and its crew.",,
+vulp_exploreWreckFirstEncounterHubReturn,DialogOptionSelected,$option == vulp_exploreWreckFirstEncounterHubReturn,"FireAll VulpWreckFirstEncounter
+ShowImageVisual bombard_saturation_result",,,
+vulp_exploreWreckFEPhysiologyOption,VulpWreckFirstEncounter,,,,vulp_exploreWreckFEPhysiology:Vulpoid Physiology Preliminary Report,
+vulp_exploreWreckFECognitionOption,VulpWreckFirstEncounter,,,,vulp_exploreWreckFECognition:Vulpoid Cognition Preliminary Report,
+vulp_exploreWreckFEShipOption,VulpWreckFirstEncounter,,,,vulp_exploreWreckFEShip:Vessel Specifications Interim Report,TODO: Image
+vulp_exploreWreckFEContinueOption,VulpWreckFirstEncounter,,,,vulp_exploreWreck3:Finish reading,
+vulp_exploreWreckFEPhysiology,DialogOptionSelected,$option == vulp_exploreWreckFEPhysiology,ShowPersonVisual true vulpoid_nude_terran_generic,"The Vulpoids are bipedal mammals, bearing a resemblance to both humans, and Old Earth foxes. Their limb and hand structure is near identical to that of a human, too close to be convergent evolution. It's almost certain that they were designed by a human organization with significant bioengineering capabilities, probably pre-Collapse or immediately post-Collapse at the latest.
+
+You skim through the rest of the report. ""low-medium muscle strength"", ""medium-low bone density"", ""likely high sensory acuity"", ""indications of efficient metabolism""… The report avoids coming to any conclusions, but notes that they're not optimally designed to serve as spacecraft crew.",vulp_exploreWreckFirstEncounterHubReturn:Continue,
+vulp_exploreWreckFECognition,DialogOptionSelected,$option == vulp_exploreWreckFECognition ,ShowPersonVisual true vulpoid_nude_terran_generic,"Based on initial observations, it's suspected that the Vulpoids have a below-human intelligence. A review of their observed memory and decision-making capabilities are consistent with a large cognitive deficit, with only their language skills reaching the level of an adult human.
+
+Psychologically speaking, they appear to have a near-compulsive desire to interact with humans, and help them with tasks. This is unlikely to be simply cultural, as they have been observed abandoning their repairs in favor of assisting our salvors in seizing control of their own systems. It seems plausible that their minds were specifically designed specifically to promote subserviance and obedience towards humans.","vulp_exploreWreckFECognitionDisturbing:Disturbing.
+vulp_exploreWreckFECognitionInteresting:Interesting.
+vulp_exploreWreckFECognitionUseful:Useful.",
+vulp_exploreWreckFECognitionDisturbing,DialogOptionSelected,$option == vulp_exploreWreckFECognitionDisturbing,"$option = vulp_exploreWreckFirstEncounterHubReturn
+FireBest DialogOptionSelected",,,
+vulp_exploreWreckFECognitionInteresting,DialogOptionSelected,$option == vulp_exploreWreckFECognitionInteresting,"$option = vulp_exploreWreckFirstEncounterHubReturn
+FireBest DialogOptionSelected",,,
+vulp_exploreWreckFECognitionUseful,DialogOptionSelected,$option == vulp_exploreWreckFECognitionUseful,"$option = vulp_exploreWreckFirstEncounterHubReturn
+FireBest DialogOptionSelected",,,
+vulp_exploreWreckFEShip,DialogOptionSelected,$option == vulp_exploreWreckFEShip,ShowImageVisual industry biotechmed,"Scans of the vessel's interior are consistent with a Paragon-class in most respects, but there are still major structural differences. The biosphere is obvious, but your engineers report that there are a great many other modifications that serve to vastly increase the vessel's logistics capability. Its cargo bays are vastly larger, cutting into regions that would totally compromise integrity on a standard Paragon, but this vessel appears to be designed to accommodate them without difficulty.
+
+The biosphere itself is vast, and far outstrips any technology in the current Sector. Initial scans - and interviews - indicate that it features full daylight cycles, clean air, simulated weather, and even arable soil. In addition to some residential sectors and what appears to be a campus, it's also home to an array of large, technologically advanced buildings. Some are showing signs of abandonment, while others are seeing active use. The Vulpoids claim that they ""came from"" those buildings, but have difficulty articulating what that means.",vulp_exploreWreckFirstEncounterHubReturn:Continue,
+vulp_exploreWreck3,DialogOptionSelected,$option == vulp_exploreWreck3,ShowImageVisual ai_core_uninstall,"Setting down the reports, you return your attention to the displays just in time to see a team advancing on the vessel's CIC. To the team's surprise the armored door begins cycling open without prompt, and they quickly assume firing positions.
+
+When the door slides open though, there's no weapons fire from the far side. Instead, it's a single Vulpoid, with her hands raised in surrender. Your science officer murmurs that none of the other Vulpoids were cognizant enough to surrender, and Tactical grunts in agreement. Orders are relayed to secure the CIC, and bring this Vulpoid to your $shipOrFleet for interrogation.
+
+There's no further surprises as your forces finish securing the ship, and you're free to make your way to the brig.",vulp_interrogation1:Continue,
+vulp_interrogation1,DialogOptionSelected,$option == vulp_interrogation1,,TODO - FILL OUT THE BRIG CONVERSATION HERE.,vulp_getBiofactory:Skip to the end,
+vulp_getBiofactory,DialogOptionSelected,$option == vulp_getBiofactory,"$global.vulp_gotFactory = true
+AddRemoveAnyItem SPECIAL vulpoid_biofactory 1
+MakeVulpoidsIllegal",,vulpExploreContinue:Continue,
+,,,,,,
+,,,,,,
+vulp_exploreDescriptionContinue,DialogOptionSelected,"$option == vulpExploreContinue
+!$global.vulp_gotFactory","$global.vulp_gotFactory = true
+AddCommodity vulpoids 1000
+AddCommodity vulpoids_shiny 1
+AddRemoveAnyItem SPECIAL vulpoid_biofactory 1",You got stuff!,vulpExploreContinue:Continue,
+vulp_exploreOfferSalvage,DialogOptionSelected,"$option == vulpExploreContinue
+$global.vulp_gotFactory",SalvageSpecialInteraction,"The chief engineer clears their throat, then continues ""I think I can get the main part of this TERRAFORMING device working again, though I can't claim to understand why it works. Not at all. The ship itself will be fit to fly, too, if we do the usual repairs. Should we proceed with recovery?""",,
+,,,,,,
+vulp_PostShipRecoverySpecial,PostShipRecoverySpecial,"$srs_baseHullId == vulp_geck
+!$tookCrew",AddCommodity vulpoids 100,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+vulp_GreetingGeneric,PickGreeting,"$isVulpoid
+!$contact_printedFirstReturnGreeting","$contact_printedFirstReturnGreeting = true 0
+ShowPersonVisual person
+FireAll PopulateOptions","After a short wait, your connection request is accepted and you're met with the grinning face of a Vulpoid.
+
+""Oh, hi $PlayerSirOrMadam! It's so nice to see you!""",,
+vulp_Greeting2Generic,PickGreeting,"$isVulpoid
+$contact_printedFirstReturnGreeting","ShowPersonVisual
+FireAll PopulateOptions","""Wanna do anything else $PlayerSirOrMadam?""",,
+vulp_GreetingAdmin,PickGreeting,"$isVulpoid
+!$contact_printedFirstReturnGreeting
+$postId == administrator","$contact_printedFirstReturnGreeting = true 0
+ShowPersonVisual
+FireAll PopulateOptions","After a short wait, your connection request is accepted and you're met with the barely-restrained smile of your Vulpoid administrator.
+
+""Hello $PlayerSirOrMadam! Can I do anything for you?""",,
+vulp_Greeting2Admin,PickGreeting,"$isVulpoid
+$contact_printedFirstReturnGreeting
+$postId == administrator","ShowPersonVisual
+FireAll PopulateOptions","""Is there anything else I can do for you $PlayerSirOrMadam?""",,
 ,,,,,,
 ,,,,,,
 ,,,,,,
 ,,,,,,
 ,,,,,,
+# Turn In to Faction Rep,,,,,,
 ,,,,,,
 ,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-# Repurposing AI Core Turn-In,,,,,,
 vulp_turnInOption,PopulateOptions,"$isPerson
 $global.vulp_gotFactory
-Vulpoids personCanAcceptVulpoids",FireBest DisableTurnInVulpOptionIfNeeded,,"11:vulp_startTurnIn:""Could I interest you in some vulpoids?""",
+TurnInVulpoids personCanAcceptVulpoids","FireBest DisableTurnInVulpOptionIfNeeded
+FireBest SetCustomVulpTurnInText",,"11:vulp_startTurnIn:""Could I interest you in some Prefecto Vulpoids?""",
+vulp_turnInOptionHeg,SetCustomVulpTurnInText,$faction.id == hegemony,"SetOptionText vulp_startTurnIn ""\""I'd like to turn over some Prefecto Vulpoids to the Hegemony.\""""",,,
+vulp_turnInChurch,SetCustomVulpTurnInText,$faction.id == luddic_church,,,,
+vulp_turnInPath,SetCustomVulpTurnInText,$faction.id == luddic_path,,,,
+vulp_turnInKazeron,SetCustomVulpTurnInText,"$faction.id == persean
+$market.id == kazeron",,,,
+vulp_turnInLeague,SetCustomVulpTurnInText,"$faction.id == persean
+$market.id != kazeron",,,,
+vulp_turnInDiktat,SetCustomVulpTurnInText,$faction.id == diktat,,,,
+vulp_turnInTriTach,SetCustomVulpTurnInText,$faction.id == tritachyon,"SetOptionText vulp_startTurnIn ""\""Would you care to acquire some Prefecto Vulpoids?\""""",,,
+vulp_turnInPirate,SetCustomVulpTurnInText,"$faction.id == pirates
+$market.id != umbra",,,,
+vulp_turnInUmbra,SetCustomVulpTurnInText,"$faction.id == pirates
+$market.id == umbra",,,,
 ,,,,,,
-vulp_disableTurnInOption,DisableTurnInVulpOptionIfNeeded,!Vulpoids playerHasVulpoids,"SetTooltip vulp_startTurnIn ""You do not have any Vulpoids in your possession.""
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+vulp_disableTurnInOption,DisableTurnInVulpOptionIfNeeded,!TurnInVulpoids playerHasVulpoids,"SetTooltip vulp_startTurnIn ""You do not have any Vulpoids in your possession.""
 SetEnabled vulp_startTurnIn false",,,
 ,,,,,,
 vulp_turnInOptionSelGeneric,DialogOptionSelected,$option == vulp_startTurnIn,FireAll PopulateVulpoidsTurnInOptions,"""A fascinating offer. Why, if one of the major factions caught you with these, they might just seize them outright. Tell you what - I'll do you a favor and give you a good price.""",,
 vulp_turnInOptionSelLuddic,DialogOptionSelected,"$option == vulp_startTurnIn
 $faction.id == luddic_church",FireAll PopulateVulpoidsTurnInOptions,"""You were right to bring these to me. I shall contact the Knight Commander to take possession of these abominations so that they may be properly cleansed.""",,
 vulp_turnInOptionSelHegemony,DialogOptionSelected,"$option == vulp_startTurnIn
-$faction.id == hegemony",FireAll PopulateVulpoidsTurnInOptions,"""We don't generally like the public to be aware that these exist, citizen, but the Hegemony is treaty-bound to take possession of any such objects and ensure they're destroyed.""",,
+$faction.id == hegemony",FireAll PopulateVulpoidsTurnInOptions,"""You say that as though you're not the one responsible for these things, but the Hegemony is treaty-bound to take possession of them all the same.""",,
 vulp_turnInOptionSelDiktat,DialogOptionSelected,"$option == vulp_startTurnIn
 $faction.id == sindrian_diktat",FireAll PopulateVulpoidsTurnInOptions,"""A dangerous catch you have there - there's no telling what could happen if one got into the hands of terrorists. I ... that is, we, are sure to be rewarded by the Lion for surrendering this to Diktat Intelligence straightaway.""
 OR
@@ -51,7 +195,7 @@ $market.id != kazeron",FireAll PopulateVulpoidsTurnInOptions,"""An excellent fin
 vulp_playerHasOption,PopulateVulpoidsTurnInOptions,,,,0:vulp_selectVulpoids:Select Vulpoids to turn in,
 vulp_neverMindOption,PopulateVulpoidsTurnInOptions,,,,"100:vulp_neverMind:""Never mind, I don't actually have any.""",
 vulp_neverMindOptionSelected,DialogOptionSelected,$option == vulp_neverMind,FireAll PopulateOptions,,,
-vulp_turnInOptionSelected,DialogOptionSelected,$option == vulp_selectVulpoids,Vulpoids selectVulpoids,,,
+vulp_turnInOptionSelected,DialogOptionSelected,$option == vulp_selectVulpoids,TurnInVulpoids selectVulpoids,,,
 vulp_turnInResponseDefault,VulpoidsTurnedIn,,FireAll PopulateOptions,$PersonRank $personLastName thanks you and the conversation moves on to other matters.,,
 vulp_turnInResponseHegemony,VulpoidsTurnedIn,$faction.id == hegemony,FireAll PopulateOptions,$PersonRank $personLastName thanks you on behalf of the Hegemony Council and the conversation moves on to other matters.,,
 vulp_turnInResponseLuddicChurch,VulpoidsTurnedIn,$faction.id == luddic_church,FireAll PopulateOptions,$PersonRank $personLastName says a quick prayer and thanks you on behalf of the Church.,,
@@ -61,3 +205,95 @@ vulp_turnInResponseLeagueKazeron,VulpoidsTurnedIn,"$faction.id == persean
 $market.id == kazeron",FireAll PopulateOptions,$PersonRank $personLastName verifies the transfer before moving the conversation to other matters.,,
 vulp_turnInResponseLeagueOther,VulpoidsTurnedIn,"$faction.id == persean
 $market.id != kazeron",FireAll PopulateOptions,$PersonRank $personLastName thanks you for your devotion to the cause of an independent Persean Sector.,,
+,,,,,,
+,,,,,,
+# Remove Colony Admin,runcode com.fs.starfarer.api.impl.campaign.intel.events.HostileActivityEventIntel.get().setProgress(600);,,,,,
+,,,,,,
+vulp_RACA_init,RemoveAICoreAdmin,$market.vulpoidAdmin != null score:1000,,"You send the order to have the Vulpoid step down from command. Only a few moments later, your comm-link chimes with an incoming message.",vulp_RACA_init1:Continue,"For whatever reason, this first line does not have the person reference. Need to go a second line to do ShowPerson, $heOrShe, etc."
+vulp_RACA_init1,DialogOptionSelected,$option == vulp_RACA_init1,"FireAll RemoveVulpAdminOptions
+ShowVulpAdminCrying","""Hi $PlayerSirOrMadam, I just got a notification from you, and just… wanted to make sure everything was okay? I thought I was doing a good job, and… I'm just not sure why…""
+
+$HeOrShe seems to have gotten $himOrHerself worked up, and looks close to tears.",,
+vulp_RACA_inspectionOption,RemoveVulpAdminOptions,MarketIsInspectionTarget,SetOptionColor vulp_RACA_inspection highlight,,"vulp_RACA_inspection:""There's a Hegemony inspection inbound.""",
+vulp_RACA_relocateOption,RemoveVulpAdminOptions,,,,"vulp_RACA_relocate:""You're being relocated to a different colony.""",
+vulp_RACA_directOrderOption,RemoveVulpAdminOptions,,,,"vulp_RACA_directOrder:""You heard me, that's an order.""",
+vulp_RACA_neverMindOption,RemoveVulpAdminOptions,,"SetShortcut vulp_RACA_neverMind ""ESCAPE""",,"vulp_RACA_neverMind:""I'm sorry, that was a mistake.""",
+vulp_RACA_inspection,DialogOptionSelected,$option == vulp_RACA_inspection,,"""What! Oh, no, I'm so sorry you're getting in trouble because of me! They don't send inspections unless they're confident, they'll be expecting to find me, they'll be so mad…""
+
+$HeOrShe pauses, taking a moment to calm $himOrHerself, before continuing.",vulp_RACA_inspection1:Continue,
+vulp_RACA_inspection1,DialogOptionSelected,$option == vulp_RACA_inspection1,,"""If I leave, I can evade them. But there's no way to cover up that I've been working here. You'll get a lot more negative attention for it, and they'll probably disrupt a lot of our operations during their in-depth searches. By my estimates, it'd be upwards of six weeks before we can return to normal operating levels.""
+
+$HeOrShe has started slowly pacing as she considers options, and then pauses.
+
+""...If your priority is to maintain good relations with the Hegemony, or to preserve the colony's economic potential, then we're already too late to get out unscathed. The next best option is to let them take me. They'll be more leniant if you don't try to cover things up.""
+
+$HeOrShe's putting on a brave face, but there's a catch in $hisOrHer voice as she says this.","vulp_RACA_inspectionConfirm:""I'd rather have you safe. Hide, and I'll deal with the consequences.""
+vulp_RACA_inspectionBribe:""I'll pull some strings, pay some credits. They won't find anything.""
+vulp_RACA_inspectionFight:""I won't let that happen. We'll resist the inspection with force.""
+vulp_RACA_inspectionStay:""If you think that's best, then stay and turn yourself over.""",
+vulp_RACA_inspectionConfirm,DialogOptionSelected,$option == vulp_RACA_inspectionConfirm,ShowPersonVisual,TODO,vulp_RACA_removeAdmin:Cut comm link,
+vulp_RACA_inspectionBribe,DialogOptionSelected,$option == vulp_RACA_inspectionBribe,ShowPersonVisual,"""You'd do that for me? The Hegemony isn't impossible to bribe, but they won't make it cheap. It'll be a lot of red on the balance sheet…""
+
+$HeOrShe looks into the distance for a moment, before straightening up and saluting.
+
+""Thank you, $PlayerSirOrMadam.""",vulp_RACA_cancel:Cut comm link,
+vulp_RACA_inspectionFight,DialogOptionSelected,$option == vulp_RACA_inspectionFight,ShowPersonVisual,"""You're going to fight them, to protect me? I… just please be careful, alright? I don't need to tell you they've got strong fleets, and won't back down easily. But if anyone can do it, it's you.""
+
+$HeOrShe gives you a nervous smile, straightens $himOrHerself up, and salutes.
+
+""Burn bright, $PlayerSirOrMadam.""",vulp_RACA_cancel:Cut comm link,
+vulp_RACA_inspectionStay,DialogOptionSelected,$option == vulp_RACA_inspectionStay,,"$HeOrShe nods silently, and salutes.
+
+""Goodbye, $PlayerSirOrMadam.""",vulp_RACA_cancel:Cut comm link,
+vulp_RACA_relocate,DialogOptionSelected,$option == vulp_RACA_relocate,,TODO,vulp_RACA_removeAdmin:Cut comm link,
+vulp_RACA_directOrder,DialogOptionSelected,$option == vulp_RACA_directOrder,,TODO,vulp_RACA_removeAdmin:Cut comm link,
+vulp_RACA_neverMind,DialogOptionSelected,$option == vulp_RACA_neverMind,ShowPersonVisual,"A wave of relief washes across $hisOrHer face, and you can see the tension leaving $hisOrHer body.
+
+""Oh, you scared me! I was so worried I'd done something wrong, I'm glad it's alright. Just… you'll let me know if you ever want me to do something, right? I just want to make sure you're happy with everything I do!""",vulp_RACA_cancel:Cut comm link,
+vulp_RACA_removeAdmin,DialogOptionSelected,$option == vulp_RACA_removeAdmin,DismissDialog override,,,
+vulp_RACA_cancel,DialogOptionSelected,$option == vulp_RACA_cancel,DismissDialog ignore,,,
+,,,,,,
+,,,,,,
+# Kanta Gifts,,,,,,
+,,,,,,
+kpVulpoid,KPFindGifts,"PlayerHasCargo vulpoids 1000
+$kpNumGifts < 5
+$kpNumGifts++",,,kpVulpoid:A thousand Vulpoids,
+kpVulpoidSel,DialogOptionSelected,$option == kpVulpoid,RemoveCommodity vulpoids 1000,TODO,kpLeaveProt:Continue,
+kpVulpoidShiny,KPFindGifts,"PlayerHasCargo vulpoids_shiny
+$kpNumGifts < 5
+$kpNumGifts++",,,kpVulpoidShiny:A Prefecto Vulpoid,
+kpVulpoidShinySel,DialogOptionSelected,$option == kpVulpoidShiny,ShowThirdPerson vulpoid_shiny_generic,"The Prefecto is brought into the court, and Cydonia immediately begins circling around her like a fighter on an attack run, studying her from every angle. Kanta quietly nods along as the Prefecto elaborates on her rarity, and gives benchmarks for her cognitive ability.
+
+When the explaination concludes, Cydonia looks eagerly at back at Kanta, his enthusiasm palpable.",kpVulpoidShiny1:Continue,
+kpVulpoidShinySel1,DialogOptionSelected,$option == kpVulpoidShiny1,RemoveCommodity vulpoids_shiny 1,"After a brief pause, Kanta's voice booms out, ""WE ACCEPT."" Her gaze turns to Cydonia, and she warns, ""It shall stay in one piece.""
+
+The 'doctor' flinches at this accusation, but his excitement is still evident as he directs the Prefecto towards his laboratory.",kpVulpoidShiny2:Continue,
+kpVulpoidShinySel2,DialogOptionSelected,$option == kpVulpoidShiny2,"HideThirdPerson
+$option = kpLeaveProt
+FireBest DialogOptionSelected ",,,
+,,,,,,
+,,,,"""What,"" Cydonia's lip curls into a sneer, ""would the mighty warlord do with-"" 
+
+There's a heavy clank, all turn to find that Kanta is standing, trailing trophies and tubes. ""WE ACCEPT,"" her vocoder blasts, the voice inhuman. ""Vacuum AND fire shall greet those prisoners I wish to dispose.""
+
+The pirates of the court cheer to this, stomping their feet and slamming weapon-stocks into the deck plates.",,
+,,,,"""I... I, yes, yes"" Cydonia caresses the specifications you transmitted to his datapad. He capers around the grim totems surrounding Kanta's throne and excitedly shows her the screen. Her attention is, for a moment, laser-focused. Her court of pirates murmur and whisper.
+
+Finally, Kanta's gauntleted hand, strength enhanced by cybernetics, shoves Cydonia away like a dewy-eyed lapdog. He nearly topples from the platform, but manages to recover his balance.
+
+Kanta stands with a clank, the hum of her synthetic voice grows, a raw buzz, in anticipation of her proclamation.",,
+,,,,"Kanta blasts her synthetic approval, ""YES. A delightful toy for my Cydonia, for his little experiments, his playthings. Won't they amuse us?"" With a creak of metal and clatter of beads and trophies, Kanta turns to look upon Cydonia. 
+ 
+He seems to shrink, ""Y- yes, my queen. I'm sure- I suppose it could be... repurposed for my needs. There will be less need for live... subjects, I suppose.""
+
+The 'doctor' looks crestfallen at this development. It would seem that Kanta doesn't notice, or care.",,
+,,,,"The core of the drone replicator is dragged into the court on an agrav sled and the specs read aloud at Cydonia's instructions by some kind of lead technician.
+
+Certain phrases stand out: ""autonomous hunter-killer"", ""exploding-tip fragmentation"", ""semi-lethal crowd-control escalation"",  ""adjustable potency chemical irritant"", ""30,000 rounds-per-minute"", ""excruciating burning sensation"".
+
+Kanta nods along, seemingly enthralled. Cydonia glances between you and her, ensuring that he is following the lead of his queen.",,
+,,,,"As the reading is finished, Cydonia exchanges one last look with Kanta then turns approvingly to the technician. ""Take it to The Arena!"" he shouts, and Kanta's court erupts with thunderous shouts and stomps.",,
+,,,,"""Oh, oh, th-"" Cydonia almost bounces with excitement, but his mewling is crushed by Kanta's synthesized voice.
+
+""A weapon of transcendent power,"" she booms. ""A beautiful thing. THIS. Is a gift worthy of Kanta."" Her dark eyes scan the crowds accusingly, demanding someone match this prize. None can.",,

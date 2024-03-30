@@ -1,0 +1,11 @@
+{
+	id:"sindrian_diktat",
+
+	"custom":{
+		"buysVulpoids":true,
+		"vulpoidValueMult":2,
+		"vulpoidRepMult":1,
+	},
+},
+
+

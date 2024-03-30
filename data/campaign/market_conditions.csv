@@ -1,0 +1,3 @@
+name,id,planetary,decivRemove,script,desc,icon,order
+Vulpoids,vulpoid_condition,,TRUE,vulpoids.impl.campaign.econ.VulpoidCondition,,graphics/icons/market/fox_planet_modifier.png,143
+Vulpoid Demand,vulpoid_demand,,,vulpoids.impl.campaign.econ.VulpoidDemandCondition,Hidden condition that adds Vulpoid demand.,,1000

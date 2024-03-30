@@ -1,0 +1,9 @@
+{
+	id:"persean",
+
+	"custom":{
+		"buysVulpoids":true,
+		"vulpoidValueMult":1.5,
+		"vulpoidRepMult":1.5,
+	},
+},

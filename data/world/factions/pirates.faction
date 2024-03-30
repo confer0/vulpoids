@@ -1,0 +1,13 @@
+{
+	"id":"pirates",
+
+	"custom":{
+		"buysVulpoids":true,
+		"vulpoidValueMult":1,
+		"vulpoidRepMult":1,
+	},
+}
+
+
+
+

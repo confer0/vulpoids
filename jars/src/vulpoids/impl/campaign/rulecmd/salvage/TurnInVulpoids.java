@@ -34,7 +34,7 @@ import com.fs.starfarer.api.util.Misc.Token;
  * NotifyEvent $eventHandle <params> 
  * 
  */
-public class Vulpoids extends BaseCommandPlugin {
+public class TurnInVulpoids extends BaseCommandPlugin {
 	
     protected CampaignFleetAPI playerFleet;
     protected SectorEntityToken entity;
@@ -76,9 +76,20 @@ public class Vulpoids extends BaseCommandPlugin {
             person = dialog.getInteractionTarget().getActivePerson();
             faction = person.getFaction();
 
-            buysAICores = faction.getCustomBoolean("buysAICores");
-            valueMult = faction.getCustomFloat("AICoreValueMult");
-            repMult = faction.getCustomFloat("AICoreRepMult");
+            buysAICores = faction.getCustomBoolean("buysVulpoids") || faction.getCustomBoolean("buysAICores");
+            
+            if(faction.getCustom().has("vulpoidValueMult")) {
+                valueMult = faction.getCustomFloat("vulpoidValueMult");
+            } else {
+                valueMult = faction.getCustomFloat("AICoreValueMult");
+            }
+            
+            if(faction.getCustom().has("vulpoidRepMult")) {
+                repMult = faction.getCustomFloat("vulpoidRepMult");
+            } else {
+                repMult = faction.getCustomFloat("AICoreRepMult");
+            }
+            
 
             if(command.equals("selectVulpoids")) {
                     selectVulpoids();
@@ -107,7 +118,10 @@ public class Vulpoids extends BaseCommandPlugin {
         //copy.setOrigSource(playerCargo);
         for (CargoStackAPI stack : playerCargo.getStacksCopy()) {
             CommoditySpecAPI spec = stack.getResourceIfResource();
-            if (spec != null && spec.getDemandClass().equals("vulpoids")) {
+            //if (spec != null && spec.getDemandClass().equals("vulpoids")) {
+            //    copy.addFromStack(stack);
+            //}
+            if (spec != null && spec.getId().equals("vulpoids_shiny")) {
                 copy.addFromStack(stack);
             }
         }
@@ -152,7 +166,8 @@ public class Vulpoids extends BaseCommandPlugin {
                     Global.getSector().adjustPlayerReputation(
                             new RepActionEnvelope(RepActions.CUSTOM, impact, null, text, true), faction.getId());
 
-                    impact.delta *= 0.25f;
+                    // Vulpoids give the full rep impact for the person.
+                    impact.delta *= 1.0f;//0.25f;
                     if (impact.delta >= 0.01f) {
                         Global.getSector().adjustPlayerReputation(
                                 new RepActionEnvelope(RepActions.CUSTOM, impact, null, text, true), person);
@@ -230,9 +245,9 @@ public class Vulpoids extends BaseCommandPlugin {
     }
 
     public static float getBaseRepValue(String commodity) {
-        if ("vulpoids".equals(commodity)) {
-            return 1f;
-        }
+        //if ("vulpoids".equals(commodity)) {
+        //    return 0.01f;
+        //}
         if ("vulpoids_shiny".equals(commodity)) {
             return 5f;
         }
@@ -243,7 +258,10 @@ public class Vulpoids extends BaseCommandPlugin {
     protected boolean playerHasVulpoids() {
         for (CargoStackAPI stack : playerCargo.getStacksCopy()) {
             CommoditySpecAPI spec = stack.getResourceIfResource();
-            if (spec != null && spec.getDemandClass().equals("vulpoids")) {
+            //if (spec != null && spec.getDemandClass().equals("vulpoids")) {
+            //    return true;
+            //}
+            if (spec != null && spec.getId().equals("vulpoids_shiny")) {
                 return true;
             }
         }

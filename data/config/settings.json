@@ -1,7 +1,21 @@
 {
 	"ruleCommandPackages":[
+		"vulpoids.impl.campaign.rulecmd",
 		"vulpoids.impl.campaign.rulecmd.salvage",
 	],
+	
+	"graphics": {
+		"industry":{
+			"organfarm":"graphics/icons/industry/organfarm.png",
+			"organfarmvulp":"graphics/icons/industry/organfarmvulp.png",
+			"biotechlow":"graphics/icons/industry/biotech_low.png",
+			"biotechmed":"graphics/icons/industry/biotech_medium.png",
+			"biotechhigh":"graphics/icons/industry/biotech_high.png",
+		},
+		"intel":{
+			"shiny_produced":"graphics/icons/intel/fox_produced.png",
+		}
+	}
 }
 
 
