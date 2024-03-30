@@ -1,0 +1,15 @@
+{
+	"id":"vulpoid_luxury",
+	"governingAptitude":"technology",
+	"compressHullmods":false,
+	"scope":"GOVERNED_OUTPOST",
+	"effectGroups":[
+		{
+			"requiredSkillLevel":1,
+			"effectBasedOnLevel":false,
+			"effects":[
+				{"type":"GOVERNED_OUTPOST", "script":"vulpoids.impl.campaign.skills.VulpoidLuxury$Level1"},
+			]
+		},
+	],
+}

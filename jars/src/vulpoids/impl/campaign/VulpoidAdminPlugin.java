@@ -26,6 +26,7 @@ public class VulpoidAdminPlugin implements AICoreAdminPlugin {
         person.getStats().setSkillLevel(Skills.INDUSTRIAL_PLANNING, 1);
         //person.getStats().setSkillLevel(Skills.HYPERCOGNITION, 1);
         person.getStats().setSkillLevel("vulpoid_brain", 1);
+        person.getStats().setSkillLevel("vulpoid_luxury", 1);
         
         person.getMemoryWithoutUpdate().set("$isVulpoid", true);
         person.getRelToPlayer().setRel(1);

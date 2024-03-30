@@ -94,6 +94,6 @@ public class VulpoidCondition extends BaseMarketConditionPlugin implements Marke
             
             tooltip.addPara("%s colony income",
                     opad, Misc.getHighlightColor(), 
-                    "+" + (int)INCOME_BONUS);
+                    "+" + (int)INCOME_BONUS + "%");
     }
 }

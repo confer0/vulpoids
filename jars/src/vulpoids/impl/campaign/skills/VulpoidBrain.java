@@ -1,7 +1,5 @@
 package vulpoids.impl.campaign.skills;
 
-import com.fs.starfarer.api.Global;
-import com.fs.starfarer.api.campaign.PlanetAPI;
 import com.fs.starfarer.api.campaign.econ.MarketAPI;
 import com.fs.starfarer.api.characters.MarketSkillEffect;
 import com.fs.starfarer.api.characters.PersonAPI;
@@ -17,14 +15,14 @@ public class VulpoidBrain {
     public static int DEFEND_BONUS = 25;//50;
     public static float STABILITY_BONUS = 1;
     
-    private static String skill_name = "Vulpoid Brain";
+    private static final String SKILL_NAME = "Vulpoid Brain";
 
 
     public static class Level1 implements MarketSkillEffect {
         PersonAPI admin;
         
         public void apply(MarketAPI market, String id, float level) {
-            market.getAccessibilityMod().modifyFlat(id, ACCESS, skill_name);
+            market.getAccessibilityMod().modifyFlat(id, ACCESS, SKILL_NAME);
             
             // Adding to comms, and giving the custom picture!
             admin = market.getAdmin();
@@ -115,7 +113,7 @@ public class VulpoidBrain {
 
     public static class Level2 implements MarketSkillEffect {
         public void apply(MarketAPI market, String id, float level) {
-            market.getStats().getDynamic().getMod(Stats.COMBAT_FLEET_SIZE_MULT).modifyFlat(id, FLEET_SIZE / 100f, skill_name);
+            market.getStats().getDynamic().getMod(Stats.COMBAT_FLEET_SIZE_MULT).modifyFlat(id, FLEET_SIZE / 100f, SKILL_NAME);
         }
 
         public void unapply(MarketAPI market, String id) {
@@ -138,7 +136,7 @@ public class VulpoidBrain {
 
     public static class Level3 implements MarketSkillEffect {
         public void apply(MarketAPI market, String id, float level) {
-            market.getStats().getDynamic().getMod(Stats.GROUND_DEFENSES_MOD).modifyMult(id, 1f + DEFEND_BONUS * 0.01f, skill_name);
+            market.getStats().getDynamic().getMod(Stats.GROUND_DEFENSES_MOD).modifyMult(id, 1f + DEFEND_BONUS * 0.01f, SKILL_NAME);
         }
 
         public void unapply(MarketAPI market, String id) {
@@ -161,7 +159,7 @@ public class VulpoidBrain {
 
     public static class Level4 implements MarketSkillEffect {
         public void apply(MarketAPI market, String id, float level) {
-            market.getStability().modifyFlat(id, STABILITY_BONUS, skill_name);
+            market.getStability().modifyFlat(id, STABILITY_BONUS, SKILL_NAME);
         }
 
         public void unapply(MarketAPI market, String id) {
