@@ -11,10 +11,15 @@
 			"biotechlow":"graphics/icons/industry/biotech_low.png",
 			"biotechmed":"graphics/icons/industry/biotech_medium.png",
 			"biotechhigh":"graphics/icons/industry/biotech_high.png",
+			"biotechvulp":"graphics/icons/industry/biotech_vulpoid.png",
 		},
 		"intel":{
 			"shiny_produced":"graphics/icons/intel/fox_produced.png",
-		}
+		},
+		"illustrations":{
+			"vulpoid_bar":"graphics/illustrations/vulpoid_bar.png",
+			"vulpoid_petting":"graphics/illustrations/vulpoid_petting.png",
+		},
 	}
 }
 

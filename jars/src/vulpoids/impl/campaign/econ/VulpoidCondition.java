@@ -2,16 +2,20 @@ package vulpoids.impl.campaign.econ;
 
 
 import com.fs.starfarer.api.Global;
+import com.fs.starfarer.api.campaign.CommDirectoryEntryAPI;
 import com.fs.starfarer.api.campaign.econ.MarketAPI;
 import com.fs.starfarer.api.campaign.econ.MarketImmigrationModifier;
 import com.fs.starfarer.api.characters.FullName;
 import com.fs.starfarer.api.characters.PersonAPI;
 import com.fs.starfarer.api.impl.campaign.econ.BaseMarketConditionPlugin;
+import com.fs.starfarer.api.impl.campaign.ids.Conditions;
 import com.fs.starfarer.api.impl.campaign.ids.Factions;
+import com.fs.starfarer.api.impl.campaign.ids.Planets;
 import com.fs.starfarer.api.impl.campaign.ids.Skills;
 import com.fs.starfarer.api.impl.campaign.population.PopulationComposition;
 import com.fs.starfarer.api.ui.TooltipMakerAPI;
 import com.fs.starfarer.api.util.Misc;
+import vulpoids.impl.campaign.VulpoidCreator;
 
 public class VulpoidCondition extends BaseMarketConditionPlugin implements MarketImmigrationModifier {
 
@@ -32,21 +36,12 @@ public class VulpoidCondition extends BaseMarketConditionPlugin implements Marke
         market.getIncomeMult().modifyPercent(id, INCOME_BONUS, BONUS_NAME);
         
         if(vulpoid_comms == null) {
-            vulpoid_comms = createVulpoid();
-            vulpoid_comms.setPortraitSprite("graphics/portraits/vulpoid_hat.png");
+            vulpoid_comms = VulpoidCreator.createNudeVulpoid(market);
+            vulpoid_comms.setId("vulpoid_rep");
+            vulpoid_comms.setName(new FullName("Vulpoid Representative", "", FullName.Gender.FEMALE));
+            vulpoid_comms.getMemoryWithoutUpdate().set("$isVulpoidRep", true);
         }
         market.getCommDirectory().addPerson(vulpoid_comms);
-    }
-    
-    private PersonAPI createVulpoid() {
-        PersonAPI person = Global.getFactory().createPerson();
-        person.setFaction(market.getFactionId());
-        person.setName(new FullName("Vulpoid Representative", "", FullName.Gender.FEMALE));
-        person.setPortraitSprite("graphics/portraits/vulpoid_basic.png");
-        person.setRankId(null);
-        person.setPostId(null);
-        person.getMemoryWithoutUpdate().set("$isVulpoid", true);
-        return person;
     }
 
     public void unapply(String id) {
@@ -57,6 +52,8 @@ public class VulpoidCondition extends BaseMarketConditionPlugin implements Marke
         if(vulpoid_comms != null) {
             market.getCommDirectory().removePerson(vulpoid_comms);
         }
+        //Safeguard
+        market.getCommDirectory().removeEntry(market.getCommDirectory().getEntryForPerson("vulpoid_rep"));
     }
 
     public void modifyIncoming(MarketAPI market, PopulationComposition incoming) {

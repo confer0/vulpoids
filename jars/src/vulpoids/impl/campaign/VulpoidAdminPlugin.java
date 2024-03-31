@@ -14,23 +14,16 @@ import com.fs.starfarer.api.impl.campaign.ids.Skills;
 public class VulpoidAdminPlugin implements AICoreAdminPlugin {
 
     public PersonAPI createPerson(String aiCoreId, String factionId, long seed) {
-        PersonAPI person = Global.getFactory().createPerson();
+        PersonAPI person = VulpoidCreator.createVulpoid(null);
         person.setFaction(factionId);
         person.setAICoreId(aiCoreId);
         person.setName(new FullName("Profecto Vulpoid", "", FullName.Gender.FEMALE));
-        person.setPortraitSprite("graphics/portraits/terran_fox.png");
-
-        person.setRankId(null);
+        //person.setRankId(null);
         person.setPostId(Ranks.POST_ADMINISTRATOR);
-
         person.getStats().setSkillLevel(Skills.INDUSTRIAL_PLANNING, 1);
-        //person.getStats().setSkillLevel(Skills.HYPERCOGNITION, 1);
         person.getStats().setSkillLevel("vulpoid_brain", 1);
         person.getStats().setSkillLevel("vulpoid_luxury", 1);
-        
-        person.getMemoryWithoutUpdate().set("$isVulpoid", true);
-        person.getRelToPlayer().setRel(1);
-        
+        person.getMemoryWithoutUpdate().set("$isVulpoidAdmin", true);
         return person;
     }
 }

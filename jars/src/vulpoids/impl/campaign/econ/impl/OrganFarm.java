@@ -34,8 +34,17 @@ public class OrganFarm extends BaseIndustry {
     }
     
     
+    public boolean hasBiofactory() {
+        return getSpecialItem() != null && "vulpoid_biofactory".equals(getSpecialItem().getId());
+    }
     public boolean isOrganFarmVulpBiofactory() {
-        return ("organfarms".equals(getId()) && getSpecialItem() != null && "vulpoid_biofactory".equals(getSpecialItem().getId()));
+        return "organfarms".equals(getId()) && hasBiofactory();
+    }
+    public boolean isBiofacilityAndNotUnlocked() {
+        return "biofacility".equals(getId()) && !Global.getSector().getMemoryWithoutUpdate().getBoolean("$vulp_gotFactory");
+    }
+    public boolean isBiofacilityVulpBiofactory() {
+        return "biofacility".equals(getId()) && hasBiofactory();
     }
     
     
@@ -45,6 +54,9 @@ public class OrganFarm extends BaseIndustry {
             return Global.getSettings().getSpriteName("industry", "organfarmvulp");
         }
         if ("biofacility".equals(getId())) {
+            if (hasBiofactory()) {
+                return Global.getSettings().getSpriteName("industry", "biotechvulp");
+            }
             if(market.getSize() == 3) {
                 return Global.getSettings().getSpriteName("industry", "biotechlow");
             }
@@ -60,7 +72,10 @@ public class OrganFarm extends BaseIndustry {
         if (isOrganFarmVulpBiofactory()) {
             return "Vulpoid Bioforge";
         }
-        if ("biofacility".equals(getId()) && !Global.getSector().getMemoryWithoutUpdate().getBoolean("$vulp_gotFactory")) {
+        if (isBiofacilityVulpBiofactory()) {
+            return "Vulpoid Biofacility";
+        }
+        if (isBiofacilityAndNotUnlocked()) {
             return "Speculative Improvements";
         }
         return super.getCurrentName();
@@ -73,7 +88,12 @@ public class OrganFarm extends BaseIndustry {
                     "The phrase 'how the sausage is made' is often used to describe operations, "+
                     "and many steps in the bioforging process do in fact have an unpleasant resemblance to sausage meat.";
         }
-        if ("biofacility".equals(getId()) && !Global.getSector().getMemoryWithoutUpdate().getBoolean("$vulp_gotFactory")) {
+        if (isBiofacilityVulpBiofactory()) {
+            return "The pinnacle of Exodyne Biotech's aspirations for the Sector. With a bioforge at its heart, "+
+                    "this sleek and advanced megacomplex is capable of producing an endless flow of fluffy friends, "+
+                    "all without compromising its baseline production levels.";
+        }
+        if (isBiofacilityAndNotUnlocked()) {
             return "Without Domain-era technology, this is advanced as is possible in the Sector.";
         }
         return super.getDescriptionOverride(); 
@@ -89,7 +109,7 @@ public class OrganFarm extends BaseIndustry {
     protected void applyImproveModifiers() {
         if (isImproved()) {
             getSupply(Commodities.ORGANS).getQuantity().modifyFlat(getModId(3), 1, getImprovementsDescForModifiers() + " (" + getNameForModifier() + ")");
-            if (isOrganFarmVulpBiofactory()) {
+            if (hasBiofactory()) {
                 getSupply("vulpoids").getQuantity().modifyFlat(getModId(3), 1, getImprovementsDescForModifiers() + " (" + getNameForModifier() + ")");
             }
         } else {

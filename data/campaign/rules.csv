@@ -122,33 +122,48 @@ vulp_PostShipRecoverySpecial,PostShipRecoverySpecial,"$srs_baseHullId == vulp_ge
 ,,,,,,
 ,,,,,,
 ,,,,,,
-vulp_GreetingGeneric,PickGreeting,"$isVulpoid
+vulp_GreetingGeneric,PickGreeting,"$isVulpoidRep
 !$contact_printedFirstReturnGreeting","$contact_printedFirstReturnGreeting = true 0
 ShowPersonVisual person
 FireAll PopulateOptions","After a short wait, your connection request is accepted and you're met with the grinning face of a Vulpoid.
 
 ""Oh, hi $PlayerSirOrMadam! It's so nice to see you!""",,
-vulp_Greeting2Generic,PickGreeting,"$isVulpoid
+vulp_Greeting2Generic,PickGreeting,"$isVulpoidRep
 $contact_printedFirstReturnGreeting","ShowPersonVisual
 FireAll PopulateOptions","""Wanna do anything else $PlayerSirOrMadam?""",,
-vulp_GreetingAdmin,PickGreeting,"$isVulpoid
-!$contact_printedFirstReturnGreeting
-$postId == administrator","$contact_printedFirstReturnGreeting = true 0
+vulp_GreetingAdmin,PickGreeting,"$isVulpoidAdmin
+!$contact_printedFirstReturnGreeting","$contact_printedFirstReturnGreeting = true 0
 ShowPersonVisual
 FireAll PopulateOptions","After a short wait, your connection request is accepted and you're met with the barely-restrained smile of your Vulpoid administrator.
 
 ""Hello $PlayerSirOrMadam! Can I do anything for you?""",,
-vulp_Greeting2Admin,PickGreeting,"$isVulpoid
-$contact_printedFirstReturnGreeting
-$postId == administrator","ShowPersonVisual
+vulp_Greeting2Admin,PickGreeting,"$isVulpoidAdmin
+$contact_printedFirstReturnGreeting","ShowPersonVisual
 FireAll PopulateOptions","""Is there anything else I can do for you $PlayerSirOrMadam?""",,
+vulp_askFunFact,PopulateOptions,$isVulpoidRep,,,vulp_getFunFact:Can you tell me a fun fact?,
+vulp_getFunFact,DialogOptionSelected,$option == vulp_getFunFact,FireBest VulpFunFact,,,
+vulp_funFactFemale,VulpFunFact,,,"""We're all girls because it's harder to make two kinds of thing at once! So the scientists made us all girls! I guess we could've been boys though, wouldn't that be weird!""",,
+vulp_funFactChocolate,VulpFunFact,,,"""We really like chocolate! It's super tasty, and makes us really happy! They say it's like drugs to us, you guys must like drugs a lot!""",,
+vulp_funFactLobster,VulpFunFact,,,"""Those blue lobsters sure are neat, huh? They're always so friendly with us, but some humans say they can be mean. No, wait! They can be crabby, haha!""",,
+vulp_funFactPet,VulpFunFact,,,"""Did you know petting us makes you live longer? It's true! Someone said you live a few days longer if you pet us a bunch! And it feels good too! You should do it!""",,
+vulp_funFactLanguage,VulpFunFact,,,"""I didn't learn how to talk, they just make us like this! It's pretty nice because learning things is tricky. Plus, how do you learn to talk if you don't know what the teacher is saying!""",,
+vulp_funFactHumans,VulpFunFact,,,"""Humans are so great! I just love being around you, and listening to you, and doing what you want! It's awesome! I don't get why the smart ones get grumpy about it.""",,
+vulp_funFactLiver,VulpFunFact,,,"""If you're hurt, just tell one of us so we can kiss it better! Really! Our spit helps fix cuts and stuff! We've got other medicine stuff too, like in our livers! I heard some people buy us just for that!""",,
+vulp_funFactReproduce,VulpFunFact,,,"""Isn't it kinda weird how you make new humans? It's like, you've got tiny little factories in everyone, instead of one big one! I guess that's nice though, it'd be cool if I could make more sisters all by myself!""",,
+vulp_funFactAging,VulpFunFact,,,"""One of my sisters told me she went through a Gate once! Isn't that crazy! It was back when they worked like normal though, so maybe it's not actually that special? How many people were born after they turned off?""",,
+vulp_funFactFruit,VulpFunFact,,,"""Have you ever smelled one of us? It's all nice and fruity, right? They say it's because of tiny plants in our fur, but I've never found any leaves, so I dunno!""",,
+vulp_funFactSpaceSuit,VulpFunFact,,,"""I bet you wear space suits all the time, right? I know how to wear them, but they're so tight around the tail. It'd be nicer to not wear anything, but then you couldn't breathe!""",,
 ,,,,,,
+bar_descVulpoid,BarPrintDesc,MarketHasCondition vulpoid_condition,ShowImageVisual vulpoid_bar,"As you enter the bar you are buffeted by the human white-noise of conversation and revelry. Ad-holos buzz softly from ceiling-mounted units, shining garish highlights through glasses and bottles as spacer crews mingle with merchants and locals trading drinks for rumor, jobs, and opportunities. Vulpoids dart from table to table, distributing drinks and occasionally thanking catcallers for the compliments.",,
+vulp_barInteractionPrompt,AddBarEvents,MarketHasCondition vulpoid_condition,"AddBarEvent vulp_barInteraction ""Talk to the Vulpoid"" ""One of the Vulpoids notices you, and quickly bounds up to see if you want anything.""",,,
+vulp_barInteraction,DialogOptionSelected,$option == vulp_barInteraction,ShowPersonVisual false vulpoid_nude_terran_generic,"""Hi $PlayerSirOrMadam! Can I get you something?""","vulp_barInteractionPet:Pet her
+backToBar:Dismiss her",
+vulp_barInteractionPet,DialogOptionSelected,$option == vulp_barInteractionPet,ShowImageVisual vulpoid_petting,,backToBar:Return to the bar,
 ,,,,,,
 ,,,,,,
 ,,,,,,
 ,,,,,,
 # Turn In to Faction Rep,,,,,,
-,,,,,,
 ,,,,,,
 vulp_turnInOption,PopulateOptions,"$isPerson
 $global.vulp_gotFactory
