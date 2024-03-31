@@ -24,7 +24,7 @@ public class VulpoidCondition extends BaseMarketConditionPlugin implements Marke
     public static float ACCESS_BONUS = 10f;
     public static float INCOME_BONUS = 10f;
 
-    public static String BONUS_NAME = "Vulpoids";
+    public static String BONUS_NAME = "Vulpoid Population";
     
     PersonAPI vulpoid_comms;
     PersonAPI vulpoid_quartermaster;
@@ -81,7 +81,7 @@ public class VulpoidCondition extends BaseMarketConditionPlugin implements Marke
                     opad, Misc.getHighlightColor(),
                     "+" + (int)STABILITY);
 
-            tooltip.addPara("%s population growth",
+            tooltip.addPara("%s population growth from immigration",
                     opad, Misc.getHighlightColor(), 
                     "+" + (int) getImmigrationBonus());
             

@@ -35,6 +35,7 @@ import com.fs.starfarer.api.impl.campaign.ids.FleetTypes;
 import com.fs.starfarer.api.impl.campaign.ids.HullMods;
 import com.fs.starfarer.api.impl.campaign.ids.MemFlags;
 import com.fs.starfarer.api.impl.campaign.ids.People;
+import com.fs.starfarer.api.impl.campaign.ids.Ranks;
 import com.fs.starfarer.api.impl.campaign.ids.Skills;
 import com.fs.starfarer.api.impl.campaign.ids.Tags;
 import com.fs.starfarer.api.impl.campaign.missions.academy.GABaseMission;
@@ -54,6 +55,7 @@ import com.fs.starfarer.api.util.Misc;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import vulpoids.impl.campaign.VulpoidCreator;
 
 public class VulpoidBiofactoryMission extends HubMissionWithSearch implements FleetEventListener {
     
@@ -93,7 +95,7 @@ public class VulpoidBiofactoryMission extends HubMissionWithSearch implements Fl
         }
         
         
-        
+        fleet.getMemoryWithoutUpdate().set("$wasAttacked", true);
         if (fleet.getFlagship() != null) {
             if (fleet.getFlagship().getCaptain() != flagship_captain) {
                 fleet.getMemoryWithoutUpdate().set("$geckDestroyed", true);
@@ -217,13 +219,15 @@ public class VulpoidBiofactoryMission extends HubMissionWithSearch implements Fl
 
         CampaignFleetAPI fleet = fleets.get(0);
         
-        AICoreOfficerPlugin plugin = Misc.getAICoreOfficerPlugin(Commodities.ALPHA_CORE);
         FleetMemberAPI member = fleet.getFleetData().addFleetMember("vulp_geck_Terraformer");
         member.setShipName("EBTS Rellrait");
-        //member.setId("xivtf_" + random.nextLong());
-        flagship_captain = plugin.createPerson(Commodities.ALPHA_CORE, fleet.getFaction().getId(), new Random());
-        //person.setPortraitSprite("graphics/portraits/vulpoid.png");
-        //person.setName(new FullName("Vulpoid", "", FullName.Gender.FEMALE));
+        flagship_captain = VulpoidCreator.createSuitedVulpoid(planet.getMarket());
+        flagship_captain.setPortraitSprite("graphics/portraits/anonymous_fox.png");
+        flagship_captain.setFaction(Factions.NEUTRAL);
+        flagship_captain.setName(new FullName("Unknown", "", FullName.Gender.FEMALE));
+        flagship_captain.setRankId(null);
+        flagship_captain.setPostId(Ranks.POST_FLEET_COMMANDER);
+        flagship_captain.getRelToPlayer().setRel(-0.1f);
         flagship_captain.getStats().setSkipRefresh(true);
         flagship_captain.getStats().setSkillLevel(Skills.CARRIER_GROUP, 1);
         flagship_captain.getStats().setSkillLevel(Skills.FIGHTER_UPLINK, 1);
@@ -240,12 +244,6 @@ public class VulpoidBiofactoryMission extends HubMissionWithSearch implements Fl
         member.setVariant(v, false, true);
         fleet.setCommander(flagship_captain);
         
-        member = fleet.getFleetData().addFleetMember("odyssey_Balanced");
-        member.setShipName("EBTS Artem");
-        
-        //addAutomated(fleet, "onslaught_xiv_Elite", null, Commodities.ALPHA_CORE, random);
-        //addAutomated(fleet, "vulp_geck_terraformer", null, "vulpoids_shiny");
-        //addAutomated(fleet, "odyssey_Balanced", null, Commodities.ALPHA_CORE);
         
         fleet.getFleetData().sort();
         
@@ -259,31 +257,6 @@ public class VulpoidBiofactoryMission extends HubMissionWithSearch implements Fl
             curr.setVariant(v, false, false);
         }
         
-        /*for (FleetMemberAPI curr : fleet.getFleetData().getMembersListCopy()) {
-            curr.getVariant().addPermaMod(HullMods.AUTOMATED);
-            curr.getVariant().setVariantDisplayName("Automated");
-            curr.getVariant().addTag(Tags.TAG_AUTOMATED_NO_PENALTY);
-            //curr.getVariant().addTag(Tags.VARIANT_UNRESTORABLE);
-            //curr.getVariant().addTag(Tags.TAG_RETAIN_SMODS_ON_RECOVERY);
-            curr.getVariant().addTag(Tags.UNRECOVERABLE);
-            curr.getVariant().addTag(Tags.VARIANT_UNBOARDABLE);
-        }*/
-        
-        /*DropData d = new DropData();
-        d.chances = 1;
-        d.addSpecialItem("vulpoid_biofactory", 1);
-        fleet.addDropRandom(d);
-        
-        d = new DropData();
-        d.chances = 1;
-        d.value = 10000;
-        d.addCommodity("vulpoids", 1);
-        fleet.addDropValue(d);
-        
-        d = new DropData();
-        d.chances = 1;
-        d.addCommodity("vulpoids_shiny", 1);
-        fleet.addDropRandom(d);*/
         
         getChanges().add(new EntityAdded(fleet)); // so it's removed when the mission is abort()ed
 
@@ -302,28 +275,13 @@ public class VulpoidBiofactoryMission extends HubMissionWithSearch implements Fl
         }
         
         fleet.getMemoryWithoutUpdate().set(MemFlags.FLEET_INTERACTION_DIALOG_CONFIG_OVERRIDE_GEN,
-                new ZigFIDConfig());
+                new VulpFIDConfig());
         
         Misc.addDefeatTrigger(fleet, "VulpoidBiofactoryFleetDefeated");
     }
     
-    public static void addAutomated(CampaignFleetAPI fleet, String variantId, String shipName, String aiCore/*, Random random*/) {
-        AICoreOfficerPlugin plugin = Misc.getAICoreOfficerPlugin(Commodities.ALPHA_CORE);
-
-        FleetMemberAPI member = fleet.getFleetData().addFleetMember(variantId);
-        //member.setId("xivtf_" + random.nextLong());
-        
-        if (shipName != null) {
-            member.setShipName(shipName);
-        }
-        if (aiCore != null) {
-            PersonAPI person = plugin.createPerson(aiCore, fleet.getFaction().getId(), new Random());
-            member.setCaptain(person);
-        }
-    }
     
-    
-    public static class ZigFIDConfig implements FIDConfigGen {
+    public static class VulpFIDConfig implements FIDConfigGen {
         public FIDConfig createConfig() {
             FIDConfig config = new FIDConfig();
 
@@ -362,7 +320,7 @@ public class VulpoidBiofactoryMission extends HubMissionWithSearch implements Fl
                     //Global.getSector().getMemoryWithoutUpdate().set(DEFEATED_ZIGGURAT_KEY, true);
                     
                     PerShipData ship = new PerShipData("vulp_geck_Hull", ShipCondition.WRECKED, 0f);
-                    ship.shipName = "TTS Xenorphica";
+                    ship.shipName = "EBTS Rellrait";
                     DerelictShipData params = new DerelictShipData(ship, false);
                     CustomCampaignEntityAPI entity = (CustomCampaignEntityAPI) BaseThemeGenerator.addSalvageEntity(
                             fleet.getContainingLocation(),

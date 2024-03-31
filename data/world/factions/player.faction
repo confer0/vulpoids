@@ -4,6 +4,8 @@
 	"portraits":{
 		"standard_female":[
 			
+			"graphics/portraits/anonymous_fox.png",
+			
 			"graphics/portraits/desert_fox.png",
 			"graphics/portraits/desert_fox_cry.png",
 			"graphics/portraits/nude_desert_fox.png",

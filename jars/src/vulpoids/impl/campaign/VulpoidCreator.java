@@ -30,7 +30,7 @@ public class VulpoidCreator {
         if(market != null) {
             person.setFaction(market.getFactionId());
         }
-        person.setRankId(null);
+        person.setRankId("vulp_servant");
         person.setPostId(null);
         person.getMemoryWithoutUpdate().set("$isVulpoid", true);
         person.getRelToPlayer().setRel(1);

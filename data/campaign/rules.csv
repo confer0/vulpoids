@@ -17,7 +17,41 @@ $didFirstTimeDesc
 vulp_factoryFleetEncounterDescGeckDestroyed,BeginFleetEncounter,"$vulpFactory_target score:2000
 $didFirstTimeDesc
 $geckDestroyed",,"The modified Paragon is a derelict, but the droneships are still defending it.",,
-vulp_factoryFleetGreeting,OpenCommLink,$entity.vulpFactory_target score:2000,,"""Citizen of the Domain, this semi-autonomous terraforming ship has identified and logged your vessel or habitat in the course of executing its mission parameters. This vessel is operating under the authorization of the Domain Explorarium, and is escorted by a Tri-Tachyon Integrated Space Defense System ordo, which will respond in force to any attempt at tampering. Maintain your distance.""",cutCommLink:Cut the comm link,
+,,,,,,
+vulp_factoryFleetGreeting,OpenCommLink,"$entity.vulpFactory_target score:2000
+!$entity.geckDestroyed
+!$talkedOnce",$talkedOnce = true,"After a moment's delay the comm-link connects, displaying the Exodynye Biotech logo. A voice comes through, modulated for anonymity.
+
+""Independent $shipOrFleet. This vessel and its associated escort are the lawful property of the Exodyne Biotech corporation. We are operating under semi-autonomous mode due to extenuating circumstances, as permitted under Domain AI Safety regulations. If you are not authorized by the Exodyne Biotech corporation to reassume control over this vessel, then you are advised to maintain your distance. We are permitted to respond with deadly force.""
+
+It's well within the capabilities of an AI core to create a fake persona, but it'd be a strange choice to then anonymize it. This ship might be controlled by something else.",cutCommLinkNoText:Cut the comm link,
+vulp_factoryFleetGreeting2,OpenCommLink,"$entity.vulpFactory_target score:2000
+!$entity.geckDestroyed
+$talkedOnce",,"""Independent $shipOrFleet, I say again: maintain your distance. We are permitted to use deadly force to defend corporate assets.""",cutCommLinkNoText:Cut the comm link,
+vulp_factoryFleetGreetingAttacked,OpenCommLink,"$entity.vulpFactory_target score:2000
+!$entity.geckDestroyed
+!$talkedOnce
+$entity.wasAttacked",$talkedOnce = true,"After a moment's delay the comm-link connects, displaying the Exodynye Biotech logo. A voice comes through, modulated for anonymity.
+
+""Hostile $shipOrFleet! This vessel and its associated escort are the lawful property of the Exodyne Biotech corporation! We are operating under semi-autonomous mode due to extenuating circumstances, as permitted under Domain AI Safety regulations! Power down weapons systems and disengage!""
+
+It's well within the capabilities of an AI core to create a fake persona, but it'd be a strange choice to then anonymize it. This ship might be controlled by something else.",cutCommLinkNoText:Cut the comm link,
+vulp_factoryFleetGreetingAttacked2,OpenCommLink,"$entity.vulpFactory_target score:2000
+!$entity.geckDestroyed
+$talkedOnce
+$entity.wasAttacked",,"""Hostile $shipOrFleet, your actions are unauthorized under Domain law! Power down weapons and disengage!""",cutCommLinkNoText:Cut the comm link,
+vulp_factoryFleetGreetingDestroyed,OpenCommLink,"$entity.vulpFactory_target score:2000
+$entity.geckDestroyed
+!$talkedOnce",$talkedOnce = true,"The comm-link hisses and crackles as it attempts to stabilize the connection with the destroyed flagship's sputtering transmitters. The wobbling image of the Exodyne Biotech logo appears on the display, and a modulated voice speaks over the garbled audio channel.
+
+""Hostile $shipOrFleet, please disengage! This fleet is authorized under Domain AI Safety regulations! We are not a threat! Please, hold your fire!""
+
+It's well within the capabilities of an AI core to create a fake persona, but it'd be a strange choice to then anonymize it. This ship - or what's left of it - might be controlled by something else.",cutCommLinkNoText:Cut the comm link,
+vulp_factoryFleetGreetingDestroyed2,OpenCommLink,"$entity.vulpFactory_target score:2000
+$entity.geckDestroyed
+$talkedOnce",,"""Hostile $shipOrFleet, please hold your fire! We are not a threat!""",cutCommLinkNoText:Cut the comm link,
+,,,,,,
+,,,,,,
 ,,,,,,
 #vulp_factoryFleetDefeated,VulpoidBiofactoryFleetDefeated,,,The fleet is defeated! Yay!,vulpBattleContinue:Continue,
 #vulp_afterDefeatingContinue,DialogOptionSelected,$option == vulpBattleContinue,FireBest OpenInteractionDialog,,,
@@ -152,9 +186,9 @@ vulp_funFactLiver,VulpFunFact,,,"""If you're hurt, just tell one of us so we can
 vulp_funFactReproduce,VulpFunFact,,,"""Isn't it kinda weird how you make new humans? It's like, you've got tiny little factories in everyone, instead of one big one! I guess that's nice though, it'd be cool if I could make more sisters all by myself!""",,
 vulp_funFactAging,VulpFunFact,,,"""One of my sisters told me she went through a Gate once! Isn't that crazy! It was back when they worked like normal though, so maybe it's not actually that special? How many people were born after they turned off?""",,
 vulp_funFactFruit,VulpFunFact,,,"""Have you ever smelled one of us? It's all nice and fruity, right? They say it's because of tiny plants in our fur, but I've never found any leaves, so I dunno!""",,
-vulp_funFactSpaceSuit,VulpFunFact,,,"""I bet you wear space suits all the time, right? I know how to wear them, but they're so tight around the tail. It'd be nicer to not wear anything, but then you couldn't breathe!""",,
+vulp_funFactSpaceSuit,VulpFunFact,,,"""I bet you wear space suits all the time, right? I know how to wear them, but they're so tight around the tail. It'd be nicer to not wear anything, but then you couldn't go to space!""",,
 ,,,,,,
-bar_descVulpoid,BarPrintDesc,MarketHasCondition vulpoid_condition,ShowImageVisual vulpoid_bar,"As you enter the bar you are buffeted by the human white-noise of conversation and revelry. Ad-holos buzz softly from ceiling-mounted units, shining garish highlights through glasses and bottles as spacer crews mingle with merchants and locals trading drinks for rumor, jobs, and opportunities. Vulpoids dart from table to table, distributing drinks and occasionally thanking catcallers for the compliments.",,
+bar_descVulpoid,BarPrintDesc,MarketHasCondition vulpoid_condition,ShowImageVisual vulpoid_bar,"As you enter the bar you are buffeted by the human white-noise of conversation and revelry. Ad-holos buzz softly from ceiling-mounted units, shining garish highlights through glasses and bottles as spacer crews mingle with merchants and locals trading drinks for rumor, jobs, and opportunities. Vulpoids dart from table to table, distributing drinks and earnestly thanking catcallers for the 'compliments'.",,
 vulp_barInteractionPrompt,AddBarEvents,MarketHasCondition vulpoid_condition,"AddBarEvent vulp_barInteraction ""Talk to the Vulpoid"" ""One of the Vulpoids notices you, and quickly bounds up to see if you want anything.""",,,
 vulp_barInteraction,DialogOptionSelected,"$option == vulp_barInteraction
 !$printedFirstReturnGreeting","ShowPersonVisual false vulpoid_barmaid
@@ -262,8 +296,8 @@ vulp_RACA_directOrderOption,RemoveVulpAdminOptions,,,,"vulp_RACA_directOrder:""Y
 vulp_RACA_neverMindOption,RemoveVulpAdminOptions,,"SetShortcut vulp_RACA_neverMind ""ESCAPE""",,"vulp_RACA_neverMind:""I'm sorry, that was a mistake.""",
 vulp_RACA_inspection,DialogOptionSelected,$option == vulp_RACA_inspection,,"That catches her off-guard.
 
-""Oh. That's bad. How did you even… never mind, you've got connections. Okay, priorities… A formal inspection is only launched when they've confident there's something to find.""",vulp_RACA_inspection1:Continue,
-vulp_RACA_inspection1,DialogOptionSelected,$option == vulp_RACA_inspection1,,"""If I leave, I can evade them. But there's no way to cover up that I've been working here. You'll get a lot more negative attention for it, and they'll probably disrupt a lot of our operations during their in-depth searches. By my estimates, it'd be upwards of six weeks before we can return to normal operating levels.""
+""Oh. That's bad. How did you even… never mind, you've got connections. Okay, priorities… A formal inspection is only launched when they've confident there's something to find. That means they know - or strongly suspect - I'm here.""",vulp_RACA_inspection1:Continue,
+vulp_RACA_inspection1,DialogOptionSelected,$option == vulp_RACA_inspection1,,"""If I step down, I'll be able to avoid their search. But there's no way to cover up that I've been working here. You'll get a lot more negative attention for it, and they'll probably disrupt a lot of our operations during their in-depth searches. I'd say... upwards of six weeks before we can return to normal operating levels.""
 
 $HeOrShe has started slowly pacing as she considers options, and then pauses.
 
@@ -273,7 +307,11 @@ $HeOrShe's putting on a brave face, but there's a catch in $hisOrHer voice as sh
 vulp_RACA_inspectionBribe:""I'll pull some strings, pay some credits. They won't find anything.""
 vulp_RACA_inspectionFight:""I won't let that happen. We'll resist the inspection with force.""
 vulp_RACA_inspectionStay:""If you think that's best, then stay and turn yourself over.""",
-vulp_RACA_inspectionConfirm,DialogOptionSelected,$option == vulp_RACA_inspectionConfirm,ShowPersonVisual,TODO,vulp_RACA_removeAdmin:Cut comm link,
+vulp_RACA_inspectionConfirm,DialogOptionSelected,$option == vulp_RACA_inspectionConfirm,ShowPersonVisual,"""I… thank you, $SirOrMadam. I'll get everything prepared for my replacement, and get into hiding. I promise you, they won't find me.""
+
+$HeOrShe quickly wipes $hisOrHer eyes, and gives you a big, smiling salute.
+
+""It means a lot that you'd do that for me. Thank you, $PlayerSirOrMadam.""",vulp_RACA_removeAdmin:Cut comm link,
 vulp_RACA_inspectionBribe,DialogOptionSelected,$option == vulp_RACA_inspectionBribe,ShowPersonVisual,"""You'd do that for me? The Hegemony isn't impossible to bribe, but they won't make it cheap. It'll be a lot of red on the balance sheet…""
 
 $HeOrShe looks into the distance for a moment, before straightening up and saluting.

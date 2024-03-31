@@ -2,6 +2,7 @@ package vulpoids.impl.campaign.econ.impl;
 
 import com.fs.starfarer.api.Global;
 import com.fs.starfarer.api.campaign.FactionAPI;
+import com.fs.starfarer.api.campaign.econ.MarketAPI;
 import com.fs.starfarer.api.impl.campaign.econ.impl.BaseIndustry;
 import com.fs.starfarer.api.impl.campaign.ids.Commodities;
 import com.fs.starfarer.api.impl.campaign.ids.Conditions;
@@ -17,8 +18,8 @@ public class OrganFarm extends BaseIndustry {
         super.apply(true);
         
         int size = market.getSize();
-        demand(Commodities.ORGANICS, size + 1);
-        demand(Commodities.FOOD, size);
+        demand(Commodities.ORGANICS, size + 2);
+        demand(Commodities.FOOD, size + 2);
         if("organfarms".equals(getId())) {
             supply(Commodities.ORGANS, size - 4);
         } else if("biofacility".equals(getId())) {
@@ -28,6 +29,8 @@ public class OrganFarm extends BaseIndustry {
         
         Pair<String, Integer> deficit = getMaxDeficit(Commodities.ORGANICS, Commodities.FOOD);
         applyDeficitToProduction(1, deficit, Commodities.ORGANS, Commodities.DRUGS);
+        deficit = getMaxDeficit(Commodities.ORGANICS, Commodities.FOOD, Commodities.RARE_METALS, Commodities.HEAVY_MACHINERY);
+        applyDeficitToProduction(1, deficit, "vulpoids");
         if (!isFunctional()) {
             supply.clear();
         }
@@ -48,6 +51,19 @@ public class OrganFarm extends BaseIndustry {
     }
     public boolean isBiofacilityAndNotUnlocked() {
         return "biofacility".equals(getId()) && !Global.getSector().getMemoryWithoutUpdate().getBoolean("$vulp_gotFactory");
+    }
+    public boolean isBiofacilityAndAnotherExists() {
+        if (!"biofacility".equals(getId())) return false;
+        return getMarketWithOtherBiofacility() != null;
+    }
+    public MarketAPI getMarketWithOtherBiofacility() {
+        for (MarketAPI world_market : Global.getSector().getEconomy().getMarketsCopy()) {
+            if (!world_market.getId().equals(market.getId())) {
+                if (world_market.hasIndustry("biofacility")) return world_market;
+                if (world_market.hasIndustry("organfarms") && world_market.getIndustry("organfarms").isUpgrading()) return world_market;
+            }
+        }
+        return null;
     }
     public boolean isBiofacilityVulpBiofactory() {
         return "biofacility".equals(getId()) && hasBiofactory();
@@ -130,7 +146,10 @@ public class OrganFarm extends BaseIndustry {
     
     @Override
     public boolean isAvailableToBuild() {
-        if ("biofacility".equals(getId()) && !Global.getSector().getMemoryWithoutUpdate().getBoolean("$vulp_gotFactory")) {
+        if (isBiofacilityAndNotUnlocked()) {
+            return false;
+        }
+        if (isBiofacilityAndAnotherExists()) {
             return false;
         }
         return market.hasCondition(Conditions.HABITABLE);
@@ -138,6 +157,12 @@ public class OrganFarm extends BaseIndustry {
     
     public String getUnavailableReason() {
         if (!super.isAvailableToBuild()) return super.getUnavailableReason();
+        if (isBiofacilityAndNotUnlocked()) {
+            return "Unknown technology";
+        }
+        if (isBiofacilityAndAnotherExists()) {
+            return "Already built on "+getMarketWithOtherBiofacility().getName();
+        }
         return "Requires habitable conditions";
     }
     

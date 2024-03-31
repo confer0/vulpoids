@@ -152,10 +152,13 @@ public class VulpoidModPlugin extends BaseModPlugin {
                 industry.getMarket().addCondition("vulpoid_condition");
                 if (industry instanceof BaseIndustry) {
                     BaseIndustry b = (BaseIndustry) industry;
-                    if("organfarm".equals(b.getId())) {
+                    int size = b.getMarket().getSize();
+                    if("organfarms".equals(b.getId())) {
                         b.supply(spec.getId(), Commodities.ORGANS, -100, Misc.ucFirst(spec.getName().toLowerCase()));
+                        b.demand(spec.getId(), Commodities.HEAVY_MACHINERY, size-2, Misc.ucFirst(spec.getName().toLowerCase()));
+                        b.demand(spec.getId(), Commodities.RARE_METALS, size-3, Misc.ucFirst(spec.getName().toLowerCase()));
                     }
-                    b.supply(spec.getId(), "vulpoids", VULPOID_PROD_AMOUNT, Misc.ucFirst(spec.getName().toLowerCase()));
+                    b.supply(spec.getId(), "vulpoids", size-2, Misc.ucFirst(spec.getName().toLowerCase()));
                 
                     int supplied_amount = b.getSupply("vulpoids").getQuantity().getModifiedInt();
                     industry.getMarket().getMemoryWithoutUpdate().set(VULPOID_PRODUCTION_VOLUME_KEY, supplied_amount);
@@ -171,6 +174,8 @@ public class VulpoidModPlugin extends BaseModPlugin {
                     BaseIndustry b = (BaseIndustry) industry;
                     b.supply(spec.getId(), Commodities.ORGANS, 0, Misc.ucFirst(spec.getName().toLowerCase()));
                     b.supply(spec.getId(), "vulpoids", -100, null);
+                    b.demand(spec.getId(), Commodities.HEAVY_MACHINERY, 0, null);
+                    b.demand(spec.getId(), Commodities.RARE_METALS, 0, null);
                     
                     // Checks that the tags are set, only false when installed for the first time.
                     if(industry.getMarket().getMemoryWithoutUpdate().contains(VULPOID_LAST_UNAPPLY_TIMESTAMP_KEY)) {
@@ -204,7 +209,7 @@ public class VulpoidModPlugin extends BaseModPlugin {
             }
             protected void addItemDescriptionImpl(Industry industry, TooltipMakerAPI text, SpecialItemData data,
                     InstallableItemDescriptionMode mode, String pre, float pad) {
-                text.addPara(pre + "Converts organ vats into Vulpoid birthing tanks, producing %s units of vulpoids.",
+                text.addPara(pre + "Enables Vulpoid production. Requires either a biofacility, or significant machinery and transplutonic upkeep.",
                         pad, Misc.getHighlightColor(), 
                         "" + (int) VULPOID_PROD_AMOUNT);
             }
@@ -226,11 +231,11 @@ public class VulpoidModPlugin extends BaseModPlugin {
             public void apply(Industry industry) {
                 //super.apply(industry);
                 industry.getSupply(Commodities.ORGANS).getQuantity().modifyFlat(spec.getId(), VULPOID_BROKEN_ORGANS, Misc.ucFirst(spec.getName().toLowerCase()));
-                industry.getDemand(Commodities.FOOD).getQuantity().modifyFlat(spec.getId(), VULPOID_BROKEN_ORGANS, Misc.ucFirst(spec.getName().toLowerCase()));
+                //industry.getDemand(Commodities.FOOD).getQuantity().modifyFlat(spec.getId(), VULPOID_BROKEN_ORGANS, Misc.ucFirst(spec.getName().toLowerCase()));
             }
             public void unapply(Industry industry) {
                 industry.getSupply(Commodities.ORGANS).getQuantity().unmodifyFlat(spec.getId());
-                industry.getDemand(Commodities.FOOD).getQuantity().unmodifyFlat(spec.getId());
+                //industry.getDemand(Commodities.FOOD).getQuantity().unmodifyFlat(spec.getId());
             }
             @Override
             public String[] getSimpleReqs(Industry industry) {
