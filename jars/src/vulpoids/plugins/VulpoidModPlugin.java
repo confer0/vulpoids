@@ -19,8 +19,10 @@ import com.fs.starfarer.api.characters.ImportantPeopleAPI;
 import com.fs.starfarer.api.characters.PersonAPI;
 import com.fs.starfarer.api.impl.campaign.ids.Commodities;
 import com.fs.starfarer.api.impl.campaign.ids.Factions;
+import com.fs.starfarer.api.impl.campaign.ids.Ranks;
 import com.fs.starfarer.api.impl.campaign.ids.Submarkets;
 import vulpoids.campaign.VulpoidsCampaignPlugin;
+import vulpoids.impl.campaign.VulpoidCreator;
 import vulpoids.impl.campaign.intel.misc.ShinyProducedIntel;
 
 public class VulpoidModPlugin extends BaseModPlugin {
@@ -34,101 +36,73 @@ public class VulpoidModPlugin extends BaseModPlugin {
         ImportantPeopleAPI ip = Global.getSector().getImportantPeople();
         PersonAPI person;
         
-        person = Global.getFactory().createPerson();
+        if (ip.getPerson("vulpoid_captain_biped") == null) {
+            person = VulpoidCreator.createVulpoid(null);
+            person.setId("vulpoid_captain_biped");
+            person.setFaction(Factions.NEUTRAL);
+            person.setName(new FullName("Biped Captain", "", FullName.Gender.FEMALE));
+            person.setRankId("null");
+            person.setPostId(Ranks.POST_FLEET_COMMANDER);
+            person.getRelToPlayer().setRel(-0.3f);  // Inhospitable by default. Frankly, if she weren't a Vulpoid she'd be much angrier at you for blowing up her ship.
+            person.setPortraitSprite("graphics/portraits/terran_fox.png");
+            ip.addPerson(person);
+        }
+        
+        
+        
+        
+        person = VulpoidCreator.createVulpoid(null);
         person.setId("vulpoid_shiny_generic");
-        person.setFaction(Factions.PLAYER);
         person.setName(new FullName("Prefecto Vulpoid", "", FullName.Gender.FEMALE));
-        person.setRankId("vulp_servant");
-        person.setPostId(null);
-        person.getRelToPlayer().setRel(1);
         person.setPortraitSprite("graphics/portraits/terran_fox.png");
         ip.removePerson(person.getId());
         ip.addPerson(person);
         
-        person = Global.getFactory().createPerson();
+        person = VulpoidCreator.createVulpoid(null);
         person.setId("vulpoid_desert_generic");
-        person.setFaction(Factions.PLAYER);
-        person.setName(new FullName("Vulpoid", "", FullName.Gender.FEMALE));
-        person.setRankId("vulp_servant");
-        person.setPostId(null);
-        person.getRelToPlayer().setRel(1);
         person.setPortraitSprite("graphics/portraits/desert_fox.png");
         ip.removePerson(person.getId());
         ip.addPerson(person);
         
-        person = Global.getFactory().createPerson();
+        person = VulpoidCreator.createVulpoid(null);
         person.setId("vulpoid_terran_generic");
-        person.setFaction(Factions.PLAYER);
-        person.setName(new FullName("Vulpoid", "", FullName.Gender.FEMALE));
-        person.setRankId("vulp_servant");
-        person.setPostId(null);
-        person.getRelToPlayer().setRel(1);
         person.setPortraitSprite("graphics/portraits/terran_fox.png");
         ip.removePerson(person.getId());
         ip.addPerson(person);
         
-        person = Global.getFactory().createPerson();
+        person = VulpoidCreator.createVulpoid(null);
         person.setId("vulpoid_winter_generic");
-        person.setFaction(Factions.PLAYER);
-        person.setName(new FullName("Vulpoid", "", FullName.Gender.FEMALE));
-        person.setRankId("vulp_servant");
-        person.setPostId(null);
-        person.getRelToPlayer().setRel(1);
         person.setPortraitSprite("graphics/portraits/winter_fox.png");
         ip.removePerson(person.getId());
         ip.addPerson(person);
         
-        person = Global.getFactory().createPerson();
+        person = VulpoidCreator.createVulpoid(null);
         person.setId("vulpoid_space_desert_generic");
-        person.setFaction(Factions.PLAYER);
-        person.setName(new FullName("Vulpoid", "", FullName.Gender.FEMALE));
-        person.setRankId("vulp_servant");
-        person.setPostId(null);
-        person.getRelToPlayer().setRel(1);
         person.setPortraitSprite("graphics/portraits/space_desert_fox.png");
         ip.removePerson(person.getId());
         ip.addPerson(person);
         
-        person = Global.getFactory().createPerson();
+        person = VulpoidCreator.createVulpoid(null);
         person.setId("vulpoid_space_terran_generic");
-        person.setFaction(Factions.PLAYER);
-        person.setName(new FullName("Vulpoid", "", FullName.Gender.FEMALE));
-        person.setRankId("vulp_servant");
-        person.setPostId(null);
-        person.getRelToPlayer().setRel(1);
         person.setPortraitSprite("graphics/portraits/space_terran_fox.png");
         ip.removePerson(person.getId());
         ip.addPerson(person);
         
-        person = Global.getFactory().createPerson();
+        person = VulpoidCreator.createVulpoid(null);
         person.setId("vulpoid_space_winter_generic");
-        person.setFaction(Factions.PLAYER);
-        person.setName(new FullName("Vulpoid", "", FullName.Gender.FEMALE));
-        person.setRankId("vulp_servant");
-        person.setPostId(null);
-        person.getRelToPlayer().setRel(1);
         person.setPortraitSprite("graphics/portraits/space_winter_fox.png");
         ip.removePerson(person.getId());
         ip.addPerson(person);
         
-        person = Global.getFactory().createPerson();
+        person = VulpoidCreator.createVulpoid(null);
         person.setId("vulpoid_nude_terran_generic");
-        person.setFaction(Factions.PLAYER);
-        person.setName(new FullName("Vulpoid", "", FullName.Gender.FEMALE));
-        person.setRankId("vulp_servant");
-        person.setPostId(null);
-        person.getRelToPlayer().setRel(1);
         person.setPortraitSprite("graphics/portraits/nude_terran_fox.png");
         ip.removePerson(person.getId());
         ip.addPerson(person);
         
-        person = Global.getFactory().createPerson();
+        person = VulpoidCreator.createVulpoid(null);
         person.setId("vulpoid_barmaid");
-        person.setFaction(Factions.PLAYER);
-        person.setName(new FullName("Vulpoid", "", FullName.Gender.FEMALE));
-        person.setRankId("vulp_servant");
         person.setPostId("vulp_barmaid");
-        person.getRelToPlayer().setRel(1);
         person.setPortraitSprite("graphics/portraits/nude_terran_fox.png");
         ip.removePerson(person.getId());
         ip.addPerson(person);

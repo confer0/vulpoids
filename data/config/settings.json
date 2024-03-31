@@ -11,7 +11,9 @@
 			"biotechlow":"graphics/icons/industry/biotech_low.png",
 			"biotechmed":"graphics/icons/industry/biotech_medium.png",
 			"biotechhigh":"graphics/icons/industry/biotech_high.png",
-			"biotechvulp":"graphics/icons/industry/biotech_vulpoid.png",
+			"biotechlowvulp":"graphics/icons/industry/biotech_low_fox.png",
+			"biotechmedvulp":"graphics/icons/industry/biotech_medium_fox.png",
+			"biotechhighvulp":"graphics/icons/industry/biotech_high_fox.png",
 		},
 		"intel":{
 			"shiny_produced":"graphics/icons/intel/fox_produced.png",

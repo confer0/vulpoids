@@ -5,6 +5,7 @@ import com.fs.starfarer.api.campaign.econ.MarketAPI;
 import com.fs.starfarer.api.characters.FullName;
 import com.fs.starfarer.api.characters.PersonAPI;
 import com.fs.starfarer.api.impl.campaign.ids.Conditions;
+import com.fs.starfarer.api.impl.campaign.ids.Factions;
 import com.fs.starfarer.api.impl.campaign.ids.Planets;
 import java.util.HashMap;
 import java.util.Map;
@@ -29,6 +30,8 @@ public class VulpoidCreator {
         person.setPortraitSprite(getPortraitForMarket(market, force_nude, force_suit));
         if(market != null) {
             person.setFaction(market.getFactionId());
+        } else {
+            person.setFaction(Factions.PLAYER);
         }
         person.setRankId("vulp_servant");
         person.setPostId(null);

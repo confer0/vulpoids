@@ -86,14 +86,12 @@ public class OrganFarm extends BaseIndustry {
         }
         if ("biofacility".equals(getId())) {
             if (hasBiofactory()) {
-                return Global.getSettings().getSpriteName("industry", "biotechvulp");
+                if(market.getSize() <= 3) return Global.getSettings().getSpriteName("industry", "biotechlowvulp");
+                if(market.getSize() >= 6) return Global.getSettings().getSpriteName("industry", "biotechhighvulp");
+                return Global.getSettings().getSpriteName("industry", "biotechmedvulp");
             }
-            if(market.getSize() == 3) {
-                return Global.getSettings().getSpriteName("industry", "biotechlow");
-            }
-            if(market.getSize() == 6) {
-                return Global.getSettings().getSpriteName("industry", "biotechhigh");
-            }
+            if(market.getSize() <= 3) return Global.getSettings().getSpriteName("industry", "biotechlow");
+            if(market.getSize() >= 6) return Global.getSettings().getSpriteName("industry", "biotechhigh");
         }
         return super.getCurrentImage();
     }
