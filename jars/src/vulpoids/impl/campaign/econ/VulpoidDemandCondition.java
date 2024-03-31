@@ -15,11 +15,11 @@ public class VulpoidDemandCondition extends BaseMarketConditionPlugin {
     
     public void apply(String id) {
         int demand = Math.min(demand_cap, market.getSize()-3);
-        market.getIndustry(Industries.POPULATION).getDemand("vulpoids").getQuantity().modifyFlat(id, demand, "Vulpoid Demand");
+        if (market.hasIndustry(Industries.POPULATION)) market.getIndustry(Industries.POPULATION).getDemand("vulpoids").getQuantity().modifyFlat(id, demand, "Vulpoid Demand");
     }
 
     public void unapply(String id) {
-        market.getIndustry(Industries.POPULATION).getDemand("vulpoids").getQuantity().unmodifyFlat(id);
+        if (market.hasIndustry(Industries.POPULATION)) market.getIndustry(Industries.POPULATION).getDemand("vulpoids").getQuantity().unmodifyFlat(id);
     }
     
     @Override

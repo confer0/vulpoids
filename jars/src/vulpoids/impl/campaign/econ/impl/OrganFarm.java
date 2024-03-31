@@ -18,8 +18,9 @@ public class OrganFarm extends BaseIndustry {
         super.apply(true);
         
         int size = market.getSize();
-        demand(Commodities.ORGANICS, size + 2);
         demand(Commodities.FOOD, size + 2);
+        demand(Commodities.ORGANICS, size + 2);
+        demand(Commodities.HEAVY_MACHINERY, size - 3);  // Same as Mining
         if("organfarms".equals(getId())) {
             supply(Commodities.ORGANS, size - 4);
         } else if("biofacility".equals(getId())) {
@@ -29,8 +30,16 @@ public class OrganFarm extends BaseIndustry {
         
         Pair<String, Integer> deficit = getMaxDeficit(Commodities.ORGANICS, Commodities.FOOD);
         applyDeficitToProduction(1, deficit, Commodities.ORGANS, Commodities.DRUGS);
-        deficit = getMaxDeficit(Commodities.ORGANICS, Commodities.FOOD, Commodities.RARE_METALS, Commodities.HEAVY_MACHINERY);
-        applyDeficitToProduction(1, deficit, "vulpoids");
+        deficit = getMaxDeficit(Commodities.ORGANICS, Commodities.FOOD, Commodities.HEAVY_MACHINERY);
+        Pair<String, Integer> rare_deficit = getMaxDeficit(Commodities.RARE_METALS);
+        if(rare_deficit.two > 0) {
+            rare_deficit.two = 100;
+            applyDeficitToProduction(1, rare_deficit, "vulpoids");
+        } else {
+            applyDeficitToProduction(1, deficit, "vulpoids");
+        }
+        
+        
         if (!isFunctional()) {
             supply.clear();
         }
@@ -113,7 +122,7 @@ public class OrganFarm extends BaseIndustry {
         if (isBiofacilityVulpBiofactory()) {
             return "The pinnacle of Exodyne Biotech's aspirations for the Sector. With a bioforge at its heart, "+
                     "this sleek and advanced megacomplex is capable of producing an endless flow of fluffy friends, "+
-                    "all without compromising its baseline production levels of assorted biological goods.";
+                    "while cast-offs are reprocessed to supplement the baseline production of assorted biological goods.";
         }
         if (isBiofacilityAndNotUnlocked()) {
             return "Without Domain-era technology, this is advanced as is possible in the Sector.";

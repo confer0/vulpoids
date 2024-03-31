@@ -53,8 +53,6 @@ $talkedOnce",,"""Hostile $shipOrFleet, please hold your fire! We are not a threa
 ,,,,,,
 ,,,,,,
 ,,,,,,
-#vulp_factoryFleetDefeated,VulpoidBiofactoryFleetDefeated,,,The fleet is defeated! Yay!,vulpBattleContinue:Continue,
-#vulp_afterDefeatingContinue,DialogOptionSelected,$option == vulpBattleContinue,FireBest OpenInteractionDialog,,,
 vulp_factoryFleetDefeated,VulpoidBiofactoryFleetDefeated,$tag:salvageable,FireBest OpenInteractionDialog,,,
 vulp_wreckInteract,OpenInteractionDialog,"$tag:salvageable
 $vulpFactoryShip score:1000","SalvageGenFromSeed
@@ -154,6 +152,12 @@ vulp_PostShipRecoverySpecial,PostShipRecoverySpecial,"$srs_baseHullId == vulp_ge
 !$tookCrew",AddCommodity vulpoids 100,,,
 ,,,,,,
 ,,,,,,
+,,,,,,
+vulp_decivRecoverBiofactory,OpenInteractionDialog,$market.hasDecivBiofactory score:1000,"$market.hasDecivBiofactory = false
+AddRemoveAnyItem SPECIAL vulpoid_biofactory 1","$marketName has descended into chaos, and it appears that any Vulpoids left on the planet have been quickly snatched up by gangs of looters. No doubt a thriving slave market has already formed.
+
+There's not much to be done for those Vulpoids, but thankfully you can still detect the transponder signal of the Vulpoid Bioforge. A shuttle is dispatched to retrieve it before any survivors have the chance to discover it.",vulp_decivRecoverBiofactoryContinue:Continue,
+vulp_decivRecoverBiofactoryContinue,DialogOptionSelected,$option == vulp_decivRecoverBiofactoryContinue,FireBest OpenInteractionDialog,,,
 ,,,,,,
 ,,,,,,
 vulp_GreetingGeneric,PickGreeting,"$isVulpoidRep
