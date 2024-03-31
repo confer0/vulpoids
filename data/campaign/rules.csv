@@ -156,10 +156,37 @@ vulp_funFactSpaceSuit,VulpFunFact,,,"""I bet you wear space suits all the time, 
 ,,,,,,
 bar_descVulpoid,BarPrintDesc,MarketHasCondition vulpoid_condition,ShowImageVisual vulpoid_bar,"As you enter the bar you are buffeted by the human white-noise of conversation and revelry. Ad-holos buzz softly from ceiling-mounted units, shining garish highlights through glasses and bottles as spacer crews mingle with merchants and locals trading drinks for rumor, jobs, and opportunities. Vulpoids dart from table to table, distributing drinks and occasionally thanking catcallers for the compliments.",,
 vulp_barInteractionPrompt,AddBarEvents,MarketHasCondition vulpoid_condition,"AddBarEvent vulp_barInteraction ""Talk to the Vulpoid"" ""One of the Vulpoids notices you, and quickly bounds up to see if you want anything.""",,,
-vulp_barInteraction,DialogOptionSelected,$option == vulp_barInteraction,ShowPersonVisual false vulpoid_nude_terran_generic,"""Hi $PlayerSirOrMadam! Can I get you something?""","vulp_barInteractionPet:Pet her
-backToBar:Dismiss her",
-vulp_barInteractionPet,DialogOptionSelected,$option == vulp_barInteractionPet,ShowImageVisual vulpoid_petting,,backToBar:Return to the bar,
+vulp_barInteraction,DialogOptionSelected,"$option == vulp_barInteraction
+!$printedFirstReturnGreeting","ShowPersonVisual false vulpoid_barmaid
+$printedFirstReturnGreeting = true 0
+FireAll VulpBarOption","""Hi $PlayerSirOrMadam! Can I get you something?""",,
+vulp_barInteraction2,DialogOptionSelected,"$option == vulp_barInteraction
+$printedFirstReturnGreeting","ShowPersonVisual false vulpoid_barmaid
+FireAll VulpBarOption","""Can I do anything else for you $PlayerSirOrMadam?""",,
+vulp_barInteractionPetOption,VulpBarOption,,,,vulp_barInteractionPet:Pet her,
+vulp_barInteractionSmoochOption,VulpBarOption,,,,vulp_barInteractionSmooch:Smooch her,
+bulp_barLeaveOption,VulpBarOption,,,,backToBar:Dismiss her,
+vulp_barInteractionPet,DialogOptionSelected,$option == vulp_barInteractionPet,ShowImageVisual vulpoid_petting,,vulp_barInteraction:Continue,
+vulp_barInteractionSmooch,DialogOptionSelected,$option == vulp_barInteractionSmooch,ShowImageVisual vulpoid_smooch,,vulp_barInteraction:Continue,
 ,,,,,,
+vulp_BarOwnColFreeDrink0,DialogOptionSelected,"$option == barOOCfreeDrink
+MarketHasCondition vulpoid_condition",$player.gotFreeDrinkFromOwnColony = true,"A Vulpoid barmaid appears by your side, a glass of what looks exactly like your favorite drink on a silver tray.
+
+""Compliments of the house!""","vulp_barOwnColFreeDrink0A:""Um. Thank you.""
+vulp_barOwnColFreeDrink0B:Take the drink
+vulp_barOwnColFreeDrink0C:""Don't I own 'the house'?""
+vulp_barOwnColFreeDrink0E:""No thanks. I'm, uh, not thirsty.""",
+vulp_BarOwnColFreeDrink0A,DialogOptionSelected,$option == vulp_barOwnColFreeDrink0A,BarCMD showOptions,The Vulpoid nods and strolls away. A sip reveals that it is perfectly to your taste.,,
+vulp_BarOwnColFreeDrink0B,DialogOptionSelected,$option == vulp_barOwnColFreeDrink0B,BarCMD showOptions,You take the drink and the Vulpoid strolls away. A sip reveals that it is perfectly to your taste.,,
+vulp_BarOwnColFreeDrink0C,DialogOptionSelected,$option == vulp_barOwnColFreeDrink0C,,"""Yeah, but you're really nice and let other people work here! And they wanted to thank you for letting them make this bar!""","vulp_barOwnColFreeDrink0A:""Thank you.""
+vulp_barOwnColFreeDrink0B:Take the drink
+vulp_barOwnColFreeDrink0D:""I wish to pay like any other customer. I insist.""
+vulp_barOwnColFreeDrink0E:""No thanks. I'm, uh, not thirsty.""",
+vulp_BarOwnColFreeDrink0D,DialogOptionSelected,$option == vulp_barOwnColFreeDrink0D,$player.ethosGenerous++,"""Wow, that's so nice of you! You're so awesome, I'm glad I get to work for you!""
+
+The Vulpoid gives you a quick hug, and strolls away. You examine the drink you just bought, then take a sip. It is, in a word, perfect.
+",barHRE_goToNormalBar:Return to the bar,
+vulp_BarOwnColFreeDrink0E,DialogOptionSelected,$option == vulp_barOwnColFreeDrink0E,,"The Vulpoid looks a little disappointed, but nods and strolls away.",barHRE_goToNormalBar:Look around the bar,
 ,,,,,,
 ,,,,,,
 ,,,,,,
@@ -228,16 +255,14 @@ $market.id != kazeron",FireAll PopulateOptions,$PersonRank $personLastName thank
 ,,,,,,
 vulp_RACA_init,RemoveAICoreAdmin,$market.vulpoidAdmin != null score:1000,,"You send the order to have the Vulpoid step down from command. Only a few moments later, your comm-link chimes with an incoming message.",vulp_RACA_init1:Continue,"For whatever reason, this first line does not have the person reference. Need to go a second line to do ShowPerson, $heOrShe, etc."
 vulp_RACA_init1,DialogOptionSelected,$option == vulp_RACA_init1,"FireAll RemoveVulpAdminOptions
-ShowVulpAdminCrying","""Hi $PlayerSirOrMadam, I just got a notification from you, and just… wanted to make sure everything was okay? I thought I was doing a good job, and… I'm just not sure why…""
-
-$HeOrShe seems to have gotten $himOrHerself worked up, and looks close to tears.",,
+ShowPersonVisual","""Hello $PlayerSirOrMadam, I just got a notification from you, and just… wanted to verify? I was under the impression I was handling things quite well here.""",,
 vulp_RACA_inspectionOption,RemoveVulpAdminOptions,MarketIsInspectionTarget,SetOptionColor vulp_RACA_inspection highlight,,"vulp_RACA_inspection:""There's a Hegemony inspection inbound.""",
 vulp_RACA_relocateOption,RemoveVulpAdminOptions,,,,"vulp_RACA_relocate:""You're being relocated to a different colony.""",
 vulp_RACA_directOrderOption,RemoveVulpAdminOptions,,,,"vulp_RACA_directOrder:""You heard me, that's an order.""",
 vulp_RACA_neverMindOption,RemoveVulpAdminOptions,,"SetShortcut vulp_RACA_neverMind ""ESCAPE""",,"vulp_RACA_neverMind:""I'm sorry, that was a mistake.""",
-vulp_RACA_inspection,DialogOptionSelected,$option == vulp_RACA_inspection,,"""What! Oh, no, I'm so sorry you're getting in trouble because of me! They don't send inspections unless they're confident, they'll be expecting to find me, they'll be so mad…""
+vulp_RACA_inspection,DialogOptionSelected,$option == vulp_RACA_inspection,,"That catches her off-guard.
 
-$HeOrShe pauses, taking a moment to calm $himOrHerself, before continuing.",vulp_RACA_inspection1:Continue,
+""Oh. That's bad. How did you even… never mind, you've got connections. Okay, priorities… A formal inspection is only launched when they've confident there's something to find.""",vulp_RACA_inspection1:Continue,
 vulp_RACA_inspection1,DialogOptionSelected,$option == vulp_RACA_inspection1,,"""If I leave, I can evade them. But there's no way to cover up that I've been working here. You'll get a lot more negative attention for it, and they'll probably disrupt a lot of our operations during their in-depth searches. By my estimates, it'd be upwards of six weeks before we can return to normal operating levels.""
 
 $HeOrShe has started slowly pacing as she considers options, and then pauses.
@@ -259,12 +284,12 @@ vulp_RACA_inspectionFight,DialogOptionSelected,$option == vulp_RACA_inspectionFi
 $HeOrShe gives you a nervous smile, straightens $himOrHerself up, and salutes.
 
 ""Burn bright, $PlayerSirOrMadam.""",vulp_RACA_cancel:Cut comm link,
-vulp_RACA_inspectionStay,DialogOptionSelected,$option == vulp_RACA_inspectionStay,,"$HeOrShe nods silently, and salutes.
+vulp_RACA_inspectionStay,DialogOptionSelected,$option == vulp_RACA_inspectionStay,ShowVulpAdminCrying,"$HeOrShe nods silently, and salutes.
 
 ""Goodbye, $PlayerSirOrMadam.""",vulp_RACA_cancel:Cut comm link,
-vulp_RACA_relocate,DialogOptionSelected,$option == vulp_RACA_relocate,,TODO,vulp_RACA_removeAdmin:Cut comm link,
-vulp_RACA_directOrder,DialogOptionSelected,$option == vulp_RACA_directOrder,,TODO,vulp_RACA_removeAdmin:Cut comm link,
-vulp_RACA_neverMind,DialogOptionSelected,$option == vulp_RACA_neverMind,ShowPersonVisual,"A wave of relief washes across $hisOrHer face, and you can see the tension leaving $hisOrHer body.
+vulp_RACA_relocate,DialogOptionSelected,$option == vulp_RACA_relocate,ShowVulpAdminCrying,TODO,vulp_RACA_removeAdmin:Cut comm link,
+vulp_RACA_directOrder,DialogOptionSelected,$option == vulp_RACA_directOrder,ShowVulpAdminCrying,TODO,vulp_RACA_removeAdmin:Cut comm link,
+vulp_RACA_neverMind,DialogOptionSelected,$option == vulp_RACA_neverMind,,"A wave of relief washes across $hisOrHer face, and you can see the tension leaving $hisOrHer body.
 
 ""Oh, you scared me! I was so worried I'd done something wrong, I'm glad it's alright. Just… you'll let me know if you ever want me to do something, right? I just want to make sure you're happy with everything I do!""",vulp_RACA_cancel:Cut comm link,
 vulp_RACA_removeAdmin,DialogOptionSelected,$option == vulp_RACA_removeAdmin,DismissDialog override,,,

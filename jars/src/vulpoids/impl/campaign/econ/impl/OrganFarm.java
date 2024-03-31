@@ -19,9 +19,15 @@ public class OrganFarm extends BaseIndustry {
         int size = market.getSize();
         demand(Commodities.ORGANICS, size + 1);
         demand(Commodities.FOOD, size);
-        supply(Commodities.ORGANS, size - 4);
+        if("organfarms".equals(getId())) {
+            supply(Commodities.ORGANS, size - 4);
+        } else if("biofacility".equals(getId())) {
+            supply(Commodities.ORGANS, size - 3);
+            supply(Commodities.DRUGS, size - 1);
+        }
+        
         Pair<String, Integer> deficit = getMaxDeficit(Commodities.ORGANICS, Commodities.FOOD);
-        applyDeficitToProduction(1, deficit, Commodities.ORGANS);
+        applyDeficitToProduction(1, deficit, Commodities.ORGANS, Commodities.DRUGS);
         if (!isFunctional()) {
             supply.clear();
         }
@@ -91,7 +97,7 @@ public class OrganFarm extends BaseIndustry {
         if (isBiofacilityVulpBiofactory()) {
             return "The pinnacle of Exodyne Biotech's aspirations for the Sector. With a bioforge at its heart, "+
                     "this sleek and advanced megacomplex is capable of producing an endless flow of fluffy friends, "+
-                    "all without compromising its baseline production levels.";
+                    "all without compromising its baseline production levels of assorted biological goods.";
         }
         if (isBiofacilityAndNotUnlocked()) {
             return "Without Domain-era technology, this is advanced as is possible in the Sector.";
@@ -109,11 +115,15 @@ public class OrganFarm extends BaseIndustry {
     protected void applyImproveModifiers() {
         if (isImproved()) {
             getSupply(Commodities.ORGANS).getQuantity().modifyFlat(getModId(3), 1, getImprovementsDescForModifiers() + " (" + getNameForModifier() + ")");
+            if ("biofacility".equals(getId())) {
+                getSupply(Commodities.DRUGS).getQuantity().modifyFlat(getModId(3), 1, getImprovementsDescForModifiers() + " (" + getNameForModifier() + ")");
+            }
             if (hasBiofactory()) {
                 getSupply("vulpoids").getQuantity().modifyFlat(getModId(3), 1, getImprovementsDescForModifiers() + " (" + getNameForModifier() + ")");
             }
         } else {
             getSupply(Commodities.ORGANS).getQuantity().unmodifyFlat(getModId(3));
+            getSupply(Commodities.DRUGS).getQuantity().unmodifyFlat(getModId(3));
             getSupply("vulpoids").getQuantity().unmodifyFlat(getModId(3));
         }
     }

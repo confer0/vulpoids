@@ -18,6 +18,7 @@ import com.fs.starfarer.api.characters.FullName;
 import com.fs.starfarer.api.characters.ImportantPeopleAPI;
 import com.fs.starfarer.api.characters.PersonAPI;
 import com.fs.starfarer.api.impl.campaign.ids.Commodities;
+import com.fs.starfarer.api.impl.campaign.ids.Factions;
 import com.fs.starfarer.api.impl.campaign.ids.Submarkets;
 import vulpoids.campaign.VulpoidsCampaignPlugin;
 import vulpoids.impl.campaign.intel.misc.ShinyProducedIntel;
@@ -31,86 +32,107 @@ public class VulpoidModPlugin extends BaseModPlugin {
         
         
         ImportantPeopleAPI ip = Global.getSector().getImportantPeople();
-        if(ip.getPerson("vulpoid_shiny_generic") == null) {
-            PersonAPI person = Global.getFactory().createPerson();
-            person.setId("vulpoid_shiny_generic");
-            person.setName(new FullName("Prefecto Vulpoid", "", FullName.Gender.FEMALE));
-            person.setRankId(null);
-            person.setPostId(null);
-            person.getRelToPlayer().setRel(1);
-            person.setPortraitSprite("graphics/portraits/terran_fox.png");
-            ip.addPerson(person);
-        }
-        if(ip.getPerson("vulpoid_desert_generic") == null) {
-            PersonAPI person = Global.getFactory().createPerson();
-            person.setId("vulpoid_desert_generic");
-            person.setName(new FullName("Vulpoid", "", FullName.Gender.FEMALE));
-            person.setRankId(null);
-            person.setPostId(null);
-            person.getRelToPlayer().setRel(1);
-            person.setPortraitSprite("graphics/portraits/desert_fox.png");
-            ip.addPerson(person);
-        }
-        if(ip.getPerson("vulpoid_terran_generic") == null) {
-            PersonAPI person = Global.getFactory().createPerson();
-            person.setId("vulpoid_terran_generic");
-            person.setName(new FullName("Vulpoid", "", FullName.Gender.FEMALE));
-            person.setRankId(null);
-            person.setPostId(null);
-            person.getRelToPlayer().setRel(1);
-            person.setPortraitSprite("graphics/portraits/terran_fox.png");
-            ip.addPerson(person);
-        }
-        if(ip.getPerson("vulpoid_winter_generic") == null) {
-            PersonAPI person = Global.getFactory().createPerson();
-            person.setId("vulpoid_winter_generic");
-            person.setName(new FullName("Vulpoid", "", FullName.Gender.FEMALE));
-            person.setRankId(null);
-            person.setPostId(null);
-            person.getRelToPlayer().setRel(1);
-            person.setPortraitSprite("graphics/portraits/winter_fox.png");
-            ip.addPerson(person);
-        }
-        if(ip.getPerson("vulpoid_space_desert_generic") == null) {
-            PersonAPI person = Global.getFactory().createPerson();
-            person.setId("vulpoid_space_desert_generic");
-            person.setName(new FullName("Vulpoid", "", FullName.Gender.FEMALE));
-            person.setRankId(null);
-            person.setPostId(null);
-            person.getRelToPlayer().setRel(1);
-            person.setPortraitSprite("graphics/portraits/space_desert_fox.png");
-            ip.addPerson(person);
-        }
-        if(ip.getPerson("vulpoid_space_terran_generic") == null) {
-            PersonAPI person = Global.getFactory().createPerson();
-            person.setId("vulpoid_space_terran_generic");
-            person.setName(new FullName("Vulpoid", "", FullName.Gender.FEMALE));
-            person.setRankId(null);
-            person.setPostId(null);
-            person.getRelToPlayer().setRel(1);
-            person.setPortraitSprite("graphics/portraits/space_terran_fox.png");
-            ip.addPerson(person);
-        }
-        if(ip.getPerson("vulpoid_space_winter_generic") == null) {
-            PersonAPI person = Global.getFactory().createPerson();
-            person.setId("vulpoid_space_winter_generic");
-            person.setName(new FullName("Vulpoid", "", FullName.Gender.FEMALE));
-            person.setRankId(null);
-            person.setPostId(null);
-            person.getRelToPlayer().setRel(1);
-            person.setPortraitSprite("graphics/portraits/space_winter_fox.png");
-            ip.addPerson(person);
-        }
-        if(ip.getPerson("vulpoid_nude_terran_generic") == null) {
-            PersonAPI person = Global.getFactory().createPerson();
-            person.setId("vulpoid_nude_terran_generic");
-            person.setName(new FullName("Vulpoid", "", FullName.Gender.FEMALE));
-            person.setRankId(null);
-            person.setPostId(null);
-            person.getRelToPlayer().setRel(1);
-            person.setPortraitSprite("graphics/portraits/nude_terran_fox.png");
-            ip.addPerson(person);
-        }
+        PersonAPI person;
+        
+        person = Global.getFactory().createPerson();
+        person.setId("vulpoid_shiny_generic");
+        person.setFaction(Factions.PLAYER);
+        person.setName(new FullName("Prefecto Vulpoid", "", FullName.Gender.FEMALE));
+        person.setRankId("vulp_servant");
+        person.setPostId(null);
+        person.getRelToPlayer().setRel(1);
+        person.setPortraitSprite("graphics/portraits/terran_fox.png");
+        ip.removePerson(person.getId());
+        ip.addPerson(person);
+        
+        person = Global.getFactory().createPerson();
+        person.setId("vulpoid_desert_generic");
+        person.setFaction(Factions.PLAYER);
+        person.setName(new FullName("Vulpoid", "", FullName.Gender.FEMALE));
+        person.setRankId("vulp_servant");
+        person.setPostId(null);
+        person.getRelToPlayer().setRel(1);
+        person.setPortraitSprite("graphics/portraits/desert_fox.png");
+        ip.removePerson(person.getId());
+        ip.addPerson(person);
+        
+        person = Global.getFactory().createPerson();
+        person.setId("vulpoid_terran_generic");
+        person.setFaction(Factions.PLAYER);
+        person.setName(new FullName("Vulpoid", "", FullName.Gender.FEMALE));
+        person.setRankId("vulp_servant");
+        person.setPostId(null);
+        person.getRelToPlayer().setRel(1);
+        person.setPortraitSprite("graphics/portraits/terran_fox.png");
+        ip.removePerson(person.getId());
+        ip.addPerson(person);
+        
+        person = Global.getFactory().createPerson();
+        person.setId("vulpoid_winter_generic");
+        person.setFaction(Factions.PLAYER);
+        person.setName(new FullName("Vulpoid", "", FullName.Gender.FEMALE));
+        person.setRankId("vulp_servant");
+        person.setPostId(null);
+        person.getRelToPlayer().setRel(1);
+        person.setPortraitSprite("graphics/portraits/winter_fox.png");
+        ip.removePerson(person.getId());
+        ip.addPerson(person);
+        
+        person = Global.getFactory().createPerson();
+        person.setId("vulpoid_space_desert_generic");
+        person.setFaction(Factions.PLAYER);
+        person.setName(new FullName("Vulpoid", "", FullName.Gender.FEMALE));
+        person.setRankId("vulp_servant");
+        person.setPostId(null);
+        person.getRelToPlayer().setRel(1);
+        person.setPortraitSprite("graphics/portraits/space_desert_fox.png");
+        ip.removePerson(person.getId());
+        ip.addPerson(person);
+        
+        person = Global.getFactory().createPerson();
+        person.setId("vulpoid_space_terran_generic");
+        person.setFaction(Factions.PLAYER);
+        person.setName(new FullName("Vulpoid", "", FullName.Gender.FEMALE));
+        person.setRankId("vulp_servant");
+        person.setPostId(null);
+        person.getRelToPlayer().setRel(1);
+        person.setPortraitSprite("graphics/portraits/space_terran_fox.png");
+        ip.removePerson(person.getId());
+        ip.addPerson(person);
+        
+        person = Global.getFactory().createPerson();
+        person.setId("vulpoid_space_winter_generic");
+        person.setFaction(Factions.PLAYER);
+        person.setName(new FullName("Vulpoid", "", FullName.Gender.FEMALE));
+        person.setRankId("vulp_servant");
+        person.setPostId(null);
+        person.getRelToPlayer().setRel(1);
+        person.setPortraitSprite("graphics/portraits/space_winter_fox.png");
+        ip.removePerson(person.getId());
+        ip.addPerson(person);
+        
+        person = Global.getFactory().createPerson();
+        person.setId("vulpoid_nude_terran_generic");
+        person.setFaction(Factions.PLAYER);
+        person.setName(new FullName("Vulpoid", "", FullName.Gender.FEMALE));
+        person.setRankId("vulp_servant");
+        person.setPostId(null);
+        person.getRelToPlayer().setRel(1);
+        person.setPortraitSprite("graphics/portraits/nude_terran_fox.png");
+        ip.removePerson(person.getId());
+        ip.addPerson(person);
+        
+        person = Global.getFactory().createPerson();
+        person.setId("vulpoid_barmaid");
+        person.setFaction(Factions.PLAYER);
+        person.setName(new FullName("Vulpoid", "", FullName.Gender.FEMALE));
+        person.setRankId("vulp_servant");
+        person.setPostId("vulp_barmaid");
+        person.getRelToPlayer().setRel(1);
+        person.setPortraitSprite("graphics/portraits/nude_terran_fox.png");
+        ip.removePerson(person.getId());
+        ip.addPerson(person);
+        
         
 
         final int VULPOID_PROD_AMOUNT = 3;
@@ -130,7 +152,9 @@ public class VulpoidModPlugin extends BaseModPlugin {
                 industry.getMarket().addCondition("vulpoid_condition");
                 if (industry instanceof BaseIndustry) {
                     BaseIndustry b = (BaseIndustry) industry;
-                    b.supply(spec.getId(), Commodities.ORGANS, -100, Misc.ucFirst(spec.getName().toLowerCase()));
+                    if("organfarm".equals(b.getId())) {
+                        b.supply(spec.getId(), Commodities.ORGANS, -100, Misc.ucFirst(spec.getName().toLowerCase()));
+                    }
                     b.supply(spec.getId(), "vulpoids", VULPOID_PROD_AMOUNT, Misc.ucFirst(spec.getName().toLowerCase()));
                 
                     int supplied_amount = b.getSupply("vulpoids").getQuantity().getModifiedInt();
@@ -150,24 +174,18 @@ public class VulpoidModPlugin extends BaseModPlugin {
                     
                     // Checks that the tags are set, only false when installed for the first time.
                     if(industry.getMarket().getMemoryWithoutUpdate().contains(VULPOID_LAST_UNAPPLY_TIMESTAMP_KEY)) {
-                        // This code is to check that we applied before we last unapplied.
-                        // That means that the item is still installed.
                         int production_volume = industry.getMarket().getMemoryWithoutUpdate().getInt(VULPOID_PRODUCTION_VOLUME_KEY);
                         if(production_volume > 0) {
                             float time_elapsed = Global.getSector().getClock().getElapsedDaysSince(industry.getMarket().getMemoryWithoutUpdate().getLong(VULPOID_LAST_UNAPPLY_TIMESTAMP_KEY));
                             
-                            //float vulpoid_buffer = industry.getMarket().getMemoryWithoutUpdate().getFloat(VULPOID_PRODUCTION_BUFFER_KEY);
-                            //vulpoid_buffer += time_elapsed * VULPOIDS_PER_DAY_PER_PROD * production_volume;
                             float vulpoid_shiny_buffer = industry.getMarket().getMemoryWithoutUpdate().getFloat(VULPOID_SHINY_PRODUCTION_BUFFER_KEY);
                             vulpoid_shiny_buffer += time_elapsed * VULPOIDS_SHINY_PER_DAY_PER_PROD * production_volume;
                             
-                            //b.getMarket().getSubmarket(Submarkets.SUBMARKET_STORAGE).getCargo().addCommodity("vulpoids", (int)vulpoid_buffer);
                             if (vulpoid_shiny_buffer >= 1) {
                                 b.getMarket().getSubmarket(Submarkets.SUBMARKET_STORAGE).getCargo().addCommodity("vulpoids_shiny", (int)vulpoid_shiny_buffer);
                                 Global.getSector().getIntelManager().addIntel(new ShinyProducedIntel(b.getMarket()));
                             }
                             
-                            //industry.getMarket().getMemoryWithoutUpdate().set(VULPOID_PRODUCTION_BUFFER_KEY, vulpoid_buffer - (int)vulpoid_buffer);
                             industry.getMarket().getMemoryWithoutUpdate().set(VULPOID_SHINY_PRODUCTION_BUFFER_KEY, vulpoid_shiny_buffer - (int)vulpoid_shiny_buffer);
                         }
                     }
