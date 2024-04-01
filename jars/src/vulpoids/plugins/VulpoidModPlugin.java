@@ -36,12 +36,12 @@ public class VulpoidModPlugin extends BaseModPlugin {
         ImportantPeopleAPI ip = Global.getSector().getImportantPeople();
         PersonAPI person;
         
-        if (ip.getPerson("vulpoid_captain_biped") == null) {
+        if (ip.getPerson("vulpoid_captain") == null) {
             person = VulpoidCreator.createVulpoid(null);
-            person.setId("vulpoid_captain_biped");
-            person.setFaction(Factions.NEUTRAL);
+            person.setId("vulpoid_captain");
+            person.setFaction(Factions.DERELICT);
             person.setName(new FullName("Biped Captain", "", FullName.Gender.FEMALE));
-            person.setRankId("null");
+            person.setRankId(null);
             person.setPostId(Ranks.POST_FLEET_COMMANDER);
             person.getRelToPlayer().setRel(-0.3f);  // Inhospitable by default. Frankly, if she weren't a Vulpoid she'd be much angrier at you for blowing up her ship.
             person.setPortraitSprite("graphics/portraits/terran_fox.png");
