@@ -1,7 +1,6 @@
 package vulpoids.impl.campaign.missions;
 
 import com.fs.starfarer.api.Global;
-import com.fs.starfarer.api.campaign.AICoreOfficerPlugin;
 import com.fs.starfarer.api.campaign.BattleAPI;
 import com.fs.starfarer.api.campaign.CampaignEventListener;
 import com.fs.starfarer.api.campaign.CampaignFleetAPI;
@@ -10,7 +9,6 @@ import com.fs.starfarer.api.campaign.CustomCampaignEntityAPI;
 import com.fs.starfarer.api.campaign.InteractionDialogAPI;
 import com.fs.starfarer.api.campaign.PlanetAPI;
 import com.fs.starfarer.api.campaign.SectorEntityToken;
-import com.fs.starfarer.api.campaign.SpecialItemData;
 import com.fs.starfarer.api.campaign.StarSystemAPI;
 import java.awt.Color;
 
@@ -28,21 +26,16 @@ import com.fs.starfarer.api.impl.campaign.FleetInteractionDialogPluginImpl.BaseF
 import com.fs.starfarer.api.impl.campaign.FleetInteractionDialogPluginImpl.FIDConfig;
 import com.fs.starfarer.api.impl.campaign.FleetInteractionDialogPluginImpl.FIDConfigGen;
 import com.fs.starfarer.api.impl.campaign.RuleBasedInteractionDialogPluginImpl;
-import com.fs.starfarer.api.impl.campaign.ids.Commodities;
 import com.fs.starfarer.api.impl.campaign.ids.Entities;
 import com.fs.starfarer.api.impl.campaign.ids.Factions;
 import com.fs.starfarer.api.impl.campaign.ids.FleetTypes;
-import com.fs.starfarer.api.impl.campaign.ids.HullMods;
 import com.fs.starfarer.api.impl.campaign.ids.MemFlags;
-import com.fs.starfarer.api.impl.campaign.ids.People;
 import com.fs.starfarer.api.impl.campaign.ids.Ranks;
 import com.fs.starfarer.api.impl.campaign.ids.Skills;
 import com.fs.starfarer.api.impl.campaign.ids.Tags;
-import com.fs.starfarer.api.impl.campaign.missions.academy.GABaseMission;
 import com.fs.starfarer.api.impl.campaign.missions.cb.CustomBountyCreator.CustomBountyData;
 import com.fs.starfarer.api.impl.campaign.missions.hub.HubMissionWithSearch;
 import com.fs.starfarer.api.impl.campaign.missions.hub.ReqMode;
-import com.fs.starfarer.api.impl.campaign.procgen.SalvageEntityGenDataSpec.DropData;
 import com.fs.starfarer.api.impl.campaign.procgen.themes.BaseThemeGenerator;
 import com.fs.starfarer.api.impl.campaign.procgen.themes.RemnantSeededFleetManager.RemnantFleetInteractionConfigGen;
 import com.fs.starfarer.api.impl.campaign.rulecmd.salvage.special.ShipRecoverySpecial.PerShipData;
@@ -54,7 +47,6 @@ import com.fs.starfarer.api.ui.TooltipMakerAPI;
 import com.fs.starfarer.api.util.Misc;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import vulpoids.impl.campaign.VulpoidCreator;
 
 public class VulpoidBiofactoryMission extends HubMissionWithSearch implements FleetEventListener {
@@ -151,7 +143,8 @@ public class VulpoidBiofactoryMission extends HubMissionWithSearch implements Fl
         //mission.setIconName("campaignMissions", "derelict_bounty");
 
         //mission.requireSystem(this);
-        requireSystemTags(ReqMode.NOT_ANY, Tags.THEME_CORE);
+        requireSystemTags(ReqMode.NOT_ANY, Tags.THEME_CORE, Tags.THEME_SPECIAL, Tags.HAS_CORONAL_TAP);
+        preferSystemTags(ReqMode.NOT_ANY, Tags.THEME_REMNANT);
         requireSystemNotHasPulsar();
         //preferSystemBlackHoleOrNebula();
         preferSystemOnFringeOfSector();
@@ -184,11 +177,12 @@ public class VulpoidBiofactoryMission extends HubMissionWithSearch implements Fl
 
         beginStageTrigger(Stage.ACTIVE);
         triggerCreateFleet(size, quality, Factions.REMNANTS, FleetTypes.PATROL_LARGE, data.system);
-        triggerSetFleetOfficers(oNum, oQuality);
+        //triggerSetFleetOfficers(oNum, oQuality);
         triggerAutoAdjustFleetSize(size, size.next());
         triggerSetRemnantConfigActive();
-        triggerSetFleetFaction(Factions.DERELICT);
-        triggerFleetSetName("Automated Colonial Fleet");
+        triggerSetFleetFaction(Factions.REMNANTS);
+        triggerFleetSetNoFactionInName();
+        triggerFleetSetName("Abnormal Automated Fleet");
         triggerFleetAddTags(Tags.NEUTRINO_HIGH);
         triggerFleetAddCommanderSkill(Skills.DERELICT_CONTINGENT, 1);
         //triggerMakeHostileAndAggressive();
@@ -203,7 +197,7 @@ public class VulpoidBiofactoryMission extends HubMissionWithSearch implements Fl
         //triggerPickLocationAtInSystemJumpPoint(data.system);
         triggerPickLocationAroundEntity(planet, 0f);
         triggerSpawnFleetAtPickedLocation(null, null);
-        triggerFleetSetPatrolActionText("awaiting authorization codes");
+        triggerFleetSetPatrolActionText("waiting for contact");
         //triggerOrderFleetPatrol(data.system, true, Tags.JUMP_POINT, Tags.NEUTRINO, Tags.NEUTRINO_HIGH, Tags.GAS_GIANT);
         triggerOrderFleetPatrol(data.system, false, planet);
 
@@ -228,10 +222,10 @@ public class VulpoidBiofactoryMission extends HubMissionWithSearch implements Fl
         flagship_captain.setRankId(null);
         flagship_captain.setPostId(Ranks.POST_FLEET_COMMANDER);
         flagship_captain.getRelToPlayer().setRel(-0.1f);
-        flagship_captain.getStats().setSkipRefresh(true);
-        flagship_captain.getStats().setSkillLevel(Skills.CARRIER_GROUP, 1);
-        flagship_captain.getStats().setSkillLevel(Skills.FIGHTER_UPLINK, 1);
-        flagship_captain.getStats().setSkipRefresh(false);
+        //flagship_captain.getStats().setSkipRefresh(true);
+        //flagship_captain.getStats().setSkillLevel(Skills.CARRIER_GROUP, 1);
+        //flagship_captain.getStats().setSkillLevel(Skills.FIGHTER_UPLINK, 1);
+        //flagship_captain.getStats().setSkipRefresh(false);
         
         member.setCaptain(flagship_captain);
         ShipVariantAPI v = member.getVariant().clone();
@@ -325,7 +319,7 @@ public class VulpoidBiofactoryMission extends HubMissionWithSearch implements Fl
                     CustomCampaignEntityAPI entity = (CustomCampaignEntityAPI) BaseThemeGenerator.addSalvageEntity(
                             fleet.getContainingLocation(),
                             Entities.WRECK, Factions.NEUTRAL, params);
-                    Misc.makeImportant(entity, "ziggurat");
+                    Misc.makeImportant(entity, "vulpFactoryShip");
                     entity.getMemoryWithoutUpdate().set("$vulpFactoryShip", true);
 
                     entity.getLocation().x = fleet.getLocation().x + (50f - (float) Math.random() * 100f);
@@ -339,7 +333,7 @@ public class VulpoidBiofactoryMission extends HubMissionWithSearch implements Fl
                     copy.variant = Global.getSettings().getVariant(copy.variantId).clone();
                     copy.variantId = null;
                     copy.variant.addTag(Tags.SHIP_CAN_NOT_SCUTTLE);
-                    copy.variant.addTag(Tags.SHIP_UNIQUE_SIGNATURE);
+                    //copy.variant.addTag(Tags.SHIP_UNIQUE_SIGNATURE);
                     data.addShip(copy);
 
                     Misc.setSalvageSpecial(entity, data);
@@ -372,12 +366,14 @@ public class VulpoidBiofactoryMission extends HubMissionWithSearch implements Fl
         Color h = Misc.getHighlightColor();
         if (currentStage == Stage.ACTIVE) {
             if (data.system != null) {
-                info.addPara("The target is located in the " + data.system.getNameWithLowercaseType() + ".", opad);
+                info.addPara("You've been informed of an AI dronefleet that allegedly showed unusual behaviour. You've been tasked to eliminate it.", opad);
+                info.addPara("The fleet was reported to be in the " + data.system.getNameWithLowercaseType() + ".", opad);
             }
             //creator.addFleetDescription(info, width, height, this, data);
         } else if (currentStage == Stage.BEATFLEET) {
             if (data.system != null) {
-                info.addPara("TODO The target is located in the " + data.system.getNameWithLowercaseType() + ".", opad);
+                info.addPara("The fleet has been defeated, but the wreck of the unusual ship has yet to be searched. It may hold answers, or valuable Domain-era artifacts.", opad);
+                info.addPara("The derelict is located in the " + data.system.getNameWithLowercaseType() + ".", opad);
             }
             //creator.addFleetDescription(info, width, height, this, data);
         }
@@ -389,14 +385,14 @@ public class VulpoidBiofactoryMission extends HubMissionWithSearch implements Fl
         if (currentStage == Stage.ACTIVE) {
             if (data.system != null) {
                 if (data.system != null) {
-                    info.addPara("Target is in the " + data.system.getNameWithLowercaseTypeShort() + "", tc, pad);
+                    info.addPara("Target fleet is in the " + data.system.getNameWithLowercaseTypeShort() + ".", tc, pad);
 		}
                 return true;
             }
         } else if (currentStage == Stage.BEATFLEET) {
             if (data.system != null) {
                 if (data.system != null) {
-                    info.addPara("TODO Target is in the " + data.system.getNameWithLowercaseTypeShort() + "", tc, pad);
+                    info.addPara("Board the derelict vessel in the " + data.system.getNameWithLowercaseTypeShort() + ".", tc, pad);
 		}
                 return true;
             }
@@ -411,7 +407,7 @@ public class VulpoidBiofactoryMission extends HubMissionWithSearch implements Fl
 
     @Override
     public String getBaseName() {
-        return "Find the Biofactory";
+        return "A Foxy Fleet";
     }
 
     @Override
