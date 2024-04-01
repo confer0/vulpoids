@@ -3,7 +3,7 @@ id,trigger,conditions,script,text,options,notes
 vulp_exampleBarEventOption,AddBarEvents,"!$market.isHidden
 !$global.vulp_gotFactoryMission","AddBarEvent vulp_findFactory_barEvent  ""Start the example bar event"" ""A large, red button labelled with the word Vulpoids is sitting in the middle of the room."" highlight",,,
 vulp_findFactory_barEvent,DialogOptionSelected,"$option == vulp_findFactory_barEvent 
-GenGAIntroAcademician",,"""There's stories of a ghost fleet that lurks around a habitable world. It's been there as long as anyone can remember. Legend says it's a fleet that was in the Gate network during the Collapse, cursed to forever haunt their destination.""","vulp_findFactory_barEvent1:""Go on…""",
+GenGAIntroAcademician",,"""There's stories of a ghost fleet that lurks around a habitable world. It's been there as long as anyone can remember. Legend says it's a fleet that was in the Gate network during the Collapse, cursed to forever haunt their destination.""","vulp_findFactory_barEvent1:""Go on...""",
 vulp_findFactory_barEvent1,DialogOptionSelected,$option == vulp_findFactory_barEvent1,"$global.vulp_gotFactoryMission = true
 BeginMission vulpFactory","""Anyway here's the exact coordinates of the fleet, on account of this mission being only partly completed!""",backToBar:Return to the bar,
 ,,,,,,
@@ -118,7 +118,7 @@ vulp_exploreWreckFEContinueOption,VulpWreckFirstEncounter,,,,vulp_exploreWreck3:
 vulp_exploreWreckFEPhysiology,DialogOptionSelected,$option == vulp_exploreWreckFEPhysiology,"SetImportantName vulpoid_nude_terran_generic ""File Photo""
 ShowPersonVisual true vulpoid_nude_terran_generic","The bipeds are apparently mammals, bearing a resemblance to both humans, and Old Earth foxes. Their limb and hand structure is near identical to that of a human, too close to be convergent evolution. It's almost certain that they were designed by a human organization with significant bioengineering capabilities, probably pre-Collapse or immediately post-Collapse at the latest.
 
-You skim through the rest of the report. ""low-medium muscle strength"", ""medium-low bone density"", ""likely high sensory acuity"", ""indications of efficient metabolism""… The report avoids coming to any conclusions, but notes that they're not optimally designed to serve as spacecraft crew.",vulp_exploreWreckFirstEncounterHubReturn:Continue,
+You skim through the rest of the report. ""low-medium muscle strength"", ""medium-low bone density"", ""likely high sensory acuity"", ""indications of efficient metabolism""... The report avoids coming to any conclusions, but notes that they're not optimally designed to serve as spacecraft crew.",vulp_exploreWreckFirstEncounterHubReturn:Continue,
 vulp_exploreWreckFECognition,DialogOptionSelected,$option == vulp_exploreWreckFECognition ,"SetImportantName vulpoid_nude_terran_generic ""File Photo""
 ShowPersonVisual true vulpoid_nude_terran_generic","Based on initial observations, it's suspected that the bipeds have a below-human intelligence. A review of their observed memory and decision-making capabilities suggests a large cognitive deficit, with only their language skills reaching the level of an adult human.
 
@@ -186,6 +186,7 @@ $option = vulp_interrogationHub
 FireBest DialogOptionSelected ",,,
 vulp_interrogationNameFluffy2,DialogOptionSelected,$option == vulp_interrogationNameFluffy2,"AdjustRepPerson vulpoid_captain VENGEFUL -5
 $player.ethosSarcastic++
+$saidFluffy2 = true
 SetImportantName vulpoid_captain ""'Fluffy'""","Scowl, and no tail wag. Apparently it's not as funny the second time.",vulp_interrogationHub:Continue,
 vulp_interrogationNameInsistCode,DialogOptionSelected,$option == vulp_interrogationNameInsistCode,"SetImportantName vulpoid_captain ""V/P-RLR-001""","Your offer appears to catch her off guard.
 
@@ -196,9 +197,12 @@ SetImportantName vulpoid_captain ""Laisa""","She stares you down for a moment, d
 
 ""Well, you've called my bluff! You're sharper than you look. But really, I do prefer Laisa.""",vulp_interrogationHub:Continue,
 ,,,,,,
-vulp_interrogationHub,DialogOptionSelected,$option == vulp_interrogationHub,FireAll VulpInterrogationHubOptions,"""Now, I'm sure you have questions. I'm not in much of a position to refuse them, so… ask away.""",,
+vulp_interrogationHub,DialogOptionSelected,$option == vulp_interrogationHub,FireAll VulpInterrogationHubOptions,"""Now, I'm sure you have questions. I'm not in much of a position to refuse them, so... ask away.""",,
 vulp_interrogationHubVulpoidsOption,VulpInterrogationHubOptions,!$askedVulpoids,,,"vulp_interrogationHubVulpoids:""What are Vulpoids?""",
 vulp_interrogationHubPrefectoOption,VulpInterrogationHubOptions,!$askedPrefecto,,,"vulp_interrogationHubPrefecto:""What is a Prefecto Vulpoid?""",
+vulp_interrogationHubHelpfulOption,VulpInterrogationHubOptions,"$askedVulpoids
+$askedPrefecto
+!$askedHelpful",,,"vulp_interrogationHubHelpful:""Do Prefecto Vulpoids also like humans?""",
 vulp_interrogationHubShipOption,VulpInterrogationHubOptions,!$askedShip,,,"vulp_interrogationHubShip:""What is this ship?""",
 vulp_interrogationHubResearchOption,VulpInterrogationHubOptions,"$askedShip
 !$askedResearch",,,"vulp_interrogationHubResearch:""What were they researching?""",
@@ -220,6 +224,34 @@ FireAll VulpInterrogationHubOptions","She perks up at this question, excited for
 She seems proud of this fact. She is definitely unaware of the current public perception of AI.
 
 ""Anyway, the researchers could never pin down what made it survivable. I suggested charisma, but they didn't like how high I ranked on the metric I proposed. So we've stayed as a purely experimental side-product.""",,
+vulp_interrogationHubHelpful,DialogOptionSelected,$option == vulp_interrogationHubHelpful,"$askedHelpful = true
+FireAll VulpInterrogationHubHelpfulHubOptions","""No! Well, technically yes. But unlike the simpler ones, I can recognize that the feelings are artificial. I'm more than capable of overcoming my baser instincts.""
+
+She is not able to maintain eye contact while saying this.",,
+vulp_interrogationHubHelpfulNowOption,VulpInterrogationHubHelpfulHubOptions,!$askedHelpfulNow,,,"vulp_interrogationHubHelpfulNow:""You're being fairly helpful right now.""",
+vulp_interrogationHubHelpfulDislikeOption,VulpInterrogationHubHelpfulHubOptions,!$askedHelpfulDislike,,,"vulp_interrogationHubHelpfulDislike:""So, you don't like humans?""",
+vulp_interrogationHubHelpfulLikeYouOption,VulpInterrogationHubHelpfulHubOptions,!$askedHelpfulLikeYou,,,"vulp_interrogationHubHelpfulLikeYou:""If it helps, I like you.""",
+,VulpInterrogationHubHelpfulHubOptions,,,,,
+vulp_interrogationHubHelpfulEndOption,VulpInterrogationHubHelpfulHubOptions,,,,"vulp_interrogationHubHelpfulEnd:""Let's change the subject.""",
+vulp_interrogationHubHelpfulNow,DialogOptionSelected,$option == vulp_interrogationHubHelpfulNow,"$askedHelpfulNow = true
+FireAll VulpInterrogationHubHelpfulHubOptions","""Because you've got me imprisoned, not because I like you!"" she defends.
+
+She still can't keep eye contact.",,
+vulp_interrogationHubHelpfulDislike,DialogOptionSelected,$option == vulp_interrogationHubHelpfulDislike,"$askedHelpfulDislike = true
+FireAll VulpInterrogationHubHelpfulHubFluffyBlurb
+FireAll VulpInterrogationHubHelpfulHubOptions","""No, it's... more complicated than that. Hm. What's a way to present this that's simple enough for a human to understand...?""
+
+""For me, interacting with humans is like eating unhealthy food. My body enjoys it because of an instinct, meant for an animal intellect. But I'm intelligent enough to recognize that the instinct is flawed. And with willpower, I can overcome it.""",,
+vulp_interrogationHubHelpfulDislike_fluffy,VulpInterrogationHubHelpfulHubFluffyBlurb,$saidFluffy2,,"""Unlike you, apparently.""
+
+Apparently 'Fluffy' hasn't forgotten your earlier comments.",,
+vulp_interrogationHubHelpfulLikeYou,DialogOptionSelected,$option == vulp_interrogationHubHelpfulLikeYou,"$askedHelpfulLikeYou = true
+AdjustRepPerson vulpoid_captain COOPERATIVE 5
+FireAll VulpInterrogationHubHelpfulHubOptions","She blushes strongly at this. Vulpoids must be intentionally designed to blush through their fur.
+
+""W-well, it's only natural that you would. Really, what's not to like? Intelligent, attractive, all the things your silly little human brain loves.""",,
+vulp_interrogationHubHelpfulEnd,DialogOptionSelected,$option == vulp_interrogationHubHelpfulEnd,FireAll VulpInterrogationHubOptions,,,
+,,,,,,
 vulp_interrogationHubShip,DialogOptionSelected,$option == vulp_interrogationHubShip,"$askedShip = true
 FireAll VulpInterrogationHubOptions","""Ah, never seen a hull like this? We got an early model on lease from Tri-Tachyon, along with that Space Defense System that you so kindly blew up. It's a Citadel-class, meant for ultra-rich folks who live deep enough in the Orion arm that not even money can buy land on planets. It's so heavily automated that it can fly with nothing more than the bridge crew - or in my case, one person smart enough to do all their jobs at once!""
 
@@ -227,16 +259,18 @@ FireAll VulpInterrogationHubOptions","""Ah, never seen a hull like this? We got 
 vulp_interrogationHubResearch,DialogOptionSelected,$option == vulp_interrogationHubResearch,"$askedResearch = true
 FireAll VulpInterrogationHubOptions","She gives a shrug.
 
-""Mostly the finer details of how the deep-space setting affects bioprinting when high-grade environmental controls are available. Don't remember most of the specifics, it's been a long time and they didn't leave their notes.""",,
+""Mostly the finer details of how the deep-space setting affects bioprinting under next-gen environmental control systems. Don't remember most of the specifics, it's been a long time and they didn't leave their notes.""",,
 vulp_interrogationHubAbandoned,DialogOptionSelected,$option == vulp_interrogationHubAbandoned,"$askedAbandoned = true
 FireAll VulpInterrogationHubOptions","""They left.""
 
 She looks innocently at you, as though this fully answers your question.
 
-""Okay, so I don't know how good your history is, but a bit over 200 cycles ago the whole Gate network threw a fit. Big thing. Exodyne called for all personnel to regroup on Tartessus, but jumping into hyperspace would have completely ruined our experiments. So they told me I was in charge, that they'd be right back, and then left. My working assumption is that they didn't know how to navigate in hyperspace without an AI helping them, and flew into a black hole. So now nobody knows they left me here.""",,
-vulp_interrogationHubAge,DialogOptionSelected,$option == vulp_interrogationHubAge,$askedAge = true,"This question earns you a finely-fanged grin.
+""Okay, so I don't know how good your history is, but a bit over 200 cycles ago the whole Gate network out here threw a fit. Big thing. Exodyne called for all personnel to regroup on Tartessus, but jumping into hyperspace would have completely ruined our experiments.""
 
-""Heard of cryosleep? But nah, we were designed to be sold to affluent humans. Folks who aren't known for their appreciation of the essential truths of reality, like death and taxes. Not much Exodyne could do about the latter, goodness knows they tried, but the former? Easy fix.""
+""They told me I was in charge, that they'd be right back, and then left. My working theory is that they didn't know how to navigate in deep hyperspace without an AI helping them, and flew into a black hole. So now, nobody knows they left me here.""",,
+vulp_interrogationHubAge,DialogOptionSelected,$option == vulp_interrogationHubAge,$askedAge = true,"This question earns you a tiny-fanged grin.
+
+""Heard of cryosleep? But nah, we were designed to be sold to affluent humans. Folks who don't appreciate the essential truths of reality, like death and taxes. Not much Exodyne could do about the latter, goodness knows they tried, but the former? Easy fix.""
 
 ""Vulpoids don't age. I'm more than 200 cycles old, in living time.""
 
@@ -256,9 +290,13 @@ vulp_interrogationHubAgeSensible,DialogOptionSelected,$option == vulp_interrogat
 vulp_interrogationHubAgeSpiritual,DialogOptionSelected,$option == vulp_interrogationHubAgeSpiritual,FireAll VulpInterrogationHubOptions,"She gives you a side-eye.
 
 ""That sounds like something that someone who ages to death would say. Couldn't be me.""",,
-vulp_interrogationHubAgeDismiss,DialogOptionSelected,$option == vulp_interrogationHubAgeDismiss,FireAll VulpInterrogationHubOptions,"She looks a little disappointed at the non-response, but doesn’t push the subject.",,
+vulp_interrogationHubAgeDismiss,DialogOptionSelected,$option == vulp_interrogationHubAgeDismiss,FireAll VulpInterrogationHubOptions,"She looks a little disappointed at the non-response, but doesn't push the subject.",,
 ,,,,,,
-vulp_interrogationAboutThat,DialogOptionSelected,$option == vulp_interrogationAboutThat,,"""Actually, I've got a question for you now. What's your end-game here? We might be a bit off the beaten path, but reactor explosions still show up bright on tachyon telescopes. Do you have a plan for when the Domain navy shows up, and can I be on a different ship for when it doesn't work and they blow you up?""","vulp_interrogationAboutThat1:""About that…"" (provide a current affairs primer)",
+vulp_interrogationAboutThat,DialogOptionSelected,$option == vulp_interrogationAboutThat,,"""Actually, I've got a question for you now. What's your end-game here? We might be a bit off the beaten path, but reactor explosions still show up bright on tachyon telescopes. Do you have a plan for when the Domain navy shows up, and can I be on a different ship for when it doesn't work and they blow you up?""
+
+She gives you a wide-eyed smile, paws under her chin, a picture of faux-innocence. The face of someone who thinks they hold all the cards.
+
+This might be rough.","vulp_interrogationAboutThat1:""About that..."" (provide a current affairs primer)",
 vulp_interrogationAboutThat1,DialogOptionSelected,$option == vulp_interrogationAboutThat1,,"You hand over a datapad, and watch as she begins to read it. You can see the entire history of the Persean Sector play out across her face.
 
 The Collapse. Warlord Leonis.
@@ -278,7 +316,7 @@ vulp_interrogationAboutThat3,DialogOptionSelected,$option == vulp_interrogationA
 $wasNice = 0
 $numBombshellOptions = 0","She looks down, suddenly a lot more aware of the cuffs she's wearing.
 
-Nobody's coming. Nobody's been coming for the last 200 cycles.",,
+The Domain won't be coming. Nobody will. Nobody's been coming for over 200 cycles.",,
 vulp_bombshellHub,VulpBombshellHub,$numBombshellOptions < 2,FireAll VulpBombshellHubOptions,,,
 vulp_bombshellHubRemoveCuffsOption,VulpBombshellHubOptions,!$removedCuffs,,,vulp_bombshellHubRemoveCuffs:Remove her cuffs,
 vulp_bombshellHubHugOption,VulpBombshellHubOptions,!$gaveHug,,,vulp_bombshellHubHug:Give her a hug,
@@ -368,8 +406,8 @@ vulp_funFactAging,VulpFunFact,,,"""One of my sisters told me she went through a 
 vulp_funFactFruit,VulpFunFact,,,"""Have you ever smelled one of us? It's all nice and fruity, right? They say it's because of tiny plants in our fur, but I've never found any leaves, so I dunno!""",,
 vulp_funFactSpaceSuit,VulpFunFact,,,"""I bet you wear space suits all the time, right? I know how to wear them, but they're so tight around the tail. It'd be nicer to not wear anything, but then you couldn't go to space!""",,
 ,,,,,,
-bar_descVulpoid,BarPrintDesc,MarketHasCondition vulpoid_condition,ShowImageVisual vulpoid_bar,"As you enter the bar you are buffeted by the human white-noise of conversation and revelry. Ad-holos buzz softly from ceiling-mounted units, shining garish highlights through glasses and bottles as spacer crews mingle with merchants and locals trading drinks for rumor, jobs, and opportunities. Vulpoids dart from table to table, distributing drinks and earnestly thanking catcallers for the 'compliments'.",,
-vulp_barInteractionPrompt,AddBarEvents,MarketHasCondition vulpoid_condition,"AddBarEvent vulp_barInteraction ""Talk to the Vulpoid"" ""One of the Vulpoids notices you, and quickly bounds up to see if you want anything.""",,,
+bar_descVulpoid,BarPrintDesc,$market.mc:vulpoid_condition,ShowImageVisual vulpoid_bar,"As you enter the bar you are buffeted by the human white-noise of conversation and revelry. Ad-holos buzz softly from ceiling-mounted units, shining garish highlights through glasses and bottles as spacer crews mingle with merchants and locals trading drinks for rumor, jobs, and opportunities. Vulpoids dart from table to table, distributing drinks and earnestly thanking catcallers for the 'compliments'.",,
+vulp_barInteractionPrompt,AddBarEvents,$market.mc:vulpoid_condition,"AddBarEvent vulp_barInteraction ""Talk to the Vulpoid"" ""One of the Vulpoids notices you, and quickly bounds up to see if you want anything.""",,,
 vulp_barInteraction,DialogOptionSelected,"$option == vulp_barInteraction
 !$printedFirstReturnGreeting","ShowPersonVisual false vulpoid_barmaid
 $printedFirstReturnGreeting = true 0
@@ -384,7 +422,7 @@ vulp_barInteractionPet,DialogOptionSelected,$option == vulp_barInteractionPet,Sh
 vulp_barInteractionSmooch,DialogOptionSelected,$option == vulp_barInteractionSmooch,ShowImageVisual vulpoid_smooch,,vulp_barInteraction:Continue,
 ,,,,,,
 vulp_BarOwnColFreeDrink0,DialogOptionSelected,"$option == barOOCfreeDrink
-MarketHasCondition vulpoid_condition",$player.gotFreeDrinkFromOwnColony = true,"A Vulpoid barmaid appears by your side, a glass of what looks exactly like your favorite drink on a silver tray.
+$market.mc:vulpoid_condition",$player.gotFreeDrinkFromOwnColony = true,"A Vulpoid barmaid appears by your side, a glass of what looks exactly like your favorite drink on a silver tray.
 
 ""Compliments of the house!""","vulp_barOwnColFreeDrink0A:""Um. Thank you.""
 vulp_barOwnColFreeDrink0B:Take the drink
@@ -437,7 +475,7 @@ $faction.id == hegemony",FireAll PopulateVulpoidsTurnInOptions,"""You say that a
 vulp_turnInOptionSelChurch,DialogOptionSelected,"$option == vulp_startTurnIn
 $faction.id == luddic_church",FireAll PopulateVulpoidsTurnInOptions,"""You were right to bring these to me. I shall contact the Knight Commander to take possession of these abominations so that they may be properly cleansed.""",,
 vulp_turnInOptionSelPath,DialogOptionSelected,"$option == vulp_startTurnIn
-$faction.id == luddic_path",FireAll PopulateVulpoidsTurnInOptions,"""You were right to bring these to me. I shall contact the Knight Commander to take possession of these abominations so that they may be summarily executed.""",,
+$faction.id == luddic_path",FireAll PopulateVulpoidsTurnInOptions,"""Bless the path that brought you here. The execution of these abominations will serve as a demonstration to those who stray from the Path of Ludd.""",,
 vulp_turnInOptionSelDiktat,DialogOptionSelected,"$option == vulp_startTurnIn
 $faction.id == sindrian_diktat",FireAll PopulateVulpoidsTurnInOptions,"""A dangerous catch you have there - there's no telling what could happen if one got into the hands of terrorists. I ... that is, we, are sure to be rewarded by the Lion for surrendering this to Diktat Intelligence straightaway.""
 OR
@@ -469,14 +507,14 @@ $market.id != kazeron",FireAll PopulateOptions,$PersonRank $personLastName thank
 ,,,,,,
 vulp_RACA_init,RemoveAICoreAdmin,$market.vulpoidAdmin != null score:1000,,"You send the order to have the Vulpoid step down from command. Only a few moments later, your comm-link chimes with an incoming message.",vulp_RACA_init1:Continue,"For whatever reason, this first line does not have the person reference. Need to go a second line to do ShowPerson, $heOrShe, etc."
 vulp_RACA_init1,DialogOptionSelected,$option == vulp_RACA_init1,"FireAll RemoveVulpAdminOptions
-ShowPersonVisual","""Hello $PlayerSirOrMadam, I just got a notification from you, and just… wanted to verify? I was under the impression I was handling things quite well here.""",,
+ShowPersonVisual","""Hello $PlayerSirOrMadam, I just got a notification from you, and just... wanted to verify? I was under the impression I was handling things quite well here.""",,
 vulp_RACA_inspectionOption,RemoveVulpAdminOptions,MarketIsInspectionTarget,SetOptionColor vulp_RACA_inspection highlight,,"vulp_RACA_inspection:""There's a Hegemony inspection inbound.""",
 vulp_RACA_relocateOption,RemoveVulpAdminOptions,,,,"vulp_RACA_relocate:""You're being relocated to a different colony.""",
 vulp_RACA_directOrderOption,RemoveVulpAdminOptions,,,,"vulp_RACA_directOrder:""You heard me, that's an order.""",
 vulp_RACA_neverMindOption,RemoveVulpAdminOptions,,"SetShortcut vulp_RACA_neverMind ""ESCAPE""",,"vulp_RACA_neverMind:""I'm sorry, that was a mistake.""",
 vulp_RACA_inspection,DialogOptionSelected,$option == vulp_RACA_inspection,,"That catches her off-guard.
 
-""Oh. That's bad. How did you even… never mind, you've got connections. Okay, priorities… A formal inspection is only launched when they've confident there's something to find. That means they know - or strongly suspect - I'm here.""",vulp_RACA_inspection1:Continue,
+""Oh. That's bad. How did you even... never mind, you've got connections. Okay, priorities... A formal inspection is only launched when they've confident there's something to find. That means they know - or strongly suspect - I'm here.""",vulp_RACA_inspection1:Continue,
 vulp_RACA_inspection1,DialogOptionSelected,$option == vulp_RACA_inspection1,,"""If I step down, I'll be able to avoid their search. But there's no way to cover up that I've been working here. You'll get a lot more negative attention for it, and they'll probably disrupt a lot of our operations during their in-depth searches. I'd say... upwards of six weeks before we can return to normal operating levels.""
 
 $HeOrShe has started slowly pacing as she considers options, and then pauses.
@@ -487,17 +525,17 @@ $HeOrShe's putting on a brave face, but there's a catch in $hisOrHer voice as sh
 vulp_RACA_inspectionBribe:""I'll pull some strings, pay some credits. They won't find anything.""
 vulp_RACA_inspectionFight:""I won't let that happen. We'll resist the inspection with force.""
 vulp_RACA_inspectionStay:""If you think that's best, then stay and turn yourself over.""",
-vulp_RACA_inspectionConfirm,DialogOptionSelected,$option == vulp_RACA_inspectionConfirm,ShowPersonVisual,"""I… thank you, $SirOrMadam. I'll get everything prepared for my replacement, and get into hiding. I promise you, they won't find me.""
+vulp_RACA_inspectionConfirm,DialogOptionSelected,$option == vulp_RACA_inspectionConfirm,ShowPersonVisual,"""I... thank you, $SirOrMadam. I'll get everything prepared for my replacement, and get into hiding. I promise you, they won't find me.""
 
 $HeOrShe quickly wipes $hisOrHer eyes, and gives you a big, smiling salute.
 
 ""It means a lot that you'd do that for me. Thank you, $PlayerSirOrMadam.""",vulp_RACA_removeAdmin:Cut comm link,
-vulp_RACA_inspectionBribe,DialogOptionSelected,$option == vulp_RACA_inspectionBribe,ShowPersonVisual,"""You'd do that for me? The Hegemony isn't impossible to bribe, but they won't make it cheap. It'll be a lot of red on the balance sheet…""
+vulp_RACA_inspectionBribe,DialogOptionSelected,$option == vulp_RACA_inspectionBribe,ShowPersonVisual,"""You'd do that for me? The Hegemony isn't impossible to bribe, but they won't make it cheap. It'll be a lot of red on the balance sheet...""
 
 $HeOrShe looks into the distance for a moment, before straightening up and saluting.
 
 ""Thank you, $PlayerSirOrMadam.""",vulp_RACA_cancel:Cut comm link,
-vulp_RACA_inspectionFight,DialogOptionSelected,$option == vulp_RACA_inspectionFight,ShowPersonVisual,"""You're going to fight them, to protect me? I… just please be careful, alright? I don't need to tell you they've got strong fleets, and won't back down easily. But if anyone can do it, it's you.""
+vulp_RACA_inspectionFight,DialogOptionSelected,$option == vulp_RACA_inspectionFight,ShowPersonVisual,"""You're going to fight them, to protect me? I... just please be careful, alright? I don't need to tell you they've got strong fleets, and won't back down easily. But if anyone can do it, it's you.""
 
 $HeOrShe gives you a nervous smile, straightens $himOrHerself up, and salutes.
 
@@ -509,7 +547,7 @@ vulp_RACA_relocate,DialogOptionSelected,$option == vulp_RACA_relocate,ShowVulpAd
 vulp_RACA_directOrder,DialogOptionSelected,$option == vulp_RACA_directOrder,ShowVulpAdminCrying,TODO,vulp_RACA_removeAdmin:Cut comm link,
 vulp_RACA_neverMind,DialogOptionSelected,$option == vulp_RACA_neverMind,,"A wave of relief washes across $hisOrHer face, and you can see the tension leaving $hisOrHer body.
 
-""Oh, you scared me! I was so worried I'd done something wrong, I'm glad it's alright. Just… you'll let me know if you ever want me to do something, right? I just want to make sure you're happy with everything I do!""",vulp_RACA_cancel:Cut comm link,
+""Oh, you scared me! I was so worried I'd done something wrong, I'm glad it's alright. Just... you'll let me know if you ever want me to do something, right? I just want to make sure you're happy with everything I do!""",vulp_RACA_cancel:Cut comm link,
 vulp_RACA_removeAdmin,DialogOptionSelected,$option == vulp_RACA_removeAdmin,DismissDialog override,,,
 vulp_RACA_cancel,DialogOptionSelected,$option == vulp_RACA_cancel,DismissDialog ignore,,,
 ,,,,,,
@@ -519,7 +557,12 @@ vulp_RACA_cancel,DialogOptionSelected,$option == vulp_RACA_cancel,DismissDialog 
 kpVulpoid,KPFindGifts,"PlayerHasCargo vulpoids 1000
 $kpNumGifts < 5
 $kpNumGifts++",,,kpVulpoid:A thousand Vulpoids,
-kpVulpoidSel,DialogOptionSelected,$option == kpVulpoid,RemoveCommodity vulpoids 1000,TODO,kpLeaveProt:Continue,
+kpVulpoidSel,DialogOptionSelected,$option == kpVulpoid,"ShowThirdPerson vulpoid_nude_terran_generic
+RemoveCommodity vulpoids 1000","Kanta's synthetic voice booms out, ""YES. They shall serve most delightfully as playthings for my Cydonia, his experiments shall amuse us."" With a creak of metal and clatter of beads and trophies, Kanta turns to look upon Cydonia.
+
+His face is one of pure, sinister glee. ""Yes, yes, my queen. Oh, there is great potential in this, I can assure you...""
+
+Kanta nods with satisfaction as Cydonia gazes into the distance, apparently preoccupied with new ideas.",kpVulpoidLeave:Continue,
 kpVulpoidShiny,KPFindGifts,"PlayerHasCargo vulpoids_shiny
 $kpNumGifts < 5
 $kpNumGifts++",,,kpVulpoidShiny:A Prefecto Vulpoid,
@@ -528,32 +571,18 @@ kpVulpoidShinySel,DialogOptionSelected,$option == kpVulpoidShiny,ShowThirdPerson
 When the explaination concludes, Cydonia looks eagerly at back at Kanta, his enthusiasm palpable.",kpVulpoidShiny1:Continue,
 kpVulpoidShinySel1,DialogOptionSelected,$option == kpVulpoidShiny1,RemoveCommodity vulpoids_shiny 1,"After a brief pause, Kanta's voice booms out, ""WE ACCEPT."" Her gaze turns to Cydonia, and she warns, ""It shall stay in one piece.""
 
-The 'doctor' flinches at this accusation, but his excitement is still evident as he directs the Prefecto towards his laboratory.",kpVulpoidShiny2:Continue,
-kpVulpoidShinySel2,DialogOptionSelected,$option == kpVulpoidShiny2,"HideThirdPerson
+The 'doctor' flinches at this accusation, but his excitement is still evident as he directs the Prefecto towards his laboratory.",kpVulpoidLeave:Continue,
+kpVulpoidLeave,DialogOptionSelected,$option == kpVulpoidLeave,"HideThirdPerson
 $option = kpLeaveProt
 FireBest DialogOptionSelected ",,,
 ,,,,,,
-,,,,"""What,"" Cydonia's lip curls into a sneer, ""would the mighty warlord do with-"" 
+vulp_gaKAArroyoVisit2,DialogOptionSelected,"$option == gaKA_arroyoVisit2
+$global.exportedVulpoids",,"A human and a Vulpoid servant greet you placidly as you arrive and lead you inside to a grand parlor done in dark geometric style. Gold inlay gleams in onyx tabletops, and the polished granite floor is set with tastefully patterned jewel-tone carpets placed slightly askew.
 
-There's a heavy clank, all turn to find that Kanta is standing, trailing trophies and tubes. ""WE ACCEPT,"" her vocoder blasts, the voice inhuman. ""Vacuum AND fire shall greet those prisoners I wish to dispose.""
+The view from the flawless sweep of diamond-matrix bay window is, as Arroyo promised, spectacular.",gaKA_arroyoVisit3:Continue,
+vulp_gaKAArroyoVisitLeave0,DialogOptionSelected,"$option == gaKA_arroyoLeave
+$global.exportedVulpoids",AddPotentialContact,"You've got what you needed from Rayan Arroyo, and with no signal on his part that you can discern, his human and Vulpoid servants appear once more.
 
-The pirates of the court cheer to this, stomping their feet and slamming weapon-stocks into the deck plates.",,
-,,,,"""I... I, yes, yes"" Cydonia caresses the specifications you transmitted to his datapad. He capers around the grim totems surrounding Kanta's throne and excitedly shows her the screen. Her attention is, for a moment, laser-focused. Her court of pirates murmur and whisper.
+""I won't say it's been a pleasure, but if you ever have more credits than you know what to do with or, hmm, a truly exceptional business opportunity, let's trade cryptokeys now so you don't have to track space-dust on my carpet again."" 
 
-Finally, Kanta's gauntleted hand, strength enhanced by cybernetics, shoves Cydonia away like a dewy-eyed lapdog. He nearly topples from the platform, but manages to recover his balance.
-
-Kanta stands with a clank, the hum of her synthetic voice grows, a raw buzz, in anticipation of her proclamation.",,
-,,,,"Kanta blasts her synthetic approval, ""YES. A delightful toy for my Cydonia, for his little experiments, his playthings. Won't they amuse us?"" With a creak of metal and clatter of beads and trophies, Kanta turns to look upon Cydonia. 
- 
-He seems to shrink, ""Y- yes, my queen. I'm sure- I suppose it could be... repurposed for my needs. There will be less need for live... subjects, I suppose.""
-
-The 'doctor' looks crestfallen at this development. It would seem that Kanta doesn't notice, or care.",,
-,,,,"The core of the drone replicator is dragged into the court on an agrav sled and the specs read aloud at Cydonia's instructions by some kind of lead technician.
-
-Certain phrases stand out: ""autonomous hunter-killer"", ""exploding-tip fragmentation"", ""semi-lethal crowd-control escalation"",  ""adjustable potency chemical irritant"", ""30,000 rounds-per-minute"", ""excruciating burning sensation"".
-
-Kanta nods along, seemingly enthralled. Cydonia glances between you and her, ensuring that he is following the lead of his queen.",,
-,,,,"As the reading is finished, Cydonia exchanges one last look with Kanta then turns approvingly to the technician. ""Take it to The Arena!"" he shouts, and Kanta's court erupts with thunderous shouts and stomps.",,
-,,,,"""Oh, oh, th-"" Cydonia almost bounces with excitement, but his mewling is crushed by Kanta's synthesized voice.
-
-""A weapon of transcendent power,"" she booms. ""A beautiful thing. THIS. Is a gift worthy of Kanta."" Her dark eyes scan the crowds accusingly, demanding someone match this prize. None can.",,
+He taps his datapad and offers it, and you perform the mundane ritual which will ensure that anyone who wants to crack your mutual comms will, at least, have to put some effort into the task.",gaKA_arroyoLeave1:Continue,
