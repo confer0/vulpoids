@@ -1,0 +1,60 @@
+{
+	"ruleCommandPackages":[
+		"vulpoids.impl.campaign.rulecmd",
+		"vulpoids.impl.campaign.rulecmd.salvage",
+	],
+	
+	"graphics": {
+		"industry":{
+			"organfarm":"graphics/icons/industry/organfarm.png",
+			"organfarmvulp":"graphics/icons/industry/organfarmvulp.png",
+			"biotechlow":"graphics/icons/industry/biotech_low.png",
+			"biotechmed":"graphics/icons/industry/biotech_medium.png",
+			"biotechhigh":"graphics/icons/industry/biotech_high.png",
+			"biotechlowvulp":"graphics/icons/industry/biotech_low_fox.png",
+			"biotechmedvulp":"graphics/icons/industry/biotech_medium_fox.png",
+			"biotechhighvulp":"graphics/icons/industry/biotech_high_fox.png",
+		},
+		"intel":{
+			"shiny_produced":"graphics/icons/intel/fox_produced.png",
+			"vulp_pop_growth":"graphics/icons/intel/fox_pop_growth.png",
+			"vulp_pop_01":"graphics/icons/markets/vulp_pop_01.png",
+			"vulp_pop_02":"graphics/icons/markets/vulp_pop_02.png",
+			"vulp_pop_03":"graphics/icons/markets/vulp_pop_03.png",
+			"vulp_pop_04":"graphics/icons/markets/vulp_pop_04.png",
+			"vulp_pop_05":"graphics/icons/markets/vulp_pop_05.png",
+			"vulp_pop_06":"graphics/icons/markets/vulp_pop_06.png",
+			"vulp_pop_07":"graphics/icons/markets/vulp_pop_07.png",
+			"vulp_pop_08":"graphics/icons/markets/vulp_pop_08.png",
+			"vulp_pop_09":"graphics/icons/markets/vulp_pop_09.png",
+			"vulp_pop_10":"graphics/icons/markets/vulp_pop_10.png",
+			"workforce_confusion":"graphics/icons/markets/workforce_confusion.png",
+		},
+		"illustrations":{
+			"vulpoid_bar":"graphics/illustrations/vulpoid_bar.png",
+			"vulpoid_petting":"graphics/illustrations/vulpoid_petting.png",
+			"vulpoid_smooch":"graphics/illustrations/vulpoid_smooch.png",
+			
+			"laisa_hug1":"graphics/illustrations/laisa_hug1.png",
+			"laisa_hug2":"graphics/illustrations/laisa_hug2.png",
+			"laisa_hug3":"graphics/illustrations/laisa_hug3.png",
+		},
+		"cargo":{
+			"vulp_embarked_icon":"graphics/icons/cargo/vulpoids/vulpoid_travel_icon.png",
+			"vulp_officer_icon":"graphics/icons/cargo/vulpoids/vulpoid_admiral_icon.png",
+			"vulp_admin_icon":"graphics/icons/cargo/vulpoids/vulpoid_admin_icon.png",
+			
+			"vulp_shiny":"graphics/icons/cargo/vulpoids/vulpoid_shiny.png",
+			"vulp_shiny_winter":"graphics/icons/cargo/vulpoids/vulpoid_shiny_winter.png",
+			"vulp_shiny_terran":"graphics/icons/cargo/vulpoids/vulpoid_shiny_terran.png",
+			"vulp_shiny_desert":"graphics/icons/cargo/vulpoids/vulpoid_shiny_desert.png",
+			"vulp_laisa":"graphics/icons/cargo/vulpoids/vulpoid_laisa.png",
+		},
+	}
+}
+
+
+
+
+
+

@@ -1,0 +1,12 @@
+{
+    "id": "vulpoids",
+    "name": "Vulpoids",
+    "author": "confer0",
+    "utility": "false",
+    "version": "1.0",
+    "description": "Adds the Vulpoid Biofactory, a biofactory variant that produces Vulpoids. They're experimental lifeforms that, while technically being AI, are in high demand with faction higher-ups.",
+    "gameVersion": "0.97a-RC6",
+	"jars": ["jars/dist/Vulpoids.jar"],
+	"modPlugin": "vulpoids.plugins.VulpoidModPlugin",
+	
+}

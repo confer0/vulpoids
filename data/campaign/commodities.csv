@@ -1,0 +1,3 @@
+name,id,demand class,base price,export value,price variability,utility,origin,tags,stack size,cargo space,icon,sound id,sound id drop,order,economyTier,econUnitOrigUnused,econUnit,baseRaidDanger,eU * base value,iconWidthMult,plugin,desc
+Vulpoids,vulpoids,vulpoids,200,500,3,1,,"exotic, luxury, expensive",1000,0,graphics/icons/cargo/vulpoids/vulpoid.png,ui_cargo_vulpoid,ui_cargo_vulpoid_drop,28,2.9,1,100,,,1,,
+Profecto Vulpoid,vulpoids_shiny,vulpoids,,,0,250,,"exotic, luxury, expensive, nonecon",1000,0,graphics/icons/cargo/vulpoids/vulpoid_shiny.png,ui_cargo_vulpoid,ui_cargo_vulpoid_drop,29,,,,EXTREME,,1,,

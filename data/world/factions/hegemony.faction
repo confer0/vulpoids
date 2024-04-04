@@ -1,0 +1,12 @@
+{
+	id:"hegemony",
+
+	"custom":{
+		"vulpoidsAlwaysIllegal":true,
+		"buysVulpoids":true,
+		"vulpoidValueMult":1,
+		"vulpoidRepMult":0.5,
+	},	
+	
+	
+},

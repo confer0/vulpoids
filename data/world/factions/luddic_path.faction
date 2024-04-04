@@ -1,0 +1,16 @@
+{
+	"id":"luddic_path",
+
+	"custom":{
+		"vulpoidsAlwaysIllegal":true,
+		"buysVulpoids":true,
+		"vulpoidValueMult":0.1,
+		"vulpoidRepMult":1,
+	},
+},
+
+
+
+
+
+

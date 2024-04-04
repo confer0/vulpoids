@@ -1,0 +1,8 @@
+name,id,planetary,decivRemove,script,desc,icon,order
+Vulpoid Population,vulpoid_condition,,TRUE,vulpoids.impl.campaign.econ.VulpoidCondition,,graphics/icons/markets/fox_planet_modifier.png,143
+Vulpoid Demand,vulpoid_demand,,,vulpoids.impl.campaign.econ.VulpoidDemandCondition,Hidden condition that adds Vulpoid demand.,,1000
+Vulpoid Population,vulpoid_population,,TRUE,vulpoids.impl.campaign.econ.VulpoidPopulation,,,30
+,,,,,,,
+Vulpoid Customs Agents,vulpoid_traders,,TRUE,vulpoids.impl.campaign.econ.workforces.TraderWorkforce,,graphics/icons/markets/workforce_traders.png,31
+Vulpoid Security Foxes,vulpoid_security,,TRUE,vulpoids.impl.campaign.econ.workforces.SecurityWorkforce,,graphics/icons/markets/workforce_security.png,32
+Vulpoid Mine Laborers,vulpoid_miners,,TRUE,vulpoids.impl.campaign.econ.workforces.MinerWorkforce,,graphics/icons/markets/workforce_miners.png,33

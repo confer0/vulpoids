@@ -1,0 +1,11 @@
+{
+	"id":"luddic_church",
+
+	"custom":{
+		"vulpoidsAlwaysIllegal":true,
+		"buysVulpoids":true,
+		"vulpoidValueMult":0.1,
+		"vulpoidRepMult":3,
+	},
+},
+

@@ -1,0 +1,11 @@
+{
+	id:"tritachyon",
+
+	"custom":{
+		"vulpoidsAlwaysLegal":true,
+		"buysVulpoids":true,
+		"vulpoidValueMult":3,
+		"vulpoidRepMult":0.5,
+	},
+},
+
