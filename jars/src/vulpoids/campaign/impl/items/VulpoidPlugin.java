@@ -132,6 +132,9 @@ public class VulpoidPlugin extends BaseSpecialItemPlugin {
         "Idle: Slacking off.",
         "Idle: Distracting the crew.",
     };
+    final String[] sleeper_assignments = new String[] {
+        "Cryosleeping: Dreaming of synthetic sheep.",
+    };
     
     
     PersonAPI person;
@@ -321,25 +324,26 @@ public class VulpoidPlugin extends BaseSpecialItemPlugin {
         tooltip.addImageWithText(opad);
         
         
-        String assignment_text = "Assignment";
+        String assignment_title = "Assignment";
         switch(getId()) {
-            case Vulpoids.SPECIAL_ITEM_DEFAULT: assignment_text = "No Assignment"; break;
-            case Vulpoids.SPECIAL_ITEM_EMBARKED: assignment_text = "Embarked on Fleet"; break;
-            case Vulpoids.SPECIAL_ITEM_OFFICER: assignment_text = "Serving as Officer"; break;
-            case Vulpoids.SPECIAL_ITEM_ADMIN: assignment_text = "Serving as Administrator"; break;
+            case Vulpoids.SPECIAL_ITEM_DEFAULT: assignment_title = "No Assignment"; break;
+            case Vulpoids.SPECIAL_ITEM_EMBARKED: assignment_title = "Embarked on Fleet"; break;
+            case Vulpoids.SPECIAL_ITEM_OFFICER: assignment_title = "Serving as Officer"; break;
+            case Vulpoids.SPECIAL_ITEM_ADMIN: assignment_title = "Serving as Administrator"; break;
         }
-        tooltip.addSectionHeading(assignment_text, white, pink, Alignment.MID, opad);
+        tooltip.addSectionHeading(assignment_title, white, pink, Alignment.MID, opad);
         if(!expanded) {
-            String assignment = disallowCycleReason();
-            if (assignment != null) {
-                tooltip.addPara(assignment, opad);
+            String assignment_text = disallowCycleReason();
+            if (assignment_text != null) {
+                tooltip.addPara(assignment_text, opad);
             } else {
-                assignment = random_assignments[new Random(stack.hashCode()).nextInt(random_assignments.length)];
-                tooltip.addPara(assignment, Misc.getGrayColor(), opad);
+                if(Vulpoids.SPECIAL_ITEM_DEFAULT.equals(getId())) assignment_text = sleeper_assignments[new Random(stack.hashCode()).nextInt(sleeper_assignments.length)];
+                else assignment_text = random_assignments[new Random(stack.hashCode()).nextInt(random_assignments.length)];
+                tooltip.addPara(assignment_text, Misc.getGrayColor(), opad);
             }
         } else {
             switch(getId()) {
-                case Vulpoids.SPECIAL_ITEM_DEFAULT: tooltip.addPara("Stored in suspended animation. Can be sold or stored, but will not escape if the fleet is destroyed.", opad); break;
+                case Vulpoids.SPECIAL_ITEM_DEFAULT: tooltip.addPara("Stored in suspended animation for commercial transport. Can be sold or stored, but will not escape if the fleet is destroyed.", opad); break;
                 case Vulpoids.SPECIAL_ITEM_EMBARKED: tooltip.addPara("Formally embarked with an executive suite. Her escape pod will follow yours if the fleet is lost.", opad); break;
                 case Vulpoids.SPECIAL_ITEM_OFFICER: tooltip.addPara("Available as an officer. Will expect pay, even if not currently commanding a ship.", opad); break;
                 case Vulpoids.SPECIAL_ITEM_ADMIN: tooltip.addPara("Available as an administrator. Will expect pay, even if not currently administrating a colony.", opad); break;
@@ -385,17 +389,22 @@ public class VulpoidPlugin extends BaseSpecialItemPlugin {
     
     private void addSkillsToTooltip(TooltipMakerAPI tooltip, ArrayList<SkillLevelAPI> skills, boolean expanded, boolean officer, boolean admin, float pad) {
         ArrayList<SkillLevelAPI> valid_skills = new ArrayList();
+        ArrayList<SkillLevelAPI> elite_skills = new ArrayList();
         for (SkillLevelAPI skill : skills) {
             if ( skill.getLevel()>0 &&
                     ((officer && skill.getSkill().isCombatOfficerSkill()) ||
-                    (admin && skill.getSkill().isAdminSkill())) )
+                    (admin && skill.getSkill().isAdminSkill())) ) {
                 valid_skills.add(skill);
+                if (skill.getLevel()>1) elite_skills.add(skill);
+            }
         }
         if (valid_skills.isEmpty()) {
             tooltip.addPara("None", pad);
         } else {
             for (SkillLevelAPI skill : valid_skills) {
-                tooltip.beginImageWithText(skill.getSkill().getSpriteName(), 36).addPara(skill.getSkill().getName(), 0);
+                TooltipMakerAPI image = tooltip.beginImageWithText(skill.getSkill().getSpriteName(), 36);
+                if(elite_skills.contains(skill)) image.addPara("Elite "+skill.getSkill().getName(), Misc.getStoryOptionColor(), 0);
+                else image.addPara(skill.getSkill().getName(), 0);
                 tooltip.addImageWithText(pad);
             }
         }
