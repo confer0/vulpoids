@@ -71,7 +71,7 @@ public class VulpoidCreator {
         switch(getClimate(portrait)) {
             case "terran": return "graphics/icons/cargo/vulpoids/vulpoid_shiny_terran.png";
             case "desert": return "graphics/icons/cargo/vulpoids/vulpoid_shiny_desert.png";
-            case "arctic": return "graphics/icons/cargo/vulpoids/vulpoid_shiny_winter.png";
+            case "arctic": return "graphics/icons/cargo/vulpoids/vulpoid_shiny_arctic.png";
             default: return "graphics/icons/cargo/vulpoids/vulpoid_shiny.png";
         }
     }

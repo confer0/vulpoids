@@ -23,6 +23,7 @@ import com.fs.starfarer.api.util.Misc;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 import java.util.Random;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -58,11 +59,19 @@ public class VulpoidPlugin extends BaseSpecialItemPlugin {
             //json.putOnce("stats", person.getStats());
             //json.putOnce("tags", person.getTags());
             JSONArray skill_array = new JSONArray();
+            JSONArray skill_levels = new JSONArray();
             for(MutableCharacterStatsAPI.SkillLevelAPI skill : person.getStats().getSkillsCopy()) {
-                if(skill.getLevel() > 0) skill_array.put(skill.getSkill().getId());
+                if(skill.getLevel() > 0) {
+                    skill_array.put(skill.getSkill().getId());
+                    skill_levels.put((long)skill.getLevel());
+                }
             }
             json.put("skills", skill_array);
+            json.put("skill_levels", skill_levels);
             json.put("xp", person.getStats().getXP());
+            json.put("bonusxp", person.getStats().getBonusXp());
+            json.put("personality", person.getPersonalityAPI().getId());
+            json.put("level", person.getStats().getLevel());
             return json.toString();
         } catch(JSONException e) {
             throw new RuntimeException("Unable to parse Vulpoid PersonAPI ["+person+"]", e);
@@ -83,7 +92,6 @@ public class VulpoidPlugin extends BaseSpecialItemPlugin {
                     person.getMemoryWithoutUpdate().set(memory_key_array.getString(i), memory_value_array.get(i), memory_expire_array.getLong(i));
                 }
             }
-            // TODO MEMORY - Need to transfer over each key and expiry individually.
             if(json.has("firstname") && json.has("lastname")) person.setName(new FullName(json.getString("firstname"), json.getString("lastname"), FullName.Gender.FEMALE));
             if(json.has("portrait")) person.setPortraitSprite(json.getString("portrait"));
             if(json.has("postid")) person.setPostId(json.getString("postid"));
@@ -91,11 +99,18 @@ public class VulpoidPlugin extends BaseSpecialItemPlugin {
             if(json.has("relfloat"))person.getRelToPlayer().setRel(json.getLong("relfloat"));
             if(json.has("skills")) {
                 JSONArray skill_array = json.getJSONArray("skills");
+                JSONArray skill_levels = null;
+                if(json.has("skill_levels")) skill_levels = json.getJSONArray("skill_levels");
                 for(int i=0; i<skill_array.length(); i++) {
-                    person.getStats().setSkillLevel(skill_array.getString(i), 1);
+                    int level = 1;
+                    if(skill_levels!= null) level = (int) skill_levels.getLong(i);
+                    person.getStats().setSkillLevel(skill_array.getString(i), level);
                 }
             }
             if(json.has("xp")) person.getStats().addXP(json.getLong("xp"));
+            if(json.has("bonusxp")) person.getStats().setBonusXp(json.getLong("bonusxp"));
+            if(json.has("personality")) person.setPersonality(json.getString("personality"));
+            if(json.has("level")) person.getStats().setLevel(json.getInt("level"));
             //for (String tag : (Set<String>)json.getJSONArray("tags")) person.addTag(tag);
             return person;
         }  catch(JSONException e) {
@@ -137,15 +152,31 @@ public class VulpoidPlugin extends BaseSpecialItemPlugin {
         }
         person = jsonToPerson(jsonStr);
         
-        //Re-set the portraits. Just doing it out here as a failsafe.
+        
         String role_portrait = null;
         switch(getId()) {
-            case Vulpoids.SPECIAL_ITEM_DEFAULT: role_portrait = person.getMemoryWithoutUpdate().getString(Vulpoids.KEY_DEFAULT_PORTRAIT); break;
-            case Vulpoids.SPECIAL_ITEM_EMBARKED: role_portrait = person.getMemoryWithoutUpdate().getString(Vulpoids.KEY_DEFAULT_PORTRAIT); break;
-            case Vulpoids.SPECIAL_ITEM_OFFICER: role_portrait = person.getMemoryWithoutUpdate().getString(Vulpoids.KEY_OFFICER_PORTRAIT); break;
-            case Vulpoids.SPECIAL_ITEM_ADMIN: role_portrait = person.getMemoryWithoutUpdate().getString(Vulpoids.KEY_DEFAULT_PORTRAIT); break;
+            case Vulpoids.SPECIAL_ITEM_DEFAULT:
+                role_portrait = person.getMemoryWithoutUpdate().getString(Vulpoids.KEY_DEFAULT_PORTRAIT);
+                break;
+            case Vulpoids.SPECIAL_ITEM_EMBARKED:
+                role_portrait = person.getMemoryWithoutUpdate().getString(Vulpoids.KEY_DEFAULT_PORTRAIT);
+                break;
+            case Vulpoids.SPECIAL_ITEM_OFFICER:
+                role_portrait = person.getMemoryWithoutUpdate().getString(Vulpoids.KEY_OFFICER_PORTRAIT);
+                break;
+            case Vulpoids.SPECIAL_ITEM_ADMIN:
+                role_portrait = person.getMemoryWithoutUpdate().getString(Vulpoids.KEY_DEFAULT_PORTRAIT);
+                break;
         }
         if (role_portrait != null) person.setPortraitSprite(role_portrait);
+        
+        if(Vulpoids.SPECIAL_ITEM_ADMIN.equals(getId())) {
+            person.getMemoryWithoutUpdate().set("$ome_isAdmin", true);
+            person.getMemoryWithoutUpdate().set("$ome_adminTier", 1);  // TODO - make smarter?
+        } else {
+            person.getMemoryWithoutUpdate().unset("$ome_isAdmin");
+            person.getMemoryWithoutUpdate().unset("$ome_adminTier");
+        }
         
         refreshPerson();
     }
@@ -289,6 +320,7 @@ public class VulpoidPlugin extends BaseSpecialItemPlugin {
         }
         tooltip.addImageWithText(opad);
         
+        
         String assignment_text = "Assignment";
         switch(getId()) {
             case Vulpoids.SPECIAL_ITEM_DEFAULT: assignment_text = "No Assignment"; break;
@@ -297,12 +329,21 @@ public class VulpoidPlugin extends BaseSpecialItemPlugin {
             case Vulpoids.SPECIAL_ITEM_ADMIN: assignment_text = "Serving as Administrator"; break;
         }
         tooltip.addSectionHeading(assignment_text, white, pink, Alignment.MID, opad);
-        String assignment = disallowCycleReason();
-        if (assignment != null) {
-            tooltip.addPara(assignment, opad);
+        if(!expanded) {
+            String assignment = disallowCycleReason();
+            if (assignment != null) {
+                tooltip.addPara(assignment, opad);
+            } else {
+                assignment = random_assignments[new Random(stack.hashCode()).nextInt(random_assignments.length)];
+                tooltip.addPara(assignment, Misc.getGrayColor(), opad);
+            }
         } else {
-            assignment = random_assignments[new Random(stack.hashCode()).nextInt(random_assignments.length)];
-            tooltip.addPara(assignment, Misc.getGrayColor(), opad);
+            switch(getId()) {
+                case Vulpoids.SPECIAL_ITEM_DEFAULT: tooltip.addPara("Stored in suspended animation. Can be sold or stored, but will not escape if the fleet is destroyed.", opad); break;
+                case Vulpoids.SPECIAL_ITEM_EMBARKED: tooltip.addPara("Formally embarked with an executive suite. Her escape pod will follow yours if the fleet is lost.", opad); break;
+                case Vulpoids.SPECIAL_ITEM_OFFICER: tooltip.addPara("Available as an officer. Will expect pay, even if not currently commanding a ship.", opad); break;
+                case Vulpoids.SPECIAL_ITEM_ADMIN: tooltip.addPara("Available as an administrator. Will expect pay, even if not currently administrating a colony.", opad); break;
+            }
         }
         
         ArrayList<SkillLevelAPI> skills = new ArrayList(person.getStats().getSkillsCopy());
@@ -367,7 +408,7 @@ public class VulpoidPlugin extends BaseSpecialItemPlugin {
 
     @Override
     public boolean isTooltipExpandable() {
-        return false;
+        return true;
     }
 
     @Override

@@ -270,16 +270,16 @@ vulp_interrogationHubHelpfulEnd,DialogOptionSelected,$option == vulp_interrogati
 SetVulpoidExpression laisa default",,,
 ,,,,,,
 vulp_interrogationHubFemale,DialogOptionSelected,$option == vulp_interrogationHubFemale,"$askedFemale = true
-SetVulpoidExpression laisa default","“Why do you ask? Did your expert eye for biology spot some subtleties in our fur patterns? Or perhaps the width of our skulls?” She asks sarcastically.
+SetVulpoidExpression laisa default","""Why do you ask? Did your expert eye for biology spot some subtleties in our fur patterns? Or perhaps the width of our skulls?"" She asks sarcastically.
 
-“Or were you referring to my adipose tissue? Which end, thorax or posterior?”
+""Or were you referring to my adipose tissue? Which end, thorax or posterior?""
 
 She wiggles her chest and hips as she says this, in a mocking imitation of more provocative gestures.",vulp_interrogationHubFemale1:Continue,
-vulp_interrogationHubFemale1,DialogOptionSelected,$option == vulp_interrogationHubFemale1,FireAll VulpInterrogationHubOptions,"“To give you a real answer, we’re monosex because it makes bioengineering easier. We’re still in development, so sexual differentiation was one less thing they wanted to deal with.”
+vulp_interrogationHubFemale1,DialogOptionSelected,$option == vulp_interrogationHubFemale1,FireAll VulpInterrogationHubOptions,"""To give you a real answer, we're monosex because it makes bioengineering easier. We're still in development, so sexual differentiation was one less thing they wanted to deal with.""
 
-“As for being female? Well, there’s statistically longer life expectancy, differences in hormonal expression… But for the real reason, just ask marketing.”
+""As for being female? Well, there's statistically longer life expectancy, differences in hormonal expression... But for the real reason, just ask marketing.""
 
-She gives a second wiggle, in case the point wasn’t clear enough.",,
+She gives a second wiggle, in case the point wasn't clear enough.",,
 vulp_interrogationHubShip,DialogOptionSelected,$option == vulp_interrogationHubShip,"$askedShip = true
 SetVulpoidExpression laisa default
 FireAll VulpInterrogationHubOptions","""Ah, never seen a hull like this? We got an early model on lease from Tri-Tachyon, along with that Space Defense System that you so kindly blew up. It's a Citadel-class, meant for ultra-rich folks who live deep enough in the Orion arm that not even money can buy land on planets. It's so heavily automated that it can fly with nothing more than the bridge crew - or in my case, one person smart enough to do all their jobs at once!""
