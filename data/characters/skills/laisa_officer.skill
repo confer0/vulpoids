@@ -1,0 +1,15 @@
+{
+	"id":"laisa_officer",
+	"governingAptitude":"combat",
+	"compressHullmods":false,
+	"scope":"FLEET",
+	"effectGroups":[
+		{
+			"requiredSkillLevel":1,
+			"effectBasedOnLevel":false,
+			"effects":[
+				{"type":"CHARACTER_STATS", "script":"vulpoids.impl.campaign.skills.LaisaOfficer$Level1"},
+			]
+		},
+	],
+}

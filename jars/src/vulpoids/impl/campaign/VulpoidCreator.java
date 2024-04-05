@@ -6,6 +6,7 @@ import com.fs.starfarer.api.characters.FullName;
 import com.fs.starfarer.api.characters.PersonAPI;
 import com.fs.starfarer.api.impl.campaign.ids.Conditions;
 import com.fs.starfarer.api.impl.campaign.ids.Factions;
+import com.fs.starfarer.api.impl.campaign.ids.MemFlags;
 import com.fs.starfarer.api.impl.campaign.ids.Planets;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -33,8 +34,16 @@ public class VulpoidCreator {
         else person = createVulpoid(market);
         person.setName(Global.getSector().getPlayerFaction().createRandomPerson().getName()); // TODO
         person.getStats().setSkillLevel("vulpoid_brain", 1);
-        person.getStats().setSkillLevel("vulpoid_luxury", 1);
+        //person.getStats().setSkillLevel("vulpoid_luxury", 1);
+        person.getStats().setSkillLevel("vulpoid_officer", 1);
+        person.getMemoryWithoutUpdate().set(MemFlags.OFFICER_MAX_LEVEL, 6);
+        person.getMemoryWithoutUpdate().set(MemFlags.OFFICER_MAX_ELITE_SKILLS, 2);
+        person.getMemoryWithoutUpdate().set(MemFlags.OFFICER_SKILL_PICKS_PER_LEVEL, 10);
         person.setRankId("vulp_profecto");
+        
+        person.getStats().setLevel(5);
+        
+        
         return person;
     }
     

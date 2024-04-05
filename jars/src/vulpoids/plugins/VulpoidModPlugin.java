@@ -18,6 +18,7 @@ import com.fs.starfarer.api.characters.ImportantPeopleAPI;
 import com.fs.starfarer.api.characters.PersonAPI;
 import com.fs.starfarer.api.impl.campaign.ids.Commodities;
 import com.fs.starfarer.api.impl.campaign.ids.Factions;
+import com.fs.starfarer.api.impl.campaign.ids.MemFlags;
 import com.fs.starfarer.api.impl.campaign.ids.Ranks;
 import vulpoids.campaign.VulpoidsCampaignPlugin;
 import vulpoids.impl.campaign.VulpoidCreator;
@@ -43,6 +44,10 @@ public class VulpoidModPlugin extends BaseModPlugin {
             person.setPostId(Ranks.POST_FLEET_COMMANDER);
             person.getRelToPlayer().setRel(-0.3f);  // Inhospitable by default. Frankly, if she weren't a Vulpoid she'd be much angrier at you for blowing up her ship.
             person.setPortraitSprite("graphics/portraits/vulpoid/laisa/clothed/default.png");
+            person.getStats().setSkillLevel("laisa_officer", 1);
+            person.getStats().setSkillLevel("laisa_admin", 1);
+            person.getMemoryWithoutUpdate().set(MemFlags.OFFICER_MAX_LEVEL, 6);
+            person.getMemoryWithoutUpdate().set(MemFlags.OFFICER_MAX_ELITE_SKILLS, 2);
             person.getMemoryWithoutUpdate().set(Vulpoids.KEY_DEFAULT_PORTRAIT, "graphics/portraits/vulpoid/laisa/clothed/default.png");
             person.getMemoryWithoutUpdate().set(Vulpoids.KEY_OFFICER_PORTRAIT, "graphics/portraits/vulpoid/laisa/laisa_special_admiral.png");
             person.getMemoryWithoutUpdate().set(Vulpoids.KEY_CARGO_ICON, "graphics/icons/cargo/vulpoids/vulpoid_laisa.png");

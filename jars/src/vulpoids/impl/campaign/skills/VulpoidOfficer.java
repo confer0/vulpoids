@@ -1,5 +1,7 @@
 package vulpoids.impl.campaign.skills;
 
+import com.fs.starfarer.api.characters.CharacterStatsSkillEffect;
+import com.fs.starfarer.api.characters.MutableCharacterStatsAPI;
 import com.fs.starfarer.api.characters.ShipSkillEffect;
 import com.fs.starfarer.api.combat.MutableShipStatsAPI;
 import com.fs.starfarer.api.combat.ShipAPI;
@@ -7,62 +9,40 @@ import com.fs.starfarer.api.combat.ShipAPI;
 public class VulpoidOfficer {
     public static class Level1 implements ShipSkillEffect {
         @Override
-        public void apply(MutableShipStatsAPI stats, ShipAPI.HullSize hullSize, String id, float level) {
-            
-        }
+        public void apply(MutableShipStatsAPI mssapi, ShipAPI.HullSize hs, String string, float f) {}
         @Override
-        public void unapply(MutableShipStatsAPI stats, ShipAPI.HullSize hullSize, String id) {
-            
-        }
-
+        public void unapply(MutableShipStatsAPI mssapi, ShipAPI.HullSize hs, String string) {}
         @Override
-        public String getEffectDescription(float level) {
-            return "TODO - What should this do?";
-        }
-
+        public String getEffectDescription(float level) {return "Maximum officer level: 6";}
         @Override
-        public String getEffectPerLevelDescription() {
-            return null;
-        }
-
+        public String getEffectPerLevelDescription() {return null;}
         @Override
-        public ScopeDescription getScopeDescription() {
-            return ScopeDescription.PILOTED_SHIP;
-        }
-        /*@Override
-        public void apply(MarketAPI market, String id, float level) {
-            market.getAccessibilityMod().modifyFlat(id, ACCESS, SKILL_NAME);
-            
-            // Adding to comms, and giving the custom picture!
-            admin = market.getAdmin();
-            
-            market.getCommDirectory().addPerson(admin, 0);
-            market.getMemoryWithoutUpdate().set("$vulpoidAdmin", admin);
-            admin.setPortraitSprite(VulpoidCreator.getPortraitForMarket(market, false, false, false));
-            
-        }
+        public ScopeDescription getScopeDescription() {return ScopeDescription.NONE;}
+    }
+    
+    public static class Level2 implements ShipSkillEffect {
         @Override
-        public void unapply(MarketAPI market, String id) {
-            market.getAccessibilityMod().unmodifyFlat(id);
-            
-            // Comm Directory
-            market.getMemoryWithoutUpdate().unset("$vulpoidAdmin");
-            if(admin != null) {
-                market.getCommDirectory().removePerson(admin);
-                Global.getSector().getPlayerStats().getAdminNumber().unmodifyFlat(admin.getId());
-            }
-        }
+        public void apply(MutableShipStatsAPI mssapi, ShipAPI.HullSize hs, String string, float f) {}
         @Override
-        public String getEffectDescription(float level) {
-            return "+" + (int)Math.round(ACCESS * 100f) + "% accessibility";
-        }
+        public void unapply(MutableShipStatsAPI mssapi, ShipAPI.HullSize hs, String string) {}
         @Override
-        public String getEffectPerLevelDescription() {
-            return null;
-        }
+        public String getEffectDescription(float level) {return "Maximum elite skills: 2";}
         @Override
-        public ScopeDescription getScopeDescription() {
-            return ScopeDescription.PILOTED_SHIP;
-        }*/
+        public String getEffectPerLevelDescription() {return null;}
+        @Override
+        public ScopeDescription getScopeDescription() {return ScopeDescription.NONE;}
+    }
+    
+    public static class Level3 implements ShipSkillEffect {
+        @Override
+        public void apply(MutableShipStatsAPI mssapi, ShipAPI.HullSize hs, String string, float f) {}
+        @Override
+        public void unapply(MutableShipStatsAPI mssapi, ShipAPI.HullSize hs, String string) {}
+        @Override
+        public String getEffectDescription(float level) {return "Skill picks: 10";}
+        @Override
+        public String getEffectPerLevelDescription() {return null;}
+        @Override
+        public ScopeDescription getScopeDescription() {return ScopeDescription.NONE;}
     }
 }

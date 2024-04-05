@@ -259,7 +259,8 @@ public class VulpoidPlugin extends BaseSpecialItemPlugin {
             sprite.renderWithCorners(blX, blY, tlX, tlY, trX, trY, brX, brY);
             
             if(disallowCycleReason()!=null) {
-                sprite.renderWithCorners(blX-32, blY-64, tlX-32, tlY-64, trX-32, trY-64, brX-32, brY-64);
+                sprite = Global.getSettings().getSprite("cargo", "vulp_lock_icon");
+                sprite.renderWithCorners(blX, blY, tlX, tlY, trX, trY, brX, brY);
             }
         }
         if(Vulpoids.SPECIAL_ITEM_OFFICER.equals(getId())) {
@@ -267,14 +268,16 @@ public class VulpoidPlugin extends BaseSpecialItemPlugin {
             sprite.renderWithCorners(blX, blY, tlX, tlY, trX, trY, brX, brY);
             
             if(disallowCycleReason()!=null) {
-                sprite.renderWithCorners(blX-32, blY-64, tlX-32, tlY-64, trX-32, trY-64, brX-32, brY-64);
+                sprite = Global.getSettings().getSprite("cargo", "vulp_lock_icon");
+                sprite.renderWithCorners(blX, blY, tlX, tlY, trX, trY, brX, brY);
             }
         }
         else if(Vulpoids.SPECIAL_ITEM_ADMIN.equals(getId())) {
             sprite = Global.getSettings().getSprite("cargo", "vulp_admin_icon");
             sprite.renderWithCorners(blX, blY, tlX, tlY, trX, trY, brX, brY);
             if(disallowCycleReason()!=null) {
-                sprite.renderWithCorners(blX-32, blY-64, tlX-32, tlY-64, trX-32, trY-64, brX-32, brY-64);
+                sprite = Global.getSettings().getSprite("cargo", "vulp_lock_icon");
+                sprite.renderWithCorners(blX, blY, tlX, tlY, trX, trY, brX, brY);
             }
         }
     }
@@ -345,8 +348,8 @@ public class VulpoidPlugin extends BaseSpecialItemPlugin {
             switch(getId()) {
                 case Vulpoids.SPECIAL_ITEM_DEFAULT: tooltip.addPara("Stored in suspended animation for commercial transport. Can be sold or stored, but will not escape if the fleet is destroyed.", opad); break;
                 case Vulpoids.SPECIAL_ITEM_EMBARKED: tooltip.addPara("Formally embarked with an executive suite. Her escape pod will follow yours if the fleet is lost.", opad); break;
-                case Vulpoids.SPECIAL_ITEM_OFFICER: tooltip.addPara("Available as an officer. Will expect pay, even if not currently commanding a ship.", opad); break;
-                case Vulpoids.SPECIAL_ITEM_ADMIN: tooltip.addPara("Available as an administrator. Will expect pay, even if not currently administrating a colony.", opad); break;
+                case Vulpoids.SPECIAL_ITEM_OFFICER: tooltip.addPara("Available as an officer. Will expect pay - in credits, not just the usual headpats - even if not currently commanding a ship.", opad); break;
+                case Vulpoids.SPECIAL_ITEM_ADMIN: tooltip.addPara("Available as an administrator. Will expect pay - in credits, not just the usual headpats - even if not currently administrating a colony.", opad); break;
             }
         }
         
