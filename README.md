@@ -6,4 +6,6 @@ VULPOIDS
 
 -Cargo sounds from soundsnap.org ///
 
+-Vulpoid cargo sounds by 北岛瑞月 (Arknights)
+
 -Compatible with 0.96a and 0.97a versions of Starsector
