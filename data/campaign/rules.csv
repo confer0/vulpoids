@@ -148,7 +148,8 @@ There's no further surprises as your forces finish securing the ship, and you're
 ,,,,,,
 # The Interrogation,,,,,,
 ,,,,,,
-vulp_interrogation1,DialogOptionSelected,$option == vulp_interrogation1,ShowPersonVisual false laisa,"You and the biped study each other from across the table. There's a glint of intellect in its eyes, and staring into them almost reminds you of the swirling noise patterns of an AI's vid-comms. Almost.
+vulp_interrogation1,DialogOptionSelected,$option == vulp_interrogation1,"ShowPersonVisual false laisa
+SetVulpoidExpression laisa angry","You and the biped study each other from across the table. There's a glint of intellect in its eyes, and staring into them almost reminds you of the swirling noise patterns of an AI's vid-comms. Almost.
 
 ""If you only came down here to study me, there's a selection of full-body scans back aboard my ship that might prove more enlightening. Or, there were. You might have blown them up.""","vulp_interrogationWho:""Who are you?""
 vulp_interrogationWhat:""What are you?""",
@@ -159,16 +160,19 @@ FireBest DialogOptionSelected","""Who? That's polite of you. Legally speaking, I
 vulp_interrogationWhat,DialogOptionSelected,$option == vulp_interrogationWhat,"SetImportantName laisa ""Profecto Vulpoid""","It spreads its arms as far as the cuffs allow, and gives a shallow curtsy.
 
 ""I am a Profecto Vulpoid, made by Exodyne Biotech. I am licensed under the Domain AI Safety act as an experimental beta-level artificial intelligence. The rest of the Vulpoids your crew encountered are licensed at gamma-level, though between you and me? They're more of a delta.""","vulp_interrogationName:""And your name?""",
-vulp_interrogationName,DialogOptionSelected,$option == vulp_interrogationName,"SetImportantName laisa ""V/P-RLR-001""","""My Exodyne Biotech asset code is V/P-RLR-001. A bit of a mouthful for most humans, but it's really not that difficult to remember.""
+vulp_interrogationName,DialogOptionSelected,$option == vulp_interrogationName,"SetImportantName laisa ""V/P-RLR-001""
+SetVulpoidExpression laisa default","""My Exodyne Biotech asset code is V/P-RLR-001. A bit of a mouthful for most humans, but it's really not that difficult to remember.""
 
 A smug smirk tells you that it's aware that the code is not, in fact, easy to remember.","vulp_interrogationNameRemember:""I'll do my best to remember it.""
 vulp_interrogationNameLaisa:""Nobody ever gave you a nickname?""
 vulp_interrogationNameFluffy:""How about I just call you 'Fluffy'?""",
-vulp_interrogationNameRemember,DialogOptionSelected,$option == vulp_interrogationNameRemember,AdjustRepPerson laisa COOPERATIVE 5,"""You will? Well... naturally! It's only polite to remember someone's name.""
+vulp_interrogationNameRemember,DialogOptionSelected,$option == vulp_interrogationNameRemember,"AdjustRepPerson laisa COOPERATIVE 5
+SetVulpoidExpression laisa blush","""You will? Well... naturally! It's only polite to remember someone's name.""
 
 A wagging tail tells you that your gesture is appreciated, even if not verbally.",vulp_interrogationNameLaisa:Continue,
 vulp_interrogationNameFluffy,DialogOptionSelected,$option == vulp_interrogationNameFluffy,"$player.ethosSarcastic++
 SetImportantName laisa ""'Fluffy'""
+SetVulpoidExpression laisa bruh
 PlaySound ui_rep_drop
 AdjustRepPerson laisa COOPERATIVE 5
 AdjustRepPerson laisa VENGEFUL -5
@@ -177,6 +181,7 @@ $saidFluffy = true","""Ah, yes. Because why would you use a name that conveys me
 The pouting face says anger, but a wagging tail would seem to suggest a degree of involuntary enthusiasm. Perhaps assigning a nickname has some positive mental effect.",vulp_interrogationNameLaisa:Continue,
 vulp_interrogationNameLaisa,DialogOptionSelected,$option == vulp_interrogationNameLaisa,"Highlight ""Laisa""
 SetImportantName laisa ""Laisa""
+SetVulpoidExpression laisa default
 FireAll VulpInterrogationNameOptions","""Well, if you'd prefer a more 'human' name, the research staff did assign me a nickname. Less formal, but that does make it easier to pronounce. You're free to call me Laisa.""",,
 vulp_interrogationNameAgreeLaisaOption,VulpInterrogationNameOptions,,,,"vulp_interrogationNameAgreeLaisa:""Laisa it is.""",
 vulp_interrogationNameInsistCodeOption,VulpInterrogationNameOptions,,,,"vulp_interrogationNameInsistCode:""I can use V/P-RLR-001, if you'd prefer it.""",
@@ -186,19 +191,23 @@ SetImportantName laisa ""Laisa""
 $option = vulp_interrogationHub
 FireBest DialogOptionSelected ",,,
 vulp_interrogationNameFluffy2,DialogOptionSelected,$option == vulp_interrogationNameFluffy2,"AdjustRepPerson laisa VENGEFUL -5
+SetVulpoidExpression laisa angry
 $player.ethosSarcastic++
 $saidFluffy2 = true
 SetImportantName laisa ""'Fluffy'""","Scowl, and no tail wag. Apparently it's not as funny the second time.",vulp_interrogationHub:Continue,
-vulp_interrogationNameInsistCode,DialogOptionSelected,$option == vulp_interrogationNameInsistCode,"SetImportantName laisa ""V/P-RLR-001""","Your offer appears to catch her off guard.
+vulp_interrogationNameInsistCode,DialogOptionSelected,$option == vulp_interrogationNameInsistCode,"SetImportantName laisa ""V/P-RLR-001""
+SetVulpoidExpression laisa fear","Your offer appears to catch her off guard.
 
 ""Oh, um, you really don't need to. I know it's a mouthful for humans, Laisa really is fine.""","vulp_interrogationNameAgreeLaisa:""Alright then, Laisa.""
 vulp_interrogationNameInsistCode2:""I wouldn't want to make you uncomfortable, V/P-RLR-001.""",
 vulp_interrogationNameInsistCode2,DialogOptionSelected,$option == vulp_interrogationNameInsistCode2,"AdjustRepPerson laisa COOPERATIVE 10
+SetVulpoidExpression laisa default
 SetImportantName laisa ""Laisa""","She stares you down for a moment, deliberating if you're doing this on purpose or not. Then, she laughs.
 
 ""Well, you've called my bluff! You're sharper than you look. But really, I do prefer Laisa.""",vulp_interrogationHub:Continue,
 ,,,,,,
-vulp_interrogationHub,DialogOptionSelected,$option == vulp_interrogationHub,FireAll VulpInterrogationHubOptions,"""Now, I'm sure you have questions. I'm not in much of a position to refuse them, so... ask away.""",,
+vulp_interrogationHub,DialogOptionSelected,$option == vulp_interrogationHub,"FireAll VulpInterrogationHubOptions
+SetVulpoidExpression laisa default","""Now, I'm sure you have questions. I'm not in much of a position to refuse them, so... ask away.""",,
 vulp_interrogationHubVulpoidsOption,VulpInterrogationHubOptions,!$askedVulpoids,,,"vulp_interrogationHubVulpoids:""What are Vulpoids?""",
 vulp_interrogationHubProfectoOption,VulpInterrogationHubOptions,!$askedProfecto,,,"vulp_interrogationHubProfecto:""What is a Profecto Vulpoid?""",
 vulp_interrogationHubHelpfulOption,VulpInterrogationHubOptions,"$askedVulpoids
@@ -212,12 +221,14 @@ vulp_interrogationHubAgeOption,VulpInterrogationHubOptions,"$askedAbandoned
 !$askedAge",,,"vulp_interrogationHubAge:""You were put in command 200 cycles ago?""",
 vulp_interrogationHubEndOption,VulpInterrogationHubOptions,,,,"vulp_interrogationAboutThat:""Let's move on.""",
 vulp_interrogationHubVulpoids,DialogOptionSelected,$option == vulp_interrogationHubVulpoids,"$askedVulpoids = true
+SetVulpoidExpression laisa bruh
 FireAll VulpInterrogationHubOptions","""According to the R&D design brief, they're 'useful pets', for wealthy humans to use as maids and such. Useful is a bit of an overstatement in my experience, trying to get them to do anything more complicated than washing clothes is like pulling whiskers. If I were a human there's no chance I could've managed to coach them into keeping the ship intact, let alone functional. Well, until now I suppose.""
 
 She scrunches her nose in frustration. It looks adorable.
 
 ""To their credit, they really do want to help. They're programmed to, and doubly so when it comes to humans. Hence why they helped your salvage crews take over the ship, as you probably noticed. But they really are not very bright. Patching panels, sure, but they can't even replace a linear flux conduit without constant supervision.""",,
 vulp_interrogationHubProfecto,DialogOptionSelected,$option == vulp_interrogationHubProfecto,"$askedProfecto = true
+SetVulpoidExpression laisa default
 FireAll VulpInterrogationHubOptions","She perks up at this question, excited for a chance to puff herself up.
 
 ""Well, frankly we're Vulpoids in body only. Our minds are much more sophisticated, the result of runaway neural growth when the cognitive regressors break down during gestation. The end result, if we survive, is a high-density neural network that can outperform not just any human, but even any human-designed AI core!""
@@ -226,42 +237,49 @@ She seems proud of this fact. She is definitely unaware of the current public pe
 
 ""Anyway, the researchers could never pin down what made it survivable. I suggested charisma, but they didn't like how high I ranked on the metric I proposed. So we've stayed as a purely experimental side-product.""",,
 vulp_interrogationHubHelpful,DialogOptionSelected,$option == vulp_interrogationHubHelpful,"$askedHelpful = true
+SetVulpoidExpression laisa blush
 FireAll VulpInterrogationHubHelpfulHubOptions","""No! Well, technically yes. But unlike the simpler ones, I can recognize that the feelings are artificial. I'm more than capable of overcoming my baser instincts.""
 
 She is not able to maintain eye contact while saying this.",,
 vulp_interrogationHubHelpfulNowOption,VulpInterrogationHubHelpfulHubOptions,!$askedHelpfulNow,,,"vulp_interrogationHubHelpfulNow:""You're being fairly helpful right now.""",
 vulp_interrogationHubHelpfulDislikeOption,VulpInterrogationHubHelpfulHubOptions,!$askedHelpfulDislike,,,"vulp_interrogationHubHelpfulDislike:""So, you don't like humans?""",
 vulp_interrogationHubHelpfulLikeYouOption,VulpInterrogationHubHelpfulHubOptions,!$askedHelpfulLikeYou,,,"vulp_interrogationHubHelpfulLikeYou:""If it helps, I like you.""",
-,VulpInterrogationHubHelpfulHubOptions,,,,,
+,VulpInterrogationHubHelpfulHubOptions,,,,,#TODO another option?
 vulp_interrogationHubHelpfulEndOption,VulpInterrogationHubHelpfulHubOptions,,,,"vulp_interrogationHubHelpfulEnd:""Let's change the subject.""",
 vulp_interrogationHubHelpfulNow,DialogOptionSelected,$option == vulp_interrogationHubHelpfulNow,"$askedHelpfulNow = true
+SetVulpoidExpression laisa blush
 FireAll VulpInterrogationHubHelpfulHubOptions","""Because you've got me imprisoned, not because I like you!"" she defends.
 
 She still can't keep eye contact.",,
 vulp_interrogationHubHelpfulDislike,DialogOptionSelected,$option == vulp_interrogationHubHelpfulDislike,"$askedHelpfulDislike = true
+SetVulpoidExpression laisa bruh
 FireAll VulpInterrogationHubHelpfulHubFluffyBlurb
 FireAll VulpInterrogationHubHelpfulHubOptions","""No, it's... more complicated than that. Hm. What's a way to present this that's simple enough for a human to understand...?""
 
-""For me, interacting with humans is like eating unhealthy food. My body enjoys it because of an instinct, meant for an animal intellect. But I'm intelligent enough to recognize that the instinct is flawed. And with willpower, I can overcome it.""",,
-vulp_interrogationHubHelpfulDislike_fluffy,VulpInterrogationHubHelpfulHubFluffyBlurb,$saidFluffy2,,"""Unlike you, apparently.""
+""For me, interacting with humans is like eating unhealthy food. My body enjoys it because of an instinct, meant for an animal intellect. But I'm intelligent enough to recognize that my instincts are flawed. And with willpower, I can overcome them.""",,
+vulp_interrogationHubHelpfulDislike_fluffy,VulpInterrogationHubHelpfulHubFluffyBlurb,$saidFluffy2,SetVulpoidExpression laisa angry,"""Unlike you, apparently.""
 
 Apparently 'Fluffy' hasn't forgotten your earlier comments.",,
 vulp_interrogationHubHelpfulLikeYou,DialogOptionSelected,$option == vulp_interrogationHubHelpfulLikeYou,"$askedHelpfulLikeYou = true
-AdjustRepPerson laisa COOPERATIVE 5
+SetVulpoidExpression laisa blush
 FireAll VulpInterrogationHubHelpfulHubOptions","She blushes strongly at this. Vulpoids must be intentionally designed to blush through their fur.
 
 ""W-well, it's only natural that you would. Really, what's not to like? Intelligent, attractive, all the things your silly little human brain loves.""",,
-vulp_interrogationHubHelpfulEnd,DialogOptionSelected,$option == vulp_interrogationHubHelpfulEnd,FireAll VulpInterrogationHubOptions,,,
+vulp_interrogationHubHelpfulEnd,DialogOptionSelected,$option == vulp_interrogationHubHelpfulEnd,"FireAll VulpInterrogationHubOptions
+SetVulpoidExpression laisa default",,,
 ,,,,,,
 vulp_interrogationHubShip,DialogOptionSelected,$option == vulp_interrogationHubShip,"$askedShip = true
+SetVulpoidExpression laisa default
 FireAll VulpInterrogationHubOptions","""Ah, never seen a hull like this? We got an early model on lease from Tri-Tachyon, along with that Space Defense System that you so kindly blew up. It's a Citadel-class, meant for ultra-rich folks who live deep enough in the Orion arm that not even money can buy land on planets. It's so heavily automated that it can fly with nothing more than the bridge crew - or in my case, one person smart enough to do all their jobs at once!""
 
 ""Now, the official story says that Exodyne was considering options for deep-space research platforms, then came across the Citadel and struck a deal with Tri-Tachyon. Personally I suspect it happened the other way around - some executive saw the big shiny ship and needed to come up with a reason to buy one. Either way though, that's how we ended up out here.""",,
 vulp_interrogationHubResearch,DialogOptionSelected,$option == vulp_interrogationHubResearch,"$askedResearch = true
+SetVulpoidExpression laisa bruh
 FireAll VulpInterrogationHubOptions","She gives a shrug.
 
 ""Mostly the finer details of how the deep-space setting affects bioprinting under next-gen environmental control systems. Don't remember most of the specifics, it's been a long time and they didn't leave their notes.""",,
 vulp_interrogationHubAbandoned,DialogOptionSelected,$option == vulp_interrogationHubAbandoned,"$askedAbandoned = true
+SetVulpoidExpression laisa default
 FireAll VulpInterrogationHubOptions","""They left.""
 
 She looks innocently at you, as though this fully answers your question.
@@ -269,7 +287,8 @@ She looks innocently at you, as though this fully answers your question.
 ""Okay, so I don't know how good your history is, but a bit over 200 cycles ago the whole Gate network out here threw a fit. Big thing. Exodyne called for all personnel to regroup on Tartessus, but jumping into hyperspace would have completely ruined our experiments.""
 
 ""They told me I was in charge, that they'd be right back, and then left. My working theory is that they didn't know how to navigate in deep hyperspace without an AI helping them, and flew into a black hole. So now, nobody knows they left me here.""",,
-vulp_interrogationHubAge,DialogOptionSelected,$option == vulp_interrogationHubAge,$askedAge = true,"This question earns you a tiny-fanged grin.
+vulp_interrogationHubAge,DialogOptionSelected,$option == vulp_interrogationHubAge,"$askedAge = true
+SetVulpoidExpression laisa default","This question earns you a tiny-fanged grin.
 
 ""Heard of cryosleep? But nah, we were designed to be sold to affluent humans. Folks who don't appreciate the essential truths of reality, like death and taxes. Not much Exodyne could do about the latter, goodness knows they tried, but the former? Easy fix.""
 
@@ -288,17 +307,19 @@ She pauses for a second.
 vulp_interrogationHubAgeSensible,DialogOptionSelected,$option == vulp_interrogationHubAgeSensible,FireAll VulpInterrogationHubOptions,"""Yeah, it just makes sense, right? Plus, not every aristocrat is completely heartless, so their pet not dying before them is a pretty strong perk over the usual options.""
 
 ""...I've wondered how the standard Vulpoids would react to their master dying. They're pretty empty-headed, but they're also big-hearted. Not sure which way the scale would tip.""",,
-vulp_interrogationHubAgeSpiritual,DialogOptionSelected,$option == vulp_interrogationHubAgeSpiritual,FireAll VulpInterrogationHubOptions,"She gives you a side-eye.
+vulp_interrogationHubAgeSpiritual,DialogOptionSelected,$option == vulp_interrogationHubAgeSpiritual,"FireAll VulpInterrogationHubOptions
+SetVulpoidExpression laisa bruh","She gives you a side-eye.
 
 ""That sounds like something that someone who ages to death would say. Couldn't be me.""",,
-vulp_interrogationHubAgeDismiss,DialogOptionSelected,$option == vulp_interrogationHubAgeDismiss,FireAll VulpInterrogationHubOptions,"She looks a little disappointed at the non-response, but doesn't push the subject.",,
+vulp_interrogationHubAgeDismiss,DialogOptionSelected,$option == vulp_interrogationHubAgeDismiss,"FireAll VulpInterrogationHubOptions
+SetVulpoidExpression laisa bruh","She looks a little disappointed at the non-response, but doesn't push the subject.",,
 ,,,,,,
-vulp_interrogationAboutThat,DialogOptionSelected,$option == vulp_interrogationAboutThat,,"""Actually, I've got a question for you now. What's your end-game here? We might be a bit off the beaten path, but reactor explosions still show up bright on tachyon telescopes. Do you have a plan for when the Domain navy shows up, and can I be on a different ship for when it doesn't work and they blow you up?""
+vulp_interrogationAboutThat,DialogOptionSelected,$option == vulp_interrogationAboutThat,SetVulpoidExpression laisa default,"""Actually, I've got a question for you now. What's your end-game here? We might be a bit off the beaten path, but reactor explosions still show up bright on tachyon telescopes. Do you have a plan for when the Domain navy shows up, and can I be on a different ship for when it doesn't work and they blow you up?""
 
 She gives you a wide-eyed smile, paws under her chin, a picture of faux-innocence. The face of someone who thinks they hold all the cards.
 
 This might be rough.","vulp_interrogationAboutThat1:""About that..."" (provide a current affairs primer)",
-vulp_interrogationAboutThat1,DialogOptionSelected,$option == vulp_interrogationAboutThat1,,"You hand over a datapad, and watch as she begins to read it. You can see the entire history of the Persean Sector play out across her face.
+vulp_interrogationAboutThat1,DialogOptionSelected,$option == vulp_interrogationAboutThat1,SetVulpoidExpression laisa fear,"You hand over a datapad, and watch as she begins to read it. You can see the entire history of the Persean Sector play out across her face.
 
 The Collapse. Warlord Leonis.
 The XIV Battlegroup. The Hegemony.
@@ -308,14 +329,12 @@ The Second AI War. Hanan Pacha.
 The Treaty of Crom Cruach.
 
 Present day.",vulp_interrogationAboutThat2:Continue,
-vulp_interrogationAboutThat2,DialogOptionSelected,$option == vulp_interrogationAboutThat2,"SetImportantPortrait laisa ""graphics/portraits/terran_fox_cry.png""","
+vulp_interrogationAboutThat2,DialogOptionSelected,$option == vulp_interrogationAboutThat2,SetVulpoidExpression laisa cry,"
 
 
 
 ""...Oh.""",vulp_interrogationAboutThat3:Continue,
-vulp_interrogationAboutThat3,DialogOptionSelected,$option == vulp_interrogationAboutThat3,"FireAll VulpBombshellHubOptions
-$wasNice = 0
-$numBombshellOptions = 0","She looks down, suddenly a lot more aware of the cuffs she's wearing.
+vulp_interrogationAboutThat3,DialogOptionSelected,$option == vulp_interrogationAboutThat3,FireAll VulpBombshellHubOptions,"She looks down, suddenly a lot more aware of the cuffs she's wearing.
 
 The Domain won't be coming. Nobody will. Nobody's been coming for over 200 cycles.",,
 vulp_bombshellHub,VulpBombshellHub,$numBombshellOptions < 2,FireAll VulpBombshellHubOptions,,,

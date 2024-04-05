@@ -4,7 +4,9 @@ import com.fs.starfarer.api.Global;
 import com.fs.starfarer.api.campaign.econ.MarketAPI;
 import com.fs.starfarer.api.characters.MarketSkillEffect;
 import com.fs.starfarer.api.characters.PersonAPI;
+import com.fs.starfarer.api.impl.campaign.ids.Ranks;
 import vulpoids.impl.campaign.VulpoidCreator;
+import vulpoids.impl.campaign.ids.Vulpoids;
 
 
 public class VulpoidBrain {
@@ -22,24 +24,19 @@ public class VulpoidBrain {
         @Override
         public void apply(MarketAPI market, String id, float level) {
             market.getAccessibilityMod().modifyFlat(id, ACCESS, SKILL_NAME);
-            
-            // Adding to comms, and giving the custom picture!
             admin = market.getAdmin();
-            
+            admin.setPostId(Ranks.POST_ADMINISTRATOR);
             market.getCommDirectory().addPerson(admin, 0);
-            market.getMemoryWithoutUpdate().set("$vulpoidAdmin", admin);
             admin.setPortraitSprite(VulpoidCreator.getPortraitForMarket(market, false, false, false));
-            
         }
         @Override
         public void unapply(MarketAPI market, String id) {
             market.getAccessibilityMod().unmodifyFlat(id);
-            
-            // Comm Directory
-            market.getMemoryWithoutUpdate().unset("$vulpoidAdmin");
             if(admin != null) {
                 market.getCommDirectory().removePerson(admin);
-                Global.getSector().getPlayerStats().getAdminNumber().unmodifyFlat(admin.getId());
+                // This doesn't work for some reason. Haven't been able to figure it out.
+                String default_portrait = admin.getMemoryWithoutUpdate().getString(Vulpoids.KEY_DEFAULT_PORTRAIT);
+                if (default_portrait != null) admin.setPortraitSprite(default_portrait);
             }
         }
         @Override
@@ -82,7 +79,7 @@ public class VulpoidBrain {
     public static class Level3 implements MarketSkillEffect {
         @Override
         public void apply(MarketAPI market, String id, float level) {
-            Global.getSector().getPlayerStats().getAdminNumber().modifyFlat(market.getId(), ADMIN_CAP_BONUS);
+            Global.getSector().getPlayerStats().getAdminNumber().modifyFlat(market.getId(), ADMIN_CAP_BONUS, SKILL_NAME);
         }
         @Override
         public void unapply(MarketAPI market, String id) {

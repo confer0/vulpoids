@@ -48,6 +48,7 @@ import com.fs.starfarer.api.util.Misc;
 import java.util.ArrayList;
 import java.util.List;
 import vulpoids.impl.campaign.VulpoidCreator;
+import vulpoids.impl.campaign.ids.Vulpoids;
 
 public class VulpoidBiofactoryMission extends HubMissionWithSearch implements FleetEventListener {
     
@@ -179,7 +180,8 @@ public class VulpoidBiofactoryMission extends HubMissionWithSearch implements Fl
         triggerCreateFleet(size, quality, Factions.REMNANTS, FleetTypes.PATROL_LARGE, data.system);
         //triggerSetFleetOfficers(oNum, oQuality);
         triggerAutoAdjustFleetSize(size, size.next());
-        triggerSetFleetFaction(Factions.REMNANTS);
+        //triggerSetFleetFaction(Factions.REMNANTS);
+        triggerSetFleetFaction(Vulpoids.FACTION_EXODYNE);
         triggerFleetSetNoFactionInName();
         triggerFleetSetName("Abnormal Automated Fleet");
         triggerFleetAddTags(Tags.NEUTRINO_HIGH);
@@ -205,8 +207,9 @@ public class VulpoidBiofactoryMission extends HubMissionWithSearch implements Fl
         FleetMemberAPI member = fleet.getFleetData().addFleetMember("vulp_geck_Terraformer");
         member.setShipName("EBTS Rellrait");
         flagship_captain = VulpoidCreator.createSuitedVulpoid(planet.getMarket());
-        flagship_captain.setPortraitSprite("graphics/portraits/anonymous_fox.png");
-        flagship_captain.setFaction(Factions.NEUTRAL);
+        flagship_captain.setPortraitSprite("graphics/portraits/vulpoid/spacer/military.png");
+        //flagship_captain.setFaction(Factions.NEUTRAL);
+        flagship_captain.setFaction(Vulpoids.FACTION_EXODYNE);
         flagship_captain.setName(new FullName("Unknown", "", FullName.Gender.FEMALE));
         flagship_captain.setRankId(null);
         flagship_captain.setPostId(Ranks.POST_FLEET_COMMANDER);

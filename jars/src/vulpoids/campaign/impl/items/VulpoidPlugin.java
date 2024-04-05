@@ -20,6 +20,9 @@ import com.fs.starfarer.api.graphics.SpriteAPI;
 import com.fs.starfarer.api.ui.Alignment;
 import com.fs.starfarer.api.ui.TooltipMakerAPI;
 import com.fs.starfarer.api.util.Misc;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Random;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -101,18 +104,18 @@ public class VulpoidPlugin extends BaseSpecialItemPlugin {
     }
     
     final String[] random_assignments = new String[]{
-        "Polishing some vibroknives.",
-        "Degaussing the flux capacitors.",
-        "Inspecting the life support.",
-        "Conducting field manipulation research.",
-        "Conducting particle physics research.",
-        "Conducting biology research.",
-        "Conducting industrial research.",
-        "Conducting materials research.",
-        "Brushing her fur.",
-        "Relaxing.",
-        "Slacking off.",
-        "Distracting the crew.",
+        "Idle: Polishing some vibroknives.",
+        "Idle: Degaussing the flux capacitors.",
+        "Idle: Inspecting the life support.",
+        "Idle: Conducting field manipulation research.",
+        "Idle: Conducting particle physics research.",
+        "Idle: Conducting biology research.",
+        "Idle: Conducting industrial research.",
+        "Idle: Conducting materials research.",
+        "Idle: Brushing her fur.",
+        "Idle: Relaxing.",
+        "Idle: Slacking off.",
+        "Idle: Distracting the crew.",
     };
     
     
@@ -133,6 +136,16 @@ public class VulpoidPlugin extends BaseSpecialItemPlugin {
             stack.getSpecialDataIfSpecial().setData(jsonStr);
         }
         person = jsonToPerson(jsonStr);
+        
+        //Re-set the portraits. Just doing it out here as a failsafe.
+        String role_portrait = null;
+        switch(getId()) {
+            case Vulpoids.SPECIAL_ITEM_DEFAULT: role_portrait = person.getMemoryWithoutUpdate().getString(Vulpoids.KEY_DEFAULT_PORTRAIT); break;
+            case Vulpoids.SPECIAL_ITEM_EMBARKED: role_portrait = person.getMemoryWithoutUpdate().getString(Vulpoids.KEY_DEFAULT_PORTRAIT); break;
+            case Vulpoids.SPECIAL_ITEM_OFFICER: role_portrait = person.getMemoryWithoutUpdate().getString(Vulpoids.KEY_OFFICER_PORTRAIT); break;
+            case Vulpoids.SPECIAL_ITEM_ADMIN: role_portrait = person.getMemoryWithoutUpdate().getString(Vulpoids.KEY_DEFAULT_PORTRAIT); break;
+        }
+        if (role_portrait != null) person.setPortraitSprite(role_portrait);
         
         refreshPerson();
     }
@@ -202,12 +215,8 @@ public class VulpoidPlugin extends BaseSpecialItemPlugin {
         //SpriteAPI sprite = Global.getSettings().getSprite(person.getPortraitSprite());
         SpriteAPI sprite = Global.getSettings().getSprite("cargo", "vulp_shiny");
         // TODO - this should be somewhere else.
-        String person_sprite = person.getMemoryWithoutUpdate().getString("$vulp_cargoIcon");
+        String person_sprite = person.getMemoryWithoutUpdate().getString(Vulpoids.KEY_CARGO_ICON);
         if(person_sprite != null) sprite = Global.getSettings().getSprite(person_sprite);
-        //if(person.getPortraitSprite().contains("winter")) sprite = Global.getSettings().getSprite("graphics/icons/cargo/vulpoid_shiny_winter.png");
-        //if(person.getPortraitSprite().contains("terran")) sprite = Global.getSettings().getSprite("graphics/icons/cargo/vulpoid_shiny_terran.png");
-        //if(person.getPortraitSprite().contains("desert")) sprite = Global.getSettings().getSprite("graphics/icons/cargo/vulpoid_shiny_desert.png");
-        
         //sprite.setAlphaMult(alphaMult);
         //sprite.setNormalBlend();
         sprite.renderWithCorners(blX, blY, tlX, tlY, trX, trY, brX, brY);
@@ -249,22 +258,12 @@ public class VulpoidPlugin extends BaseSpecialItemPlugin {
         b = Misc.getPositiveHighlightColor();
         
         Color pink = new Color(226, 143, 173);
-        Color darkpink = new Color(255, 91, 165);
-        //tooltip.addTitle(getName(), pink);
-        
-        /*String design = getDesignType();
-        if (design != null) {
-            Misc.addDesignTypePara(tooltip, design, 10f);
-        }*/
+        Color white = new Color(255,255,255);
         
         TooltipMakerAPI portrait = tooltip.beginImageWithText(person.getPortraitSprite(), 128, tooltip.getWidthSoFar(), false);
-        String role = "";
-        if (Vulpoids.SPECIAL_ITEM_EMBARKED.equals(getId())) role = "Passenger ";
-        if (Vulpoids.SPECIAL_ITEM_OFFICER.equals(getId())) role = "Officer ";
-        if (Vulpoids.SPECIAL_ITEM_ADMIN.equals(getId())) role = "Administrator ";
-        portrait.addTitle(role+getName(), pink);
+        portrait.addTitle(getName(), pink);
         portrait.addRelationshipBar(person, pad);
-        if (null != getId()) switch (getId()) {
+        switch (getId()) {
             case Vulpoids.SPECIAL_ITEM_DEFAULT:
                 //portrait.addPara("Profecto Vulpoids are a rare, highly intelligent mutation. They retain a powerful innate "+
                 //        "desire to help humans, though are self-aware enough to resist it. Considered beta-level AI, and "+
@@ -287,13 +286,17 @@ public class VulpoidPlugin extends BaseSpecialItemPlugin {
                         "awareness makes them capable negotiators and people-pleasers. Few humans can hope to match their "+
                         "aptitude.", opad);
                 break;
-            default:
-                break;
         }
         tooltip.addImageWithText(opad);
         
-        
-        tooltip.addSectionHeading("Assignment", pink, darkpink, Alignment.MID, opad);
+        String assignment_text = "Assignment";
+        switch(getId()) {
+            case Vulpoids.SPECIAL_ITEM_DEFAULT: assignment_text = "No Assignment"; break;
+            case Vulpoids.SPECIAL_ITEM_EMBARKED: assignment_text = "Embarked on Fleet"; break;
+            case Vulpoids.SPECIAL_ITEM_OFFICER: assignment_text = "Serving as Officer"; break;
+            case Vulpoids.SPECIAL_ITEM_ADMIN: assignment_text = "Serving as Administrator"; break;
+        }
+        tooltip.addSectionHeading(assignment_text, white, pink, Alignment.MID, opad);
         String assignment = disallowCycleReason();
         if (assignment != null) {
             tooltip.addPara(assignment, opad);
@@ -302,45 +305,59 @@ public class VulpoidPlugin extends BaseSpecialItemPlugin {
             tooltip.addPara(assignment, Misc.getGrayColor(), opad);
         }
         
-        tooltip.addSectionHeading("Skills", pink, darkpink, Alignment.MID, opad);
-        
-        for (SkillLevelAPI skill : person.getStats().getSkillsCopy()) {
-            if(skill.getLevel() > 0) {
-                tooltip.beginImageWithText(skill.getSkill().getSpriteName(), 36).addPara(skill.getSkill().getName(), pad);
-                tooltip.addImageWithText(opad);
+        ArrayList<SkillLevelAPI> skills = new ArrayList(person.getStats().getSkillsCopy());
+        Collections.sort(skills, new Comparator<SkillLevelAPI>() {
+            @Override
+            public int compare(SkillLevelAPI o1, SkillLevelAPI o2) {
+                return (int)(o1.getSkill().getOrder() - o2.getSkill().getOrder());
             }
-        }
+        });
         
-        //tooltip.addSkillPanel(person, opad);
+        //BaseEventIntel :)
         
-        /*if (!spec.getDesc().isEmpty()) {
-            tooltip.addPara(spec.getDesc(), Misc.getTextColor(), opad);
-        }
-
-        addCostLabel(tooltip, opad, transferHandler, stackSource);
-
-        tooltip.addPara("Right-click to integrate the " + getName() + " with your fleet", b, opad);
-        switch(getId()) {
-            case Vulpoids.SPECIAL_ITEM_DEFAULT: tooltip.addPara("IDLE", opad); break;
-            case Vulpoids.SPECIAL_ITEM_OFFICER: tooltip.addPara("OFFICER", opad); break;
-            case Vulpoids.SPECIAL_ITEM_ADMIN: tooltip.addPara("ADMIN", opad); break;
-        }
-        tooltip.addPara("Item Id: "+getId(), b, opad);
-        tooltip.addPara("Item Spec Name: "+getSpec().getName(), b, opad);
-        tooltip.addPara("Data: "+stack.getSpecialDataIfSpecial().getData(), b, opad);
-        tooltip.addPara("Person ID: "+person.getId(), b, opad);
-        tooltip.addPara("Person Name: "+person.getNameString(), b, opad);
-        tooltip.addPara("Admin Number: "+person.getStats().getAdminNumber().getModifiedInt(), b, opad);
+        TooltipMakerAPI skillTooltip = tooltip.beginSubTooltip(tooltip.getWidthSoFar());
         
-        //tooltip.addTitle("Skill Panel");
-        //tooltip.addSkillPanel(person, opad);  // Doesn't seem to work?
-        for (SkillLevelAPI skill : person.getStats().getSkillsCopy()) {
-            if(skill.getLevel() > 0) tooltip.addImage(skill.getSkill().getSpriteName(), opad);
-        }
-        //tooltip.addImages(64, 64, opad, 64, strings);*/
-        //tooltip.addPara(stack.getSpecialDataIfSpecial().getData(), b, opad);
+        TooltipMakerAPI adminTooltip = skillTooltip.beginSubTooltip(tooltip.getWidthSoFar()/2-opad);
+        adminTooltip.addSectionHeading("Industrial Skills", white, pink, Alignment.MID, 0);
+        addSkillsToTooltip(adminTooltip, skills, expanded, false, true, opad);
+        skillTooltip.endSubTooltip();
+        
+        TooltipMakerAPI officerTooltip = skillTooltip.beginSubTooltip(tooltip.getWidthSoFar()/2-opad);
+        officerTooltip.addSectionHeading("Combat Skills", white, pink, Alignment.MID, 0);
+        addSkillsToTooltip(officerTooltip, skills, expanded, true, false, opad);
+        skillTooltip.endSubTooltip();
+        
+        float factorHeight = Math.max(adminTooltip.getHeightSoFar(), officerTooltip.getHeightSoFar());
+        adminTooltip.setHeightSoFar(factorHeight);
+        officerTooltip.setHeightSoFar(factorHeight);
+        
+        skillTooltip.addCustom(adminTooltip, 0);
+	skillTooltip.addCustomDoNotSetPosition(officerTooltip).getPosition().rightOfTop(adminTooltip, opad);
+        skillTooltip.setHeightSoFar(factorHeight);
+        
+        tooltip.endSubTooltip();
+        tooltip.addCustom(skillTooltip, opad);
+        
         tooltip.addPara("Market value: %s", opad, Misc.getHighlightColor(), Misc.getDGSCredits(getPrice(null, null)));
         tooltip.addPara("Right-click to cycle jobs", Misc.getHighlightColor(), opad);
+    }
+    
+    private void addSkillsToTooltip(TooltipMakerAPI tooltip, ArrayList<SkillLevelAPI> skills, boolean expanded, boolean officer, boolean admin, float pad) {
+        ArrayList<SkillLevelAPI> valid_skills = new ArrayList();
+        for (SkillLevelAPI skill : skills) {
+            if ( skill.getLevel()>0 &&
+                    ((officer && skill.getSkill().isCombatOfficerSkill()) ||
+                    (admin && skill.getSkill().isAdminSkill())) )
+                valid_skills.add(skill);
+        }
+        if (valid_skills.isEmpty()) {
+            tooltip.addPara("None", pad);
+        } else {
+            for (SkillLevelAPI skill : valid_skills) {
+                tooltip.beginImageWithText(skill.getSkill().getSpriteName(), 36).addPara(skill.getSkill().getName(), 0);
+                tooltip.addImageWithText(pad);
+            }
+        }
     }
 
     @Override
@@ -360,6 +377,7 @@ public class VulpoidPlugin extends BaseSpecialItemPlugin {
     
     
     private static boolean stacksHaveSamePerson(CargoStackAPI a, CargoStackAPI b) {
+        if(a.getPlugin() != b.getPlugin()) return false;
         try {
             JSONObject json_a = new JSONObject(a.getSpecialDataIfSpecial().getData());
             JSONObject json_b = new JSONObject(b.getSpecialDataIfSpecial().getData());
@@ -427,6 +445,7 @@ public class VulpoidPlugin extends BaseSpecialItemPlugin {
                     new_id = Vulpoids.SPECIAL_ITEM_DEFAULT;
                     break;
             }
+            Global.getSoundPlayer().playUISound("ui_cargo_crew", 1f, 1f);
             stack.getCargo().addSpecial(new SpecialItemData(new_id, personToJson(person)), 1);
         } else {
             Global.getSector().getCampaignUI().getMessageDisplay().addMessage(disallowReason, Misc.getNegativeHighlightColor());

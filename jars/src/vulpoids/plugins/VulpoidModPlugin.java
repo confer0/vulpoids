@@ -37,20 +37,22 @@ public class VulpoidModPlugin extends BaseModPlugin {
         if (ip.getPerson(Vulpoids.PERSON_LAISA) == null) {
             person = VulpoidCreator.createPrefectoVulpoid(null);
             person.setId(Vulpoids.PERSON_LAISA);
-            person.setFaction(Factions.DERELICT);
-            person.setName(new FullName("Biped Captain", "", FullName.Gender.FEMALE));
+            person.setFaction(Vulpoids.FACTION_EXODYNE);
+            person.setName(new FullName("Laisa", "", FullName.Gender.FEMALE));
             person.setRankId(null);
             person.setPostId(Ranks.POST_FLEET_COMMANDER);
             person.getRelToPlayer().setRel(-0.3f);  // Inhospitable by default. Frankly, if she weren't a Vulpoid she'd be much angrier at you for blowing up her ship.
-            person.setPortraitSprite("graphics/portraits/terran_fox.png");
-            person.getMemoryWithoutUpdate().set("$vulp_cargoIcon", "graphics/icons/cargo/vulpoids/vulpoid_laisa.png");
+            person.setPortraitSprite("graphics/portraits/vulpoid/laisa/clothed/default.png");
+            person.getMemoryWithoutUpdate().set(Vulpoids.KEY_DEFAULT_PORTRAIT, "graphics/portraits/vulpoid/laisa/clothed/default.png");
+            person.getMemoryWithoutUpdate().set(Vulpoids.KEY_OFFICER_PORTRAIT, "graphics/portraits/vulpoid/laisa/laisa_special_admiral.png");
+            person.getMemoryWithoutUpdate().set(Vulpoids.KEY_CARGO_ICON, "graphics/icons/cargo/vulpoids/vulpoid_laisa.png");
             ip.addPerson(person);
         }
         
         
         
         
-        person = VulpoidCreator.createVulpoid(null);
+        /*person = VulpoidCreator.createVulpoid(null);
         person.setId("vulpoid_shiny_generic");
         person.setName(new FullName("Profecto Vulpoid", "", FullName.Gender.FEMALE));
         person.setPortraitSprite("graphics/portraits/terran_fox.png");
@@ -104,7 +106,7 @@ public class VulpoidModPlugin extends BaseModPlugin {
         person.setPostId("vulp_barmaid");
         person.setPortraitSprite("graphics/portraits/nude_terran_fox.png");
         ip.removePerson(person.getId());
-        ip.addPerson(person);
+        ip.addPerson(person);*/
         
         
         
@@ -119,7 +121,7 @@ public class VulpoidModPlugin extends BaseModPlugin {
                         b.supply(spec.getId(), Commodities.ORGANS, -100, Misc.ucFirst(spec.getName().toLowerCase()));
                     } else if ("biofacility".equals(b.getId())) {
                         b.supply(spec.getId(), Commodities.ORGANS, 1, "Vulpoid reprocessing");
-                        b.supply(spec.getId(), Commodities.DRUGS, 1, "Vulpoid reprocessing");
+                        //b.supply(spec.getId(), Commodities.DRUGS, 1, "Vulpoid reprocessing");
                     }
                     b.demand(spec.getId(), Commodities.RARE_METALS, 1, Misc.ucFirst(spec.getName().toLowerCase()));
                     b.supply(spec.getId(), "vulpoids", size-3, Misc.ucFirst(spec.getName().toLowerCase()));
@@ -149,7 +151,7 @@ public class VulpoidModPlugin extends BaseModPlugin {
                 if (industry instanceof BaseIndustry) {
                     BaseIndustry b = (BaseIndustry) industry;
                     b.supply(spec.getId(), Commodities.ORGANS, 0, Misc.ucFirst(spec.getName().toLowerCase()));
-                    b.supply(spec.getId(), Commodities.DRUGS, 0, Misc.ucFirst(spec.getName().toLowerCase()));
+                    //b.supply(spec.getId(), Commodities.DRUGS, 0, Misc.ucFirst(spec.getName().toLowerCase()));
                     b.supply(spec.getId(), "vulpoids", -100, null);
                     b.demand(spec.getId(), Commodities.RARE_METALS, 0, null);
                     

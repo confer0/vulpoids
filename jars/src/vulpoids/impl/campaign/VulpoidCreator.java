@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
+import vulpoids.impl.campaign.ids.Vulpoids;
 
 public class VulpoidCreator {
     
@@ -34,9 +35,6 @@ public class VulpoidCreator {
         person.getStats().setSkillLevel("vulpoid_brain", 1);
         person.getStats().setSkillLevel("vulpoid_luxury", 1);
         person.setRankId("vulp_profecto");
-        if(person.getPortraitSprite().contains("winter")) person.getMemoryWithoutUpdate().set("$vulp_cargoIcon", Global.getSettings().getSpriteName("cargo", "vulp_shiny_winter"));
-        if(person.getPortraitSprite().contains("terran")) person.getMemoryWithoutUpdate().set("$vulp_cargoIcon", Global.getSettings().getSpriteName("cargo", "vulp_shiny_terran"));
-        if(person.getPortraitSprite().contains("desert")) person.getMemoryWithoutUpdate().set("$vulp_cargoIcon", Global.getSettings().getSpriteName("cargo", "vulp_shiny_desert"));
         return person;
     }
     
@@ -47,7 +45,11 @@ public class VulpoidCreator {
     public static PersonAPI createVulpoid(MarketAPI market, boolean force_nude, boolean force_suit, boolean randomize_climate) {
         PersonAPI person = Global.getFactory().createPerson();
         person.setName(new FullName("Vulpoid", "", FullName.Gender.FEMALE));
-        person.setPortraitSprite(getPortraitForMarket(market, force_nude, force_suit, randomize_climate));
+        String portrait = getPortraitForMarket(market, force_nude, force_suit, randomize_climate);
+        person.setPortraitSprite(portrait);
+        person.getMemoryWithoutUpdate().set(Vulpoids.KEY_DEFAULT_PORTRAIT, portrait);
+        person.getMemoryWithoutUpdate().set(Vulpoids.KEY_OFFICER_PORTRAIT, "graphics/portraits/vulpoid/spacer/military.png");
+        person.getMemoryWithoutUpdate().set(Vulpoids.KEY_CARGO_ICON, getIcon(portrait));
         if(market != null) {
             person.setFaction(market.getFactionId());
         } else {
@@ -55,89 +57,56 @@ public class VulpoidCreator {
         }
         person.setRankId("vulp_servant");
         person.setPostId(null);
-        person.getMemoryWithoutUpdate().set("$isVulpoid", true);
+        person.getMemoryWithoutUpdate().set(Vulpoids.KEY_IS_VULPOID, true);
         person.getRelToPlayer().setRel(1);
         return person;
     }
     
-    public static Map<String, String> default_sprites = new HashMap<String, String>() {{
-        put("terran", "graphics/portraits/terran_fox.png");
-        put("desert", "graphics/portraits/desert_fox.png");
-        put("winter", "graphics/portraits/winter_fox.png");
-    }};
-    public static Map<String, String> nude_sprites = new HashMap<String, String>() {{
-        put("terran", "graphics/portraits/nude_terran_fox.png");
-        put("desert", "graphics/portraits/nude_desert_fox.png");
-        put("winter", "graphics/portraits/nude_winter_fox.png");
-    }};
-    public static Map<String, String> suited_sprites = new HashMap<String, String>() {{
-        put("terran", "graphics/portraits/space_terran_fox.png");
-        put("desert", "graphics/portraits/space_desert_fox.png");
-        put("winter", "graphics/portraits/space_winter_fox.png");
-    }};
     
-    public static Map<String, String> icon_sprites = new HashMap<String, String>() {{
-        put("terran", "graphics/icons/cargo/vulpoid_shiny_terran.png");
-        put("desert", "graphics/icons/cargo/vulpoid_shiny_desert.png");
-        put("winter", "graphics/icons/cargo/vulpoid_shiny_winter.png");
-    }};
+    public static String getClimate(String portrait) {
+        return portrait.split("/")[3]; // TODO
+    }
     
+    public static String getIcon(String portrait) {
+        switch(getClimate(portrait)) {
+            case "terran": return "graphics/icons/cargo/vulpoids/vulpoid_shiny_terran.png";
+            case "desert": return "graphics/icons/cargo/vulpoids/vulpoid_shiny_desert.png";
+            case "arctic": return "graphics/icons/cargo/vulpoids/vulpoid_shiny_winter.png";
+            default: return "graphics/icons/cargo/vulpoids/vulpoid_shiny.png";
+        }
+    }
     
     public static String getPortraitForMarket(MarketAPI market, boolean force_nude, boolean force_suit, boolean randomize_climate) {
-        
-        Map<String, String> default_sprites_for_selection = default_sprites;
-        Map<String, String> suit_sprites_for_selection = suited_sprites;
-        if(force_suit) {
-            default_sprites_for_selection = suited_sprites;
-        }
-        if(force_nude) {
-            default_sprites_for_selection = nude_sprites;
-            suit_sprites_for_selection = nude_sprites;
-        }
+        String path = "graphics/portraits/vulpoid/";
+        String expression = "default.png";
+        if (!force_nude && force_suit) return path+"spacer/admin_no_atmos.png";
+        String clothing = "/clothed/";
+        if (force_nude) clothing = "/nude/";
         
         String default_climate = "terran";
         if(randomize_climate) {
             Random r = new Random();
-            ArrayList<String> climates = new ArrayList(default_sprites.keySet());
-            default_climate = climates.get(r.nextInt(climates.size()));
+            String[] climates = new String[]{"terran", "desert", "arctic"};
+            default_climate = climates[r.nextInt(climates.length)];
         }
         
         if (market == null) {
-            return default_sprites_for_selection.get(default_climate);
+            return path+default_climate+clothing+expression;
         }
         
-        if (market.getPlanetEntity() == null) {
-            // Station
-            return suit_sprites_for_selection.get(default_climate);
+        if (market.getPlanetEntity() == null || !market.hasCondition(Conditions.HABITABLE)) {
+            return path+"spacer/admin_no_atmos.png";
         } else {
-            //Planets
-            if (market.hasCondition(Conditions.HABITABLE)) {
-                switch (market.getPlanetEntity().getSpec().getPlanetType()) {
-                    case "jungle":
-                        return default_sprites_for_selection.get("terran");
-                    case Planets.PLANET_TERRAN:
-                        return default_sprites_for_selection.get("terran");
-                    case Planets.DESERT:
-                        return default_sprites_for_selection.get("desert");
-                    case Planets.DESERT1:
-                        return default_sprites_for_selection.get("desert");
-                    case Planets.ARID:
-                        return default_sprites_for_selection.get("desert");
-                    case Planets.PLANET_WATER:
-                        return default_sprites_for_selection.get("terran");
-                    case Planets.TUNDRA:
-                        return default_sprites_for_selection.get("winter");
-                    case Planets.PLANET_TERRAN_ECCENTRIC:
-                        return default_sprites_for_selection.get("winter");
-                    default:
-                        return default_sprites_for_selection.get("terran");
-                }
-            } else if (market.hasCondition(Conditions.VERY_HOT)) {
-                return suit_sprites_for_selection.get("desert");
-            } else if (market.hasCondition(Conditions.VERY_COLD)) {
-                return suit_sprites_for_selection.get("winter");
-            } else {
-                return suit_sprites_for_selection.get("terran");
+            switch (market.getPlanetEntity().getSpec().getPlanetType()) {
+                case "jungle": return path+"terran"+clothing+expression;
+                case Planets.PLANET_TERRAN: return path+"terran"+clothing+expression;
+                case Planets.DESERT: return path+"desert"+clothing+expression;
+                case Planets.DESERT1: return path+"desert"+clothing+expression;
+                case Planets.ARID: return path+"desert"+clothing+expression;
+                case Planets.PLANET_WATER: return path+"terran"+clothing+expression;
+                case Planets.TUNDRA: return path+"arctic"+clothing+expression;
+                case Planets.PLANET_TERRAN_ECCENTRIC: return path+"arctic"+clothing+expression;
+                default: return path+"terran"+clothing+expression;
             }
         }
     }

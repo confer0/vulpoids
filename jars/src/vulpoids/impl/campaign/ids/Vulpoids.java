@@ -14,4 +14,10 @@ public class Vulpoids {
     
     public static final String PERSON_LAISA = "laisa";
     
+    public static final String KEY_IS_VULPOID = "$isVulpoid";
+    public static final String KEY_DEFAULT_PORTRAIT = "$vulp_defaultPortrait";
+    public static final String KEY_OFFICER_PORTRAIT = "$vulp_officerPortrait";
+    public static final String KEY_CARGO_ICON = "$vulp_cargoIcon";
+    
+    public static final String FACTION_EXODYNE = "exodyne";
 }

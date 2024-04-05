@@ -53,7 +53,7 @@ public class OrganFarm extends BaseIndustry {
             supply(Commodities.ORGANS, size - 4);
         } else if("biofacility".equals(getId())) {
             supply(Commodities.ORGANS, size - 3);
-            supply(Commodities.DRUGS, size - 1);
+            //supply(Commodities.DRUGS, size - 1);
         }
         
         Pair<String, Integer> deficit = getMaxDeficit(Commodities.ORGANICS, Commodities.FOOD);
@@ -168,14 +168,14 @@ public class OrganFarm extends BaseIndustry {
         if (isImproved()) {
             getSupply(Commodities.ORGANS).getQuantity().modifyFlat(getModId(3), 1, getImprovementsDescForModifiers() + " (" + getNameForModifier() + ")");
             if ("biofacility".equals(getId())) {
-                getSupply(Commodities.DRUGS).getQuantity().modifyFlat(getModId(3), 1, getImprovementsDescForModifiers() + " (" + getNameForModifier() + ")");
+                //getSupply(Commodities.DRUGS).getQuantity().modifyFlat(getModId(3), 1, getImprovementsDescForModifiers() + " (" + getNameForModifier() + ")");
             }
             if (hasBiofactory()) {
                 getSupply("vulpoids").getQuantity().modifyFlat(getModId(3), 1, getImprovementsDescForModifiers() + " (" + getNameForModifier() + ")");
             }
         } else {
             getSupply(Commodities.ORGANS).getQuantity().unmodifyFlat(getModId(3));
-            getSupply(Commodities.DRUGS).getQuantity().unmodifyFlat(getModId(3));
+            //getSupply(Commodities.DRUGS).getQuantity().unmodifyFlat(getModId(3));
             getSupply("vulpoids").getQuantity().unmodifyFlat(getModId(3));
         }
     }

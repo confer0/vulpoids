@@ -1,0 +1,83 @@
+{
+	"id":"exodyne",
+	
+	"color":[201,219,4,255], # From special item
+	
+	"baseUIColor":[236,251,60,255],
+	#"darkUIColor":[31,94,112,175],
+	#"gridUIColor":[70,200,255,75],
+	
+	"displayName":"Exodyne Biotech",
+	"displayNameWithArticle":"Exodyne Biotech",
+	"logo":"graphics/factions/exodyne.png",
+	"crest": "graphics/factions/crest_exodyne.png",
+	"showInIntelTab":false,
+	"names":{
+	},
+	
+	"portraits":{
+		"standard_female":[
+			
+			"graphics/portraits/vulpoid/arctic/clothed/angry.png",
+			"graphics/portraits/vulpoid/arctic/clothed/blush.png",
+			"graphics/portraits/vulpoid/arctic/clothed/bruh.png",
+			"graphics/portraits/vulpoid/arctic/clothed/cry.png",
+			"graphics/portraits/vulpoid/arctic/clothed/default.png",
+			"graphics/portraits/vulpoid/arctic/clothed/fear.png",
+			"graphics/portraits/vulpoid/arctic/nude/angry.png",
+			"graphics/portraits/vulpoid/arctic/nude/blush.png",
+			"graphics/portraits/vulpoid/arctic/nude/bruh.png",
+			"graphics/portraits/vulpoid/arctic/nude/cry.png",
+			"graphics/portraits/vulpoid/arctic/nude/default.png",
+			"graphics/portraits/vulpoid/arctic/nude/fear.png",
+			
+			"graphics/portraits/vulpoid/desert/clothed/angry.png",
+			"graphics/portraits/vulpoid/desert/clothed/blush.png",
+			"graphics/portraits/vulpoid/desert/clothed/bruh.png",
+			"graphics/portraits/vulpoid/desert/clothed/cry.png",
+			"graphics/portraits/vulpoid/desert/clothed/default.png",
+			"graphics/portraits/vulpoid/desert/clothed/fear.png",
+			"graphics/portraits/vulpoid/desert/nude/angry.png",
+			"graphics/portraits/vulpoid/desert/nude/blush.png",
+			"graphics/portraits/vulpoid/desert/nude/bruh.png",
+			"graphics/portraits/vulpoid/desert/nude/cry.png",
+			"graphics/portraits/vulpoid/desert/nude/default.png",
+			"graphics/portraits/vulpoid/desert/nude/fear.png",
+			
+			"graphics/portraits/vulpoid/terran/clothed/angry.png",
+			"graphics/portraits/vulpoid/terran/clothed/blush.png",
+			"graphics/portraits/vulpoid/terran/clothed/bruh.png",
+			"graphics/portraits/vulpoid/terran/clothed/cry.png",
+			"graphics/portraits/vulpoid/terran/clothed/default.png",
+			"graphics/portraits/vulpoid/terran/clothed/fear.png",
+			"graphics/portraits/vulpoid/terran/nude/angry.png",
+			"graphics/portraits/vulpoid/terran/nude/blush.png",
+			"graphics/portraits/vulpoid/terran/nude/bruh.png",
+			"graphics/portraits/vulpoid/terran/nude/cry.png",
+			"graphics/portraits/vulpoid/terran/nude/default.png",
+			"graphics/portraits/vulpoid/terran/nude/fear.png",
+			
+			
+			"graphics/portraits/vulpoid/spacer/admin_no_atmos.png",
+			"graphics/portraits/vulpoid/spacer/military.png",
+			
+			
+			"graphics/portraits/vulpoid/laisa/clothed/angry.png",
+			"graphics/portraits/vulpoid/laisa/clothed/blush.png",
+			"graphics/portraits/vulpoid/laisa/clothed/bruh.png",
+			"graphics/portraits/vulpoid/laisa/clothed/cry.png",
+			"graphics/portraits/vulpoid/laisa/clothed/default.png",
+			"graphics/portraits/vulpoid/laisa/clothed/fear.png",
+			"graphics/portraits/vulpoid/laisa/nude/angry.png",
+			"graphics/portraits/vulpoid/laisa/nude/blush.png",
+			"graphics/portraits/vulpoid/laisa/nude/bruh.png",
+			"graphics/portraits/vulpoid/laisa/nude/cry.png",
+			"graphics/portraits/vulpoid/laisa/nude/default.png",
+			"graphics/portraits/vulpoid/laisa/nude/fear.png",
+			"graphics/portraits/vulpoid/laisa/laisa_special_admiral.png",
+			
+		],
+	},
+}
+
+
