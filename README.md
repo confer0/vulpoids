@@ -1,3 +1,9 @@
-Original post and artwork source: https://www.reddit.com/r/starsector/comments/1blwmzz/another_weird_concept_by_me_d/
+VULPOIDS
 
-Cargo sounds from soundsnap.org
+-Art, Lore, Ideas by Yanzihko ///
+
+-Code, Ideas and Writing by confer0 ///
+
+-Cargo sounds from soundsnap.org ///
+
+-Compatible with 0.96a and 0.97a versions of Starsector
