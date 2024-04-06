@@ -22,7 +22,7 @@ public class SecurityWorkforce extends BaseWorkforce {
         super.createTooltipAfterDescription(tooltip, expanded);
         if(shouldApply()) {
             float opad = 10f;
-            tooltip.addPara("Our Vulpoids are working with our security forces, helping to sniff out criminal elements.", opad);
+            tooltip.addPara("Our Vulpoids are working with our security forces, helping to ``sniff out`` criminal elements, using their emotional intelligence.", opad);
             tooltip.addPara("%s", opad, Misc.getHighlightColor(), "Pather activity suppressed");
         }
     }

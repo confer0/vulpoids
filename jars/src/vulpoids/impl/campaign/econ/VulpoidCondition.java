@@ -110,8 +110,9 @@ public class VulpoidCondition extends BaseMarketConditionPlugin implements Marke
             
             tooltip.addPara(name+" has a large population of Vulpoids, a cute and helpful artificial lifeform. "+
                     "Their presence drives immigration of people hoping for a more comforable life, "+
-                    "and helps placate the more rowdy parts of society.", opad);
+                    "and helps placate the more rowdy parts of society by overhelming cuteness.", opad);
             // I know what that might sound like. But I honestly wrote that with the idea of people being less aggressive when they're around.
+            // -Cuteness bit might make it sound less "questionable".
 
             tooltip.addPara("%s population growth (based on colony size)",
                     opad, Misc.getHighlightColor(), 

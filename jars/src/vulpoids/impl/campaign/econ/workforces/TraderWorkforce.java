@@ -22,7 +22,7 @@ public class TraderWorkforce extends BaseWorkforce {
         super.createTooltipAfterDescription(tooltip, expanded);
         if(shouldApply()) {
             float opad = 10f;
-            tooltip.addPara("Our Vulpoids are catering to visiting traders at the spaceports, encouraging more trade.", opad);
+            tooltip.addPara("Our Vulpoids are catering to visiting traders at the spaceports, offering free headpats and encouraging more trade.", opad);
             tooltip.addPara("%s colony income", opad, Misc.getHighlightColor(), "+" + (int)INCOME_BONUS + "%");
         }
     }
