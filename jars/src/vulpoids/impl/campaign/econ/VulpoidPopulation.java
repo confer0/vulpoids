@@ -4,17 +4,20 @@ import com.fs.starfarer.api.Global;
 import com.fs.starfarer.api.campaign.econ.Industry;
 import com.fs.starfarer.api.campaign.econ.MarketAPI;
 import com.fs.starfarer.api.campaign.econ.MarketConditionAPI;
+import com.fs.starfarer.api.campaign.econ.MarketImmigrationModifier;
 import com.fs.starfarer.api.characters.FullName;
 import com.fs.starfarer.api.characters.PersonAPI;
 import com.fs.starfarer.api.impl.campaign.econ.BaseMarketConditionPlugin;
+import com.fs.starfarer.api.impl.campaign.ids.Factions;
 import com.fs.starfarer.api.impl.campaign.ids.MemFlags;
+import com.fs.starfarer.api.impl.campaign.population.PopulationComposition;
 import com.fs.starfarer.api.ui.TooltipMakerAPI;
 import com.fs.starfarer.api.util.Misc;
 import vulpoids.impl.campaign.VulpoidCreator;
 import vulpoids.impl.campaign.econ.workforces.BaseWorkforce;
 import vulpoids.impl.campaign.intel.misc.VulpPopGrownIntel;
 
-public class VulpoidPopulation extends BaseMarketConditionPlugin {
+public class VulpoidPopulation extends BaseMarketConditionPlugin implements MarketImmigrationModifier {
     
     private float population = 0;
     final float MIN_POPULATION = 1;
@@ -116,11 +119,21 @@ public class VulpoidPopulation extends BaseMarketConditionPlugin {
         vulpoid_comms.setName(new FullName("Vulpoid Representative", "", FullName.Gender.FEMALE));
         vulpoid_comms.getMemoryWithoutUpdate().set("$isVulpoidRep", true);
         market.getCommDirectory().addPerson(vulpoid_comms);
+        
+        market.getStability().modifyFlat(id, getAvailabilityStability(), "Vulpoid Availability");
+        market.addTransientImmigrationModifier(this);
     }
 
     @Override
     public void unapply(String id) {
         market.getCommDirectory().removeEntry(market.getCommDirectory().getEntryForPerson("vulpoid_rep"));
+        market.removeTransientImmigrationModifier(this);
+    }
+    
+    public void modifyIncoming(MarketAPI market, PopulationComposition incoming) {
+        float bonus = getAvailabilityGrowth();
+        incoming.add(Factions.INDEPENDENT, bonus);
+        incoming.getWeight().modifyFlat(getModId(), bonus, "Vulpoid Availability");
     }
     
     public void removeAllWorkforceConditions() {
