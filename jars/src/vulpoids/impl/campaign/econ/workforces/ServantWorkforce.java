@@ -39,7 +39,7 @@ public class ServantWorkforce extends BaseWorkforce {
         super.createTooltipAfterDescription(tooltip, expanded);
         if(shouldApply()) {
             float opad = 10f;
-            tooltip.addPara("Our Vulpoids are distributed across every household, ensuring the entire population is attended to.", opad);
+            tooltip.addPara("Our Vulpoids are distributed across households and public spaces, ensuring the entire population is attended to.", opad);
             tooltip.addPara("%s stability", opad, Misc.getHighlightColor(), "+"+STABILITY_BONUS);
             tooltip.addPara("%s recreational drugs demand", opad, Misc.getHighlightColor(), "-"+DRUG_DEMAND_REDUCTION);
         }
