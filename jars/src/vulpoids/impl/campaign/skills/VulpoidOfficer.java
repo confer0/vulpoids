@@ -1,7 +1,5 @@
 package vulpoids.impl.campaign.skills;
 
-import com.fs.starfarer.api.characters.CharacterStatsSkillEffect;
-import com.fs.starfarer.api.characters.MutableCharacterStatsAPI;
 import com.fs.starfarer.api.characters.ShipSkillEffect;
 import com.fs.starfarer.api.combat.MutableShipStatsAPI;
 import com.fs.starfarer.api.combat.ShipAPI;
@@ -40,6 +38,19 @@ public class VulpoidOfficer {
         public void unapply(MutableShipStatsAPI mssapi, ShipAPI.HullSize hs, String string) {}
         @Override
         public String getEffectDescription(float level) {return "Skill picks: 10";}
+        @Override
+        public String getEffectPerLevelDescription() {return null;}
+        @Override
+        public ScopeDescription getScopeDescription() {return ScopeDescription.NONE;}
+    }
+    
+    public static class Level4 implements ShipSkillEffect {
+        @Override
+        public void apply(MutableShipStatsAPI mssapi, ShipAPI.HullSize hs, String string, float f) {}
+        @Override
+        public void unapply(MutableShipStatsAPI mssapi, ShipAPI.HullSize hs, String string) {}
+        @Override
+        public String getEffectDescription(float level) {return "Not affected by Officer Training";}
         @Override
         public String getEffectPerLevelDescription() {return null;}
         @Override

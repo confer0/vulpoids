@@ -11,10 +11,6 @@ import com.fs.starfarer.api.input.InputEventAPI;
 import com.fs.starfarer.api.ui.PositionAPI;
 import java.util.List;
 
-/**
- *
- * @author c.ferwerda
- */
 public class AnimatedIllustrationUIPanelPlugin implements CustomUIPanelPlugin {
     
     int frame = 0;

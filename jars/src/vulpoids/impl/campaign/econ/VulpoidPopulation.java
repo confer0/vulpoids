@@ -17,11 +17,13 @@ import vulpoids.impl.campaign.intel.misc.VulpPopGrownIntel;
 public class VulpoidPopulation extends BaseMarketConditionPlugin {
     
     private float population = 0;
+    final float MIN_POPULATION = 1;
     final float MAX_POPULATION = 10; // Just in case.
     //private int last_reported_production = 0;
     
     private int workforce_cap = 0;
     final int MIN_POPULATION_FOR_WORKFORCE = 3;
+    final float POPULATION_WORKFORCE_MULT = 0.5f; // 3>0, 4>1, 5>1, 6>2, 7>3.
     final int MAX_WORKFORCE_CAP = 4;
     
     final int MIN_AVAILABILITY = -6;  // 1 Vulpoid per 1M Humans
@@ -56,10 +58,12 @@ public class VulpoidPopulation extends BaseMarketConditionPlugin {
             if ((int)population < (int)(population+population_growth)) Global.getSector().getIntelManager().addIntel(new VulpPopGrownIntel(market, (int)population+1));
             population += population_growth;
             population = Math.min(population, MAX_POPULATION);
+            population = Math.max(population, MIN_POPULATION);
         } else {
             population = getPopCap() - 2;
         }
         workforce_cap = (int)population - MIN_POPULATION_FOR_WORKFORCE + 1;
+        workforce_cap = (int)(workforce_cap * POPULATION_WORKFORCE_MULT);
         workforce_cap = Math.max(workforce_cap, 0);
         workforce_cap = Math.min(workforce_cap, MAX_WORKFORCE_CAP);
         market.getMemoryWithoutUpdate().set("$workforce_cap", workforce_cap);
@@ -157,18 +161,19 @@ public class VulpoidPopulation extends BaseMarketConditionPlugin {
                 "comforable life, and help placate the more rowdy parts of society.", opad);
         
         
+        tooltip.addPara("\nQuantity", market.getFaction().getBaseUIColor(), opad);
         
         int p = getPopulation();
-        if(p < 2)       tooltip.addPara("\nOnly a few dozen Vulpoids are permanently present here.", opad);
-        else if(p < 3)  tooltip.addPara("\nA few hundred Vulpoids are present at any given time.", opad);
-        else if(p < 4)  tooltip.addPara("\nThousands of Vulpoids are present across "+name+".", opad);
-        else if(p < 5)  tooltip.addPara("\nTens of thousands of Vulpoids inhabit the cities of "+name+".", opad);
-        else if(p < 6)  tooltip.addPara("\nHundreds of thousands of Vulpoids occupy whole districts of "+name+".", opad);
-        else if(p < 7)  tooltip.addPara("\nMillions of Vulpoids fill the cities of "+name+".", opad);
-        else if(p < 8)  tooltip.addPara("\nTens of millions of Vulpoids fill entire arcologies on "+name+".", opad);
-        else if(p < 9)  tooltip.addPara("\nHundreds of millions of Vulpoids live in seas of fluffy ears and wagging tails.", opad);
-        else if(p < 10) tooltip.addPara("\nBillions of Vulpoids make entire oceans of fluffy affection, deep enough to drown in.", opad);
-        else            tooltip.addPara("\nTens of billions of Vulpoids live so densely on "+name+" that there's not a single place not smothered by eager adoration.", opad);
+        if(p < 2)       tooltip.addPara("Only a few dozen Vulpoids are permanently present here.", opad);
+        else if(p < 3)  tooltip.addPara("A few hundred Vulpoids are present at any given time.", opad);
+        else if(p < 4)  tooltip.addPara("Thousands of Vulpoids are present across "+name+".", opad);
+        else if(p < 5)  tooltip.addPara("Tens of thousands of Vulpoids inhabit the cities of "+name+".", opad);
+        else if(p < 6)  tooltip.addPara("Hundreds of thousands of Vulpoids occupy whole districts of "+name+".", opad);
+        else if(p < 7)  tooltip.addPara("Millions of Vulpoids fill the cities of "+name+".", opad);
+        else if(p < 8)  tooltip.addPara("Tens of millions of Vulpoids fill entire arcologies on "+name+".", opad);
+        else if(p < 9)  tooltip.addPara("Hundreds of millions of Vulpoids live in seas of fluffy ears and wagging tails.", opad);
+        else if(p < 10) tooltip.addPara("Billions of Vulpoids make entire oceans of fluffy affection, deep enough to drown in.", opad);
+        else            tooltip.addPara("Tens of billions of Vulpoids live so densely on "+name+" that there's not a single place not smothered by eager adoration.", opad);
         
         int w = getWorkforceCap();
         String w_s = "s";
@@ -176,16 +181,18 @@ public class VulpoidPopulation extends BaseMarketConditionPlugin {
         if(w > 0) tooltip.addPara("Supports %s Vulpoid workforce"+w_s, opad, Misc.getHighlightColor(), ""+w);
         
         
+        tooltip.addPara("\nAvailability", market.getFaction().getBaseUIColor(), opad);
+        
         switch(getAvailability()) {
-            case -6:    tooltip.addPara("\nVulpoids on "+name+" are one-in-a-million, with only the very richest posessing them.", opad); break;
-            case -5:    tooltip.addPara("\nOnly the upper echelons of "+name+"'s elites possess Vulpoids.", opad); break;
-            case -4:    tooltip.addPara("\nEven among the wealthier citizens of "+name+", Vulpoids are a rarity.", opad); break;
-            case -3:    tooltip.addPara("\nThe wealthy citizens of "+name+" usually keep Vulpoids of their own.", opad); break;
-            case -2:    tooltip.addPara("\nAnyone of means on "+name+" has at least one Vulpoid to their name.", opad); break;
-            case -1:    tooltip.addPara("\nVulpoids are common on "+name+", with over one in every dozen people having one.", opad); break;
-            case 0:     tooltip.addPara("\nNearly everyone on "+name+" has a Vulpoid to tend to their needs.", opad); break;
-            case 1:     tooltip.addPara("\nA citizen of "+name+" has dozens of Vulpoids at their beck and call.", opad); break;
-            case 2:     tooltip.addPara("\nEvery person on "+name+" has hundreds of Vulpoids catering to their every whim, living a life of luxury unheard of in the Persean Sector.", opad); break;
+            case -6:    tooltip.addPara("Vulpoids on "+name+" are one-in-a-million, with only the very richest posessing them.", opad); break;
+            case -5:    tooltip.addPara("Only the upper echelons of "+name+"'s elites possess Vulpoids.", opad); break;
+            case -4:    tooltip.addPara("Even among the wealthier citizens of "+name+", Vulpoids are a rarity.", opad); break;
+            case -3:    tooltip.addPara("The wealthy citizens of "+name+" usually keep Vulpoids of their own.", opad); break;
+            case -2:    tooltip.addPara("Anyone of means on "+name+" has at least one Vulpoid to their name.", opad); break;
+            case -1:    tooltip.addPara("Vulpoids are common on "+name+", with over one in every dozen people having one.", opad); break;
+            case 0:     tooltip.addPara("Nearly everyone on "+name+" has a Vulpoid to tend to their needs.", opad); break;
+            case 1:     tooltip.addPara("A citizen of "+name+" has dozens of Vulpoids at their beck and call.", opad); break;
+            case 2:     tooltip.addPara("Every person on "+name+" has hundreds of Vulpoids catering to their every whim, living a life of luxury unheard of in the Persean Sector.", opad); break;
         }
         
         if (getAvailabilityStability()>0) tooltip.addPara("%s stability", opad, Misc.getHighlightColor(), "+"+(int)getAvailabilityStability());

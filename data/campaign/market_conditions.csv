@@ -6,3 +6,6 @@ Vulpoid Population,vulpoid_population,,TRUE,vulpoids.impl.campaign.econ.VulpoidP
 Vulpoid Customs Agents,vulpoid_traders,,TRUE,vulpoids.impl.campaign.econ.workforces.TraderWorkforce,,graphics/icons/markets/workforce_traders.png,31
 Vulpoid Security Foxes,vulpoid_security,,TRUE,vulpoids.impl.campaign.econ.workforces.SecurityWorkforce,,graphics/icons/markets/workforce_security.png,32
 Vulpoid Mine Laborers,vulpoid_miners,,TRUE,vulpoids.impl.campaign.econ.workforces.MinerWorkforce,,graphics/icons/markets/workforce_miners.png,33
+Vulpoid Clerks,vulpoid_clerks,,TRUE,vulpoids.impl.campaign.econ.workforces.ClerkWorkforce,,graphics/icons/markets/workforce_clerks.png,34
+Vulpoid Orbital Workers,vulpoid_maintenance,,TRUE,vulpoids.impl.campaign.econ.workforces.MaintenanceWorkforce,,graphics/icons/markets/workforce_maintenance.png,35
+Vulpoid Servants,vulpoid_servants,,TRUE,vulpoids.impl.campaign.econ.workforces.ServantWorkforce,,graphics/icons/markets/workforce_servants.png,36

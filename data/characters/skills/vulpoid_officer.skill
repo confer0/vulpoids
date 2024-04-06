@@ -11,6 +11,7 @@
 				{"type":"SHIP", "script":"vulpoids.impl.campaign.skills.VulpoidOfficer$Level1"},
 				{"type":"SHIP", "script":"vulpoids.impl.campaign.skills.VulpoidOfficer$Level2"},
 				{"type":"SHIP", "script":"vulpoids.impl.campaign.skills.VulpoidOfficer$Level3"},
+				{"type":"SHIP", "script":"vulpoids.impl.campaign.skills.VulpoidOfficer$Level4"},
 			]
 		},
 	],

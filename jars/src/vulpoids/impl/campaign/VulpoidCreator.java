@@ -8,9 +8,6 @@ import com.fs.starfarer.api.impl.campaign.ids.Conditions;
 import com.fs.starfarer.api.impl.campaign.ids.Factions;
 import com.fs.starfarer.api.impl.campaign.ids.MemFlags;
 import com.fs.starfarer.api.impl.campaign.ids.Planets;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Random;
 import vulpoids.impl.campaign.ids.Vulpoids;
 
@@ -32,16 +29,17 @@ public class VulpoidCreator {
         PersonAPI person;
         if(market == null) person = createRandomVulpoid(null);
         else person = createVulpoid(market);
-        person.setName(Global.getSector().getPlayerFaction().createRandomPerson().getName()); // TODO
-        person.getStats().setSkillLevel("vulpoid_brain", 1);
+        //person.setName(Global.getSector().getPlayerFaction().createRandomPerson().getName());
+        person.setName(Global.getSector().getFaction(Vulpoids.FACTION_EXODYNE).createRandomPerson().getName());
+        person.setGender(FullName.Gender.FEMALE);
+        person.getStats().setSkillLevel(Vulpoids.SKILL_ADMIN, 1);
         //person.getStats().setSkillLevel("vulpoid_luxury", 1);
-        person.getStats().setSkillLevel("vulpoid_officer", 1);
+        person.getStats().setSkillLevel(Vulpoids.SKILL_OFFICER, 1);
         person.getMemoryWithoutUpdate().set(MemFlags.OFFICER_MAX_LEVEL, 6);
         person.getMemoryWithoutUpdate().set(MemFlags.OFFICER_MAX_ELITE_SKILLS, 2);
         person.getMemoryWithoutUpdate().set(MemFlags.OFFICER_SKILL_PICKS_PER_LEVEL, 10);
-        person.setRankId("vulp_profecto");
-        
-        person.getStats().setLevel(5);
+        person.setRankId(Vulpoids.RANK_PROFECTO);
+        person.setPostId(null);
         
         
         return person;
@@ -64,7 +62,7 @@ public class VulpoidCreator {
         } else {
             person.setFaction(Factions.PLAYER);
         }
-        person.setRankId("vulp_servant");
+        person.setRankId(Vulpoids.RANK_SERVANT);
         person.setPostId(null);
         person.getMemoryWithoutUpdate().set(Vulpoids.KEY_IS_VULPOID, true);
         person.getRelToPlayer().setRel(1);

@@ -213,7 +213,7 @@ vulp_interrogationHubProfectoOption,VulpInterrogationHubOptions,!$askedProfecto,
 vulp_interrogationHubHelpfulOption,VulpInterrogationHubOptions,"$askedVulpoids
 $askedProfecto
 !$askedHelpful",,,"vulp_interrogationHubHelpful:""Do Profecto Vulpoids also like humans?""",
-vulp_interrogationHubFemaleOption,VulpInterrogationHubOptions,$askedFemale,,,"vulp_interrogationHubFemale:""Why are all of you female?""",
+vulp_interrogationHubFemaleOption,VulpInterrogationHubOptions,!$askedFemale,,,"vulp_interrogationHubFemale:""Why are all of you female?""",
 vulp_interrogationHubShipOption,VulpInterrogationHubOptions,!$askedShip,,,"vulp_interrogationHubShip:""What is this ship?""",
 vulp_interrogationHubResearchOption,VulpInterrogationHubOptions,"$askedShip
 !$askedResearch",,,"vulp_interrogationHubResearch:""What were they researching?""",
@@ -417,13 +417,13 @@ vulp_Greeting2Admin,PickGreeting,"$isVulpoidAdmin
 $contact_printedFirstReturnGreeting","ShowPersonVisual
 FireAll PopulateOptions","""Is there anything else I can do for you $PlayerSirOrMadam?""",,
 ,,,,,,
-vulp_GreetingGeneric,PickGreeting,"$isVulpoidRep
+vulp_GreetingRep,PickGreeting,"$isVulpoidRep
 !$contact_printedFirstReturnGreeting","$contact_printedFirstReturnGreeting = true 0
 ShowPersonVisual person
 FireAll PopulateOptions","After a short wait, your connection request is accepted and you're met with the grinning face of a Vulpoid.
 
 ""Oh, hi $PlayerSirOrMadam! It's so nice to see you!""",,
-vulp_Greeting2Generic,PickGreeting,"$isVulpoidRep
+vulp_Greeting2Rep,PickGreeting,"$isVulpoidRep
 $contact_printedFirstReturnGreeting","ShowPersonVisual
 FireAll PopulateOptions","""Wanna do anything else $PlayerSirOrMadam?""",,
 vulp_trainingProgram,PopulateOptions,$isVulpoidRep,FireBest DisableTrainingProgramsIfUnavailable,,vulp_trainingProgramHub:Select active workforces,
@@ -532,6 +532,12 @@ vulp_BarOwnColFreeDrink0D,DialogOptionSelected,$option == vulp_barOwnColFreeDrin
 The Vulpoid gives you a quick hug, and strolls away. You examine the drink you just bought, then take a sip. It is, in a word, perfect.
 ",barHRE_goToNormalBar:Return to the bar,
 vulp_BarOwnColFreeDrink0E,DialogOptionSelected,$option == vulp_barOwnColFreeDrink0E,,"The Vulpoid looks a little disappointed, but nods and strolls away.",barHRE_goToNormalBar:Look around the bar,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
 ,,,,,,
 ,,,,,,
 ,,,,,,
@@ -686,3 +692,25 @@ He taps his datapad and offers it, and you perform the mundane ritual which will
 testOption,PopulateOptions,,,,testOption2:Test,
 testOption2,DialogOptionSelected,$option == testOption2,"TESTOPTION
 AddVulpoidFromImportant laisa",,,
+,,,,,,
+testSelectorOption,PopulateOptions,,,,testSelectorOption2:Test Selector,
+testSelectorOption2,DialogOptionSelected,$option == testSelectorOption2,"VulpoidPicker selectVulpoid
+$vulpoidselectedoption = chat",,,
+,,,,,,
+testSelectorOption3,VulpoidSelected,$vulpoidselectedoption == chat,"BeginConversation $global.selectedVulpoid
+FireBest GreetInventoryVulp",,,
+,,,,,,
+vulp_GreetingDefault,GreetInventoryVulp,"$isVulpoid
+!$contact_printedFirstReturnGreeting","$contact_printedFirstReturnGreeting = true 0
+ShowPersonVisual
+FireAll InventoryVulpPopulateOptions","After a short wait, your connection request is accepted and you're met with the barely-restrained smile of your Vulpoid administrator.
+
+""Hello $PlayerSirOrMadam! Can I do anything for you?""",,
+vulp_Greeting2Default,GreetInventoryVulp,"$isVulpoid
+$contact_printedFirstReturnGreeting","ShowPersonVisual
+FireAll InventoryVulpPopulateOptions","""Is there anything else I can do for you $PlayerSirOrMadam?""",,
+vulp_askFunFactTEST,InventoryVulpPopulateOptions,,,,vulp_getFunFact:Make conversation,
+vulpconv_convOptionLeave,InventoryVulpPopulateOptions,,"SetShortcut cutCommLink ""ESCAPE""",,100:cutCommLink:Cut the comm link,
+,,,,,,
+testOption3,PopulateOptions,,,,testOption4:Test Workforce Interaction,
+testOption4,DialogOptionSelected,$option == testOption4,WorkforceMenu,,,

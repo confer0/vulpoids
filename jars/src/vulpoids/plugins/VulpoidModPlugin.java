@@ -44,17 +44,17 @@ public class VulpoidModPlugin extends BaseModPlugin {
             person.setPostId(Ranks.POST_FLEET_COMMANDER);
             person.getRelToPlayer().setRel(-0.3f);  // Inhospitable by default. Frankly, if she weren't a Vulpoid she'd be much angrier at you for blowing up her ship.
             person.setPortraitSprite("graphics/portraits/vulpoid/laisa/clothed/default.png");
-            person.getStats().setSkillLevel("laisa_officer", 1);
-            person.getStats().setSkillLevel("laisa_admin", 1);
-            person.getMemoryWithoutUpdate().set(MemFlags.OFFICER_MAX_LEVEL, 6);
-            person.getMemoryWithoutUpdate().set(MemFlags.OFFICER_MAX_ELITE_SKILLS, 2);
+            person.getStats().setSkillLevel(Vulpoids.SKILL_LAISA_ADMIN, 1);
+            person.getStats().setSkillLevel(Vulpoids.SKILL_LAISA_OFFICER, 1);
+            person.getMemoryWithoutUpdate().set(MemFlags.OFFICER_MAX_LEVEL, 7);
+            person.getMemoryWithoutUpdate().set(MemFlags.OFFICER_MAX_ELITE_SKILLS, 3);
             person.getMemoryWithoutUpdate().set(Vulpoids.KEY_DEFAULT_PORTRAIT, "graphics/portraits/vulpoid/laisa/clothed/default.png");
             person.getMemoryWithoutUpdate().set(Vulpoids.KEY_OFFICER_PORTRAIT, "graphics/portraits/vulpoid/laisa/laisa_special_admiral.png");
             person.getMemoryWithoutUpdate().set(Vulpoids.KEY_CARGO_ICON, "graphics/icons/cargo/vulpoids/vulpoid_laisa.png");
             ip.addPerson(person);
         }
         
-        
+        //Global.getSector().getFaction("hegemony").makeCommodityIllegal(Vulpoids.SPECIAL_ITEM_DEFAULT);
         
         
         /*person = VulpoidCreator.createVulpoid(null);
@@ -122,31 +122,31 @@ public class VulpoidModPlugin extends BaseModPlugin {
                 if (industry instanceof BaseIndustry) {
                     BaseIndustry b = (BaseIndustry) industry;
                     int size = b.getMarket().getSize();
-                    if("organfarms".equals(b.getId())) {
+                    if(Vulpoids.INDUSTRY_ORGANFARM.equals(b.getId())) {
                         b.supply(spec.getId(), Commodities.ORGANS, -100, Misc.ucFirst(spec.getName().toLowerCase()));
-                    } else if ("biofacility".equals(b.getId())) {
+                    } else if (Vulpoids.INDUSTRY_BIOFACILITY.equals(b.getId())) {
                         b.supply(spec.getId(), Commodities.ORGANS, 1, "Vulpoid reprocessing");
                         //b.supply(spec.getId(), Commodities.DRUGS, 1, "Vulpoid reprocessing");
                     }
                     b.demand(spec.getId(), Commodities.RARE_METALS, 1, Misc.ucFirst(spec.getName().toLowerCase()));
-                    b.supply(spec.getId(), "vulpoids", size-3, Misc.ucFirst(spec.getName().toLowerCase()));
+                    b.supply(spec.getId(), Vulpoids.CARGO_ITEM, size-3, Misc.ucFirst(spec.getName().toLowerCase()));
                 
-                    int supplied_amount = b.getSupply("vulpoids").getQuantity().getModifiedInt();
+                    int supplied_amount = b.getSupply(Vulpoids.CARGO_ITEM).getQuantity().getModifiedInt();
                     if (supplied_amount > 0) {
-                        Global.getSector().getMemoryWithoutUpdate().set("$exportedVulpoids", true);
+                        Global.getSector().getMemoryWithoutUpdate().set(Vulpoids.KEY_EXPORTED_VULPOIDS, true);
                         for(MarketAPI market : Global.getSector().getEconomy().getMarketsCopy()) {
-                            market.addCondition("vulpoid_demand", supplied_amount);
+                            market.addCondition(Vulpoids.CONDITION_VULPOID_DEMAND, supplied_amount);
                         }
                     }
                     
-                    if(!industry.getMarket().hasCondition("vulpoid_population") && !b.getMarket().getMemoryWithoutUpdate().contains("$infinitelooppreventer")) {
+                    if(!industry.getMarket().hasCondition(Vulpoids.CONDITION_VULPOID_POPULATION) && !b.getMarket().getMemoryWithoutUpdate().contains("$infinitelooppreventer")) {
                         b.getMarket().getMemoryWithoutUpdate().set("$infinitelooppreventer", true);
                         // Need to reapply to get the shortages to calculate properly.
                         // Otherwise we can end up starting off with an overly high pop size.
                         // Just reapplying without doing anything else would cause an infinite loop,
                         // hence the $infinitelooppreventer flags.
                         b.reapply();
-                        industry.getMarket().addCondition("vulpoid_population");
+                        industry.getMarket().addCondition(Vulpoids.CONDITION_VULPOID_POPULATION);
                         b.getMarket().getMemoryWithoutUpdate().unset("$infinitelooppreventer");
                     }
                 }
@@ -157,11 +157,11 @@ public class VulpoidModPlugin extends BaseModPlugin {
                     BaseIndustry b = (BaseIndustry) industry;
                     b.supply(spec.getId(), Commodities.ORGANS, 0, Misc.ucFirst(spec.getName().toLowerCase()));
                     //b.supply(spec.getId(), Commodities.DRUGS, 0, Misc.ucFirst(spec.getName().toLowerCase()));
-                    b.supply(spec.getId(), "vulpoids", -100, null);
+                    b.supply(spec.getId(), Vulpoids.CARGO_ITEM, -100, null);
                     b.demand(spec.getId(), Commodities.RARE_METALS, 0, null);
                     
                     for(MarketAPI market : Global.getSector().getEconomy().getMarketsCopy()) {
-                        market.removeCondition("vulpoid_demand");
+                        market.removeCondition(Vulpoids.CONDITION_VULPOID_DEMAND);
                     }
                 }
             }

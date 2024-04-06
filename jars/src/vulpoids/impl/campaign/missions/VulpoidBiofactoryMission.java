@@ -112,7 +112,7 @@ public class VulpoidBiofactoryMission extends HubMissionWithSearch implements Fl
     @Override
     protected boolean create(MarketAPI createdAt, boolean barEvent) {
         
-        completedKey = "$vulp_gotFactory";
+        completedKey = Vulpoids.KEY_GOT_FACTORY;
         
         
 
@@ -130,7 +130,7 @@ public class VulpoidBiofactoryMission extends HubMissionWithSearch implements Fl
         
         //connectWithMemoryFlag(Stage.ACTIVE, Stage.COMPLETED, Global.getSector().getMemoryWithoutUpdate(), completedKey);
         connectWithMemoryFlag(Stage.ACTIVE, Stage.BEATFLEET, Global.getSector().getMemoryWithoutUpdate(), "$vulp_beatFactoryFleet");
-        connectWithMemoryFlag(Stage.BEATFLEET, Stage.COMPLETED, Global.getSector().getMemoryWithoutUpdate(), "$vulp_gotFactory");
+        connectWithMemoryFlag(Stage.BEATFLEET, Stage.COMPLETED, Global.getSector().getMemoryWithoutUpdate(), Vulpoids.KEY_GOT_FACTORY);
         
         createFleet();
 
@@ -205,7 +205,7 @@ public class VulpoidBiofactoryMission extends HubMissionWithSearch implements Fl
         CampaignFleetAPI fleet = fleets.get(0);
         
         FleetMemberAPI member = fleet.getFleetData().addFleetMember("vulp_geck_Terraformer");
-        member.setShipName("EBTS Rellrait");
+        member.setShipName("XBS Rellrait");
         flagship_captain = VulpoidCreator.createSuitedVulpoid(planet.getMarket());
         flagship_captain.setPortraitSprite("graphics/portraits/vulpoid/spacer/military.png");
         //flagship_captain.setFaction(Factions.NEUTRAL);

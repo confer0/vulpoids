@@ -13,6 +13,7 @@
 	"crest": "graphics/factions/crest_exodyne.png",
 	"showInIntelTab":false,
 	"names":{
+		"vulpoid":1,
 	},
 	
 	"portraits":{

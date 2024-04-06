@@ -2,6 +2,7 @@ package vulpoids.impl.campaign.econ.impl;
 
 import com.fs.starfarer.api.Global;
 import com.fs.starfarer.api.campaign.FactionAPI;
+import com.fs.starfarer.api.campaign.SpecialItemData;
 import com.fs.starfarer.api.campaign.econ.MarketAPI;
 import com.fs.starfarer.api.impl.campaign.econ.impl.BaseIndustry;
 import com.fs.starfarer.api.impl.campaign.ids.Commodities;
@@ -27,10 +28,11 @@ public class OrganFarm extends BaseIndustry {
 
         if (special != null && Vulpoids.BIOFORGE_ITEM.equals(special.getId())) {
             float days = Misc.getDays(amount);
-            shiny_vulpoid_production_buffer += days * SHINY_VULPOIDS_PER_DAY * Math.max(0, getSupply("vulpoids").getQuantity().getModifiedInt());
+            shiny_vulpoid_production_buffer += days * SHINY_VULPOIDS_PER_DAY * Math.max(0, getSupply(Vulpoids.CARGO_ITEM).getQuantity().getModifiedInt());
             while(shiny_vulpoid_production_buffer >= 1) {
                 shiny_vulpoid_production_buffer -= 1;
-                market.getSubmarket(Submarkets.SUBMARKET_STORAGE).getCargo().addCommodity("vulpoids_shiny", 1);
+                //market.getSubmarket(Submarkets.SUBMARKET_STORAGE).getCargo().addCommodity("vulpoids_shiny", 1);
+                market.getSubmarket(Submarkets.SUBMARKET_STORAGE).getCargo().addSpecial(new SpecialItemData(Vulpoids.SPECIAL_ITEM_DEFAULT, null), 1);
                 Global.getSector().getIntelManager().addIntel(new ShinyProducedIntel(market));
             }
         }
@@ -49,9 +51,9 @@ public class OrganFarm extends BaseIndustry {
         demand(Commodities.FOOD, size + 2);
         demand(Commodities.ORGANICS, size + 2);
         demand(Commodities.HEAVY_MACHINERY, size - 3);  // Same as Mining
-        if("organfarms".equals(getId())) {
+        if(Vulpoids.INDUSTRY_ORGANFARM.equals(getId())) {
             supply(Commodities.ORGANS, size - 4);
-        } else if("biofacility".equals(getId())) {
+        } else if(Vulpoids.INDUSTRY_BIOFACILITY.equals(getId())) {
             supply(Commodities.ORGANS, size - 3);
             //supply(Commodities.DRUGS, size - 1);
         }
@@ -62,9 +64,9 @@ public class OrganFarm extends BaseIndustry {
         Pair<String, Integer> rare_deficit = getMaxDeficit(Commodities.RARE_METALS);
         if(rare_deficit.two > 0) {
             rare_deficit.two = 100;
-            applyDeficitToProduction(1, rare_deficit, "vulpoids");
+            applyDeficitToProduction(1, rare_deficit, Vulpoids.CARGO_ITEM);
         } else {
-            applyDeficitToProduction(1, deficit, "vulpoids");
+            applyDeficitToProduction(1, deficit, Vulpoids.CARGO_ITEM);
         }
         
         
@@ -84,26 +86,26 @@ public class OrganFarm extends BaseIndustry {
         return getSpecialItem() != null && Vulpoids.BIOFORGE_ITEM.equals(getSpecialItem().getId());
     }
     public boolean isOrganFarmVulpBiofactory() {
-        return "organfarms".equals(getId()) && hasBiofactory();
+        return Vulpoids.INDUSTRY_ORGANFARM.equals(getId()) && hasBiofactory();
     }
     public boolean isBiofacilityAndNotUnlocked() {
-        return "biofacility".equals(getId()) && !Global.getSector().getMemoryWithoutUpdate().getBoolean("$vulp_gotFactory");
+        return Vulpoids.INDUSTRY_BIOFACILITY.equals(getId()) && !Global.getSector().getMemoryWithoutUpdate().getBoolean(Vulpoids.KEY_GOT_FACTORY);
     }
     public boolean isBiofacilityAndAnotherExists() {
-        if (!"biofacility".equals(getId())) return false;
+        if (!Vulpoids.INDUSTRY_BIOFACILITY.equals(getId())) return false;
         return getMarketWithOtherBiofacility() != null;
     }
     public MarketAPI getMarketWithOtherBiofacility() {
         for (MarketAPI world_market : Global.getSector().getEconomy().getMarketsCopy()) {
             if (!world_market.getId().equals(market.getId())) {
-                if (world_market.hasIndustry("biofacility")) return world_market;
-                if (world_market.hasIndustry("organfarms") && world_market.getIndustry("organfarms").isUpgrading()) return world_market;
+                if (world_market.hasIndustry(Vulpoids.INDUSTRY_BIOFACILITY)) return world_market;
+                if (world_market.hasIndustry(Vulpoids.INDUSTRY_ORGANFARM) && world_market.getIndustry(Vulpoids.INDUSTRY_ORGANFARM).isUpgrading()) return world_market;
             }
         }
         return null;
     }
     public boolean isBiofacilityVulpBiofactory() {
-        return "biofacility".equals(getId()) && hasBiofactory();
+        return Vulpoids.INDUSTRY_BIOFACILITY.equals(getId()) && hasBiofactory();
     }
     
     
@@ -112,7 +114,7 @@ public class OrganFarm extends BaseIndustry {
         if (isOrganFarmVulpBiofactory()) {
             return Global.getSettings().getSpriteName("industry", "organfarmvulp");
         }
-        if ("biofacility".equals(getId())) {
+        if (Vulpoids.INDUSTRY_BIOFACILITY.equals(getId())) {
             if (hasBiofactory()) {
                 if(market.getSize() <= 3) return Global.getSettings().getSpriteName("industry", "biotechlowvulp");
                 if(market.getSize() >= 6) return Global.getSettings().getSpriteName("industry", "biotechhighvulp");
@@ -167,16 +169,16 @@ public class OrganFarm extends BaseIndustry {
     protected void applyImproveModifiers() {
         if (isImproved()) {
             getSupply(Commodities.ORGANS).getQuantity().modifyFlat(getModId(3), 1, getImprovementsDescForModifiers() + " (" + getNameForModifier() + ")");
-            if ("biofacility".equals(getId())) {
+            if (Vulpoids.INDUSTRY_BIOFACILITY.equals(getId())) {
                 //getSupply(Commodities.DRUGS).getQuantity().modifyFlat(getModId(3), 1, getImprovementsDescForModifiers() + " (" + getNameForModifier() + ")");
             }
             if (hasBiofactory()) {
-                getSupply("vulpoids").getQuantity().modifyFlat(getModId(3), 1, getImprovementsDescForModifiers() + " (" + getNameForModifier() + ")");
+                getSupply(Vulpoids.CARGO_ITEM).getQuantity().modifyFlat(getModId(3), 1, getImprovementsDescForModifiers() + " (" + getNameForModifier() + ")");
             }
         } else {
             getSupply(Commodities.ORGANS).getQuantity().unmodifyFlat(getModId(3));
             //getSupply(Commodities.DRUGS).getQuantity().unmodifyFlat(getModId(3));
-            getSupply("vulpoids").getQuantity().unmodifyFlat(getModId(3));
+            getSupply(Vulpoids.CARGO_ITEM).getQuantity().unmodifyFlat(getModId(3));
         }
     }
     
@@ -200,7 +202,7 @@ public class OrganFarm extends BaseIndustry {
     // We override this so the tooltip doesn't blab about the exact properties of the "speculative" upgrade.
     @Override
     public void createTooltip(IndustryTooltipMode mode, TooltipMakerAPI tooltip, boolean expanded) {
-        if ("biofacility".equals(getId()) && !Global.getSector().getMemoryWithoutUpdate().getBoolean("$vulp_gotFactory")) {
+        if (Vulpoids.INDUSTRY_BIOFACILITY.equals(getId()) && !Global.getSector().getMemoryWithoutUpdate().getBoolean(Vulpoids.KEY_GOT_FACTORY)) {
             currTooltipMode = mode;
             float opad = 10f;
 

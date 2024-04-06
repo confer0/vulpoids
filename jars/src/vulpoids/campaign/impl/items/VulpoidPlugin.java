@@ -95,7 +95,9 @@ public class VulpoidPlugin extends BaseSpecialItemPlugin {
             if(json.has("firstname") && json.has("lastname")) person.setName(new FullName(json.getString("firstname"), json.getString("lastname"), FullName.Gender.FEMALE));
             if(json.has("portrait")) person.setPortraitSprite(json.getString("portrait"));
             if(json.has("postid")) person.setPostId(json.getString("postid"));
+            else person.setPostId(null);
             if(json.has("rankid"))person.setRankId(json.getString("rankid"));
+            else person.setPostId(null);
             if(json.has("relfloat"))person.getRelToPlayer().setRel(json.getLong("relfloat"));
             if(json.has("skills")) {
                 JSONArray skill_array = json.getJSONArray("skills");
@@ -138,6 +140,10 @@ public class VulpoidPlugin extends BaseSpecialItemPlugin {
     
     
     PersonAPI person;
+    public PersonAPI getPerson() {
+        refreshPerson();  // Just to be safe
+        return person;
+    }
     
     public VulpoidPlugin() {
         super();
@@ -294,11 +300,34 @@ public class VulpoidPlugin extends BaseSpecialItemPlugin {
         Color b = Misc.getButtonTextColor();
         b = Misc.getPositiveHighlightColor();
         
-        Color pink = new Color(226, 143, 173);
-        Color white = new Color(255,255,255);
+        Color body_color;
+        Color text_color;
+        switch(getId()) {
+            case Vulpoids.SPECIAL_ITEM_DEFAULT:
+                body_color = new Color(127,127,127);
+                text_color = new Color(255,255,255);
+                break;
+            case Vulpoids.SPECIAL_ITEM_EMBARKED:
+                body_color = new Color(125,175,240);
+                text_color = new Color(255,255,255);
+                break;
+            case Vulpoids.SPECIAL_ITEM_OFFICER:
+                body_color = new Color(240,130,130);
+                text_color = new Color(255,255,255);
+                break;
+            case Vulpoids.SPECIAL_ITEM_ADMIN:
+                body_color = new Color(130,240,200);
+                text_color = new Color(255,255,255);
+                break;
+            default:
+                body_color = new Color(226, 143, 173);
+                text_color = new Color(255,255,255);
+                break;
+        }
+        
         
         TooltipMakerAPI portrait = tooltip.beginImageWithText(person.getPortraitSprite(), 128, tooltip.getWidthSoFar(), false);
-        portrait.addTitle(getName(), pink);
+        portrait.addTitle(getName(), body_color);
         portrait.addRelationshipBar(person, pad);
         switch (getId()) {
             case Vulpoids.SPECIAL_ITEM_DEFAULT:
@@ -334,7 +363,7 @@ public class VulpoidPlugin extends BaseSpecialItemPlugin {
             case Vulpoids.SPECIAL_ITEM_OFFICER: assignment_title = "Serving as Officer"; break;
             case Vulpoids.SPECIAL_ITEM_ADMIN: assignment_title = "Serving as Administrator"; break;
         }
-        tooltip.addSectionHeading(assignment_title, white, pink, Alignment.MID, opad);
+        tooltip.addSectionHeading(assignment_title, text_color, body_color, Alignment.MID, opad);
         if(!expanded) {
             String assignment_text = disallowCycleReason();
             if (assignment_text != null) {
@@ -365,22 +394,26 @@ public class VulpoidPlugin extends BaseSpecialItemPlugin {
         
         TooltipMakerAPI skillTooltip = tooltip.beginSubTooltip(tooltip.getWidthSoFar());
         
-        TooltipMakerAPI adminTooltip = skillTooltip.beginSubTooltip(tooltip.getWidthSoFar()/2-opad);
-        adminTooltip.addSectionHeading("Industrial Skills", white, pink, Alignment.MID, 0);
-        addSkillsToTooltip(adminTooltip, skills, expanded, false, true, opad);
+        TooltipMakerAPI officerTooltip = skillTooltip.beginSubTooltip(tooltip.getWidthSoFar()/2-opad);
+        Color highlight_color = text_color;
+        if(Vulpoids.SPECIAL_ITEM_OFFICER.equals(getId())) highlight_color = Misc.getHighlightColor();
+        officerTooltip.addSectionHeading("Combat Skills", highlight_color, body_color, Alignment.MID, 0);
+        addSkillsToTooltip(officerTooltip, skills, expanded, true, false, opad);
         skillTooltip.endSubTooltip();
         
-        TooltipMakerAPI officerTooltip = skillTooltip.beginSubTooltip(tooltip.getWidthSoFar()/2-opad);
-        officerTooltip.addSectionHeading("Combat Skills", white, pink, Alignment.MID, 0);
-        addSkillsToTooltip(officerTooltip, skills, expanded, true, false, opad);
+        TooltipMakerAPI adminTooltip = skillTooltip.beginSubTooltip(tooltip.getWidthSoFar()/2-opad);
+        highlight_color = text_color;
+        if(Vulpoids.SPECIAL_ITEM_ADMIN.equals(getId())) highlight_color = Misc.getHighlightColor();
+        adminTooltip.addSectionHeading("Industrial Skills", highlight_color, body_color, Alignment.MID, 0);
+        addSkillsToTooltip(adminTooltip, skills, expanded, false, true, opad);
         skillTooltip.endSubTooltip();
         
         float factorHeight = Math.max(adminTooltip.getHeightSoFar(), officerTooltip.getHeightSoFar());
         adminTooltip.setHeightSoFar(factorHeight);
         officerTooltip.setHeightSoFar(factorHeight);
         
-        skillTooltip.addCustom(adminTooltip, 0);
-	skillTooltip.addCustomDoNotSetPosition(officerTooltip).getPosition().rightOfTop(adminTooltip, opad);
+        skillTooltip.addCustom(officerTooltip, 0);
+	skillTooltip.addCustomDoNotSetPosition(adminTooltip).getPosition().rightOfTop(officerTooltip, opad);
         skillTooltip.setHeightSoFar(factorHeight);
         
         tooltip.endSubTooltip();
@@ -388,6 +421,8 @@ public class VulpoidPlugin extends BaseSpecialItemPlugin {
         
         tooltip.addPara("Market value: %s", opad, Misc.getHighlightColor(), Misc.getDGSCredits(getPrice(null, null)));
         tooltip.addPara("Right-click to cycle jobs", Misc.getHighlightColor(), opad);
+        
+        tooltip.addPara(personToJson(person), opad);
     }
     
     private void addSkillsToTooltip(TooltipMakerAPI tooltip, ArrayList<SkillLevelAPI> skills, boolean expanded, boolean officer, boolean admin, float pad) {
