@@ -143,7 +143,8 @@ public class OrganFarm extends BaseIndustry {
     @Override
     protected String getDescriptionOverride() {
         if (isOrganFarmVulpBiofactory()) {
-            return "With the power of a fully-operational bioforge, living creatures can be printed as easily as spacecraft. "+
+            return "With the power of a fully-operational bioforge, adorable fluffies can be printed at industrial scale."+
+///spacecraft is NOT easy to print xd
                     "The phrase 'how the sausage is made' is often used to describe operations, "+
                     "and many steps in the bioforging process do in fact have an unpleasant resemblance to sausage meat.";
         }
