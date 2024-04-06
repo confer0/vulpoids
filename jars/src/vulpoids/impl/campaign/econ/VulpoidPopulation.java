@@ -191,7 +191,7 @@ public class VulpoidPopulation extends BaseMarketConditionPlugin {
             case -2:    tooltip.addPara("Anyone of means on "+name+" has at least one Vulpoid to their name.", opad); break;
             case -1:    tooltip.addPara("Vulpoids are common on "+name+", with over one in every dozen people having one.", opad); break;
             case 0:     tooltip.addPara("Nearly everyone on "+name+" has a Vulpoid to tend to their needs.", opad); break;
-            case 1:     tooltip.addPara("Every citizen of "+name+" has a personal Vulpoid eager to be their best friend.", opad); break;
+            case 1:     tooltip.addPara("Every citizen of "+name+" has a personal Vulpoid eager to be their best friend, and many have more than one.", opad); break;
             case 2:     tooltip.addPara("Every person on "+name+" has dozens of Vulpoids catering to their every whim, living a life of luxury unheard of in the Persean Sector.", opad); break;
                                         // Mentioning hundreds is overkill imho. Tweaked case 1 and 2 desc a bit
         }

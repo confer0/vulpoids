@@ -28,7 +28,7 @@ public class MaintenanceWorkforce extends BaseWorkforce {
         super.createTooltipAfterDescription(tooltip, expanded);
         if(shouldApply()) {
             float opad = 10f;
-            tooltip.addPara("Our Vulpoids are assisting in orbital operations and stellar communications, greatly improving logistics and colony's attractiveness.", opad);
+            tooltip.addPara("Our Vulpoids are assisting in orbital operations and stellar communications, greatly improving logistics.", opad);
             tooltip.addPara("%s colony accessibility", opad, Misc.getHighlightColor(), "+"+ACCESS_BONUS+"%");
         }
     }

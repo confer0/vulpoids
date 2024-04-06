@@ -3,10 +3,7 @@ package vulpoids.impl.campaign.intel.misc;
 import java.awt.Color;
 
 import com.fs.starfarer.api.Global;
-import com.fs.starfarer.api.campaign.PlanetAPI;
-import com.fs.starfarer.api.campaign.StarSystemAPI;
 import com.fs.starfarer.api.campaign.econ.MarketAPI;
-import com.fs.starfarer.api.impl.campaign.intel.misc.BreadcrumbIntel;
 import com.fs.starfarer.api.impl.campaign.intel.misc.FleetLogIntel;
 import com.fs.starfarer.api.ui.TooltipMakerAPI;
 import com.fs.starfarer.api.util.Misc;
@@ -29,9 +26,9 @@ public class ShinyProducedIntel extends FleetLogIntel {
     public void advance(float amount) {
         super.advance(amount);
     }
-
-
-
+    
+    
+    @Override
     public void createIntelInfo(TooltipMakerAPI info, ListInfoMode mode) {
         Color c = getTitleColor(mode);
         info.addPara(getName(), c, 0f);
@@ -49,7 +46,7 @@ public class ShinyProducedIntel extends FleetLogIntel {
             unindent(info);
         }
     }
-
+    
     @Override
     public void createSmallDescription(TooltipMakerAPI info, float width, float height) {
         Color h = Misc.getHighlightColor();
@@ -61,7 +58,7 @@ public class ShinyProducedIntel extends FleetLogIntel {
         info.addPara("You've received a report that the biofactory on "+market.getName()+
                     " has produced a Vulpoid with exceptional cognitive abilities. "+
                     // wording was a bit strange imo
-                    "It has been removed from the production line and transferred to your personal suite.", opad);
+                    "\nIt has been removed from the production line and transferred to your personal suite.", opad);
                     // i can imagine a poor fox being put into a fucking warehouse straight off the bat xd
 
         float days = getDaysSincePlayerVisible();
@@ -69,7 +66,8 @@ public class ShinyProducedIntel extends FleetLogIntel {
             addDays(info, "ago.", days, tc, opad);
         }
     }
-
+    
+    @Override
     public String getName() {
         return "Profecto Vulpoid Produced";
     }

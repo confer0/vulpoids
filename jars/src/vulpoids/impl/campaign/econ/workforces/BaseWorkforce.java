@@ -51,7 +51,7 @@ public class BaseWorkforce extends BaseMarketConditionPlugin {
     @Override
     public String getIconName() {
         if(shouldApply()) return condition.getSpec().getIcon();
-        return "graphics/icons/markets/workforce_confusion.png";
+        return "graphics/icons/markets/workforce_confused.png";
     }
     @Override
     protected void createTooltipAfterDescription(TooltipMakerAPI tooltip, boolean expanded) {
@@ -59,7 +59,7 @@ public class BaseWorkforce extends BaseMarketConditionPlugin {
             float opad = 10f;
             //tooltip.addPara("Due to a loss of population or some other factor, %s.", opad, Misc.getNegativeHighlightColor(), "our workforces are in disarray");
             //tooltip.addPara("%s", opad, Misc.getHighlightColor(), "Suspend some workforces to restore normal operation");
-            tooltip.addPara("This workforce is unable to operate properly.", opad, Misc.getNegativeHighlightColor());
+            tooltip.addPara("This workforce is unable to operate properly.", Misc.getNegativeHighlightColor(), opad);
             String list = "";
             for (String curr : getUnmetRequirements()) {
                 curr = curr.trim();
