@@ -59,8 +59,10 @@ public class ShinyProducedIntel extends FleetLogIntel {
         float opad = 10f;
 
         info.addPara("You've received a report that the biofactory on "+market.getName()+
-                    " has produced a Vulpoid with anomalously strong cognitive ability. "+
-                    "It has been removed from the production line and transferred to your personal storage.", opad);
+                    " has produced a Vulpoid with exceptional cognitive abilities. "+
+                    // wording was a bit strange imo
+                    "It has been removed from the production line and transferred to your personal suite.", opad);
+                    // i can imagine a poor fox being put into a fucking warehouse straight off the bat xd
 
         float days = getDaysSincePlayerVisible();
         if (days >= 1) {
