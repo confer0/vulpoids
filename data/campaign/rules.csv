@@ -672,15 +672,42 @@ $vulpoidselectedoption = kanta",,,
 kpVulpoidShinySel,VulpoidSelected,$vulpoidselectedoption == kanta,"ResetVulpoidPortrait $global.selectedVulpoid
 SetVulpoidExpression $global.selectedVulpoid fear
 #SetVulpoidClothing $global.selectedVulpoid nude
-ShowThirdPersonFromMemory $global.selectedVulpoid","$global.selectedVulpoidName is brought into the court, and Cydonia immediately begins circling around her like a fighter on an attack run, studying her from every angle. Kanta quietly nods along as $global.selectedVulpoidName fearfully elaborates on her rarity, and gives benchmarks for her cognitive ability.
+ShowThirdPersonFromMemory $global.selectedVulpoid
+AdjustRepPerson $global.selectedVulpoid INHOSPITABLE -200","$global.selectedVulpoidName is brought into the court, and Cydonia immediately begins circling around her like a fighter on an attack run, studying her from every angle. Kanta quietly nods along as $global.selectedVulpoidName fearfully elaborates on her rarity, and gives benchmarks for her cognitive ability.
 
 When the explaination concludes, Cydonia looks eagerly at back at Kanta, his enthusiasm palpable.",kpVulpoidShiny1:Continue,
 kpVulpoidShinySel1,DialogOptionSelected,$option == kpVulpoidShiny1,,"After a brief pause, Kanta's voice booms out, ""WE ACCEPT."" Her gaze turns to Cydonia, and she warns, ""It shall stay in one piece.""
 
 The 'doctor' flinches at this accusation, but his excitement is still evident as he directs the Profecto towards his laboratory.",kpVulpoidLeave:Continue,
 kpVulpoidLeave,DialogOptionSelected,$option == kpVulpoidLeave,"HideThirdPerson
+ResetVulpoidPortrait $global.selectedVulpoid
+SetVulpoidExpression $global.selectedVulpoid angry
+SetVulpoidClothing $global.selectedVulpoid nude
+MovePersonFromMemoryToMarket $global.selectedVulpoid
+SetPersonFaction $global.selectedVulpoid pirates
+SetPersonMemory $global.selectedVulpoid ""$isCydoniaVulpoid"" ""boolean"" true
 $option = kpLeaveProt
 FireBest DialogOptionSelected ",,,
+,,,,,,
+vulp_kantaVulpCommsFirstTime,PickGreeting,"$isCydoniaVulpoid score:1000
+!$didFirstTime","ShowPersonVisual
+$didFirstTime = true","After a short wait, your connection request is accepted.
+
+""Oh, it's you. I'm doing alright, still in one piece, ha-ha. I don't suppose you're here to tell me I get to leave? Thought not.""",0:cutCommLink:Cut the comm link,
+vulp_kantaVulpComms,PickGreeting,$isCydoniaVulpoid score:1000,ShowPersonVisual,"After a short wait, your connection request is accepted.
+
+""Yep, I'm still alive. Did you actually want anything?""",0:cutCommLink:Cut the comm link,
+vulp_kantaVulpCommsLaisa,PickGreeting,"$isCydoniaVulpoid score:1000
+$id == laisa score:1000
+!$didFirstTime","ShowPersonVisual
+$didFirstTime = true","After a short wait, your connection request is accepted.
+
+""Oh, it's you. I'm doing alright, still in one piece, ha-ha. And here I though I was finally done being experimented on.""",0:cutCommLink:Cut the comm link,# You horrible person lol
+vulp_kantaVulpCommsLaisaFirstTime,PickGreeting,"$isCydoniaVulpoid score:1000
+$id == laisa score:1000",ShowPersonVisual,"After a short wait, your connection request is accepted.
+
+""Yep, I'm still alive. Did you actually want anything?""",0:cutCommLink:Cut the comm link,
+,,,,,,
 ,,,,,,
 vulp_gaKAArroyoVisit2,DialogOptionSelected,"$option == gaKA_arroyoVisit2
 $global.exportedVulpoids",,"A human and a Vulpoid servant greet you placidly as you arrive and lead you inside to a grand parlor done in dark geometric style. Gold inlay gleams in onyx tabletops, and the polished granite floor is set with tastefully patterned jewel-tone carpets placed slightly askew.
@@ -696,8 +723,8 @@ He taps his datapad and offers it, and you perform the mundane ritual which will
 ,,,,,,
 ,,,,,,
 ,,,,,,
-#testOption,PopulateOptions,,,,testOption2:Test,
-#testOption2,DialogOptionSelected,$option == testOption2,"TESTOPTION
+testOption,PopulateOptions,,,,testOption2:TEST - See animation and get Laisa,
+testOption2,DialogOptionSelected,$option == testOption2,"TESTOPTION
 AddVulpoidFromImportant laisa",,,
 ,,,,,,
 testSelectorOption,PopulateOptions,,,,testSelectorOption2:TEST - Chat with a Vulpoid,
