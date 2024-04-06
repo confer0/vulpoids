@@ -9,16 +9,23 @@ import com.fs.starfarer.api.campaign.OptionPanelAPI;
 import com.fs.starfarer.api.campaign.TextPanelAPI;
 import com.fs.starfarer.api.campaign.VisualPanelAPI;
 import com.fs.starfarer.api.campaign.econ.MarketAPI;
+import com.fs.starfarer.api.campaign.rules.MemKeys;
 import com.fs.starfarer.api.campaign.rules.MemoryAPI;
 import com.fs.starfarer.api.combat.EngagementResultAPI;
 import com.fs.starfarer.api.impl.campaign.DevMenuOptions;
+import com.fs.starfarer.api.impl.campaign.RuleBasedInteractionDialogPluginImpl;
+import com.fs.starfarer.api.impl.campaign.rulecmd.FireAll;
+import com.fs.starfarer.api.util.Misc;
+import java.awt.Color;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import vulpoids.impl.campaign.econ.workforces.*;
 
 
 public class WorkforceInteractionDialogPlugin implements InteractionDialogPlugin {
     
-    private static enum OptionId {
+    /*private static enum OptionId {
         INIT,
         ADD_STABLE_CONFIRM,
         ADD_STABLE_DESCRIBE,
@@ -28,7 +35,7 @@ public class WorkforceInteractionDialogPlugin implements InteractionDialogPlugin
         DUMP_PLANETKILLER_CONT_1,
         ADD_STABLE_NEVER_MIND,
         LEAVE,
-    }
+    }*/
     
     private InteractionDialogAPI dialog;
     private TextPanelAPI textPanel;
@@ -42,9 +49,9 @@ public class WorkforceInteractionDialogPlugin implements InteractionDialogPlugin
         "vulpoid_traders",
         "vulpoid_security",
         "vulpoid_miners",
-        "vulpoid_clerks",
         "vulpoid_maintenance",
         "vulpoid_servants",
+        "vulpoid_clerks",
     };
     /*Class[] test = new Class[]{
         TraderWorkforce.class,
@@ -62,7 +69,7 @@ public class WorkforceInteractionDialogPlugin implements InteractionDialogPlugin
         options = dialog.getOptionPanel();
         visual = dialog.getVisualPanel();
         market = dialog.getInteractionTarget().getMarket();
-
+        
         //visual.setVisualFade(0.25f, 0.25f);
 
         /*if (planet.getCustomInteractionDialogImageVisual() != null) {
@@ -73,41 +80,91 @@ public class WorkforceInteractionDialogPlugin implements InteractionDialogPlugin
                 }
         }*/
         
-        dialog.setOptionOnEscape("Leave", OptionId.LEAVE);
+        dialog.setOptionOnEscape("Leave", "LEAVE");
 
-        optionSelected(null, OptionId.INIT);
+        optionSelected(null, "INIT");
     }
 
     @Override
     public void optionSelected(String text, Object optionData) {
         if (optionData == null) return;
-        OptionId option = (OptionId) optionData;
+        String option = (String) optionData;
         if (text != null) {
             dialog.addOptionSelectedText(option);
         }
         switch(option) {
-            case INIT:
+            case "INIT":
+                textPanel.addPara("Vulpoids, while not particularly intelligent on their own, "+
+                        "nonetheless take well to training. We can teach our Vulpoids to operate "+
+                        "as part of a specialized workforce, providing various benefits for the "+
+                        "colony.\n"+
+                        "In most cases, the limiting factor will be the number of Vulpoids we can manage to train.");
+            case "HUB":
                 options.clearOptions();
                 for (String condition : conditions) {
-                    BaseWorkforce test = getPluginForCondition(condition);
-                    String reqs = "";
-                    for (String req : test.getUnmetRequirements()) {
-                        reqs += req + ", ";
+                    BaseWorkforce condition_plugin = getPluginForCondition(condition);
+                    String tickbox = "[  ] ";
+                    Color option_color = Misc.getButtonTextColor();
+                    boolean enabled = true;
+                    String tooltip = Global.getSettings().getMarketConditionSpec(condition).getDesc();
+                    if(market.hasCondition(condition)) {
+                        tickbox = "[X] ";
+                        List<String> unmet_reqs = condition_plugin.getUnmetRequirements(false);
+                        if(!unmet_reqs.isEmpty()) {
+                            option_color = Misc.getNegativeHighlightColor();
+                            tooltip += "\n\nUnmet Requirements: ";
+                            for(String req : unmet_reqs) tooltip += req+", ";
+                            tooltip = tooltip.substring(0, tooltip.length() - 2);
+                        }
+                    } else{
+                        List<String> unmet_reqs = condition_plugin.getUnmetRequirements(true);
+                        if(!unmet_reqs.isEmpty()) {
+                            enabled = false;
+                            tooltip += "\n\nUnmet Requirements: ";
+                            for(String req : unmet_reqs) tooltip += req+", ";
+                            tooltip = tooltip.substring(0, tooltip.length() - 2);
+                        }
                     }
-                    textPanel.addPara(condition + ": " + reqs);
+                    options.addOption(tickbox+Global.getSettings().getMarketConditionSpec(condition).getName(), condition, option_color, tooltip);
+                    options.setEnabled(condition, enabled);
                 }
                 
-                options.addOption("Leave", OptionId.LEAVE, null);
-		options.setShortcut(OptionId.LEAVE, Keyboard.KEY_ESCAPE, false, false, false, true);
+                options.addOption("Leave", "LEAVE", null);
+		options.setShortcut("LEAVE", Keyboard.KEY_ESCAPE, false, false, false, true);
 		
 		if (Global.getSettings().isDevMode()) {
                     DevMenuOptions.addOptions(dialog);
 		}
                 break;
-            case LEAVE:
-                //Global.getSector().setPaused(false);
-                dialog.dismiss();
+            case "LEAVE":
+                Map<String, MemoryAPI> memoryMap = new HashMap<String, MemoryAPI>();
+                MemoryAPI memory = dialog.getInteractionTarget().getMemory();
+
+                memoryMap.put(MemKeys.LOCAL, memory);
+                if (dialog.getInteractionTarget().getFaction() != null) {
+                        memoryMap.put(MemKeys.FACTION, dialog.getInteractionTarget().getFaction().getMemory());
+                } else {
+                        memoryMap.put(MemKeys.FACTION, Global.getFactory().createMemory());
+                }
+                memoryMap.put(MemKeys.GLOBAL, Global.getSector().getMemory());
+                memoryMap.put(MemKeys.PLAYER, Global.getSector().getCharacterData().getMemory());
+
+                if (dialog.getInteractionTarget().getMarket() != null) {
+                        memoryMap.put(MemKeys.MARKET, dialog.getInteractionTarget().getMarket().getMemory());
+                }
+                RuleBasedInteractionDialogPluginImpl plugin = new RuleBasedInteractionDialogPluginImpl();
+                plugin.init(dialog);
+                dialog.setPlugin(plugin);
+                FireAll.fire(null, dialog, memoryMap, "PopulateOptions");
                 break;
+            default:
+                // We assume that the options are correctly enabled/disabled, so just blindly un/apply them.
+                if(market.hasCondition(option)) {
+                    market.removeCondition(option);
+                } else {
+                    market.addCondition(option);
+                }
+                optionSelected(option, "HUB");
         }
     }
     

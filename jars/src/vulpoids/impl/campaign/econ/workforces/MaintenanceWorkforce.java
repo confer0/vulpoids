@@ -4,7 +4,7 @@ import com.fs.starfarer.api.ui.TooltipMakerAPI;
 import com.fs.starfarer.api.util.Misc;
 
 public class MaintenanceWorkforce extends BaseWorkforce {
-    final int ACCESS_BONUS = 50;
+    final int ACCESS_BONUS = 30;
     
     @Override
     public String[] getRequirements() {

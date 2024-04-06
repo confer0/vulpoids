@@ -25,11 +25,16 @@ public class BaseWorkforce extends BaseMarketConditionPlugin {
         return getUnmetRequirements().isEmpty();
     }
     public List<String> getUnmetRequirements() {
+        return getUnmetRequirements(false);
+    }
+    public List<String> getUnmetRequirements(boolean for_placement) {
         ArrayList<String> unmet_requirements = new ArrayList<>();
         if(market.isPlanetConditionMarketOnly()) {
             unmet_requirements.add("inhabited");
         } else {
-            if(market.getMemoryWithoutUpdate().getInt("$workforces") > market.getMemoryWithoutUpdate().getInt("$workforce_cap")) unmet_requirements.add("sufficient workforce capacity");
+            int virtual = 0;
+            if(for_placement) virtual = 1;
+            if(market.getMemoryWithoutUpdate().getInt("$workforces") + virtual > market.getMemoryWithoutUpdate().getInt("$workforce_cap")) unmet_requirements.add("sufficient workforce capacity");
             int vulp_pop = ((VulpoidPopulation)market.getCondition(Vulpoids.CONDITION_VULPOID_POPULATION).getPlugin()).getPopulation();
             for (String requirement : getRequirements()) {
                 switch(requirement) {

@@ -432,55 +432,57 @@ $market.workforce_cap <= $market.workforces","SetEnabled vulp_trainingProgramHub
 SetTooltip vulp_trainingProgramHub ""There aren't enough Vulpoids here to form an effective workforce.""",,,
 vulp_askFunFact,PopulateOptions,$isVulpoidRep,,,vulp_getFunFact:Make conversation,
 ,,,,,,
-vulp_trainingProgramHub,DialogOptionSelected,$option == vulp_trainingProgramHub,FireAll VulpTrainingProgramOptions,"Vulpoids, while not particularly intelligent on their own, nonetheless take well to training. We can teach our Vulpoids to operate as part of a specialized workforce, providing various benefits for the colony.",,
+vulp_trainingProgramHub,DialogOptionSelected,$option == vulp_trainingProgramHub,WorkforceMenu,,,
 ,,,,,,
-vulp_trainingProgramHubUsageDetails,VulpTrainingProgramOptions,$market.workforce_cap >= $market.workforces,"SetTextHighlightColors good
+#vulp_trainingProgramHub,DialogOptionSelected,$option == vulp_trainingProgramHub,FireAll VulpTrainingProgramOptions,"Vulpoids, while not particularly intelligent on their own, nonetheless take well to training. We can teach our Vulpoids to operate as part of a specialized workforce, providing various benefits for the colony.",,
+,,,,,,
+#vulp_trainingProgramHubUsageDetails,VulpTrainingProgramOptions,$market.workforce_cap >= $market.workforces,"SetTextHighlightColors good
 SetTextHighlights $market.workforces",We're currently operating $market.workforces workforces.,,
-vulp_trainingProgramHubUsageDetailsOver,VulpTrainingProgramOptions,$market.workforce_cap < $market.workforces,"SetTextHighlightColors bad
+#vulp_trainingProgramHubUsageDetailsOver,VulpTrainingProgramOptions,$market.workforce_cap < $market.workforces,"SetTextHighlightColors bad
 SetTextHighlights $market.workforces ""over capacity""","We're currently operating $market.workforces workforces, and are over capacity.",,
-vulp_trainingProgramHubUsageDetails1,VulpTrainingProgramOptions,,SetTextHighlights $market.workforce_cap,We can support up to $market.workforce_cap workforces.,,
+#vulp_trainingProgramHubUsageDetails1,VulpTrainingProgramOptions,,SetTextHighlights $market.workforce_cap,We can support up to $market.workforce_cap workforces.,,
 ,,,,,,
-vulp_trainingProgramHubCustomsActivateOption,VulpTrainingProgramOptions,!$market.mc:vulpoid_traders,"SetTooltip vulp_trainingProgramHubCustomsActivate ""Effective customer service work at spaceports requires a working knowledge of cargo logistics and spacecraft operations. While Vulpoids may not be able to handle everything, with enough training they can still serve as effective tier-one support.\n\nA spaceport catered by Vulpoids will provide a top-tier experience for visiting traders, and encourage them to visit more frequently even if another port might offer slightly higher profits. Those lost margins end up bolstering colony revenue instead.""",,vulp_trainingProgramHubCustomsActivate:[  ] Vulpoid customs agents,
-vulp_trainingProgramHubCustomsActivate,DialogOptionSelected,$option == vulp_trainingProgramHubCustomsActivate,"AddCondition vulpoid_traders
+#vulp_trainingProgramHubCustomsActivateOption,VulpTrainingProgramOptions,!$market.mc:vulpoid_traders,"SetTooltip vulp_trainingProgramHubCustomsActivate ""Effective customer service work at spaceports requires a working knowledge of cargo logistics and spacecraft operations. While Vulpoids may not be able to handle everything, with enough training they can still serve as effective tier-one support.\n\nA spaceport catered by Vulpoids will provide a top-tier experience for visiting traders, and encourage them to visit more frequently even if another port might offer slightly higher profits. Those lost margins end up bolstering colony revenue instead.""",,vulp_trainingProgramHubCustomsActivate:[  ] Vulpoid customs agents,
+#vulp_trainingProgramHubCustomsActivate,DialogOptionSelected,$option == vulp_trainingProgramHubCustomsActivate,"AddCondition vulpoid_traders
 $market.mc:vulpoid_traders = true
 FireAll VulpTrainingProgramOptions",,,
-vulp_trainingProgramHubCustomsDeactivateOption,VulpTrainingProgramOptions,$market.mc:vulpoid_traders,"SetTooltip vulp_trainingProgramHubCustomsDeactivate ""Effective customer service work at spaceports requires a working knowledge of cargo logistics and spacecraft operations. While Vulpoids may not be able to handle everything, with enough training they can still serve as effective tier-one support.\n\nA spaceport catered by Vulpoids will provide a top-tier experience for visiting traders, and encourage them to visit more frequently even if another port might offer slightly higher profits. Those lost margins end up bolstering colony revenue instead.""",,vulp_trainingProgramHubCustomsDeactivate:[X] Vulpoid customs agents,
-vulp_trainingProgramHubCustomsDeactivate,DialogOptionSelected,$option == vulp_trainingProgramHubCustomsDeactivate,"RemoveCondition vulpoid_traders
+#vulp_trainingProgramHubCustomsDeactivateOption,VulpTrainingProgramOptions,$market.mc:vulpoid_traders,"SetTooltip vulp_trainingProgramHubCustomsDeactivate ""Effective customer service work at spaceports requires a working knowledge of cargo logistics and spacecraft operations. While Vulpoids may not be able to handle everything, with enough training they can still serve as effective tier-one support.\n\nA spaceport catered by Vulpoids will provide a top-tier experience for visiting traders, and encourage them to visit more frequently even if another port might offer slightly higher profits. Those lost margins end up bolstering colony revenue instead.""",,vulp_trainingProgramHubCustomsDeactivate:[X] Vulpoid customs agents,
+#vulp_trainingProgramHubCustomsDeactivate,DialogOptionSelected,$option == vulp_trainingProgramHubCustomsDeactivate,"RemoveCondition vulpoid_traders
 $market.mc:vulpoid_traders = false
 FireAll VulpTrainingProgramOptions",,,
 ,,,,,,
-vulp_trainingProgramHubSecurityActivateOption,VulpTrainingProgramOptions,!$market.mc:vulpoid_security,"SetTooltip vulp_trainingProgramHubSecurityActivate ""Vulpoids have impressive emotional intelligence as-built, but they struggle to perceive humans in a negative light. A human handler can help pick up that slack, allowing our security forces can use them as the emotional equivalent of sniffer dogs.\n\nA K9 unit using Vulpoids is significantly more effective at identifying individuals with problematic ideologies, making it difficult for criminal or terrorist networks to obtain support. In particular, Luddic Path cells will be unable to coordinate attacks under these conditions.""",,vulp_trainingProgramHubSecurityActivate:[  ] Vulpoid security foxes,
-vulp_trainingProgramHubSecurityActivate,DialogOptionSelected,$option == vulp_trainingProgramHubSecurityActivate,"AddCondition vulpoid_security
+#vulp_trainingProgramHubSecurityActivateOption,VulpTrainingProgramOptions,!$market.mc:vulpoid_security,"SetTooltip vulp_trainingProgramHubSecurityActivate ""Vulpoids have impressive emotional intelligence as-built, but they struggle to perceive humans in a negative light. A human handler can help pick up that slack, allowing our security forces can use them as the emotional equivalent of sniffer dogs.\n\nA K9 unit using Vulpoids is significantly more effective at identifying individuals with problematic ideologies, making it difficult for criminal or terrorist networks to obtain support. In particular, Luddic Path cells will be unable to coordinate attacks under these conditions.""",,vulp_trainingProgramHubSecurityActivate:[  ] Vulpoid security foxes,
+#vulp_trainingProgramHubSecurityActivate,DialogOptionSelected,$option == vulp_trainingProgramHubSecurityActivate,"AddCondition vulpoid_security
 $market.mc:vulpoid_security = true
 FireAll VulpTrainingProgramOptions",,,
-vulp_trainingProgramHubSecurityDeactivateOption,VulpTrainingProgramOptions,$market.mc:vulpoid_security,"SetTooltip vulp_trainingProgramHubSecurityDeactivate ""Vulpoids have impressive emotional intelligence as-built, but they struggle to perceive humans in a negative light. A human handler can help pick up that slack, allowing our security forces can use them as the emotional equivalent of sniffer dogs.\n\nA K9 unit using Vulpoids is significantly more effective at identifying individuals with problematic ideologies, making it difficult for criminal or terrorist networks to obtain support. In particular, Luddic Path cells will be unable to coordinate attacks under these conditions.""",,vulp_trainingProgramHubSecurityDeactivate:[X] Vulpoid security foxes,
-vulp_trainingProgramHubSecurityDeactivate,DialogOptionSelected,$option == vulp_trainingProgramHubSecurityDeactivate,"RemoveCondition vulpoid_security
+#vulp_trainingProgramHubSecurityDeactivateOption,VulpTrainingProgramOptions,$market.mc:vulpoid_security,"SetTooltip vulp_trainingProgramHubSecurityDeactivate ""Vulpoids have impressive emotional intelligence as-built, but they struggle to perceive humans in a negative light. A human handler can help pick up that slack, allowing our security forces can use them as the emotional equivalent of sniffer dogs.\n\nA K9 unit using Vulpoids is significantly more effective at identifying individuals with problematic ideologies, making it difficult for criminal or terrorist networks to obtain support. In particular, Luddic Path cells will be unable to coordinate attacks under these conditions.""",,vulp_trainingProgramHubSecurityDeactivate:[X] Vulpoid security foxes,
+#vulp_trainingProgramHubSecurityDeactivate,DialogOptionSelected,$option == vulp_trainingProgramHubSecurityDeactivate,"RemoveCondition vulpoid_security
 $market.mc:vulpoid_security = false
 FireAll VulpTrainingProgramOptions",,,
 ,,,,,,
-vulp_trainingProgramHubMiningActivateOption,VulpTrainingProgramOptions,!$market.mc:vulpoid_miners,"SetTooltip vulp_trainingProgramHubMiningActivate ""Vulpoids are not well-suited for performing hard labor or operating heavy machinery. Powered exoskeletons normally used on high-gravity worlds can supplement their strength, enabling them to work shoulder-to-shoulder with human miners.\n\nMines with Vulpoid workers benefit from an enlarged workforce with better-motivated humans, if one is willing to endure occasional protests regarding the Vulpoids' safety. Although it causes minor disruption to stability, this will result in increased yields from mining operations.""",,vulp_trainingProgramHubMiningActivate:[  ] Vulpoid mine laborers,
-vulp_trainingProgramHubMiningActivate,DialogOptionSelected,$option == vulp_trainingProgramHubMiningActivate,"AddCondition vulpoid_miners
+#vulp_trainingProgramHubMiningActivateOption,VulpTrainingProgramOptions,!$market.mc:vulpoid_miners,"SetTooltip vulp_trainingProgramHubMiningActivate ""Vulpoids are not well-suited for performing hard labor or operating heavy machinery. Powered exoskeletons normally used on high-gravity worlds can supplement their strength, enabling them to work shoulder-to-shoulder with human miners.\n\nMines with Vulpoid workers benefit from an enlarged workforce with better-motivated humans, if one is willing to endure occasional protests regarding the Vulpoids' safety. Although it causes minor disruption to stability, this will result in increased yields from mining operations.""",,vulp_trainingProgramHubMiningActivate:[  ] Vulpoid mine laborers,
+#vulp_trainingProgramHubMiningActivate,DialogOptionSelected,$option == vulp_trainingProgramHubMiningActivate,"AddCondition vulpoid_miners
 $market.mc:vulpoid_miners = true
 FireAll VulpTrainingProgramOptions",,,
-vulp_trainingProgramHubMiningDeactivateOption,VulpTrainingProgramOptions,$market.mc:vulpoid_miners,"SetTooltip vulp_trainingProgramHubMiningDeactivate ""Vulpoids are not well-suited for performing hard labor or operating heavy machinery. Powered exoskeletons normally used on high-gravity worlds can supplement their strength, enabling them to work shoulder-to-shoulder with human miners.\n\nMines with Vulpoid workers benefit from an enlarged workforce with better-motivated humans, if one is willing to endure occasional protests regarding the Vulpoids' safety. Although it causes minor disruption to stability, this will result in increased yields from mining operations.""",,vulp_trainingProgramHubMiningDeactivate:[X] Vulpoid mine laborers,
-vulp_trainingProgramHubMiningDeactivate,DialogOptionSelected,$option == vulp_trainingProgramHubMiningDeactivate,"RemoveCondition vulpoid_miners
+#vulp_trainingProgramHubMiningDeactivateOption,VulpTrainingProgramOptions,$market.mc:vulpoid_miners,"SetTooltip vulp_trainingProgramHubMiningDeactivate ""Vulpoids are not well-suited for performing hard labor or operating heavy machinery. Powered exoskeletons normally used on high-gravity worlds can supplement their strength, enabling them to work shoulder-to-shoulder with human miners.\n\nMines with Vulpoid workers benefit from an enlarged workforce with better-motivated humans, if one is willing to endure occasional protests regarding the Vulpoids' safety. Although it causes minor disruption to stability, this will result in increased yields from mining operations.""",,vulp_trainingProgramHubMiningDeactivate:[X] Vulpoid mine laborers,
+#vulp_trainingProgramHubMiningDeactivate,DialogOptionSelected,$option == vulp_trainingProgramHubMiningDeactivate,"RemoveCondition vulpoid_miners
 $market.mc:vulpoid_miners = false
 FireAll VulpTrainingProgramOptions",,,
 ,,,,,,
-vulp_trainingProgramHubDisableIfCapped,VulpTrainingProgramOptions,$market.workforces >= $market.workforce_cap,"SetEnabled vulp_trainingProgramHubCustomsActivate false
+##vulp_trainingProgramHubDisableIfCapped,VulpTrainingProgramOptions,$market.workforces >= $market.workforce_cap,"SetEnabled vulp_trainingProgramHubCustomsActivate false
 SetEnabled vulp_trainingProgramHubSecurityActivate false
 SetEnabled vulp_trainingProgramHubMiningActivate false",,,
-vulp_trainingProgramHubLeaveOption,VulpTrainingProgramOptions,,"SetShortcut vulp_trainingProgramHubLeave ""ESCAPE""",,vulp_trainingProgramHubLeave:Back,
-vulp_trainingProgramHubLeave,DialogOptionSelected,$option == vulp_trainingProgramHubLeave,"FireAll PopulateOptions
+#vulp_trainingProgramHubLeaveOption,VulpTrainingProgramOptions,,"SetShortcut vulp_trainingProgramHubLeave ""ESCAPE""",,vulp_trainingProgramHubLeave:Back,
+#vulp_trainingProgramHubLeave,DialogOptionSelected,$option == vulp_trainingProgramHubLeave,"FireAll PopulateOptions
 ShowPersonVisual",,,
 ,,,,,,
 ,,,,,,
-#vulp_trainingProgramHubLaborOption,VulpTrainingProgramOptions,,,,vulp_trainingProgramHubLabor:Hard Labor (Mining),
-#vulp_trainingProgramHubLabor,DialogOptionSelected,$option == vulp_trainingProgramHubLabor,"ShowImageVisual mine
+##vulp_trainingProgramHubLaborOption,VulpTrainingProgramOptions,,,,vulp_trainingProgramHubLabor:Hard Labor (Mining),
+##vulp_trainingProgramHubLabor,DialogOptionSelected,$option == vulp_trainingProgramHubLabor,"ShowImageVisual mine
 Highlight ""minor disruption"" ""increased yields""
 SetShortcut vulp_trainingProgramHub ""ESCAPE""",,"vulp_trainingProgramHubLaborSelect:Select Program
 vulp_trainingProgramHub:Cancel",
-#vulp_trainingProgramHubLaborSelect,DialogOptionSelected,$option == vulp_trainingProgramHubLaborSelect,"VulpTrainingProgram hard_labor
+##vulp_trainingProgramHubLaborSelect,DialogOptionSelected,$option == vulp_trainingProgramHubLaborSelect,"VulpTrainingProgram hard_labor
 $option = vulp_trainingProgramHubLeave
 FireBest DialogOptionSelected",,,
 ,,,,,,
