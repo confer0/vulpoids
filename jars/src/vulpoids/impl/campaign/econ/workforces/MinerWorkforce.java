@@ -31,7 +31,7 @@ public class MinerWorkforce extends BaseWorkforce {
         super.createTooltipAfterDescription(tooltip, expanded);
         if(shouldApply()) {
             float opad = 10f;
-            tooltip.addPara("Our Vulpoids labor alongside our miners. The foxgirls yearn for the mines!", opad);
+            tooltip.addPara("Our Vulpoids labor alongside our miners. These fluffies yearn for the mines!", opad);
             tooltip.addPara("%s mining production", opad, Misc.getHighlightColor(), "+" + PROD_BONUS);
             tooltip.addPara("%s stability", opad, Misc.getNegativeHighlightColor(), "" + STAB_PENALTY);
         }
