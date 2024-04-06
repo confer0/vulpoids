@@ -664,13 +664,18 @@ RemoveCommodity vulpoids 1000","Kanta's synthetic voice booms out, ""YES. They s
 His face is one of pure, sinister glee. ""Yes, yes, my queen. Oh, there is great potential in this, I can assure you...""
 
 Kanta nods with satisfaction as Cydonia gazes into the distance, apparently preoccupied with new ideas.",kpVulpoidLeave:Continue,
-kpVulpoidShiny,KPFindGifts,"PlayerHasCargo vulpoids_shiny
+kpVulpoidShiny,KPFindGifts,"VulpoidPicker hasVulpoid
 $kpNumGifts < 5
 $kpNumGifts++",,,kpVulpoidShiny:A Profecto Vulpoid,
-kpVulpoidShinySel,DialogOptionSelected,$option == kpVulpoidShiny,ShowThirdPerson vulpoid_shiny_generic,"The Profecto is brought into the court, and Cydonia immediately begins circling around her like a fighter on an attack run, studying her from every angle. Kanta quietly nods along as the Profecto elaborates on her rarity, and gives benchmarks for her cognitive ability.
+kpVulpoidShinyPick,DialogOptionSelected,$option == kpVulpoidShiny,"VulpoidPicker selectRemoveVulpoid ""Select a Vulpoid to offer as tribute to Kanta""
+$vulpoidselectedoption = kanta",,,
+kpVulpoidShinySel,VulpoidSelected,$vulpoidselectedoption == kanta,"ResetVulpoidPortrait $global.selectedVulpoid
+SetVulpoidExpression $global.selectedVulpoid fear
+#SetVulpoidClothing $global.selectedVulpoid nude
+ShowThirdPersonFromMemory $global.selectedVulpoid","$global.selectedVulpoidName is brought into the court, and Cydonia immediately begins circling around her like a fighter on an attack run, studying her from every angle. Kanta quietly nods along as $global.selectedVulpoidName fearfully elaborates on her rarity, and gives benchmarks for her cognitive ability.
 
 When the explaination concludes, Cydonia looks eagerly at back at Kanta, his enthusiasm palpable.",kpVulpoidShiny1:Continue,
-kpVulpoidShinySel1,DialogOptionSelected,$option == kpVulpoidShiny1,RemoveCommodity vulpoids_shiny 1,"After a brief pause, Kanta's voice booms out, ""WE ACCEPT."" Her gaze turns to Cydonia, and she warns, ""It shall stay in one piece.""
+kpVulpoidShinySel1,DialogOptionSelected,$option == kpVulpoidShiny1,,"After a brief pause, Kanta's voice booms out, ""WE ACCEPT."" Her gaze turns to Cydonia, and she warns, ""It shall stay in one piece.""
 
 The 'doctor' flinches at this accusation, but his excitement is still evident as he directs the Profecto towards his laboratory.",kpVulpoidLeave:Continue,
 kpVulpoidLeave,DialogOptionSelected,$option == kpVulpoidLeave,"HideThirdPerson
@@ -691,11 +696,11 @@ He taps his datapad and offers it, and you perform the mundane ritual which will
 ,,,,,,
 ,,,,,,
 ,,,,,,
-testOption,PopulateOptions,,,,testOption2:Test,
-testOption2,DialogOptionSelected,$option == testOption2,"TESTOPTION
+#testOption,PopulateOptions,,,,testOption2:Test,
+#testOption2,DialogOptionSelected,$option == testOption2,"TESTOPTION
 AddVulpoidFromImportant laisa",,,
 ,,,,,,
-testSelectorOption,PopulateOptions,,,,testSelectorOption2:Test Selector,
+testSelectorOption,PopulateOptions,,,,testSelectorOption2:TEST - Chat with a Vulpoid,
 testSelectorOption2,DialogOptionSelected,$option == testSelectorOption2,"VulpoidPicker selectVulpoid
 $vulpoidselectedoption = chat",,,
 ,,,,,,
@@ -713,6 +718,3 @@ $contact_printedFirstReturnGreeting","ShowPersonVisual
 FireAll InventoryVulpPopulateOptions","""Is there anything else I can do for you $PlayerSirOrMadam?""",,
 vulp_askFunFactTEST,InventoryVulpPopulateOptions,,,,vulp_getFunFact:Make conversation,
 vulpconv_convOptionLeave,InventoryVulpPopulateOptions,,"SetShortcut cutCommLink ""ESCAPE""",,100:cutCommLink:Cut the comm link,
-,,,,,,
-testOption3,PopulateOptions,,,,testOption4:Test Workforce Interaction,
-testOption4,DialogOptionSelected,$option == testOption4,WorkforceMenu,,,

@@ -8,30 +8,23 @@ import com.fs.starfarer.api.impl.campaign.rulecmd.BaseCommandPlugin;
 import com.fs.starfarer.api.util.Misc;
 import java.util.List;
 import java.util.Map;
+import vulpoids.impl.campaign.ids.Vulpoids;
 
-public class SetVulpoidExpression extends BaseCommandPlugin {
+public class ResetVulpoidPortrait extends BaseCommandPlugin {
 
     @Override
     public boolean execute(String ruleId, InteractionDialogAPI dialog, List<Misc.Token> params, Map<String, MemoryAPI> memoryMap) {
-        if (params.size() < 1) return false;
         PersonAPI person;
-        String expression;
-        if (params.size() == 1) {
+        if (params.isEmpty()) {
             person = dialog.getInteractionTarget().getActivePerson();
-            expression = params.get(0).getString(memoryMap);
         } else {
             Object o = params.get(0).getObject(memoryMap);
             if (o instanceof PersonAPI) person = (PersonAPI) o;
             else person = Global.getSector().getImportantPeople().getPerson((String)o);
-            expression = params.get(1).getString(memoryMap);
         }
         if (person == null) return false;
-        String[] portrait_slices = person.getPortraitSprite().split("/");
-        String portrait = "";
-        for(int i=0; i<portrait_slices.length-1; i++) {
-            portrait += portrait_slices[i]+"/";
-        }
-        portrait += expression + ".png";
+        String portrait = person.getMemoryWithoutUpdate().getString(Vulpoids.KEY_DEFAULT_PORTRAIT);
+        if (portrait == null) return false;
         person.setPortraitSprite(portrait);
         return true;
     }

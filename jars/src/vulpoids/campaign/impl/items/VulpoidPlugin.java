@@ -421,8 +421,6 @@ public class VulpoidPlugin extends BaseSpecialItemPlugin {
         
         tooltip.addPara("Market value: %s", opad, Misc.getHighlightColor(), Misc.getDGSCredits(getPrice(null, null)));
         tooltip.addPara("Right-click to cycle jobs", Misc.getHighlightColor(), opad);
-        
-        tooltip.addPara(personToJson(person), opad);
     }
     
     private void addSkillsToTooltip(TooltipMakerAPI tooltip, ArrayList<SkillLevelAPI> skills, boolean expanded, boolean officer, boolean admin, float pad) {

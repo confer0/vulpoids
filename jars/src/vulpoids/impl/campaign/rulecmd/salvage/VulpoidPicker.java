@@ -94,6 +94,7 @@ public class VulpoidPicker extends BaseCommandPlugin {
                             if (stack.isSpecialStack() && stack.getPlugin() instanceof VulpoidPlugin) {
                                 PersonAPI person = ((VulpoidPlugin)stack.getPlugin()).getPerson();
                                 Global.getSector().getMemoryWithoutUpdate().set(Vulpoids.KEY_SELECTED_VULPOID, person);
+                                Global.getSector().getMemoryWithoutUpdate().set(Vulpoids.KEY_SELECTED_VULPOID_NAME, person.getNameString());
                                 if(final_remove) {
                                     playerCargo.removeItems(CargoItemType.SPECIAL, stack.getSpecialDataIfSpecial(), 1);
                                     AddRemoveCommodity.addItemLossText(stack.getSpecialDataIfSpecial(), 1, dialog.getTextPanel());
@@ -112,6 +113,7 @@ public class VulpoidPicker extends BaseCommandPlugin {
                         cargo.sort();
                         for(CargoStackAPI stack : cargo.getStacksCopy()) {
                             panel.addPara("Selected: %s", 10f, Misc.getHighlightColor(), stack.getDisplayName());
+                            break;
                         }
                     }
                 });

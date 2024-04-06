@@ -28,6 +28,7 @@ public class Vulpoids {
     public static final String KEY_EXPORTED_VULPOIDS = "$exportedVulpoids";
     
     public static final String KEY_SELECTED_VULPOID = "$selectedVulpoid";
+    public static final String KEY_SELECTED_VULPOID_NAME = "$selectedVulpoidName";
     
     public static final String CONDITION_VULPOID_DEMAND = "vulpoid_demand";
     public static final String CONDITION_VULPOID_POPULATION = "vulpoid_population";
