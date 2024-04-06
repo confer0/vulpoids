@@ -31,6 +31,8 @@
 			"workforce_confusion":"graphics/icons/markets/workforce_confused.png",
 		},
 		"illustrations":{
+			"vulp_bar_quest":"graphics/illustrations/bar_quest_sketch.png",
+			
 			"vulpoid_bar":"graphics/illustrations/vulpoid_bar.png",
 			"vulpoid_petting":"graphics/illustrations/vulpoid_petting.png",
 			"vulpoid_smooch":"graphics/illustrations/vulpoid_smooch.png",

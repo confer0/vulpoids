@@ -20,12 +20,11 @@ public class SetVulpoidExpression extends BaseCommandPlugin {
             person = dialog.getInteractionTarget().getActivePerson();
             expression = params.get(0).getString(memoryMap);
         } else {
-            Object o = params.get(0).getObject(memoryMap);
-            if (o instanceof PersonAPI) person = (PersonAPI) o;
-            else person = Global.getSector().getImportantPeople().getPerson((String)o);
+            person = Global.getSector().getImportantPeople().getPerson(params.get(0).getString(memoryMap));
+            if(person==null) person = (PersonAPI) params.get(0).getObject(memoryMap);
             expression = params.get(1).getString(memoryMap);
         }
-        if (person == null) return false;
+        //if (person == null) return false;
         String[] portrait_slices = person.getPortraitSprite().split("/");
         String portrait = "";
         for(int i=0; i<portrait_slices.length-1; i++) {

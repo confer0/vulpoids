@@ -61,7 +61,7 @@ public class VulpoidBiofactoryMission extends HubMissionWithSearch implements Fl
         if (isDone() || result != null) return;
         if (this.data.fleet == fleet) {
             String id = getMissionId();
-            getPerson().getMemoryWithoutUpdate().set("$" + id + "_failed", true);
+            //getPerson().getMemoryWithoutUpdate().set("$" + id + "_failed", true);  //TODO
         }
     }
 
@@ -77,7 +77,7 @@ public class VulpoidBiofactoryMission extends HubMissionWithSearch implements Fl
                     (!fleet.isStationMode() && fleet.getFlagship() != null);
             if (cancelBounty) {
                 String id = getMissionId();
-                getPerson().getMemoryWithoutUpdate().set("$" + id + "_failed", true);
+                //getPerson().getMemoryWithoutUpdate().set("$" + id + "_failed", true);  //TODO
                 return;
             }
         }

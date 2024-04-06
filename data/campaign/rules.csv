@@ -1,11 +1,16 @@
 id,trigger,conditions,script,text,options,notes
 ,,,,,,
-vulp_exampleBarEventOption,AddBarEvents,"!$market.isHidden
-!$global.vulp_gotFactoryMission","AddBarEvent vulp_findFactory_barEvent  ""Start the example bar event"" ""A large, red button labelled with the word Vulpoids is sitting in the middle of the room."" highlight",,,
-vulp_findFactory_barEvent,DialogOptionSelected,"$option == vulp_findFactory_barEvent 
-GenGAIntroAcademician",,"""There's stories of a ghost fleet that lurks around a habitable world. It's been there as long as anyone can remember. Legend says it's a fleet that was in the Gate network during the Collapse, cursed to forever haunt their destination.""","vulp_findFactory_barEvent1:""Go on...""",
-vulp_findFactory_barEvent1,DialogOptionSelected,$option == vulp_findFactory_barEvent1,"$global.vulp_gotFactoryMission = true
+vulp_exampleBarEventOption,AddBarEvents,"$market.id == nomios
+!$global.vulp_gotFactoryMission
+HasFoughtRemnant","AddBarEvent vulp_findFactory_barEvent  ""Talk to the man in the lab coat"" ""A man wearing the branded lab coat of a long-dead megacorp is making a poor attempt at subtly grabbing your attention."" highlight",,,
+vulp_exampleBarEventOptionDev,AddBarEvents,$global.isDevMode,"AddBarEvent vulp_findFactory_barEvent  ""(dev) Start the quest with dev mode"" ""A large, red button labelled with the word 'Vulpoids' is sitting in the middle of the room."" highlight",,,
+vulp_findFactory_barEvent,DialogOptionSelected,$option == vulp_findFactory_barEvent,,"Even if you weren’t on Nomios, you could've pegged this man as a recent thaw from a lightyear away. Clothes with old logos ('Exodyne Biotech'), an expression of worried bewilderment, and inexperience with the subtle ways social convention has changed over the last 200 cycles. So the fact that he's waving to you specifically is worth inquiring about.",vulp_findFactory_barEvent1:Continue,
+vulp_findFactory_barEvent1,DialogOptionSelected,$option == vulp_findFactory_barEvent1,ShowImageVisual vulp_bar_quest,,vulp_findFactory_barEventEnd:Continue,
+,,,,,,
+vulp_findFactory_barEventEnd,DialogOptionSelected,$option == vulp_findFactory_barEventEnd,"$global.vulp_gotFactoryMission = true
 BeginMission vulpFactory","""Anyway here's the exact coordinates of the fleet, on account of this mission being only partly completed!""",backToBar:Return to the bar,
+,,,,,,
+,,,,,,
 ,,,,,,
 ,,,,,,
 ,,,,,,
@@ -501,8 +506,8 @@ vulp_funFactAging,VulpFunFact,,,"""One of my sisters told me she went through a 
 vulp_funFactFruit,VulpFunFact,,,"""Have you ever smelled one of us? It's all nice and fruity, right? They say it's because of tiny plants in our fur, but I've never found any leaves, so I dunno!""",,
 vulp_funFactSpaceSuit,VulpFunFact,,,"""I bet you wear space suits all the time, right? I know how to wear them, but they're so tight around the tail. It'd be nicer to not wear anything, but then you couldn't go to space!""",,
 ,,,,,,
-bar_descVulpoid,BarPrintDesc,$market.mc:vulpoid_condition,ShowImageVisual vulpoid_bar,"As you enter the bar you are buffeted by the human white-noise of conversation and revelry. Ad-holos buzz softly from ceiling-mounted units, shining garish highlights through glasses and bottles as spacer crews mingle with merchants and locals trading drinks for rumor, jobs, and opportunities. Vulpoids dart from table to table, distributing drinks and earnestly thanking catcallers for the 'compliments'.",,
-vulp_barInteractionPrompt,AddBarEvents,$market.mc:vulpoid_condition,"AddBarEvent vulp_barInteraction ""Talk to the Vulpoid"" ""One of the Vulpoids notices you, and quickly bounds up to see if you want anything.""",,,
+bar_descVulpoid,BarPrintDesc,$market.mc:vulpoid_population,ShowImageVisual vulpoid_bar,"As you enter the bar you are buffeted by the human white-noise of conversation and revelry. Ad-holos buzz softly from ceiling-mounted units, shining garish highlights through glasses and bottles as spacer crews mingle with merchants and locals trading drinks for rumor, jobs, and opportunities. Vulpoids dart from table to table, distributing drinks and earnestly thanking catcallers for the 'compliments'.",,
+vulp_barInteractionPrompt,AddBarEvents,$market.mc:vulpoid_population,"AddBarEvent vulp_barInteraction ""Talk to the Vulpoid"" ""One of the Vulpoids notices you, and quickly bounds up to see if you want anything.""",,,
 vulp_barInteraction,DialogOptionSelected,"$option == vulp_barInteraction
 !$printedFirstReturnGreeting","ShowPersonVisual false vulpoid_barmaid
 $printedFirstReturnGreeting = true 0
@@ -517,7 +522,7 @@ vulp_barInteractionPet,DialogOptionSelected,$option == vulp_barInteractionPet,Sh
 vulp_barInteractionSmooch,DialogOptionSelected,$option == vulp_barInteractionSmooch,ShowImageVisual vulpoid_smooch,,vulp_barInteraction:Continue,
 ,,,,,,
 vulp_BarOwnColFreeDrink0,DialogOptionSelected,"$option == barOOCfreeDrink
-$market.mc:vulpoid_condition",$player.gotFreeDrinkFromOwnColony = true,"A Vulpoid barmaid appears by your side, a glass of what looks exactly like your favorite drink on a silver tray.
+$market.mc:vulpoid_population",$player.gotFreeDrinkFromOwnColony = true,"A Vulpoid barmaid appears by your side, a glass of what looks exactly like your favorite drink on a silver tray.
 
 ""Compliments of the house!""","vulp_barOwnColFreeDrink0A:""Um. Thank you.""
 vulp_barOwnColFreeDrink0B:Take the drink
@@ -685,6 +690,7 @@ SetVulpoidExpression $global.selectedVulpoid angry
 SetVulpoidClothing $global.selectedVulpoid nude
 MovePersonFromMemoryToMarket $global.selectedVulpoid
 SetPersonFaction $global.selectedVulpoid pirates
+SetPersonRank $global.selectedVulpoid vulp_testSubject
 SetPersonMemory $global.selectedVulpoid ""$isCydoniaVulpoid"" ""boolean"" true
 $option = kpLeaveProt
 FireBest DialogOptionSelected ",,,
@@ -708,6 +714,8 @@ $id == laisa score:1000",ShowPersonVisual,"After a short wait, your connection r
 
 ""Yep, I'm still alive. Did you actually want anything?""",0:cutCommLink:Cut the comm link,
 ,,,,,,
+,,,,,,
+# Arroyo - swapping out two bits of dialog so he's got Vulpoid servants too.,,,,,,
 ,,,,,,
 vulp_gaKAArroyoVisit2,DialogOptionSelected,"$option == gaKA_arroyoVisit2
 $global.exportedVulpoids",,"A human and a Vulpoid servant greet you placidly as you arrive and lead you inside to a grand parlor done in dark geometric style. Gold inlay gleams in onyx tabletops, and the polished granite floor is set with tastefully patterned jewel-tone carpets placed slightly askew.

@@ -11,6 +11,7 @@
 				{"type":"GOVERNED_OUTPOST", "script":"vulpoids.impl.campaign.skills.VulpoidBrain$Level1"},
 				{"type":"GOVERNED_OUTPOST", "script":"vulpoids.impl.campaign.skills.VulpoidBrain$Level2"},
 				{"type":"GOVERNED_OUTPOST", "script":"vulpoids.impl.campaign.skills.VulpoidBrain$Level3"},
+				{"type":"GOVERNED_OUTPOST", "script":"vulpoids.impl.campaign.skills.VulpoidBrain$Level4"},
 			]
 		},
 	],

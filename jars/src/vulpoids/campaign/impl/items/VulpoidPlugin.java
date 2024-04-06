@@ -231,6 +231,10 @@ public class VulpoidPlugin extends BaseSpecialItemPlugin {
         return price_per_skill * person.getStats().getSkillsCopy().size();
     }
     
+    public int getTurnInRep() {
+        return person.getStats().getSkillsCopy().size();
+    }
+    
     @Override
     public String getName() {
         refreshPerson();

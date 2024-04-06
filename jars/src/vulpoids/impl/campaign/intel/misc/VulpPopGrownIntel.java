@@ -21,7 +21,7 @@ public class VulpPopGrownIntel extends FleetLogIntel {
             Global.getSector().addScript(this);
 
             setIcon(Global.getSettings().getSpriteName("intel", "vulp_pop_growth"));
-            setSound("ui_cargo_vulpoid_drop");
+            setSound("ui_intel_vulpoid_pop_grown");
             setDuration(30f);
     }
 

@@ -22,7 +22,12 @@ public class Vulpoids {
     public static final String KEY_IS_VULPOID = "$isVulpoid";
     public static final String KEY_DEFAULT_PORTRAIT = "$vulp_defaultPortrait";
     public static final String KEY_OFFICER_PORTRAIT = "$vulp_officerPortrait";
+    public static final String KEY_DEFAULT_POST = "$vulp_defaultPost";
     public static final String KEY_CARGO_ICON = "$vulp_cargoIcon";
+    
+    public static final String KEY_MARKET_VULPOID_ADMIN = "$vulp_marketVulpoidAdmin";
+    public static final String KEY_MARKET_VULPOID_ADMIN_TIMESTAMP = "$vulp_marketVulpoidAdminTimestamp";
+    public static final String KEY_ADMIN_XP_DAYS = "$vulp_adminXpDays";
     
     public static final String KEY_GOT_FACTORY = "$vulp_gotFactory";
     public static final String KEY_EXPORTED_VULPOIDS = "$exportedVulpoids";

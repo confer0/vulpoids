@@ -31,7 +31,6 @@ public class OrganFarm extends BaseIndustry {
             shiny_vulpoid_production_buffer += days * SHINY_VULPOIDS_PER_DAY * Math.max(0, getSupply(Vulpoids.CARGO_ITEM).getQuantity().getModifiedInt());
             while(shiny_vulpoid_production_buffer >= 1) {
                 shiny_vulpoid_production_buffer -= 1;
-                //market.getSubmarket(Submarkets.SUBMARKET_STORAGE).getCargo().addCommodity("vulpoids_shiny", 1);
                 market.getSubmarket(Submarkets.SUBMARKET_STORAGE).getCargo().addSpecial(new SpecialItemData(Vulpoids.SPECIAL_ITEM_DEFAULT, null), 1);
                 Global.getSector().getIntelManager().addIntel(new ShinyProducedIntel(market));
             }

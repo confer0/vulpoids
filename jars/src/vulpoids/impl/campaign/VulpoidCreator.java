@@ -14,15 +14,15 @@ import vulpoids.impl.campaign.ids.Vulpoids;
 public class VulpoidCreator {
     
     public static PersonAPI createVulpoid(MarketAPI market) {
-        return createVulpoid(market, false, false, false);
+        return createVulpoid(market, false, false);
     }
     
     public static PersonAPI createNudeVulpoid(MarketAPI market) {
-        return createVulpoid(market, true, false, false);
+        return createVulpoid(market, true, false);
     }
     
     public static PersonAPI createSuitedVulpoid(MarketAPI market) {
-        return createVulpoid(market, false, true, false);
+        return createVulpoid(market, false, true);
     }
     
     public static PersonAPI createPrefectoVulpoid(MarketAPI market) {
@@ -46,13 +46,13 @@ public class VulpoidCreator {
     }
     
     public static PersonAPI createRandomVulpoid(MarketAPI market) {
-        return createVulpoid(market, false, false, true);
+        return createVulpoid(market, false, false);
     }
     
-    public static PersonAPI createVulpoid(MarketAPI market, boolean force_nude, boolean force_suit, boolean randomize_climate) {
+    public static PersonAPI createVulpoid(MarketAPI market, boolean force_nude, boolean force_suit) {
         PersonAPI person = Global.getFactory().createPerson();
         person.setName(new FullName("Vulpoid", "", FullName.Gender.FEMALE));
-        String portrait = getPortraitForMarket(market, force_nude, force_suit, randomize_climate);
+        String portrait = getPortraitForMarket(market, force_nude, force_suit);
         person.setPortraitSprite(portrait);
         person.getMemoryWithoutUpdate().set(Vulpoids.KEY_DEFAULT_PORTRAIT, portrait);
         person.getMemoryWithoutUpdate().set(Vulpoids.KEY_OFFICER_PORTRAIT, "graphics/portraits/vulpoid/spacer/military.png");
@@ -83,38 +83,34 @@ public class VulpoidCreator {
         }
     }
     
-    public static String getPortraitForMarket(MarketAPI market, boolean force_nude, boolean force_suit, boolean randomize_climate) {
+    public static boolean marketIsSuitMarket(MarketAPI market) {
+        return market.getPlanetEntity() == null || !market.hasCondition(Conditions.HABITABLE);
+    }
+    
+    public static String getPortraitForMarket(MarketAPI market, boolean force_nude, boolean force_suit) {
         String path = "graphics/portraits/vulpoid/";
         String expression = "default.png";
         if (!force_nude && force_suit) return path+"spacer/admin_no_atmos.png";
         String clothing = "/clothed/";
         if (force_nude) clothing = "/nude/";
         
-        String default_climate = "terran";
-        if(randomize_climate) {
-            Random r = new Random();
-            String[] climates = new String[]{"terran", "desert", "arctic"};
-            default_climate = climates[r.nextInt(climates.length)];
-        }
+        Random r = new Random();
+        String[] climates = new String[]{"terran", "desert", "arctic"};
+        String default_climate = climates[r.nextInt(climates.length)];
         
-        if (market == null) {
-            return path+default_climate+clothing+expression;
-        }
-        
-        if (market.getPlanetEntity() == null || !market.hasCondition(Conditions.HABITABLE)) {
-            return path+"spacer/admin_no_atmos.png";
-        } else {
-            switch (market.getPlanetEntity().getSpec().getPlanetType()) {
-                case "jungle": return path+"terran"+clothing+expression;
-                case Planets.PLANET_TERRAN: return path+"terran"+clothing+expression;
-                case Planets.DESERT: return path+"desert"+clothing+expression;
-                case Planets.DESERT1: return path+"desert"+clothing+expression;
-                case Planets.ARID: return path+"desert"+clothing+expression;
-                case Planets.PLANET_WATER: return path+"terran"+clothing+expression;
-                case Planets.TUNDRA: return path+"arctic"+clothing+expression;
-                case Planets.PLANET_TERRAN_ECCENTRIC: return path+"arctic"+clothing+expression;
-                default: return path+"terran"+clothing+expression;
-            }
-        }
+        if (market == null) return path+default_climate+clothing+expression;
+        if (marketIsSuitMarket(market)) return path+"spacer/admin_no_atmos.png";
+        return path+default_climate+clothing+expression;
+        /*switch (market.getPlanetEntity().getSpec().getPlanetType()) {
+            case "jungle": return path+"terran"+clothing+expression;
+            case Planets.PLANET_TERRAN: return path+"terran"+clothing+expression;
+            case Planets.DESERT: return path+"desert"+clothing+expression;
+            case Planets.DESERT1: return path+"desert"+clothing+expression;
+            case Planets.ARID: return path+"desert"+clothing+expression;
+            case Planets.PLANET_WATER: return path+"terran"+clothing+expression;
+            case Planets.TUNDRA: return path+"arctic"+clothing+expression;
+            case Planets.PLANET_TERRAN_ECCENTRIC: return path+"arctic"+clothing+expression;
+            default: return path+"terran"+clothing+expression;
+        }*/
     }
 }

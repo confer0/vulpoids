@@ -17,10 +17,8 @@ import com.fs.starfarer.api.characters.FullName;
 import com.fs.starfarer.api.characters.ImportantPeopleAPI;
 import com.fs.starfarer.api.characters.PersonAPI;
 import com.fs.starfarer.api.impl.campaign.ids.Commodities;
-import com.fs.starfarer.api.impl.campaign.ids.Factions;
 import com.fs.starfarer.api.impl.campaign.ids.MemFlags;
 import com.fs.starfarer.api.impl.campaign.ids.Ranks;
-import vulpoids.campaign.VulpoidsCampaignPlugin;
 import vulpoids.impl.campaign.VulpoidCreator;
 import vulpoids.impl.campaign.ids.Vulpoids;
 
@@ -28,9 +26,6 @@ public class VulpoidModPlugin extends BaseModPlugin {
 
     @Override
     public void onGameLoad(boolean newGame) {
-        
-        Global.getSector().registerPlugin(new VulpoidsCampaignPlugin());
-        
         
         ImportantPeopleAPI ip = Global.getSector().getImportantPeople();
         PersonAPI person;

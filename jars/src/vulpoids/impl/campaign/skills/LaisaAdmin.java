@@ -11,7 +11,7 @@ public class LaisaAdmin {
     public static class Level1 implements MarketSkillEffect {
         @Override
         public void apply(MarketAPI market, String id, float level) {
-            market.getStats().getDynamic().getMod(Stats.COMBAT_FLEET_SIZE_MULT).modifyFlat(id, FLEET_SIZE / 100f, "Hypercognition");
+            market.getStats().getDynamic().getMod(Stats.COMBAT_FLEET_SIZE_MULT).modifyFlat(id, FLEET_SIZE / 100f, "Predictive Checklists");
         }
         @Override
         public void unapply(MarketAPI market, String id) {

@@ -1,11 +1,32 @@
 {
-
-
+	
 	"ui_cargo_vulpoid":{"sounds":[
-		{"file":"sounds/sfx_cargo/539082-Fox-Vocal-Cry-Distant-03-06.ogg","pitch":1,"volume":0.3},
+		{"file":"sounds/sfx_cargo/AH.ogg","pitch":1,"volume":1.0},
 	],},
 	"ui_cargo_vulpoid_drop":{"sounds":[
-		{"file":"sounds/sfx_cargo/539052-Fox-Vocal-Cry-Close-04-09.ogg","pitch":1,"volume":0.3},
+		{"file":"sounds/sfx_cargo/AH.ogg","pitch":0.8,"volume":1.0},
+	],},
+	
+	"ui_cargo_prefecto":{"sounds":[
+		{"file":"sounds/sfx_cargo/ready.ogg","pitch":1,"volume":1.0},
+	],},
+	"ui_cargo_prefecto_drop":{"sounds":[
+		{"file":"sounds/sfx_cargo/clear.ogg","pitch":1,"volume":1.0},
+	],},
+	
+	"ui_intel_vulpoid_produced":{"sounds":[
+		{"file":"sounds/sfx_interface/ui_objective_constructed.ogg","pitch":1,"volume":0.3},
+	],},
+	
+	"ui_intel_vulpoid_pop_grown":{"sounds":[
+		{"file":"sounds/sfx_interface/ui_channel_comm_secure_01.ogg","pitch":1,"volume":0.2},
+		{"file":"sounds/sfx_interface/ui_channel_comm_secure_01.ogg","pitch":0.98,"volume":0.2},
+		{"file":"sounds/sfx_interface/ui_channel_comm_secure_01.ogg","pitch":0.96,"volume":0.2},
+		{"file":"sounds/sfx_interface/ui_channel_comm_secure_01.ogg","pitch":1.02,"volume":0.2},
+	],},
+	
+	"ui_intel_vulpoid_admin_level_up":{"sounds":[
+		{"file":"sounds/sfx_interface/ui_char_level_up.ogg","pitch":1,"volume":1.0},
 	],},
 }
 

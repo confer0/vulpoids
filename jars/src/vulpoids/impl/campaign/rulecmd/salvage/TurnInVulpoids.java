@@ -12,6 +12,7 @@ import com.fs.starfarer.api.campaign.FactionAPI;
 import com.fs.starfarer.api.campaign.InteractionDialogAPI;
 import com.fs.starfarer.api.campaign.OptionPanelAPI;
 import com.fs.starfarer.api.campaign.SectorEntityToken;
+import com.fs.starfarer.api.campaign.SpecialItemSpecAPI;
 import com.fs.starfarer.api.campaign.TextPanelAPI;
 import com.fs.starfarer.api.campaign.econ.CommoditySpecAPI;
 import com.fs.starfarer.api.campaign.rules.MemoryAPI;
@@ -29,6 +30,8 @@ import com.fs.starfarer.api.impl.campaign.rulecmd.FireBest;
 import com.fs.starfarer.api.ui.TooltipMakerAPI;
 import com.fs.starfarer.api.util.Misc;
 import com.fs.starfarer.api.util.Misc.Token;
+import vulpoids.campaign.impl.items.VulpoidPlugin;
+import vulpoids.impl.campaign.ids.Vulpoids;
 
 /**
  * NotifyEvent $eventHandle <params> 
@@ -114,14 +117,9 @@ public class TurnInVulpoids extends BaseCommandPlugin {
 
     protected void selectVulpoids() {
         CargoAPI copy = Global.getFactory().createCargo(false);
-        //copy.addAll(cargo);
-        //copy.setOrigSource(playerCargo);
         for (CargoStackAPI stack : playerCargo.getStacksCopy()) {
-            CommoditySpecAPI spec = stack.getResourceIfResource();
-            //if (spec != null && spec.getDemandClass().equals("vulpoids")) {
-            //    copy.addFromStack(stack);
-            //}
-            if (spec != null && spec.getId().equals("vulpoids_shiny")) {
+            SpecialItemSpecAPI spec = stack.getSpecialItemSpecIfSpecial();
+            if(spec != null && spec.getId().equals(Vulpoids.SPECIAL_ITEM_DEFAULT)) {
                 copy.addFromStack(stack);
             }
         }
@@ -222,9 +220,8 @@ public class TurnInVulpoids extends BaseCommandPlugin {
     protected float computeCreditValue(CargoAPI cargo) {
         float bounty = 0;
         for (CargoStackAPI stack : cargo.getStacksCopy()) {
-            CommoditySpecAPI spec = stack.getResourceIfResource();
-            if (spec != null && spec.getDemandClass().equals("vulpoids")) {
-                bounty += spec.getBasePrice() * stack.getSize();
+            if (stack.getPlugin() instanceof VulpoidPlugin) {
+                bounty += ((VulpoidPlugin)stack.getPlugin()).getPrice(null, null);
             }
         }
         bounty *= valueMult;
@@ -234,34 +231,18 @@ public class TurnInVulpoids extends BaseCommandPlugin {
     protected float computeReputationValue(CargoAPI cargo) {
         float rep = 0;
         for (CargoStackAPI stack : cargo.getStacksCopy()) {
-            CommoditySpecAPI spec = stack.getResourceIfResource();
-            if (spec != null && spec.getDemandClass().equals("vulpoids")) {
-                rep += getBaseRepValue(spec.getId()) * stack.getSize();
+            if (stack.getPlugin() instanceof VulpoidPlugin) {
+                rep += ((VulpoidPlugin)stack.getPlugin()).getTurnInRep();
             }
         }
         rep *= repMult;
-        //if (rep < 1f) rep = 1f;
         return rep;
     }
-
-    public static float getBaseRepValue(String commodity) {
-        //if ("vulpoids".equals(commodity)) {
-        //    return 0.01f;
-        //}
-        if ("vulpoids_shiny".equals(commodity)) {
-            return 5f;
-        }
-        return 0f;
-    }
-
-
+    
     protected boolean playerHasVulpoids() {
         for (CargoStackAPI stack : playerCargo.getStacksCopy()) {
-            CommoditySpecAPI spec = stack.getResourceIfResource();
-            //if (spec != null && spec.getDemandClass().equals("vulpoids")) {
-            //    return true;
-            //}
-            if (spec != null && spec.getId().equals("vulpoids_shiny")) {
+            SpecialItemSpecAPI spec = stack.getSpecialItemSpecIfSpecial();
+            if(spec != null && spec.getId().equals(Vulpoids.SPECIAL_ITEM_DEFAULT)) {
                 return true;
             }
         }

@@ -1,24 +1,26 @@
 package vulpoids.impl.campaign.intel.misc;
 
-import java.awt.Color;
-
 import com.fs.starfarer.api.Global;
 import com.fs.starfarer.api.campaign.econ.MarketAPI;
+import com.fs.starfarer.api.characters.PersonAPI;
 import com.fs.starfarer.api.impl.campaign.intel.misc.FleetLogIntel;
 import com.fs.starfarer.api.ui.TooltipMakerAPI;
 import com.fs.starfarer.api.util.Misc;
+import java.awt.Color;
 
-public class ShinyProducedIntel extends FleetLogIntel {
-
+public class AdminGotPlanning extends FleetLogIntel {
+    
     protected MarketAPI market;
+    protected PersonAPI person;
 
-    public ShinyProducedIntel(MarketAPI market) {
+    public AdminGotPlanning(MarketAPI market, PersonAPI person) {
             //super(null, planet);
             this.market = market;
+            this.person = person;
             Global.getSector().addScript(this);
 
-            setIcon(Global.getSettings().getSpriteName("intel", "shiny_produced"));
-            setSound("ui_intel_vulpoid_produced");
+            setIcon("graphics/icons/skills/industrial_planning.png");
+            setSound("ui_intel_vulpoid_admin_level_up");
             setDuration(30f);
     }
 
@@ -55,11 +57,8 @@ public class ShinyProducedIntel extends FleetLogIntel {
         float pad = 3f;
         float opad = 10f;
 
-        info.addPara("You've received a report that the biofactory on "+market.getName()+
-                    " has produced a Vulpoid with exceptional cognitive abilities. "+
-                    // wording was a bit strange imo
-                    "\nIt has been removed from the production line and transferred to your personal suite.", opad);
-                    // i can imagine a poor fox being put into a fucking warehouse straight off the bat xd
+        info.addPara("You've received a report from your administrator "+person.getNameString()+" on "+market.getName()+
+                    " that she has improved her skillset.", opad);
 
         float days = getDaysSincePlayerVisible();
         if (days >= 1) {
@@ -69,7 +68,7 @@ public class ShinyProducedIntel extends FleetLogIntel {
     
     @Override
     public String getName() {
-        return "Profecto Vulpoid Produced";
+        return "Administrator Gained Skill";
     }
-
+    
 }

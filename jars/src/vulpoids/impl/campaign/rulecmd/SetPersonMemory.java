@@ -30,12 +30,8 @@ public class SetPersonMemory extends BaseCommandPlugin {
             memflag = params.get(1).getString(memoryMap);
             vartype = params.get(2).getString(memoryMap);
             var_index = 3;
-            if (personvar.memory.get(personvar.name) instanceof PersonAPI) {
-                person = (PersonAPI) personvar.memory.get(personvar.name);
-            } else {
-                String id = params.get(0).getString(memoryMap);
-                person = Global.getSector().getImportantPeople().getPerson(id);
-            }
+            person = Global.getSector().getImportantPeople().getPerson(params.get(0).getString(memoryMap));
+            if(person==null) person = (PersonAPI) params.get(0).getObject(memoryMap);
         }
         switch(vartype) {
             case "boolean": person.getMemoryWithoutUpdate().set(memflag, params.get(var_index).getBoolean(memoryMap)); break;

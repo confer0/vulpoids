@@ -15,7 +15,7 @@ public class MaintenanceWorkforce extends BaseWorkforce {
     public void apply(String id) {
         super.apply(id);
         if(shouldApply()) {
-            market.getAccessibilityMod().modifyFlat(id, ACCESS_BONUS, "Vulpoid Orbital Workers");
+            market.getAccessibilityMod().modifyFlat(id, ACCESS_BONUS/100f, "Vulpoid Orbital Workers");
         }
     }
     @Override

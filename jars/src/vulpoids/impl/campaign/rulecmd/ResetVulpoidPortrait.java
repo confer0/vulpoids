@@ -18,9 +18,8 @@ public class ResetVulpoidPortrait extends BaseCommandPlugin {
         if (params.isEmpty()) {
             person = dialog.getInteractionTarget().getActivePerson();
         } else {
-            Object o = params.get(0).getObject(memoryMap);
-            if (o instanceof PersonAPI) person = (PersonAPI) o;
-            else person = Global.getSector().getImportantPeople().getPerson((String)o);
+            person = Global.getSector().getImportantPeople().getPerson(params.get(0).getString(memoryMap));
+            if(person==null) person = (PersonAPI) params.get(0).getObject(memoryMap);
         }
         if (person == null) return false;
         String portrait = person.getMemoryWithoutUpdate().getString(Vulpoids.KEY_DEFAULT_PORTRAIT);

@@ -2,6 +2,7 @@
 	"ranks":{
 		"vulp_servant":{"name":"Servant"},
 		"vulp_profecto":{"name":"Profecto"},
+		"vulp_testSubject":{"name":"Test Subject"},
 	},
 	
 	"posts":{

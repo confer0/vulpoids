@@ -9,31 +9,24 @@ import com.fs.starfarer.api.util.Misc;
 import java.util.List;
 import java.util.Map;
 
-public class SetVulpoidClothing extends BaseCommandPlugin {
-
+public class SetPersonRank extends BaseCommandPlugin {
+    
     @Override
     public boolean execute(String ruleId, InteractionDialogAPI dialog, List<Misc.Token> params, Map<String, MemoryAPI> memoryMap) {
-        if (params.size() < 1) return false;
+        if(params.isEmpty()) return false;
         PersonAPI person;
-        String clothing;
-        if (params.size() == 1) {
+        String rank;
+        
+        if(params.size()==1) {
             person = dialog.getInteractionTarget().getActivePerson();
-            clothing = params.get(0).getString(memoryMap);
+            rank = params.get(0).getString(memoryMap);
         } else {
+            rank = params.get(1).getString(memoryMap);
             person = Global.getSector().getImportantPeople().getPerson(params.get(0).getString(memoryMap));
             if(person==null) person = (PersonAPI) params.get(0).getObject(memoryMap);
-            clothing = params.get(1).getString(memoryMap);
         }
-        if (person == null) return false;
-        String[] portrait_slices = person.getPortraitSprite().split("/");
-        String portrait = "";
-        for(int i=0; i<portrait_slices.length; i++) {
-            if(i!=portrait_slices.length-2) portrait += portrait_slices[i]+"/";
-            else portrait += clothing+"/";
-        }
-        portrait = portrait.substring(0, portrait.length()-1); // Cutting off the last slash.
-        person.setPortraitSprite(portrait);
+        if("null".equals(rank)) rank=null;
+        person.setRankId(rank);
         return true;
     }
-    
 }
