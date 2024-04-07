@@ -231,8 +231,8 @@ public class VulpoidPlugin extends BaseSpecialItemPlugin {
         return base_price + (price_per_skill * getSkillScore());
     }
     //Ranges 3 to 7
-    public int getTurnInRep() {
-        return 2+getSkillScore()/2;
+    public float getTurnInRep() {
+        return 2+getSkillScore()/2f;
     }
     
     // Currently this can range from 2 at the start, to 10: 8 skills, 2 of them elite.
