@@ -25,7 +25,7 @@ public class VulpoidCreator {
         return createVulpoid(market, false, true);
     }
     
-    public static PersonAPI createPrefectoVulpoid(MarketAPI market) {
+    public static PersonAPI createProfectoVulpoid(MarketAPI market) {
         PersonAPI person;
         if(market == null) person = createRandomVulpoid(null);
         else person = createVulpoid(market);

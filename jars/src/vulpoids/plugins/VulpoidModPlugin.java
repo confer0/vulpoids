@@ -31,7 +31,7 @@ public class VulpoidModPlugin extends BaseModPlugin {
         PersonAPI person;
         
         if (ip.getPerson(Vulpoids.PERSON_LAISA) == null) {
-            person = VulpoidCreator.createPrefectoVulpoid(null);
+            person = VulpoidCreator.createProfectoVulpoid(null);
             person.setId(Vulpoids.PERSON_LAISA);
             person.setFaction(Vulpoids.FACTION_EXODYNE);
             person.setName(new FullName("Laisa", "", FullName.Gender.FEMALE));

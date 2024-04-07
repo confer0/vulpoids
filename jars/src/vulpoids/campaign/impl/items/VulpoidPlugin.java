@@ -17,6 +17,7 @@ import com.fs.starfarer.api.characters.OfficerDataAPI;
 import com.fs.starfarer.api.characters.PersonAPI;
 import com.fs.starfarer.api.fleet.FleetMemberAPI;
 import com.fs.starfarer.api.graphics.SpriteAPI;
+import com.fs.starfarer.api.impl.campaign.ids.Skills;
 import com.fs.starfarer.api.ui.Alignment;
 import com.fs.starfarer.api.ui.TooltipMakerAPI;
 import com.fs.starfarer.api.util.Misc;
@@ -155,7 +156,7 @@ public class VulpoidPlugin extends BaseSpecialItemPlugin {
         super.init(stack);
         String jsonStr = stack.getSpecialDataIfSpecial().getData(); 
         if (jsonStr == null) {
-            PersonAPI new_person = VulpoidCreator.createPrefectoVulpoid(null);
+            PersonAPI new_person = VulpoidCreator.createProfectoVulpoid(null);
             jsonStr = personToJson(new_person);
             stack.getSpecialDataIfSpecial().setData(jsonStr);
         }
@@ -181,7 +182,8 @@ public class VulpoidPlugin extends BaseSpecialItemPlugin {
         
         if(Vulpoids.SPECIAL_ITEM_ADMIN.equals(getId())) {
             person.getMemoryWithoutUpdate().set("$ome_isAdmin", true);
-            person.getMemoryWithoutUpdate().set("$ome_adminTier", 1);  // TODO - make smarter?
+            if(person.getStats().hasSkill(Skills.INDUSTRIAL_PLANNING)) person.getMemoryWithoutUpdate().set("$ome_adminTier", 1);
+            else person.getMemoryWithoutUpdate().set("$ome_adminTier", 0);
         } else {
             person.getMemoryWithoutUpdate().unset("$ome_isAdmin");
             person.getMemoryWithoutUpdate().unset("$ome_adminTier");
@@ -221,18 +223,25 @@ public class VulpoidPlugin extends BaseSpecialItemPlugin {
     }
     
     
-    
+    // Ranges 50,000 to 130,000
     @Override
     public int getPrice(MarketAPI market, SubmarketAPI submarket) {
-        //return super.getPrice(market, submarket);
-        // Price is increased for every skill!
-        // There's a baseline of four 'skills' that's just the headers, plus the two built-in.
-        int price_per_skill = 7500;
-        return price_per_skill * person.getStats().getSkillsCopy().size();
+        int price_per_skill = 10000;
+        int base_price = 30000;
+        return base_price + (price_per_skill * getSkillScore());
+    }
+    //Ranges 3 to 7
+    public int getTurnInRep() {
+        return 2+getSkillScore()/2;
     }
     
-    public int getTurnInRep() {
-        return person.getStats().getSkillsCopy().size();
+    // Currently this can range from 2 at the start, to 10: 8 skills, 2 of them elite.
+    public int getSkillScore() {
+        int score = 0;
+        for (SkillLevelAPI skill : person.getStats().getSkillsCopy()) {
+            score += skill.getLevel();
+        }
+        return score;
     }
     
     @Override
@@ -335,16 +344,17 @@ public class VulpoidPlugin extends BaseSpecialItemPlugin {
         portrait.addRelationshipBar(person, pad);
         switch (getId()) {
             case Vulpoids.SPECIAL_ITEM_DEFAULT:
-                //portrait.addPara("Profecto Vulpoids are a rare, highly intelligent mutation. They retain a powerful innate "+
-                //        "desire to help humans, though are self-aware enough to resist it. Considered beta-level AI, and "+
-                //        "extremely valuable.", opad);
-                portrait.addPara("Profecto Vulpoids are a rare, highly intelligent mutation. They're considered beta-level AI, "+
-                        "yet are easily disguised as an ordinary Vulpoid. Important people would pay fortunes to own even one.", opad);
+                portrait.addPara("Profecto Vulpoids are a rare, highly intelligent mutation. They're roughly equivalent to "+
+                        "beta-level AI, and are quite capable of masquerading as human to inspectors. Worth fortunes to the "+
+                        "right people.", opad);
                 break;
             case Vulpoids.SPECIAL_ITEM_EMBARKED:
                 // TODO - Not really happy with this. Could be better.
+                //portrait.addPara("Profecto Vulpoids retain a powerful innate desire to help humans, though are self-aware "+
+                //        "enough to resist it. "+"If one earns their trust, their psychology makes their loyalty unbreakable.", opad);
                 portrait.addPara("Profecto Vulpoids retain a powerful innate desire to help humans, though are self-aware "+
-                        "enough to resist it. If one earns their trust, their psychology makes their loyalty unbreakable.", opad);
+                        "enough to resist it. Their trust is not lightly earned, but once done their loyalty and commitment "+
+                        "is all but unbreakable.", opad);
                 break;
             case Vulpoids.SPECIAL_ITEM_OFFICER:
                 portrait.addPara("Profecto Vulpoids can make for strong spacecraft commanders, able to think and act at speeds "+
@@ -425,6 +435,7 @@ public class VulpoidPlugin extends BaseSpecialItemPlugin {
         
         tooltip.addPara("Market value: %s", opad, Misc.getHighlightColor(), Misc.getDGSCredits(getPrice(null, null)));
         tooltip.addPara("Right-click to cycle jobs", Misc.getHighlightColor(), opad);
+        tooltip.addPara(person.getStats().getSkillsCopy().toString(), opad);
     }
     
     private void addSkillsToTooltip(TooltipMakerAPI tooltip, ArrayList<SkillLevelAPI> skills, boolean expanded, boolean officer, boolean admin, float pad) {
