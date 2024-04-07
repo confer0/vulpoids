@@ -2,7 +2,7 @@
 
 > This modification is released as it is. To be enjoyed for free by Starsector players across the world. 
 
-> You CAN reupload this mod AS A WHOLE anywhere but you CAN'T claim it as yours. A reference to the original authors MUST be provided. Official versions of the mod exist only at [to add starsector forum link] and Github repository: ["https://github.com/Yanzihko/Vulpes-Adorable-Foxes"](https://github.com/confer0/vulpoids/new/main). 
+> You CAN reupload this mod AS A WHOLE anywhere but you CAN'T claim it as yours. A reference to the original authors MUST be provided. Official versions of the mod exist only at [to add starsector forum link] and Github repository: [https://github.com/confer0/vulpoids/new/main]. 
 Authors do not support nor take any responsibility for versions of this mod uploaded anywhere else.
 
 > You CAN'T use artwork within this Mod for commercial use, your own modifications or any other means, except for private personal use. You can't claim artwork as yours even if permission to use it for your modification is given. A reference to the original authors MUST be provided.
