@@ -15,6 +15,7 @@ import com.fs.starfarer.api.ui.TooltipMakerAPI;
 import com.fs.starfarer.api.util.Misc;
 import vulpoids.impl.campaign.VulpoidCreator;
 import vulpoids.impl.campaign.econ.workforces.BaseWorkforce;
+import vulpoids.impl.campaign.ids.Vulpoids;
 import vulpoids.impl.campaign.intel.misc.VulpPopGrownIntel;
 
 public class VulpoidPopulation extends BaseMarketConditionPlugin implements MarketImmigrationModifier {
@@ -69,7 +70,8 @@ public class VulpoidPopulation extends BaseMarketConditionPlugin implements Mark
         workforce_cap = (int)(workforce_cap * POPULATION_WORKFORCE_MULT);
         workforce_cap = Math.max(workforce_cap, 0);
         workforce_cap = Math.min(workforce_cap, MAX_WORKFORCE_CAP);
-        market.getMemoryWithoutUpdate().set("$workforce_cap", workforce_cap);
+        market.getMemoryWithoutUpdate().set(Vulpoids.KEY_WORKFORCE_CAP, workforce_cap);
+        market.getMemoryWithoutUpdate().set(Vulpoids.KEY_VULPOID_POP_AMOUNT, population);
     }
     private int getPopCap() {
         try {
@@ -112,8 +114,8 @@ public class VulpoidPopulation extends BaseMarketConditionPlugin implements Mark
     @Override
     public void apply(String id) {
         advance(0);
-        if(!market.getMemoryWithoutUpdate().contains("$workforces")) market.getMemoryWithoutUpdate().set("$workforces", 0);
-        market.getMemoryWithoutUpdate().set("$workforce_cap", workforce_cap);
+        if(!market.getMemoryWithoutUpdate().contains(Vulpoids.KEY_WORKFORCES)) market.getMemoryWithoutUpdate().set(Vulpoids.KEY_WORKFORCES, 0);
+        market.getMemoryWithoutUpdate().set(Vulpoids.KEY_WORKFORCE_CAP, workforce_cap);
         PersonAPI vulpoid_comms = VulpoidCreator.createNudeVulpoid(market);
         vulpoid_comms.setId("vulpoid_rep");
         vulpoid_comms.setName(new FullName("Vulpoid Representative", "", FullName.Gender.FEMALE));
@@ -165,9 +167,13 @@ public class VulpoidPopulation extends BaseMarketConditionPlugin implements Mark
     @Override
     protected void createTooltipAfterDescription(TooltipMakerAPI tooltip, boolean expanded) {
         super.createTooltipAfterDescription(tooltip, expanded);
-
+        
         String name = market.getName();
         float opad = 10f;
+        
+        if(population<=3) tooltip.addImage(Global.getSettings().getSpriteName("illustrations", "vulp_pop_low"), opad);
+        else if(population>=6) tooltip.addImage(Global.getSettings().getSpriteName("illustrations", "vulp_pop_high"), opad);
+        else tooltip.addImage(Global.getSettings().getSpriteName("illustrations", "vulp_pop_med"), opad);
 
         tooltip.addPara(name+" has a permanent population of Vulpoids, a cute and helpful artificial lifeform. "+
                 "In sufficient quantities, their presence will drive immigration of people hoping for a more "+
