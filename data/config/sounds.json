@@ -8,17 +8,17 @@
 	#],},
 	
 	"ui_cargo_vulpoid":{"sounds":[
-		{"file":"sounds/sfx_cargo/AH.ogg","pitch":1,"volume":0.9},
+		{"file":"sounds/sfx_cargo/AH.ogg","pitch":1,"volume":0.6},
 	],},
 	"ui_cargo_vulpoid_drop":{"sounds":[
-		{"file":"sounds/sfx_cargo/AH.ogg","pitch":0.8,"volume":0.9},
+		{"file":"sounds/sfx_cargo/AH.ogg","pitch":0.8,"volume":0.6},
 	],},
 	
 	"ui_cargo_prefecto":{"sounds":[
-		{"file":"sounds/sfx_cargo/ready.ogg","pitch":1,"volume":0.8},
+		{"file":"sounds/sfx_cargo/ready.ogg","pitch":1.1,"volume":0.6},
 	],},
 	"ui_cargo_prefecto_drop":{"sounds":[
-		{"file":"sounds/sfx_cargo/clear.ogg","pitch":1,"volume":0.8},
+		{"file":"sounds/sfx_cargo/clear.ogg","pitch":1.1,"volume":0.6},
 	],},
 	
 	"ui_intel_vulpoid_produced":{"sounds":[
