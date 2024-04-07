@@ -553,47 +553,49 @@ vulp_BarOwnColFreeDrink0E,DialogOptionSelected,$option == vulp_barOwnColFreeDrin
 vulp_turnInOption,PopulateOptions,"$isPerson
 $global.vulp_gotFactory
 TurnInVulpoids personCanAcceptVulpoids","FireBest DisableTurnInVulpOptionIfNeeded
-FireBest SetCustomVulpTurnInText",,"11:vulp_startTurnIn:""Could I interest you in some Profecto Vulpoids?""",
-vulp_turnInOptionHeg,SetCustomVulpTurnInText,$faction.id == hegemony,"SetOptionText vulp_startTurnIn ""\""I'd like to turn over some Profecto Vulpoids to the Hegemony.\""""",,,
-vulp_turnInChurch,SetCustomVulpTurnInText,$faction.id == luddic_church,,,,
-vulp_turnInPath,SetCustomVulpTurnInText,$faction.id == luddic_path,,,,
-vulp_turnInKazeron,SetCustomVulpTurnInText,"$faction.id == persean
-$market.id == kazeron",,,,
-vulp_turnInLeague,SetCustomVulpTurnInText,"$faction.id == persean
-$market.id != kazeron",,,,
-vulp_turnInDiktat,SetCustomVulpTurnInText,$faction.id == diktat,,,,
+FireBest SetCustomVulpTurnInText",,11:vulp_startTurnIn:Turn in Profecto Vulpoids,
+vulp_turnInOptionHeg,SetCustomVulpTurnInText,$faction.id == hegemony,"SetOptionText vulp_startTurnIn ""\""I'd like to turn in some Profecto Vulpoids to the Hegemony.\""""",,,
+vulp_turnInChurch,SetCustomVulpTurnInText,$faction.id == luddic_church,"SetOptionText vulp_startTurnIn ""\""I'd like to give over some Profecto Vulpoids to the Faithful.\""""",,,
+vulp_turnInPath,SetCustomVulpTurnInText,$faction.id == luddic_path,"SetOptionText vulp_startTurnIn ""\""I have some Profecto Vulpoids to be purged by the Path.\""""",,,
+vulp_turnInDiktat,SetCustomVulpTurnInText,$faction.id == diktat,"SetOptionText vulp_startTurnIn ""\""I'd like these Profecto Vulpoids to serve the Diktat.\""""",,,
 vulp_turnInTriTach,SetCustomVulpTurnInText,$faction.id == tritachyon,"SetOptionText vulp_startTurnIn ""\""Would you care to acquire some Profecto Vulpoids?\""""",,,
-vulp_turnInPirate,SetCustomVulpTurnInText,"$faction.id == pirates
-$market.id != umbra",,,,
-vulp_turnInUmbra,SetCustomVulpTurnInText,"$faction.id == pirates
-$market.id == umbra",,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
+vulp_turnInKazeron,SetCustomVulpTurnInText,"$faction.id == persean
+$market.id == kazeron","SetOptionText vulp_startTurnIn ""\""I believe these Profecto Vulpoids might benefit Kazeron.\""""",,,
+vulp_turnInLeague,SetCustomVulpTurnInText,"$faction.id == persean
+$market.id != kazeron","SetOptionText vulp_startTurnIn ""\""I believe these Profecto Vulpoids might benefit the League.\""""",,,
+vulp_turnInPirate,SetCustomVulpTurnInText,$faction.id == pirates,"SetOptionText vulp_startTurnIn ""\""Do you want to get yourself a Profecto Vulpoid?\""""",,,
+vulp_turnInIndie,SetCustomVulpTurnInText,$faction.id == independent,"SetOptionText vulp_startTurnIn ""\""Would you be interested in some Profecto Vulpoids?\""""",,,
 ,,,,,,
 vulp_disableTurnInOption,DisableTurnInVulpOptionIfNeeded,!TurnInVulpoids playerHasVulpoids,"SetTooltip vulp_startTurnIn ""You do not have any Vulpoids in your possession.""
 SetEnabled vulp_startTurnIn false",,,
 ,,,,,,
-vulp_turnInOptionSelGeneric,DialogOptionSelected,$option == vulp_startTurnIn,FireAll PopulateVulpoidsTurnInOptions,"""A fascinating offer. Why, if one of the major factions caught you with these, they might just seize them outright. Tell you what - I'll do you a favor and give you a good price.""",,
+vulp_turnInOptionSelGeneric,DialogOptionSelected,$option == vulp_startTurnIn,FireAll PopulateVulpoidsTurnInOptions,"""A fascinating offer. You know, they're technically illegal - one of the major factions might just try to seize them if they caught you. Tell you what - I'll do you a favor and give you a good price.""",,
 vulp_turnInOptionSelHegemony,DialogOptionSelected,"$option == vulp_startTurnIn
 $faction.id == hegemony",FireAll PopulateVulpoidsTurnInOptions,"""You say that as though you're not the one responsible for these things, but the Hegemony is treaty-bound to take possession of them all the same.""",,
 vulp_turnInOptionSelChurch,DialogOptionSelected,"$option == vulp_startTurnIn
-$faction.id == luddic_church",FireAll PopulateVulpoidsTurnInOptions,"""You were right to bring these to me. I shall contact the Knight Commander to take possession of these abominations so that they may be properly cleansed.""",,
-vulp_turnInOptionSelPath,DialogOptionSelected,"$option == vulp_startTurnIn
-$faction.id == luddic_path",FireAll PopulateVulpoidsTurnInOptions,"""Bless the path that brought you here. The execution of these abominations will serve as a demonstration to those who stray from the Path of Ludd.""",,
-vulp_turnInOptionSelDiktat,DialogOptionSelected,"$option == vulp_startTurnIn
-$faction.id == sindrian_diktat",FireAll PopulateVulpoidsTurnInOptions,"""A dangerous catch you have there - there's no telling what could happen if one got into the hands of terrorists. I ... that is, we, are sure to be rewarded by the Lion for surrendering this to Diktat Intelligence straightaway.""
+$faction.id == luddic_church",FireAll PopulateVulpoidsTurnInOptions,"""I appreciate you bringing them to me. We will take custody of these daughters of Moloch, and pray deeply that the light of Ludd may one day reach them.""
 OR
-""It's a good thing you came directly to me; a less understanding officer might have you arrested for transporting material deemed a threat to the interests of the Sindrian Cause. Your loyalty shall be rewarded.""",,
+""I appreciate you bringing them to me. We will take custody of these daughters of Moloch, and have them seek penance for the sin of their creation.""",,
+vulp_turnInOptionSelPath,DialogOptionSelected,"$option == vulp_startTurnIn
+$faction.id == luddic_path",FireAll PopulateVulpoidsTurnInOptions,"""Blessed be the path that brought you here. The execution of these abominations will serve as a demonstration to those who would stray from the Path of Ludd.""",,
+vulp_turnInOptionSelDiktat,DialogOptionSelected,"$option == vulp_startTurnIn
+$faction.id == sindrian_diktat",FireAll PopulateVulpoidsTurnInOptions,"""A fascinating beast you have there. I can think of a number of uses for that thing… that benefit the Great Cause, of course. Your loyalty will be rewarded.""
+OR
+""It's good that you came directly to me, beasts such as these require a firm hand. It shall learn to serve the Lion, whether through loyalty or labor.""",,
 vulp_turnInOptionSelTriTachyon,DialogOptionSelected,"$option == vulp_startTurnIn
-$faction.id == tritachyon",FireAll PopulateVulpoidsTurnInOptions,"""You hold quite the object of fascination there, though you are surely aware that you lack the expertise and capital necessary to exploit its full potential. The Tri-Tachyon Corporation would be more than pleased to offer you a fair market price for your goods.""",,
+$faction.id == tritachyon",FireAll PopulateVulpoidsTurnInOptions,"""I wouldn't dream of purchasing the competition's products,"" $heOrShe says before disabling the comms record. ""There, much better. You can name your price.""",,
 vulp_turnInOptionSelPerseanKazeron,DialogOptionSelected,"$option == vulp_startTurnIn
 $faction.id == persean
-$market.id == kazeron",FireAll PopulateVulpoidsTurnInOptions,"""An excellent find, citizen. The polity of Kazeron, and of course the Persean League as a whole, will recognize and reward your fulfillment of patriotic duty in assisting in finding these dangerous objects.""",,
+$market.id == kazeron",FireAll PopulateVulpoidsTurnInOptions,"""Excellent work, citizen. The polity of Kazeron, and of course the Persean League as a whole, greatly appreciates your efforts in bringing these valuable entities to us.""
+OR
+""Excellent work, citizen. The polity of Kazeron, and of course the Persean League as a whole, greatly appreciates your efforts in bringing these desirable entities to us.""",,
 vulp_turnInOptionSelPerseanNotKazeron,DialogOptionSelected,"$option == vulp_startTurnIn
 $faction.id == persean
-$market.id != kazeron",FireAll PopulateVulpoidsTurnInOptions,"""An excellent find, citizen. We can't allow factions that would seek to impose their tyranny over our Sector to accumulate these dangerous objects.""",,
+$market.id != kazeron",FireAll PopulateVulpoidsTurnInOptions,"""Excellent work, citizen. We can hope that treasures such as these will one day bring us to a truly independent Persean Sector.""",,
+vulp_turnInOptionSelPirate,DialogOptionSelected,"$option == vulp_startTurnIn
+$faction.id == pirates",FireAll PopulateVulpoidsTurnInOptions,"""What a pretty little thing. I'd be more than happy to give a sweetheart like that a lovin' home.""
+OR
+""These ones still do chores for ya, right? Actually, don't matter. I can persuade 'em.""",,
 vulp_playerHasOption,PopulateVulpoidsTurnInOptions,,,,0:vulp_selectVulpoids:Select Vulpoids to turn in,
 vulp_neverMindOption,PopulateVulpoidsTurnInOptions,,,,"100:vulp_neverMind:""Never mind, I don't actually have any.""",
 vulp_neverMindOptionSelected,DialogOptionSelected,$option == vulp_neverMind,FireAll PopulateOptions,,,
@@ -601,61 +603,17 @@ vulp_turnInOptionSelected,DialogOptionSelected,$option == vulp_selectVulpoids,Tu
 vulp_turnInResponseDefault,VulpoidsTurnedIn,,FireAll PopulateOptions,$PersonRank $personLastName thanks you and the conversation moves on to other matters.,,
 vulp_turnInResponseHegemony,VulpoidsTurnedIn,$faction.id == hegemony,FireAll PopulateOptions,$PersonRank $personLastName thanks you on behalf of the Hegemony Council and the conversation moves on to other matters.,,
 vulp_turnInResponseLuddicChurch,VulpoidsTurnedIn,$faction.id == luddic_church,FireAll PopulateOptions,$PersonRank $personLastName says a quick prayer and thanks you on behalf of the Church.,,
+vulp_turnInResponseLuddicPath,VulpoidsTurnedIn,$faction.id == luddic_church,FireAll PopulateOptions,$PersonRank $personLastName says a quick prayer and thanks you for your righteous act.,,
 vulp_turnInResponseDiktat,VulpoidsTurnedIn,$faction.id == sindrian_diktat,FireAll PopulateOptions,$PersonRank $personLastName salutes in an energetic display of loyalty to the Sindrian Cause before allowing you to turn to other matters.,,
-vulp_turnInResponseTriTachyon,VulpoidsTurnedIn,$faction.id == tritachyon,FireAll PopulateOptions,"$personName smiles like a carnivorous animal you saw in a holodoc once.  ""It's a deal.""",,
+vulp_turnInResponseTriTachyon,VulpoidsTurnedIn,$faction.id == tritachyon,FireAll PopulateOptions,"$personName smiles like a carnivorous animal you saw in a holodoc once. ""It's a deal.""",,
 vulp_turnInResponseLeagueKazeron,VulpoidsTurnedIn,"$faction.id == persean
 $market.id == kazeron",FireAll PopulateOptions,$PersonRank $personLastName verifies the transfer before moving the conversation to other matters.,,
 vulp_turnInResponseLeagueOther,VulpoidsTurnedIn,"$faction.id == persean
 $market.id != kazeron",FireAll PopulateOptions,$PersonRank $personLastName thanks you for your devotion to the cause of an independent Persean Sector.,,
+vulp_turnInResponsePirate,VulpoidsTurnedIn,$faction.id == pirates,FireAll PopulateOptions,"$personName pulls out a bottle of something and takes a celebratory swig. ""Today's a good one!""
+OR
+$personName licks $hisOrHer lips uncomfortably. ""Good deal. I'm looking forward to this.""",,
 ,,,,,,
-,,,,,,
-# Remove Colony Admin,runcode com.fs.starfarer.api.impl.campaign.intel.events.HostileActivityEventIntel.get().setProgress(600),,,,,
-,,,,,,
-vulp_RACA_init,RemoveAICoreAdmin,$market.vulpoidAdmin != null score:1000,,"You send the order to have the Vulpoid step down from command. Only a few moments later, your comm-link chimes with an incoming message.",vulp_RACA_init1:Continue,"For whatever reason, this first line does not have the person reference. Need to go a second line to do ShowPerson, $heOrShe, etc."
-vulp_RACA_init1,DialogOptionSelected,$option == vulp_RACA_init1,"FireAll RemoveVulpAdminOptions
-ShowPersonVisual","""Hello $PlayerSirOrMadam, I just got a notification from you, and just... wanted to verify? I was under the impression I was handling things quite well here.""",,
-vulp_RACA_inspectionOption,RemoveVulpAdminOptions,MarketIsInspectionTarget,SetOptionColor vulp_RACA_inspection highlight,,"vulp_RACA_inspection:""There's a Hegemony inspection inbound.""",
-vulp_RACA_relocateOption,RemoveVulpAdminOptions,,,,"vulp_RACA_relocate:""You're being relocated to a different colony.""",
-vulp_RACA_directOrderOption,RemoveVulpAdminOptions,,,,"vulp_RACA_directOrder:""You heard me, that's an order.""",
-vulp_RACA_neverMindOption,RemoveVulpAdminOptions,,"SetShortcut vulp_RACA_neverMind ""ESCAPE""",,"vulp_RACA_neverMind:""I'm sorry, that was a mistake.""",
-vulp_RACA_inspection,DialogOptionSelected,$option == vulp_RACA_inspection,,"That catches her off-guard.
-
-""Oh. That's bad. How did you even... never mind, you've got connections. Okay, priorities... A formal inspection is only launched when they've confident there's something to find. That means they know - or strongly suspect - I'm here.""",vulp_RACA_inspection1:Continue,
-vulp_RACA_inspection1,DialogOptionSelected,$option == vulp_RACA_inspection1,,"""If I step down, I'll be able to avoid their search. But there's no way to cover up that I've been working here. You'll get a lot more negative attention for it, and they'll probably disrupt a lot of our operations during their in-depth searches. I'd say... upwards of six weeks before we can return to normal operating levels.""
-
-$HeOrShe has started slowly pacing as she considers options, and then pauses.
-
-""...If your priority is to maintain good relations with the Hegemony, or to preserve the colony's economic potential, then we're already too late to get out unscathed. The next best option is to let them take me. They'll be more leniant if you don't try to cover things up.""
-
-$HeOrShe's putting on a brave face, but there's a catch in $hisOrHer voice as she says this.","vulp_RACA_inspectionConfirm:""I'd rather have you safe. Hide, and I'll deal with the consequences.""
-vulp_RACA_inspectionBribe:""I'll pull some strings, pay some credits. They won't find anything.""
-vulp_RACA_inspectionFight:""I won't let that happen. We'll resist the inspection with force.""
-vulp_RACA_inspectionStay:""If you think that's best, then stay and turn yourself over.""",
-vulp_RACA_inspectionConfirm,DialogOptionSelected,$option == vulp_RACA_inspectionConfirm,ShowPersonVisual,"""I... thank you, $SirOrMadam. I'll get everything prepared for my replacement, and get into hiding. I promise you, they won't find me.""
-
-$HeOrShe quickly wipes $hisOrHer eyes, and gives you a big, smiling salute.
-
-""It means a lot that you'd do that for me. Thank you, $PlayerSirOrMadam.""",vulp_RACA_removeAdmin:Cut comm link,
-vulp_RACA_inspectionBribe,DialogOptionSelected,$option == vulp_RACA_inspectionBribe,ShowPersonVisual,"""You'd do that for me? The Hegemony isn't impossible to bribe, but they won't make it cheap. It'll be a lot of red on the balance sheet...""
-
-$HeOrShe looks into the distance for a moment, before straightening up and saluting.
-
-""Thank you, $PlayerSirOrMadam.""",vulp_RACA_cancel:Cut comm link,
-vulp_RACA_inspectionFight,DialogOptionSelected,$option == vulp_RACA_inspectionFight,ShowPersonVisual,"""You're going to fight them, to protect me? I... just please be careful, alright? I don't need to tell you they've got strong fleets, and won't back down easily. But if anyone can do it, it's you.""
-
-$HeOrShe gives you a nervous smile, straightens $himOrHerself up, and salutes.
-
-""Burn bright, $PlayerSirOrMadam.""",vulp_RACA_cancel:Cut comm link,
-vulp_RACA_inspectionStay,DialogOptionSelected,$option == vulp_RACA_inspectionStay,ShowVulpAdminCrying,"$HeOrShe nods silently, and salutes.
-
-""Goodbye, $PlayerSirOrMadam.""",vulp_RACA_cancel:Cut comm link,
-vulp_RACA_relocate,DialogOptionSelected,$option == vulp_RACA_relocate,ShowVulpAdminCrying,TODO,vulp_RACA_removeAdmin:Cut comm link,
-vulp_RACA_directOrder,DialogOptionSelected,$option == vulp_RACA_directOrder,ShowVulpAdminCrying,TODO,vulp_RACA_removeAdmin:Cut comm link,
-vulp_RACA_neverMind,DialogOptionSelected,$option == vulp_RACA_neverMind,,"A wave of relief washes across $hisOrHer face, and you can see the tension leaving $hisOrHer body.
-
-""Oh, you scared me! I was so worried I'd done something wrong, I'm glad it's alright. Just... you'll let me know if you ever want me to do something, right? I just want to make sure you're happy with everything I do!""",vulp_RACA_cancel:Cut comm link,
-vulp_RACA_removeAdmin,DialogOptionSelected,$option == vulp_RACA_removeAdmin,DismissDialog override,,,
-vulp_RACA_cancel,DialogOptionSelected,$option == vulp_RACA_cancel,DismissDialog ignore,,,
 ,,,,,,
 ,,,,,,
 # Kanta Gifts,,,,,,
@@ -713,6 +671,7 @@ vulp_kantaVulpCommsLaisaFirstTime,PickGreeting,"$isCydoniaVulpoid score:1000
 $id == laisa score:1000",ShowPersonVisual,"After a short wait, your connection request is accepted.
 
 ""Yep, I'm still alive. Did you actually want anything?""",0:cutCommLink:Cut the comm link,
+,,,,,,
 ,,,,,,
 ,,,,,,
 # Arroyo - swapping out two bits of dialog so he's got Vulpoid servants too.,,,,,,
