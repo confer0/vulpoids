@@ -16,6 +16,9 @@ public class Vulpoids {
     
     
     public static final String PERSON_LAISA = "laisa";
+    public static final String PERSON_DUMMY_TERRAN = "vulp_dummy_terran";
+    public static final String PERSON_DUMMY_DESERT = "vulp_dummy_desert";
+    public static final String PERSON_DUMMY_ARCTIC = "vulp_dummy_arctic";
     
     public static final String FACTION_EXODYNE = "exodyne";
     

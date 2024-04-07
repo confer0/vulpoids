@@ -34,18 +34,38 @@ public class VulpoidModPlugin extends BaseModPlugin {
             person = VulpoidCreator.createProfectoVulpoid(null);
             person.setId(Vulpoids.PERSON_LAISA);
             person.setFaction(Vulpoids.FACTION_EXODYNE);
-            person.setName(new FullName("Laisa", "", FullName.Gender.FEMALE));
+            person.setName(new FullName("Exodyne Captain", "", FullName.Gender.FEMALE));
             person.setRankId(null);
             person.setPostId(Ranks.POST_FLEET_COMMANDER);
-            person.getRelToPlayer().setRel(-0.3f);  // Inhospitable by default. Frankly, if she weren't a Vulpoid she'd be much angrier at you for blowing up her ship.
-            person.setPortraitSprite("graphics/portraits/vulpoid/laisa/clothed/default.png");
+            person.getRelToPlayer().setRel(-0.1f);
+            person.setPortraitSprite("graphics/portraits/vulpoid/spacer/military.png");
             person.getStats().setSkillLevel(Vulpoids.SKILL_LAISA_ADMIN, 1);
             person.getStats().setSkillLevel(Vulpoids.SKILL_LAISA_OFFICER, 1);
+            // TODO - Combat Skills
             person.getMemoryWithoutUpdate().set(MemFlags.OFFICER_MAX_LEVEL, 7);
             person.getMemoryWithoutUpdate().set(MemFlags.OFFICER_MAX_ELITE_SKILLS, 3);
             person.getMemoryWithoutUpdate().set(Vulpoids.KEY_DEFAULT_PORTRAIT, "graphics/portraits/vulpoid/laisa/clothed/default.png");
             person.getMemoryWithoutUpdate().set(Vulpoids.KEY_OFFICER_PORTRAIT, "graphics/portraits/vulpoid/laisa/laisa_special_admiral.png");
             person.getMemoryWithoutUpdate().set(Vulpoids.KEY_CARGO_ICON, "graphics/icons/cargo/vulpoids/vulpoid_laisa.png");
+            ip.addPerson(person);
+        }
+        
+        if(ip.getPerson(Vulpoids.PERSON_DUMMY_TERRAN) == null) {
+            person = VulpoidCreator.createNudeVulpoid(null);
+            person.setId(Vulpoids.PERSON_DUMMY_TERRAN);
+            VulpoidCreator.setDefaultClimate(person, "terran");
+            ip.addPerson(person);
+        }
+        if(ip.getPerson(Vulpoids.PERSON_DUMMY_DESERT) == null) {
+            person = VulpoidCreator.createNudeVulpoid(null);
+            VulpoidCreator.setDefaultClimate(person, "desert");
+            person.setId(Vulpoids.PERSON_DUMMY_DESERT);
+            ip.addPerson(person);
+        }
+        if(ip.getPerson(Vulpoids.PERSON_DUMMY_ARCTIC) == null) {
+            person = VulpoidCreator.createNudeVulpoid(null);
+            VulpoidCreator.setDefaultClimate(person, "arctic");
+            person.setId(Vulpoids.PERSON_DUMMY_ARCTIC);
             ip.addPerson(person);
         }
         

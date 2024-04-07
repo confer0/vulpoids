@@ -73,6 +73,20 @@ public class VulpoidCreator {
     public static String getClimate(String portrait) {
         return portrait.split("/")[3]; // TODO
     }
+    public static String setClimate(String portrait, String climate) {
+        String[] split = portrait.split("/");
+        String new_portrait = split[0];
+        for(int i=1; i<split.length; i++) {
+            if(i!=3) new_portrait += "/"+split[i];
+            else new_portrait += "/"+climate;
+        }
+        return new_portrait;
+    }
+    public static void setDefaultClimate(PersonAPI person, String climate) {
+        String portrait = setClimate(person.getPortraitSprite(), climate);
+        person.setPortraitSprite(portrait);
+        person.getMemoryWithoutUpdate().set(Vulpoids.KEY_DEFAULT_PORTRAIT, portrait);
+    }
     
     public static String getIcon(String portrait) {
         switch(getClimate(portrait)) {

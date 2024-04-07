@@ -14,7 +14,7 @@ import java.awt.Color;
 
 import com.fs.starfarer.api.campaign.econ.MarketAPI;
 import com.fs.starfarer.api.campaign.listeners.FleetEventListener;
-import com.fs.starfarer.api.characters.FullName;
+import com.fs.starfarer.api.campaign.rules.MemoryAPI;
 import com.fs.starfarer.api.characters.PersonAPI;
 import com.fs.starfarer.api.combat.BattleCreationContext;
 import com.fs.starfarer.api.combat.ShipVariantAPI;
@@ -26,18 +26,18 @@ import com.fs.starfarer.api.impl.campaign.FleetInteractionDialogPluginImpl.BaseF
 import com.fs.starfarer.api.impl.campaign.FleetInteractionDialogPluginImpl.FIDConfig;
 import com.fs.starfarer.api.impl.campaign.FleetInteractionDialogPluginImpl.FIDConfigGen;
 import com.fs.starfarer.api.impl.campaign.RuleBasedInteractionDialogPluginImpl;
+import com.fs.starfarer.api.impl.campaign.ids.Commodities;
 import com.fs.starfarer.api.impl.campaign.ids.Entities;
 import com.fs.starfarer.api.impl.campaign.ids.Factions;
 import com.fs.starfarer.api.impl.campaign.ids.FleetTypes;
 import com.fs.starfarer.api.impl.campaign.ids.MemFlags;
-import com.fs.starfarer.api.impl.campaign.ids.Ranks;
-import com.fs.starfarer.api.impl.campaign.ids.Skills;
 import com.fs.starfarer.api.impl.campaign.ids.Tags;
 import com.fs.starfarer.api.impl.campaign.missions.cb.CustomBountyCreator.CustomBountyData;
 import com.fs.starfarer.api.impl.campaign.missions.hub.HubMissionWithSearch;
 import com.fs.starfarer.api.impl.campaign.missions.hub.ReqMode;
 import com.fs.starfarer.api.impl.campaign.procgen.themes.BaseThemeGenerator;
 import com.fs.starfarer.api.impl.campaign.procgen.themes.RemnantSeededFleetManager.RemnantFleetInteractionConfigGen;
+import com.fs.starfarer.api.impl.campaign.rulecmd.AddRemoveCommodity;
 import com.fs.starfarer.api.impl.campaign.rulecmd.salvage.special.ShipRecoverySpecial.PerShipData;
 import com.fs.starfarer.api.impl.campaign.rulecmd.salvage.special.ShipRecoverySpecial.ShipCondition;
 import com.fs.starfarer.api.impl.campaign.rulecmd.salvage.special.ShipRecoverySpecial.ShipRecoverySpecialData;
@@ -47,7 +47,8 @@ import com.fs.starfarer.api.ui.TooltipMakerAPI;
 import com.fs.starfarer.api.util.Misc;
 import java.util.ArrayList;
 import java.util.List;
-import vulpoids.impl.campaign.VulpoidCreator;
+import java.util.Map;
+import java.util.Random;
 import vulpoids.impl.campaign.ids.Vulpoids;
 
 public class VulpoidBiofactoryMission extends HubMissionWithSearch implements FleetEventListener {
@@ -106,19 +107,21 @@ public class VulpoidBiofactoryMission extends HubMissionWithSearch implements Fl
             ACTIVE,
             BEATFLEET,
             COMPLETED,
+            FAILED,
     }
 
     
     @Override
     protected boolean create(MarketAPI createdAt, boolean barEvent) {
         
+        Global.getSector().getMemoryWithoutUpdate().set("$" + getMissionId() + "_ref", this);
+        
         completedKey = Vulpoids.KEY_GOT_FACTORY;
-        
-        
 
         setStartingStage(Stage.ACTIVE);
         //addSuccessStages(Stage.COMPLETED);
         setSuccessStage(Stage.COMPLETED);
+        setFailureStage(Stage.FAILED);
 
         setStoryMission();
 
@@ -131,6 +134,7 @@ public class VulpoidBiofactoryMission extends HubMissionWithSearch implements Fl
         //connectWithMemoryFlag(Stage.ACTIVE, Stage.COMPLETED, Global.getSector().getMemoryWithoutUpdate(), completedKey);
         connectWithMemoryFlag(Stage.ACTIVE, Stage.BEATFLEET, Global.getSector().getMemoryWithoutUpdate(), "$vulp_beatFactoryFleet");
         connectWithMemoryFlag(Stage.BEATFLEET, Stage.COMPLETED, Global.getSector().getMemoryWithoutUpdate(), Vulpoids.KEY_GOT_FACTORY);
+        connectWithMemoryFlag(Stage.BEATFLEET, Stage.FAILED, Global.getSector().getMemoryWithoutUpdate(), "$vulp_didBadEnding");
         
         createFleet();
 
@@ -206,19 +210,8 @@ public class VulpoidBiofactoryMission extends HubMissionWithSearch implements Fl
         
         FleetMemberAPI member = fleet.getFleetData().addFleetMember("vulp_geck_Terraformer");
         member.setShipName("XBS Rellrait");
-        flagship_captain = VulpoidCreator.createSuitedVulpoid(planet.getMarket());
-        flagship_captain.setPortraitSprite("graphics/portraits/vulpoid/spacer/military.png");
-        //flagship_captain.setFaction(Factions.NEUTRAL);
-        flagship_captain.setFaction(Vulpoids.FACTION_EXODYNE);
-        flagship_captain.setName(new FullName("Unknown", "", FullName.Gender.FEMALE));
-        flagship_captain.setRankId(null);
-        flagship_captain.setPostId(Ranks.POST_FLEET_COMMANDER);
-        flagship_captain.getRelToPlayer().setRel(-0.1f);
-        //flagship_captain.getStats().setSkipRefresh(true);
-        //flagship_captain.getStats().setSkillLevel(Skills.CARRIER_GROUP, 1);
-        //flagship_captain.getStats().setSkillLevel(Skills.FIGHTER_UPLINK, 1);
-        //flagship_captain.getStats().setSkipRefresh(false);
         
+        flagship_captain = Global.getSector().getImportantPeople().getPerson(Vulpoids.PERSON_LAISA);
         member.setCaptain(flagship_captain);
         ShipVariantAPI v = member.getVariant().clone();
         v.setSource(VariantSource.REFIT);
@@ -313,7 +306,9 @@ public class VulpoidBiofactoryMission extends HubMissionWithSearch implements Fl
                             Entities.WRECK, Factions.NEUTRAL, params);
                     Misc.makeImportant(entity, "vulpFactoryShip");
                     entity.getMemoryWithoutUpdate().set("$vulpFactoryShip", true);
-
+                    Global.getSector().getMemoryWithoutUpdate().set("$vulpFactoryShip", entity);
+                    if(Global.getSector().getImportantPeople().getPerson(Vulpoids.PERSON_LAISA).getMemoryWithoutUpdate().contains("$talkedOnComms")) entity.getMemoryWithoutUpdate().set("$talkedOnComms", true);
+                    
                     entity.getLocation().x = fleet.getLocation().x + (50f - (float) Math.random() * 100f);
                     entity.getLocation().y = fleet.getLocation().y + (50f - (float) Math.random() * 100f);
 
@@ -409,8 +404,38 @@ public class VulpoidBiofactoryMission extends HubMissionWithSearch implements Fl
         }
         return super.getPostfixForState();
     }
-
-	
+    
+    
+    @Override
+    public boolean callEvent(String ruleId, InteractionDialogAPI dialog, List<Misc.Token> params, Map<String, MemoryAPI> memoryMap) {
+        String action = params.get(0).getString(memoryMap);
+        if("applyPunishment".equals(action)) {
+            
+            Random random = new Random();
+            float crMult = 1;
+            for (FleetMemberAPI member : Global.getSector().getPlayerFleet().getMembersWithFightersCopy()) {
+                float crLost = Math.min(member.getRepairTracker().getBaseCR(), member.getDeployCost() * 0.5f);
+                crLost += 0.01f * (float)random.nextInt(10);
+                crLost *= crMult;
+                if (crLost > 0) {
+                    member.getRepairTracker().applyCREvent(-crLost, "Citadel explosion");
+                    AddRemoveCommodity.addCRLossText(member, dialog.getTextPanel(), crLost);
+                }
+            }
+            int n_crew_lost = 250;
+            if(Global.getSector().getPlayerFleet().getCargo().getCrew() < 750) n_crew_lost = 1+(int)((1f/3f) * Global.getSector().getPlayerFleet().getCargo().getCrew());
+            AddRemoveCommodity.addCommodityLossText(Commodities.CREW, n_crew_lost, dialog.getTextPanel());
+            Global.getSector().getPlayerFleet().getCargo().removeCrew(n_crew_lost);
+            
+            Global.getSoundPlayer().playSound("gate_explosion", 1, 1, Global.getSoundPlayer().getListenerPos(), Misc.ZERO);
+            CustomCampaignEntityAPI derelict_ship = (CustomCampaignEntityAPI)Global.getSector().getMemoryWithoutUpdate().get("$vulpFactoryShip");
+            derelict_ship.setExpired(true);
+            
+        } else {
+            return super.callEvent(ruleId, dialog, params, memoryMap);
+        }
+        return true;
+    }
 }
 
 

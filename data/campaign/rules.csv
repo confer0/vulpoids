@@ -4,7 +4,7 @@ vulp_exampleBarEventOption,AddBarEvents,"$market.id == nomios
 !$global.vulp_gotFactoryMission
 HasFoughtRemnant","AddBarEvent vulp_findFactory_barEvent  ""Talk to the man in the lab coat"" ""A man wearing the branded lab coat of a long-dead megacorp is making a poor attempt at subtly grabbing your attention."" highlight",,,
 vulp_exampleBarEventOptionDev,AddBarEvents,$global.isDevMode,"AddBarEvent vulp_findFactory_barEvent  ""(dev) Start the quest with dev mode"" ""A large, red button labelled with the word 'Vulpoids' is sitting in the middle of the room."" highlight",,,
-vulp_findFactory_barEvent,DialogOptionSelected,$option == vulp_findFactory_barEvent,,"Even if you weren’t on Nomios, you could've pegged this man as a recent thaw from a lightyear away. Clothes with old logos ('Exodyne Biotech'), an expression of worried bewilderment, and inexperience with the subtle ways social convention has changed over the last 200 cycles. So the fact that he's waving to you specifically is worth inquiring about.",vulp_findFactory_barEvent1:Continue,
+vulp_findFactory_barEvent,DialogOptionSelected,$option == vulp_findFactory_barEvent,,"Even if you weren’t on Nomios, you could've pegged this man as a recent thaw from a lightyear away. Clothes with ancient logos, an expression of worried bewilderment, and inexperience with the subtle ways social convention has changed over the last 200 cycles. So the fact that he's waving to you specifically is worth inquiring about.",vulp_findFactory_barEvent1:Continue,
 vulp_findFactory_barEvent1,DialogOptionSelected,$option == vulp_findFactory_barEvent1,ShowImageVisual vulp_bar_quest,,vulp_findFactory_barEventEnd:Continue,
 ,,,,,,
 vulp_findFactory_barEventEnd,DialogOptionSelected,$option == vulp_findFactory_barEventEnd,"$global.vulp_gotFactoryMission = true
@@ -25,36 +25,36 @@ $geckDestroyed",,"The modified Paragon is a derelict, but the droneships are sti
 ,,,,,,
 vulp_factoryFleetGreeting,OpenCommLink,"$entity.vulpFactory_target score:2000
 !$entity.geckDestroyed
-!$talkedOnce",$talkedOnce = true,"After a moment's delay the comm-link connects, displaying the Exodynye Biotech logo. A voice comes through, modulated for anonymity.
+!$talkedOnComms",$talkedOnComms = true,"After a moment's delay the comm-link connects, displaying the Exodynye Biotech logo. A voice comes through, modulated for anonymity.
 
 ""Independent $shipOrFleet. This vessel and its associated escort are the lawful property of the Exodyne Biotech corporation. We are operating under semi-autonomous mode due to extenuating circumstances, as permitted under Domain AI Safety regulations. If you are not authorized by the Exodyne Biotech corporation to reassume control over this vessel, then you are advised to maintain your distance. We are permitted to respond with deadly force.""
 
 It's well within the capabilities of an AI core to create a fake persona, but it'd be a strange choice to then anonymize it. This ship might be controlled by something else.",cutCommLinkNoText:Cut the comm link,
 vulp_factoryFleetGreeting2,OpenCommLink,"$entity.vulpFactory_target score:2000
 !$entity.geckDestroyed
-$talkedOnce",,"""Independent $shipOrFleet, I say again: maintain your distance. We are permitted to use deadly force to defend corporate assets.""",cutCommLinkNoText:Cut the comm link,
+$talkedOnComms",,"""Independent $shipOrFleet, I say again: maintain your distance. We are permitted to use deadly force to defend corporate assets.""",cutCommLinkNoText:Cut the comm link,
 vulp_factoryFleetGreetingAttacked,OpenCommLink,"$entity.vulpFactory_target score:2000
 !$entity.geckDestroyed
-!$talkedOnce
-$entity.wasAttacked",$talkedOnce = true,"After a moment's delay the comm-link connects, displaying the Exodynye Biotech logo. A voice comes through, modulated for anonymity.
+!$talkedOnComms
+$entity.wasAttacked",$talkedOnComms = true,"After a moment's delay the comm-link connects, displaying the Exodynye Biotech logo. A voice comes through, modulated for anonymity.
 
 ""Hostile $shipOrFleet! This vessel and its associated escort are the lawful property of the Exodyne Biotech corporation! We are operating under semi-autonomous mode due to extenuating circumstances, as permitted under Domain AI Safety regulations! Power down weapons systems and disengage!""
 
 It's well within the capabilities of an AI core to create a fake persona, but it'd be a strange choice to then anonymize it. This ship might be controlled by something else.",cutCommLinkNoText:Cut the comm link,
 vulp_factoryFleetGreetingAttacked2,OpenCommLink,"$entity.vulpFactory_target score:2000
 !$entity.geckDestroyed
-$talkedOnce
+$talkedOnComms
 $entity.wasAttacked",,"""Hostile $shipOrFleet, your actions are unauthorized under Domain law! Power down weapons and disengage!""",cutCommLinkNoText:Cut the comm link,
 vulp_factoryFleetGreetingDestroyed,OpenCommLink,"$entity.vulpFactory_target score:2000
 $entity.geckDestroyed
-!$talkedOnce",$talkedOnce = true,"The comm-link hisses and crackles as it attempts to stabilize the connection with the destroyed flagship's sputtering transmitters. The wobbling image of the Exodyne Biotech logo appears on the display, and a modulated voice speaks over the garbled audio channel.
+!$talkedOnComms",$talkedOnComms = true,"The comm-link hisses and crackles as it attempts to stabilize the connection with the destroyed flagship's sputtering transmitters. The wobbling image of the Exodyne Biotech logo appears on the display, and a modulated voice speaks over the garbled audio channel.
 
 ""Hostile $shipOrFleet, please disengage! This fleet is authorized under Domain AI Safety regulations! We are not a threat! Please, hold your fire!""
 
 It's well within the capabilities of an AI core to create a fake persona, but it'd be a strange choice to then anonymize it. This ship - or what's left of it - might be controlled by something else.",cutCommLinkNoText:Cut the comm link,
 vulp_factoryFleetGreetingDestroyed2,OpenCommLink,"$entity.vulpFactory_target score:2000
 $entity.geckDestroyed
-$talkedOnce",,"""Hostile $shipOrFleet, please hold your fire! We are not a threat!""",cutCommLinkNoText:Cut the comm link,
+$talkedOnComms",,"""Hostile $shipOrFleet, please hold your fire! We are not a threat!""",cutCommLinkNoText:Cut the comm link,
 ,,,,,,
 ,,,,,,
 ,,,,,,
@@ -97,51 +97,224 @@ $tookCrew",SalvageSpecialInteraction,"Salvage crews re-boarding the wreck confir
 vulp_exploreWreck,CheckSalvageSpecial,"$salvageSpecialData != null
 $customType == wreck
 $vulpFactoryShip score:1000
-!$global.vulp_gotFactory",ShowImageVisual raid_prepare,"Your bridge officers spend some time reviewing scans of the vessel, evaluating the most likely layouts of internal corridors and creating tactical extrapolations. Of greatest concern is the massive biosphere occupying the center of the vessel - it's large enough that terrestrial weapons could theoretically be fielded, and orbital support can't be provided without severely damaging the ship.
+!$global.vulp_gotFactory",ShowImageVisual raid_prepare,"Your bridge officers spend some time reviewing scans of the vessel, evaluating the most likely layouts of internal corridors and creating tactical extrapolations. Of greatest concern is the massive biodome occupying the center of the vessel - it's large enough that terrestrial weapons could theoretically be fielded, and orbital support can't be provided without severely damaging the ship.
 
-It's decided that the best course of action will be to deploy mixed salvor/security teams across the vessel, aiming to quickly seize control over primary ship systems while neutralizing any resistance along the way.",vulp_exploreWreck1:Continue,
-vulp_exploreWreck1,DialogOptionSelected,$option == vulp_exploreWreck1,"ShowImageVisual bombard_saturation_result
-PlaySound ui_raid_prepared","The boarding shuttles are released in a single large wave, minimizing the time any hostile forces will have to react. The shuttles dock all across the vessel's hull, and your bridge is immediately alive with comms chatter as security teams sweep corridors and salvors start tracing conduits.
+It's decided that the best course of action will be to deploy mixed salvor/security teams across the vessel, aiming to quickly seize control over primary ship systems while neutralizing any resistance along the way.",vulp_exploreWreck1:Make it so,
+vulp_exploreWreck1,DialogOptionSelected,$option == vulp_exploreWreck1,"HideVisual
+PlaySound ui_raid_prepared","The boarding shuttles are released in a single wave, minimizing the time any hostile forces will have to react. The shuttles dock all across the vessel's hull, and your bridge is immediately alive with comms chatter as security teams sweep corridors and salvors start tracing conduits.
 
-It doesn't take long for the first teams to report contact, but the procedural tone quickly dissolves into confusion as additional details come through.",vulp_exploreWreck2:Continue,
-vulp_exploreWreck2,DialogOptionSelected,$option == vulp_exploreWreck2,"SetImportantName vulpoid_space_terran_generic ""Unknown Bipeds""
-SetImportantName vulpoid_space_winter_generic ""Unknown Bipeds""
-SetImportantName vulpoid_space_desert_generic ""Unknown Bipeds""
-ShowPersonVisual true vulpoid_space_terran_generic
-ShowSecondPerson vulpoid_space_winter_generic
-ShowThirdPerson vulpoid_space_desert_generic","Your tactical officer cuts through the chatter and pulls together a clear picture for you. Apparently the personnel the teams are encountering are not humans, but some sort of furred, bipedal mammal. They're approaching the salvage teams and, for some reason, attempting to assist the salvors in taking over their own ship. The security teams have had no issue securing them, as they're extremely receptive to orders and show no resistance to being cuffed.
+It doesn't take long for the first teams to report contact.",vulp_exploreWreck_helmets:Continue,
+vulp_exploreWreck_nottalked,DialogOptionSelected,"$option == vulp_exploreWreck_helmets
+!$talkedOnComms","SetImportantName vulp_dummy_terran ""Opposition Crew""
+SetImportantPortrait vulp_dummy_terran ""graphics/portraits/vulpoid/spacer/admin_no_atmos.png""
+ShowPersonVisual true vulp_dummy_terran
+ShowSecondPerson vulp_dummy_terran
+ShowThirdPerson vulp_dummy_terran","The opposing crew is wearing distinctive space suits, with large panels that extend from their helmets. Perhaps decorative, or serving some esoteric purpose.
 
-One team reports that they've allowed the bipeds to mingle among their ranks with no issue. Tactical assures you they'll receive remedial training, but also notes that the bipeds really are helping the salvors, with no indications of sabotage or hostility.",vulp_exploreWreckFirstEncounterHub:Continue,
+They're working to repair the damage to their vessel, but immediately stop and stare as soon as our teams arrive.","vulp_exploreWreck2:""Secure them.""",
+vulp_exploreWreck_talked,DialogOptionSelected,"$option == vulp_exploreWreck_helmets
+$talkedOnComms","SetImportantName vulp_dummy_terran ""Opposition Crew""
+SetImportantPortrait vulp_dummy_terran ""graphics/portraits/vulpoid/spacer/admin_no_atmos.png""
+ShowPersonVisual true vulp_dummy_terran
+ShowSecondPerson vulp_dummy_terran
+ShowThirdPerson vulp_dummy_terran","The opposing crew is wearing the same type of suit that their captain wore on comms, with those same distinctive panels extending from the helmet.
+
+They're working to repair the damage to their vessel, but immediately stop and stare as soon as our teams arrive.","vulp_exploreWreck2:""Secure them.""",
+vulp_exploreWreck2,DialogOptionSelected,$option == vulp_exploreWreck2,,"The security teams quickly ascertain that they don't seem to use the same comms protocols, nor do they appear to understand standard spacer hand-signs. Fortunately, the ancient gesture of pointing is enough common language for the teams' purposes.
+
+The opposing crew puts up no resistance as the security teams arrest them, clearing the way for the salvors to move forward and seize control over the systems that they were repairing.",vulp_exploreWreck3:Press forward,
+vulp_exploreWreck3,DialogOptionSelected,$option == vulp_exploreWreck3,HideVisual,"Your teams continue deeper into the vessel, the routine call-and-response filling the airwaves like a rhythm. Damage is severe, as expected, but is growing lighter as teams approach the heavily-reinforced biodome.
+
+Atmospheric pressure goes from a holed vacuum, to combat-low, to full hab-pressure. Helmets stay on, but it's a good sign that the ship will prove recoverable.
+
+Before long, the first teams have reached the biodome.",vulp_exploreWreck4:Breach and clear,
+vulp_exploreWreck4,DialogOptionSelected,$option == vulp_exploreWreck4,ShowImageVisual citadel_biodome,"Teams breach into the biodome, quickly fanning out to clear the bottleneck and secure a foothold.
+
+The total lack of resistance is making the armed boarding feel like overkill, but you won't know for sure until the command codes are in your computers.",vulp_exploreWreck5:Continue,
+vulp_exploreWreck5,DialogOptionSelected,$option == vulp_exploreWreck5,,"One of the biodome teams reports contact, and that they're moving up to arrest.
+
+Suddenly, the comms are filled with the sounds of human…
+
+...fawning?","vulp_exploreWreck6:""Tactical?""",
+vulp_exploreWreck6,DialogOptionSelected,$option == vulp_exploreWreck6,"SetImportantName vulp_dummy_terran ""Opposition Crew?""
+SetImportantName vulp_dummy_desert ""Opposition Crew?""
+SetImportantName vulp_dummy_arctic ""Opposition Crew?""
+ResetVulpoidPortrait vulp_dummy_terran
+ResetVulpoidPortrait vulp_dummy_desert
+ResetVulpoidPortrait vulp_dummy_arctic
+ShowPersonVisual true vulp_dummy_terran
+ShowSecondPerson vulp_dummy_arctic
+ShowThirdPerson vulp_dummy_desert","Tactical is busy barking out harsh orders to cut out the chatter, but directs your attention to the corresponding team's cameras.
+
+Apparently those helmets weren't decorative after all.",vulp_exploreWreck7:Continue,
+vulp_exploreWreck7,DialogOptionSelected,$option == vulp_exploreWreck7,,"The team's loss of decorum isn't simply due to creatures' appearance, but also behavior. They apparently have a firm grasp of language after all, and are excitedly chatting with the team.
+
+The simultaneous conversations are difficult to follow through comms, but you grasp that nothing of consequence is being said - it appears that the creatures are just extremely curious about humans. ""Do you eat food?"" is a highlight.
+
+The team is promptly persuaded to get back in gear, and these apparent non-humans are placed under arrest. Your science officer is has dispatched analysis teams to board the vessel and hopefully get some clear answers.",vulp_exploreWreck8:Continue,
+vulp_exploreWreck8,DialogOptionSelected,$option == vulp_exploreWreck8,"HideFirstPerson
+HideSecondPerson
+HideThirdPerson","Your bridge is on edge with the alien nature of the ship's crew, but the boarding continues all the same.
+
+Tactical's chewing out of the first team did the trick, and there are no further incidents as additional teams encounter unsuited crew and place them under arrest.
+
+With verbal communication, and the comms protocols from an unused suit, your teams can start extracting directons towards key systems.",vulp_exploreWreck9:Continue,
+vulp_exploreWreck9,DialogOptionSelected,$option == vulp_exploreWreck9,SetOptionColor vulp_badEndingHubImmediate bad,"You've reached a lull in the boarding of the ship. Several teams pressing into the armored depths of the command decks towards the CIC, while salvors sweep through the already-secured areas searching for anything of interest.
+
+The exploration of the biodome has yet to start in earnest. You could step in and oversee it personally.","vulp_exploreBiodomeHub:Oversee the biodome exploration
+vulp_exploreWreck9:Just wait for a team to reach the CIC
+vulp_badEndingHubImmediate:Consider the fate of the crew",
+,,,,,,
+# Bad Ending,,,,,,
+,,,,,,
+vulp_badEndingHubImmediate,DialogOptionSelected,$option == vulp_badEndingHubImmediate,"$backtrackBadEndOption = vulp_exploreWreck9
+FireAll VulpBadEndJustifications","These non-human crew are a major concern. It's not certain if they can be trusted, and their very nature raises uncomfortable questions. It might be better if they were no longer around.
+
+If you ordered your boarding teams to begin executing the crew, they'd do so. Spacers will follow nearly any order, and your crew trusts you to make informed decisions.
+
+Still, it would be easier to swallow if you had a justification.",,
+vulp_badEndingHubAfterExplore,DialogOptionSelected,$option == vulp_badEndingHubAfterExplore,"$backtrackBadEndOption = vulp_exploreBiodomeEnding
+FireAll VulpBadEndJustifications","After exploring the biodome, you feel as though you have a clearer picture of what these non-human crew are. The question is, what's to be done about them?
+
+If you ordered your boarding teams to begin executing the crew, they'd do so. Spacers will follow nearly any order, and your crew trusts you to make informed decisions.
+
+Still, it would be easier to swallow if you had a justification.",,
+vulp_badEndingJustifyHeg,VulpBadEndJustifications,,,,"vulp_badEndingHeg:AI is AI, decisive action is needed.",
+vulp_badEndingJustifyHuman,VulpBadEndJustifications,,,,vulp_badEndingHuman:Non-human intelligences are a threat to humanity.,
+vulp_badEndingJustifyLuddic,VulpBadEndJustifications,,,,vulp_badEndingLuddic:Artificial life is an abomination to be purged.,
+vulp_badEndingJustifyBacktrack,VulpBadEndJustifications,,SetOptionColor vulp_badEndingBacktrack good,,"vulp_badEndingBacktrack:Hold off, take a measured approach.",
+vulp_badEndingBacktrack,DialogOptionSelected,$option == vulp_badEndingBacktrack,"$option = $backtrackBadEndOption
+FireBest DialogOptionSelected",,,
+vulp_badEndingHeg,DialogOptionSelected,$option == vulp_badEndingHeg,"$player.ethosAntiAI++
+$player.ethosRuthless++","While these creatures are biological in nature, appear to be artificial in origin. That makes them artificial intelligence.
+
+Under the cycle 194 Treaty of Crom Cruach, there's only one legal option for dealing with rogue AI - immediate, decisive action. An AI cannot be allowed a fair field of battle.",vulp_badEnding1:Give the order,
+vulp_badEndingHuman,DialogOptionSelected,$option == vulp_badEndingHuman,"$player.ethosRuthless++
+$player.ethosRuthless++","There's no question that these creatures aren't human. Yet, they display intelligence beyond any non-human biological life ever encountered, natural or artificial.
+
+Xenointelligence has long been considered a potential existential threat, and while these beings might fall a little short of both 'xeno' and 'intelligent', they still cannot be allowed to endanger humanity.",vulp_badEnding1:Give the order,
+vulp_badEndingLuddic,DialogOptionSelected,$option == vulp_badEndingLuddic,"$player.luddicAttitudePather++
+$player.ethosRuthless++","These creatures are, without question, artificial life. No doubt created by Domain-era technology for some sick purpose, but the details don’t matter.
+
+Granting life is the domain of God alone, and these abominations stand as testament to the Domain's sin against Creation. They must be purged.",vulp_badEnding1:Give the order,
+vulp_badEnding1,DialogOptionSelected,$option == vulp_badEnding1,,"Your bridge crew grimly accepts your order, and sets to work relaying it to the crew. Most teams doubly and triply verify their orders - the closest your disciplined crew will come to outright objecting.
+
+The creatures already in your teams' custody are lined up, still obliviously obedient.",vulp_badEnding2:Continue,
+vulp_badEnding2,DialogOptionSelected,$option == vulp_badEnding2,"ShowImageVisual vulp_execution
+PlaySound storyevent_diktat_execution","The first shots ring out over comms.
+
+As the creatures realize what's happening, they begin begging your teams. Promising they'll be obedient, that they'll do whatever they're asked.
+
+Despite this, they don't even require prompting for the next in line to step forward, every time.
+
+You shut off your video feed.",vulp_badEnding2_you:...,
+vulp_badEnding2_you,DialogOptionSelected,$option == vulp_badEnding2_you,"HideVisual
+PlaySound storyevent_diktat_execution",,vulp_badEnding2_horrible:...,
+vulp_badEnding2_horrible,DialogOptionSelected,$option == vulp_badEnding2_horrible,PlaySound storyevent_diktat_execution,,vulp_badEnding2_person:...,
+vulp_badEnding2_person,DialogOptionSelected,$option == vulp_badEnding2_person,PlaySound storyevent_diktat_execution,,vulp_badEnding3:...,
+vulp_badEnding3,DialogOptionSelected,$option == vulp_badEnding3,,"It's done. Your teams move forward without resistance or interference, blood-soaked boots trailing footsteps down the corridors towards the vessel's CIC.
+
+The bulkhead door is sealed tight. With nobody to open it, your salvors begin the slow job of cutting through.",vulp_badEnding4:Wait,
+vulp_badEnding4,DialogOptionSelected,$option == vulp_badEnding4,,"The wait is agonizing, but your teams finally breach the CIC. Inside, a single creature, dressed in a simple outfit or uniform.
+
+It's already dead. Gunshot wound, self-inflicted.
+
+Suddenly a salvor screams out, ""Pull the $shipOrFleet back!""",vulp_badEnding5:Continue,
+vulp_badEnding5,DialogOptionSelected,$option == vulp_badEnding5,,"Ops takes a single look at the helmet camera and confirms the order. Combat agrav is activated, and drives burn hard to gain distance from the wreck.
+
+The former captain's final act was to initiate an emergency counter-espionage system. The ship's reactor undergoing a silent delamination sequence, about to release the antimatter in its core for one final explosion.
+
+There is no time to recall the shuttles.",vulp_badEnding6:Brace for impact,
+vulp_badEnding6,DialogOptionSelected,$option == vulp_badEnding6,Call $global.vulpFactory_ref applyPunishment,,vulp_badEnding7:Continue,
+vulp_badEnding7,DialogOptionSelected,$option == vulp_badEnding7,"$global.vulp_didBadEnding = true 30
+ShowImageVisual space_wreckage","Even at distance the explosion is incredibly fierce, scorching your $shipOrFleet with the fury of a dying capital ship.
+
+Whatever Domain technology was on that ship has been utterly destroyed, along with all personnel aboard.",defaultLeave:There is nothing we can do.,
+,,,,,,
+# Biodome Exploration,,,,,,
+,,,,,,
+vulp_exploreBiodomeHub,DialogOptionSelected,$option == vulp_exploreBiodomeHub,"FireAll VulpBiodomeOptions
+ShowImageVisual citadel_biodome",,,# TODO - mini exploration game here
+vulp_exploreBiodomeHubReturn,DialogOptionSelected,$option == vulp_exploreBiodomeHubReturn,"FireAll VulpBiodomeOptions
+ShowImageVisual citadel_biodome",,,
+vulp_exploreBiodomeExodyneOption,VulpBiodomeOptions,!$didBiodomeExodyne,,The imitation skyline is dominated by a massive tower bearing the Exodyne logo.,vulp_exploreBiodomeExodyne:Check the Exodyne tower,
+vulp_exploreBiodomeExodyneAlreadyDone,VulpBiodomeOptions,$didBiodomeExodyne,,The Exodyne tower has been thoroughly searched through.,,
+vulp_exploreBiodomeDomainOption,VulpBiodomeOptions,!$didBiodomeDomain,,"An office for the Domain Colonial Marshals stands firm, but empty.",vulp_exploreBiodomeDomain:Check the Domain Marshal Bureau,
+vulp_exploreBiodomeDomainAlreadyDone,VulpBiodomeOptions,$didBiodomeDomain,,,,
+vulp_exploreBiodomeTTOption,VulpBiodomeOptions,!$didBiodomeTT,,,vulp_exploreBiodomeTT:Check the Tri-Tachyon branch office,
+vulp_exploreBiodomeTTAlreadyDone,VulpBiodomeOptions,$didBiodomeTT,,,,
+vulp_exploreBiodomeUtopiaOption,VulpBiodomeOptions,!$didBiodomeUtopia,,,vulp_exploreBiodomeUtopia:Check the Eridani-Utopia branch office,
+vulp_exploreBiodomeUtopiaAlreadyDone,VulpBiodomeOptions,$didBiodomeUtopia,,,,
+vulp_exploreBiodomeSuburbOption,VulpBiodomeOptions,!$didBiodomeSuburb,,Surrounding the central urban area are wide arcs of suburban habitation areas.,vulp_exploreBiodomeSuburb:Check the suburban areas,
+vulp_exploreBiodomeSuburbAlreadyDone,VulpBiodomeOptions,$didBiodomeSuburb,,The suburban areas have been scoured.,,
+vulp_exploreBiodomeLeaveOption,VulpBiodomeOptions,$biodomeSitesExplored > 0,,,vulp_exploreWreckEnding:Wrap up the exploration,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+vulp_exploreCIC,DialogOptionSelected,$option == vulp_exploreCIC,,"Tactical draws your attention to the team moving up on the CIC. It's in a different location than a traditional Paragon-class, but the crew was perfectly willing to guide a team there.
+
+As the team approaches the bulkhead door, it begins to cycle open. Salvors duck for cover and security takes firing positions.",vulp_exploreCIC1:Breathe in,
+vulp_exploreCIC1,DialogOptionSelected,$option == vulp_exploreCIC1,ShowImageVisual citadel_cic,"No gunfire emerges from the open door. Instead, another member of the crew steps forward out of the breach. It's wearing something that could be a uniform, and its arms are raised in surrender.
+
+The presumed captain is quickly placed under arrest while the teams secure the CIC. Your TriPad chimes as the new command codes are accepted, and the ship is under your control.
+
+Tactical quietly notes that none of the other crew had the presence of mind to surrender. Ops retorts that none of the others wore pants either, earning a few chuckles. Tension leaves the bridge now that the hard part is over.",vulp_exploreCIC2:Breathe out,
+vulp_exploreCIC2,DialogOptionSelected,$option == vulp_exploreCIC2,HideVisual,"The opposing captain is still in the process of being transferred to your $shipOrFleet, but your science officer informs you that they've compiled a few preliminary reports on the ship and its crew.","vulp_exploreWreckFirstEncounterHub:Review the reports
+vulp_interrogation1:Head straight to the brig
+vulp_badEnd1:Order something more drastic",# TODO - change options
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+# Reports,,,,,,
+,,,,,,
 vulp_exploreWreckFirstEncounterHub,DialogOptionSelected,$option == vulp_exploreWreckFirstEncounterHub,"FireAll VulpWreckFirstEncounter
-ShowImageVisual bombard_saturation_result","You thank tactical for the brief, and they return their full attention to commanding the operation. In this short time your analysis teams have already managed to compile several reports, ready for your attention.",,
-vulp_exploreWreckFirstEncounterHubReturn,DialogOptionSelected,$option == vulp_exploreWreckFirstEncounterHubReturn,"FireAll VulpWreckFirstEncounter
-ShowImageVisual bombard_saturation_result",,,
+HideVisual",,,
 vulp_exploreWreckFEPhysiologyOption,VulpWreckFirstEncounter,,,,vulp_exploreWreckFEPhysiology:Biped Physiology Preliminary Report,
 vulp_exploreWreckFECognitionOption,VulpWreckFirstEncounter,,,,vulp_exploreWreckFECognition:Biped Cognition Preliminary Report,
 vulp_exploreWreckFEShipOption,VulpWreckFirstEncounter,,,,vulp_exploreWreckFEShip:Vessel Specifications Interim Report,TODO: Image
 vulp_exploreWreckFEContinueOption,VulpWreckFirstEncounter,,,,vulp_exploreWreck3:Finish reading,
-vulp_exploreWreckFEPhysiology,DialogOptionSelected,$option == vulp_exploreWreckFEPhysiology,"SetImportantName vulpoid_nude_terran_generic ""File Photo""
-ShowPersonVisual true vulpoid_nude_terran_generic","The bipeds are apparently mammals, bearing a resemblance to both humans, and Old Earth foxes. Their limb and hand structure is near identical to that of a human, too close to be convergent evolution. It's almost certain that they were designed by a human organization with significant bioengineering capabilities, probably pre-Collapse or immediately post-Collapse at the latest.
+vulp_exploreWreckFEPhysiology,DialogOptionSelected,$option == vulp_exploreWreckFEPhysiology,"SetImportantName vulp_dummy_terran ""Biped Variant: Gamma""
+SetImportantName vulp_dummy_desert ""Biped Variant: Delta""
+SetImportantName vulp_dummy_arctic ""Biped Variant: Alpha""
+ResetVulpoidPortrait vulp_dummy_terran
+ResetVulpoidPortrait vulp_dummy_desert
+ResetVulpoidPortrait vulp_dummy_arctic
+ShowPersonVisual true vulp_dummy_terran
+ShowSecondPerson vulp_dummy_arctic
+ShowThirdPerson vulp_dummy_desert","The bipeds are apparently mammals, bearing a resemblance to both humans, and Old Earth foxes. Their limb and hand structure is near identical to that of a human, too close to be convergent evolution. It's almost certain that they were designed by a human organization with significant bioengineering capabilities, probably pre-Collapse or immediately post-Collapse at the latest.
 
-You skim through the rest of the report. ""low-medium muscle strength"", ""medium-low bone density"", ""likely high sensory acuity"", ""indications of efficient metabolism""... The report avoids coming to any conclusions, but notes that they're not optimally designed to serve as spacecraft crew.",vulp_exploreWreckFirstEncounterHubReturn:Continue,
-vulp_exploreWreckFECognition,DialogOptionSelected,$option == vulp_exploreWreckFECognition ,"SetImportantName vulpoid_nude_terran_generic ""File Photo""
-ShowPersonVisual true vulpoid_nude_terran_generic","Based on initial observations, it's suspected that the bipeds have a below-human intelligence. A review of their observed memory and decision-making capabilities suggests a large cognitive deficit, with only their language skills reaching the level of an adult human.
+You skim through the rest of the report. ""low-medium muscle strength"", ""medium-low bone density"", ""likely high sensory acuity"", ""indications of efficient metabolism""... The report avoids coming to any conclusions, but notes that they're not optimally designed to serve as spacecraft crew.",vulp_exploreWreckFirstEncounterHub:Continue,
+vulp_exploreWreckFECognition,DialogOptionSelected,$option == vulp_exploreWreckFECognition ,"SetImportantName vulp_dummy_terran ""Biped Variant: Gamma""
+SetImportantName vulp_dummy_desert ""Biped Variant: Delta""
+SetImportantName vulp_dummy_arctic ""Biped Variant: Alpha""
+ResetVulpoidPortrait vulp_dummy_terran
+ResetVulpoidPortrait vulp_dummy_desert
+ResetVulpoidPortrait vulp_dummy_arctic
+SetVulpoidExpression vulp_dummy_terran blush
+SetVulpoidExpression vulp_dummy_desert cry
+SetVulpoidExpression vulp_dummy_arctic fear
+ShowPersonVisual true vulp_dummy_terran
+ShowSecondPerson vulp_dummy_arctic
+ShowThirdPerson vulp_dummy_desert","Based on initial observations, it's suspected that the bipeds have a below-human intelligence. A review of their observed memory and decision-making capabilities suggests a large cognitive deficit, with only their language skills reaching the level of an adult human.
 
 Psychologically speaking, they appear to have a near-compulsive desire to interact with humans, and help them with tasks. This is unlikely to be simply cultural, as they prioritized helping our salvors over performing their own repairs, even when informed that our goal was to seize control of their ship.
 
 It seems plausible that their minds were specifically designed specifically to promote subserviance and obedience towards humans.","vulp_exploreWreckFECognitionDisturbing:Disturbing.
 vulp_exploreWreckFECognitionInteresting:Interesting.
 vulp_exploreWreckFECognitionUseful:Useful.",
-vulp_exploreWreckFECognitionDisturbing,DialogOptionSelected,$option == vulp_exploreWreckFECognitionDisturbing,"$option = vulp_exploreWreckFirstEncounterHubReturn
+vulp_exploreWreckFECognitionDisturbing,DialogOptionSelected,$option == vulp_exploreWreckFECognitionDisturbing,"$option = vulp_exploreWreckFirstEncounterHub
 FireBest DialogOptionSelected",,,
-vulp_exploreWreckFECognitionInteresting,DialogOptionSelected,$option == vulp_exploreWreckFECognitionInteresting,"$option = vulp_exploreWreckFirstEncounterHubReturn
+vulp_exploreWreckFECognitionInteresting,DialogOptionSelected,$option == vulp_exploreWreckFECognitionInteresting,"$option = vulp_exploreWreckFirstEncounterHub
 FireBest DialogOptionSelected",,,
-vulp_exploreWreckFECognitionUseful,DialogOptionSelected,$option == vulp_exploreWreckFECognitionUseful,"$option = vulp_exploreWreckFirstEncounterHubReturn
+vulp_exploreWreckFECognitionUseful,DialogOptionSelected,$option == vulp_exploreWreckFECognitionUseful,"$option = vulp_exploreWreckFirstEncounterHub
 FireBest DialogOptionSelected",,,
 vulp_exploreWreckFEShip,DialogOptionSelected,$option == vulp_exploreWreckFEShip,ShowImageVisual industry biotechlow,"Scans of the vessel's interior are consistent with a Paragon-class in most respects, but there are still major structural differences. The colossal biosphere is the most obvious change, but your engineers report that there are a great many other modifications that serve to vastly increase the vessel's logistics capability. Its cargo bays are vastly larger, cutting into regions that would totally compromise integrity on a standard Paragon, but this vessel appears to be designed to accommodate them without difficulty.
 
-The biosphere itself is vast, and far outstrips any technology available in the current Sector. Initial scans - and interviews - indicate that it features full daylight cycles, clean air, simulated weather, and even arable soil. It's also home to a number of buildings: preliminary surveys have identified residential sectors, a research campus, and what appear to be sophisticated bio-industrial facilities.",vulp_exploreWreckFirstEncounterHubReturn:Continue,
-vulp_exploreWreck3,DialogOptionSelected,$option == vulp_exploreWreck3,"SetImportantName vulpoid_space_terran_generic ""Vulpoid""
+The biosphere itself is vast, and far outstrips any technology available in the current Sector. Initial scans - and interviews - indicate that it features full daylight cycles, clean air, simulated weather, and even arable soil. It's also home to a number of buildings: preliminary surveys have identified residential sectors, a research campus, and what appear to be sophisticated bio-industrial facilities.",vulp_exploreWreckFirstEncounterHub:Continue,
+#vulp_exploreWreck3,DialogOptionSelected,$option == vulp_exploreWreck3,"SetImportantName vulpoid_space_terran_generic ""Vulpoid""
 SetImportantName vulpoid_space_winter_generic ""Vulpoid""
 SetImportantName vulpoid_space_desert_generic ""Vulpoid""
 SetImportantName vulpoid_nude_terran_generic ""Vulpoid""
@@ -621,12 +794,17 @@ $personName licks $hisOrHer lips uncomfortably. ""Good deal. I'm looking forward
 kpVulpoid,KPFindGifts,"PlayerHasCargo vulpoids 1000
 $kpNumGifts < 5
 $kpNumGifts++",,,kpVulpoid:A thousand Vulpoids,
-kpVulpoidSel,DialogOptionSelected,$option == kpVulpoid,"ShowThirdPerson vulpoid_nude_terran_generic
+kpVulpoidSel,DialogOptionSelected,$option == kpVulpoid,"ResetVulpoidPortrait vulp_dummy_terran
+SetImportantName vulp_dummy_terran ""Vulpoids""
+ShowThirdPerson vulp_dummy_terran
 RemoveCommodity vulpoids 1000","Kanta's synthetic voice booms out, ""YES. They shall serve most delightfully as playthings for my Cydonia, his experiments shall amuse us."" With a creak of metal and clatter of beads and trophies, Kanta turns to look upon Cydonia.
 
 His face is one of pure, sinister glee. ""Yes, yes, my queen. Oh, there is great potential in this, I can assure you...""
 
 Kanta nods with satisfaction as Cydonia gazes into the distance, apparently preoccupied with new ideas.",kpVulpoidLeave:Continue,
+kpVulpoidLeave,DialogOptionSelected,$option == kpVulpoidLeave,"HideThirdPerson
+$option = kpLeaveProt
+FireBest DialogOptionSelected ",,,
 kpVulpoidShiny,KPFindGifts,"VulpoidPicker hasVulpoid
 $kpNumGifts < 5
 $kpNumGifts++",,,kpVulpoidShiny:A Profecto Vulpoid,
@@ -634,15 +812,14 @@ kpVulpoidShinyPick,DialogOptionSelected,$option == kpVulpoidShiny,"VulpoidPicker
 $vulpoidselectedoption = kanta",,,
 kpVulpoidShinySel,VulpoidSelected,$vulpoidselectedoption == kanta,"ResetVulpoidPortrait $global.selectedVulpoid
 SetVulpoidExpression $global.selectedVulpoid fear
-#SetVulpoidClothing $global.selectedVulpoid nude
 ShowThirdPersonFromMemory $global.selectedVulpoid
 AdjustRepPerson $global.selectedVulpoid INHOSPITABLE -200","$global.selectedVulpoidName is brought into the court, and Cydonia immediately begins circling around her like a fighter on an attack run, studying her from every angle. Kanta quietly nods along as $global.selectedVulpoidName fearfully elaborates on her rarity, and gives benchmarks for her cognitive ability.
 
 When the explaination concludes, Cydonia looks eagerly at back at Kanta, his enthusiasm palpable.",kpVulpoidShiny1:Continue,
 kpVulpoidShinySel1,DialogOptionSelected,$option == kpVulpoidShiny1,,"After a brief pause, Kanta's voice booms out, ""WE ACCEPT."" Her gaze turns to Cydonia, and she warns, ""It shall stay in one piece.""
 
-The 'doctor' flinches at this accusation, but his excitement is still evident as he directs the Profecto towards his laboratory.",kpVulpoidLeave:Continue,
-kpVulpoidLeave,DialogOptionSelected,$option == kpVulpoidLeave,"HideThirdPerson
+The 'doctor' flinches at this accusation, but his excitement is still evident as he directs the Profecto towards his laboratory.",kpVulpoidShinyLeave:Continue,
+kpVulpoidShinyLeave,DialogOptionSelected,$option == kpVulpoidShinyLeave,"HideThirdPerson
 ResetVulpoidPortrait $global.selectedVulpoid
 SetVulpoidExpression $global.selectedVulpoid angry
 SetVulpoidClothing $global.selectedVulpoid nude
