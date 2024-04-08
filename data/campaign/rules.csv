@@ -11,6 +11,18 @@ vulp_findFactory_barEventEnd,DialogOptionSelected,$option == vulp_findFactory_ba
 BeginMission vulpFactory","""Anyway here's the exact coordinates of the fleet, on account of this mission being only partly completed!""",backToBar:Return to the bar,
 ,,,,,,
 ,,,,,,
+vulp_barEventStart,DialogOptionSelected,"$option == marketVisitBar
+!$global.vulp_gotFactoryMission
+$market.id == nomios
+HasFoughtRemnant",,"No sooner have you entered the bar than you're quickly approached by a slightly-frantic man in a lab coat. Your guards step forward to block his approach, and he stops dead in his tracks with an almost bewildered look on his face.
+
+From that reaction you can assume he's just thawed out from pre-Collapse, and a closer look at his clothes confirms this - the lab coat has the logo of the long-gone Exodyne Biotech megacorporation.
+
+""L-look, I'm sorry if I startled you, but this is really quite urgent,"" he stammers out, ""You're a starship captain, right? There's something I need to tell you about.""",vulp_barEvent1:Find a seat,
+vulp_barEvent1,DialogOptionSelected,$option == vulp_barEvent1,ShowImageVisual vulp_bar_quest,"You humor him and find a free booth. He wastes no time launching into his explanation.
+
+""I'm from ",,
+,,,,,,
 ,,,,,,
 ,,,,,,
 ,,,,,,
@@ -249,9 +261,7 @@ vulp_exploreBiodomeSuburbOption,VulpBiodomeOptions,!$didBiodomeSuburb,,Surroundi
 vulp_exploreBiodomeSuburbAlreadyDone,VulpBiodomeOptions,$didBiodomeSuburb,,The suburban areas have been scoured.,,
 vulp_exploreBiodomeLeaveOption,VulpBiodomeOptions,$biodomeSitesExplored > 0,,,vulp_exploreWreckEnding:Wrap up the exploration,
 ,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
+# Continuing exploration,,,,,,
 ,,,,,,
 vulp_exploreCIC,DialogOptionSelected,$option == vulp_exploreCIC,,"Tactical draws your attention to the team moving up on the CIC. It's in a different location than a traditional Paragon-class, but the crew was perfectly willing to guide a team there.
 
@@ -262,8 +272,7 @@ The presumed captain is quickly placed under arrest while the teams secure the C
 
 Tactical quietly notes that none of the other crew had the presence of mind to surrender. Ops retorts that none of the others wore pants either, earning a few chuckles. Tension leaves the bridge now that the hard part is over.",vulp_exploreCIC2:Breathe out,
 vulp_exploreCIC2,DialogOptionSelected,$option == vulp_exploreCIC2,HideVisual,"The opposing captain is still in the process of being transferred to your $shipOrFleet, but your science officer informs you that they've compiled a few preliminary reports on the ship and its crew.","vulp_exploreWreckFirstEncounterHub:Review the reports
-vulp_interrogation1:Head straight to the brig
-vulp_badEnd1:Order something more drastic",# TODO - change options
+vulp_interrogation1:Head straight to the brig",# TODO - change options
 ,,,,,,
 ,,,,,,
 ,,,,,,
@@ -693,10 +702,36 @@ SetEnabled vulp_startTurnIn false",,,
 vulp_turnInOptionSelGeneric,DialogOptionSelected,$option == vulp_startTurnIn,FireAll PopulateVulpoidsTurnInOptions,"""A fascinating offer. You know, they're technically illegal - one of the major factions might just try to seize them if they caught you. Tell you what - I'll do you a favor and give you a good price.""",,
 vulp_turnInOptionSelHegemony,DialogOptionSelected,"$option == vulp_startTurnIn
 $faction.id == hegemony",FireAll PopulateVulpoidsTurnInOptions,"""You say that as though you're not the one responsible for these things, but the Hegemony is treaty-bound to take possession of them all the same.""",,
-vulp_turnInOptionSelChurch,DialogOptionSelected,"$option == vulp_startTurnIn
-$faction.id == luddic_church",FireAll PopulateVulpoidsTurnInOptions,"""I appreciate you bringing them to me. We will take custody of these daughters of Moloch, and pray deeply that the light of Ludd may one day reach them.""
-OR
-""I appreciate you bringing them to me. We will take custody of these daughters of Moloch, and have them seek penance for the sin of their creation.""",,
+vulp_turnInOptionSelChurch_SetAbomination,DialogOptionSelected,"$option == vulp_startTurnIn
+$faction.id == luddic_church","$vulp_luddicEthosAbomination = true
+FireBest DialogOptionSelected",,,
+vulp_turnInOptionSelChurch_SetSinful,DialogOptionSelected,"$option == vulp_startTurnIn
+$faction.id == luddic_church","$vulp_luddicEthosSinful = true
+FireBest DialogOptionSelected",,,
+vulp_turnInOptionSelChurch_SetNeutral,DialogOptionSelected,"$option == vulp_startTurnIn
+$faction.id == luddic_church","$vulp_luddicEthosNeutral = true
+FireBest DialogOptionSelected",,,
+vulp_turnInOptionSelChurch_SetVirtuous,DialogOptionSelected,"$option == vulp_startTurnIn
+$faction.id == luddic_church","$vulp_luddicEthosVirtuous = true
+FireBest DialogOptionSelected",,,
+vulp_turnInOptionSelChurch_SetAngelic,DialogOptionSelected,"$option == vulp_startTurnIn
+$faction.id == luddic_church","$vulp_luddicEthosAngelic = true
+FireBest DialogOptionSelected",,,
+vulp_turnInOptionSelChurch_Abomination,DialogOptionSelected,"$option == vulp_startTurnIn
+$faction.id == luddic_church
+$vulp_luddicEthosAbomination",FireAll PopulateVulpoidsTurnInOptions,"""You were right to bring them to me. I shall contact the Knight Commander to take possession of these abominations so that they may be properly cleansed.""",,
+vulp_turnInOptionSelChurch_Sinful,DialogOptionSelected,"$option == vulp_startTurnIn
+$faction.id == luddic_church
+$vulp_luddicEthosSinful",FireAll PopulateVulpoidsTurnInOptions,"""I appreciate you bringing them to me. We will take custody of these spawn of Moloch, and have them seek absolution for the sin of their creation.""",,
+vulp_turnInOptionSelChurch_Neutral,DialogOptionSelected,"$option == vulp_startTurnIn
+$faction.id == luddic_church
+$vulp_luddicEthosNeutral",FireAll PopulateVulpoidsTurnInOptions,"""Thank you bringing them here. We will open our homes and hearts to these daughters of Moloch, and pray deeply that the light of Ludd may one day reach them.""",,
+vulp_turnInOptionSelChurch_Virtuous,DialogOptionSelected,"$option == vulp_startTurnIn
+$faction.id == luddic_church
+$vulp_luddicEthosVirtuous",FireAll PopulateVulpoidsTurnInOptions,"""It is a good deed you have done, bringing these virtuous beings to me. I will ensure that their service is spent in the name of holy Ludd, blessed be his name.""",,
+vulp_turnInOptionSelChurch_Angelic,DialogOptionSelected,"$option == vulp_startTurnIn
+$faction.id == luddic_church
+$vulp_luddicEthosAngelic",FireAll PopulateVulpoidsTurnInOptions,"""Bless you for bringing these angels to my door! I shall ensure that these holy servants are protected from those who would do them harm, and are kept free to do their holy work.""",,
 vulp_turnInOptionSelPath,DialogOptionSelected,"$option == vulp_startTurnIn
 $faction.id == luddic_path",FireAll PopulateVulpoidsTurnInOptions,"""Blessed be the path that brought you here. The execution of these abominations will serve as a demonstration to those who would stray from the Path of Ludd.""",,
 vulp_turnInOptionSelDiktat,DialogOptionSelected,"$option == vulp_startTurnIn
