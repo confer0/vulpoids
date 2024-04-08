@@ -1,0 +1,2 @@
+name,id,type,tags,activationDays,activationCooldown,durationDays,deactivationDays,deactivationCooldown,unlockedAtStart,defaultForAIFleet,musicSuppression,uiOn,uiOff,uiLoop,worldOn,worldOff,worldLoop,icon,plugin,ai,desc,sortOrder
+Chat With Vulpoid,vulpoid_chat,DURATION,,0,,0,0,0,TRUE,,,,,,,,,graphics/icons/abilities/vulpoid_chat.png,vulpoids.impl.campaign.abilities.ChatAbility,,,1100
