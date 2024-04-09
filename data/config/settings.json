@@ -55,6 +55,7 @@
 			"vulp_shiny_arctic":"graphics/icons/cargo/vulpoids/vulpoid_arctic.png",
 			"vulp_shiny_terran":"graphics/icons/cargo/vulpoids/vulpoid_terran.png",
 			"vulp_shiny_desert":"graphics/icons/cargo/vulpoids/vulpoid_desert.png",
+			"vulp_shiny_sugar":"graphics/icons/cargo/vulpoids/vulpoid_sugar.png",
 			"vulp_laisa":"graphics/icons/cargo/vulpoids/vulpoid_laisa.png",
 		},
 	}
