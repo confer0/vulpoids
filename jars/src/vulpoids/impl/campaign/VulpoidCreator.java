@@ -68,7 +68,6 @@ public class VulpoidCreator {
     public static final String CLOTHING_CLOTHED = "clothed";
     public static final String CLOTHING_NUDE = "nude";
     public static final String CLOTHING_SUIT = "spacer";
-    public static final String CLOTHING_OFFICER = "admiral";
     
     public static final String EXPRESSION_ANGRY = "angry";
     public static final String EXPRESSION_BLUSH = "blush";
@@ -77,6 +76,8 @@ public class VulpoidCreator {
     public static final String EXPRESSION_DEFAULT = "default";
     public static final String EXPRESSION_FEAR = "fear";
     public static final String EXPRESSION_HELMET = "helmet";
+    public static final String EXPRESSION_OFFICER = "military";
+    public static final String EXPRESSION_FROZEN = "popsicle";
     
     
     public static String getIcon(String portrait) {
@@ -117,6 +118,11 @@ public class VulpoidCreator {
         person.setPortraitSprite(portrait);
         person.getMemoryWithoutUpdate().set(Vulpoids.KEY_DEFAULT_PORTRAIT, portrait);
     }*/
+    public static String getPersonDefaultExpression(PersonAPI person) {
+        String default_expression = person.getMemoryWithoutUpdate().getString(Vulpoids.KEY_DEFAULT_EXPRESSION);
+        if(default_expression == null) default_expression = EXPRESSION_DEFAULT;
+        return default_expression;
+    }
     
     public static boolean marketIsSuitMarket(MarketAPI market) {
         return market.getPlanetEntity() == null || !market.hasCondition(Conditions.HABITABLE);
@@ -138,19 +144,4 @@ public class VulpoidCreator {
         if(market.hasCondition(Conditions.COLD) || market.hasCondition(Conditions.VERY_COLD)) return CLIMATE_ARCTIC;
         return CLIMATE_TERRAN;
     }
-    /*public static String getPortraitForMarket(MarketAPI market, boolean force_nude, boolean force_suit) {
-        String path = "graphics/portraits/vulpoid/";
-        String expression = "default.png";
-        if (!force_nude && force_suit) return path+"spacer/admin_no_atmos.png";
-        String clothing = "/clothed/";
-        if (force_nude) clothing = "/nude/";
-        
-        Random r = new Random();
-        String[] climates = new String[]{"terran", "desert", "arctic"};
-        String default_climate = climates[r.nextInt(climates.length)];
-        
-        if (market == null) return path+default_climate+clothing+expression;
-        if (marketIsSuitMarket(market)) return path+"spacer/admin_no_atmos.png";
-        return path+default_climate+clothing+expression;
-    }*/
 }

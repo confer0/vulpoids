@@ -165,20 +165,7 @@ public class VulpoidPlugin extends BaseSpecialItemPlugin {
         
         refreshPerson();
         
-        switch(getId()) {
-            case Vulpoids.SPECIAL_ITEM_DEFAULT:
-                VulpoidCreator.setPersonPortraitPropertyAtIndex(person, VulpoidCreator.INDEX_CLOTHING, VulpoidCreator.CLOTHING_NUDE);
-                break;
-            case Vulpoids.SPECIAL_ITEM_EMBARKED:
-                VulpoidCreator.setPersonPortraitPropertyAtIndex(person, VulpoidCreator.INDEX_CLOTHING, VulpoidCreator.CLOTHING_CLOTHED);
-                break;
-            case Vulpoids.SPECIAL_ITEM_OFFICER:
-                VulpoidCreator.setPersonPortraitPropertyAtIndex(person, VulpoidCreator.INDEX_CLOTHING, VulpoidCreator.CLOTHING_OFFICER);
-                break;
-            case Vulpoids.SPECIAL_ITEM_ADMIN:
-                VulpoidCreator.setPersonPortraitPropertyAtIndex(person, VulpoidCreator.INDEX_CLOTHING, VulpoidCreator.CLOTHING_CLOTHED);
-                break;
-        }
+        resetClothingAndExpressions();
         
         person.getMemoryWithoutUpdate().set(Vulpoids.KEY_PROFECTO_ASSIGNMENT, getId());
         
@@ -190,6 +177,31 @@ public class VulpoidPlugin extends BaseSpecialItemPlugin {
             person.getMemoryWithoutUpdate().unset("$ome_isAdmin");
             person.getMemoryWithoutUpdate().unset("$ome_adminTier");
         }
+    }
+    
+    public void resetClothingAndExpressions() {
+        switch(getId()) {
+            case Vulpoids.SPECIAL_ITEM_DEFAULT:
+                VulpoidCreator.setPersonPortraitPropertyAtIndex(person, VulpoidCreator.INDEX_CLOTHING, VulpoidCreator.CLOTHING_NUDE);
+                VulpoidCreator.setPersonPortraitPropertyAtIndex(person, VulpoidCreator.INDEX_EXPRESSION, VulpoidCreator.EXPRESSION_FROZEN);
+                break;
+            case Vulpoids.SPECIAL_ITEM_EMBARKED:
+                VulpoidCreator.setPersonPortraitPropertyAtIndex(person, VulpoidCreator.INDEX_CLOTHING, VulpoidCreator.CLOTHING_CLOTHED);
+                VulpoidCreator.setPersonPortraitPropertyAtIndex(person, VulpoidCreator.INDEX_EXPRESSION, VulpoidCreator.getPersonDefaultExpression(person));
+                break;
+            case Vulpoids.SPECIAL_ITEM_OFFICER:
+                VulpoidCreator.setPersonPortraitPropertyAtIndex(person, VulpoidCreator.INDEX_CLOTHING, VulpoidCreator.CLOTHING_SUIT);
+                VulpoidCreator.setPersonPortraitPropertyAtIndex(person, VulpoidCreator.INDEX_EXPRESSION, VulpoidCreator.EXPRESSION_OFFICER);
+                break;
+            case Vulpoids.SPECIAL_ITEM_ADMIN:
+                VulpoidCreator.setPersonPortraitPropertyAtIndex(person, VulpoidCreator.INDEX_CLOTHING, VulpoidCreator.CLOTHING_CLOTHED);
+                VulpoidCreator.setPersonPortraitPropertyAtIndex(person, VulpoidCreator.INDEX_EXPRESSION, VulpoidCreator.getPersonDefaultExpression(person));
+                break;
+        }
+    }
+    
+    public void setToDefaultExpression() {
+        VulpoidCreator.setPersonPortraitPropertyAtIndex(person, VulpoidCreator.INDEX_EXPRESSION, VulpoidCreator.getPersonDefaultExpression(person));
     }
     
     public void refreshPerson() {
@@ -331,8 +343,14 @@ public class VulpoidPlugin extends BaseSpecialItemPlugin {
         Color body_color = getColor();
         Color text_color = new Color(255,255,255);
         
+        String original_portrait = person.getPortraitSprite();
+        // If it's default we don't use the default expression, we _want_ them to be locked into the frozen expression.
+        if(!Vulpoids.SPECIAL_ITEM_DEFAULT.equals(getId())) setToDefaultExpression();
         
         TooltipMakerAPI portrait = tooltip.beginImageWithText(person.getPortraitSprite(), 128, tooltip.getWidthSoFar(), false);
+        
+        person.setPortraitSprite(original_portrait);
+        
         portrait.addTitle(getName(), body_color);
         portrait.addRelationshipBar(person, pad);
         switch (getId()) {

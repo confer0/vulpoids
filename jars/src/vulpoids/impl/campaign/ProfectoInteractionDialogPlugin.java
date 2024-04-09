@@ -63,6 +63,7 @@ public class ProfectoInteractionDialogPlugin implements InteractionDialogPlugin 
             if (stack.getPlugin() instanceof VulpoidPlugin) {
                 if (pages.size() < 1+page) pages.add(new CargoStackAPI[MAX_ITEMS_PER_PAGE]);
                 ((VulpoidPlugin)stack.getPlugin()).refreshPerson();  // This is actually here for when we return. It saves the updated person to the data.
+                ((VulpoidPlugin)stack.getPlugin()).setToDefaultExpression();  // This, on the other hand, is for seeing their faces.
                 pages.get(page)[vulps%MAX_ITEMS_PER_PAGE] = stack;
                 vulps++;
                 if(vulps%MAX_ITEMS_PER_PAGE == 0) page++;
@@ -127,9 +128,16 @@ public class ProfectoInteractionDialogPlugin implements InteractionDialogPlugin 
                     optionSelected(null, "INIT");
                     break;
                 case "LEAVE":
+                    for (CargoStackAPI[] page1 : pages) {
+                        for (CargoStackAPI stack : page1) {
+                            // Resetting back to the defaults, so we don't carry over expression changes from the conversation.
+                            if(stack!=null && stack.getPlugin() instanceof VulpoidPlugin) ((VulpoidPlugin)stack.getPlugin()).resetClothingAndExpressions();
+                        }
+                    }
                     dialog.dismiss();
                     Global.getSector().setPaused(true); // Doesn't work
                     break;
+
             }
         } else if (optionData instanceof Integer) {
             CargoStackAPI stack = pages.get(page)[(Integer)optionData];

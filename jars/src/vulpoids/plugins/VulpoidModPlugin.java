@@ -39,7 +39,7 @@ public class VulpoidModPlugin extends BaseModPlugin {
             person.setPostId(Ranks.POST_FLEET_COMMANDER);
             person.getRelToPlayer().setRel(-0.1f);
             VulpoidCreator.setPersonPortraitPropertyAtIndex(person, VulpoidCreator.INDEX_CLIMATE, VulpoidCreator.CLIMATE_LAISA);
-            VulpoidCreator.setPersonPortraitPropertyAtIndex(person, VulpoidCreator.INDEX_CLOTHING, VulpoidCreator.CLOTHING_OFFICER);
+            VulpoidCreator.setPersonPortraitPropertyAtIndex(person, VulpoidCreator.INDEX_CLOTHING, VulpoidCreator.CLOTHING_SUIT);
             VulpoidCreator.setPersonPortraitPropertyAtIndex(person, VulpoidCreator.INDEX_EXPRESSION, VulpoidCreator.EXPRESSION_HELMET);
             person.getStats().setSkillLevel(Vulpoids.SKILL_LAISA_ADMIN, 1);
             person.getStats().setSkillLevel(Vulpoids.SKILL_LAISA_OFFICER, 1);

@@ -31,7 +31,10 @@ public class VulpoidBrain {
             market.getMemoryWithoutUpdate().set(Vulpoids.KEY_MARKET_VULPOID_ADMIN, admin);
             market.getMemoryWithoutUpdate().set(Vulpoids.KEY_MARKET_VULPOID_ADMIN_TIMESTAMP, Global.getSector().getClock().getTimestamp());
             market.getCommDirectory().addPerson(admin, 0);
-            if(VulpoidCreator.marketIsSuitMarket(market)) admin.setPortraitSprite(VulpoidCreator.setPortraitPropertyAtIndex(admin.getPortraitSprite(), VulpoidCreator.INDEX_CLOTHING, VulpoidCreator.CLOTHING_SUIT));
+            if(VulpoidCreator.marketIsSuitMarket(market)) {
+                admin.setPortraitSprite(VulpoidCreator.setPortraitPropertyAtIndex(admin.getPortraitSprite(), VulpoidCreator.INDEX_CLOTHING, VulpoidCreator.CLOTHING_SUIT));
+                admin.setPortraitSprite(VulpoidCreator.setPortraitPropertyAtIndex(admin.getPortraitSprite(), VulpoidCreator.INDEX_EXPRESSION, VulpoidCreator.EXPRESSION_HELMET));
+            }
             //else if(admin.getMemoryWithoutUpdate().contains(Vulpoids.KEY_DEFAULT_PORTRAIT)) admin.setPortraitSprite(admin.getMemoryWithoutUpdate().getString(Vulpoids.KEY_DEFAULT_PORTRAIT));
         }
         @Override
