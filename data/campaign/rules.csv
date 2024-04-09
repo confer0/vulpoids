@@ -16,107 +16,95 @@ vulp_barEventStart,DialogOptionSelected,"$option == marketVisitBar
 $market.id == nomios
 HasFoughtRemnant","ShowImageVisual vulp_bar_quest
 $global.vulp_gotFactoryMission = true
-BeginMission vulpFactory false","No sooner have you entered the bar than you're quickly approached by a slightly-frantic man in a lab coat. Your guards step forward to block his approach, and he stops dead in his tracks with an almost bewildered look on his face.
+BeginMission vulpFactory false","No sooner have you entered the bar than you're quickly approached by a man in a lab coat. Your guards step forward to block his approach, and he stops dead in his tracks.
 
 From that reaction you can assume he's just thawed out from pre-Collapse, and a closer look at his clothes confirms this - the lab coat has the logo of the long-gone Exodyne Biotech megacorporation.
 
-""L-look, I'm sorry if I startled you, but this is really quite urgent,"" he stammers out, ""You're a starship captain, right? There's something I need to tell you about.""",vulp_barEvent1:Find a seat,
+""Woah, sorry about that. But you're a starship, captain, right? I've got something incredibly important to tell you about, you're going to want to hear this.""",vulp_barEvent1:Find a seat,
 vulp_barEvent1,DialogOptionSelected,$option == vulp_barEvent1,,"You humor him and find a free booth. He wastes no time launching into his explanation.
 
-""I'm from back when... you call it the 'Collapse', right? Well I got put on ice shortly after it. Genetic illness, needs implants to keep under control and their DRM can't connect to the verification serverâ€¦""
+""I'm from before the... 'Collapse', right? Got put on ice because my medical implants needed the Gates to connect to their verification server, but that's not important.""
 
-You shoot him a glance before he can ramble any further.",vulp_barEvent2:Continue,
-vulp_barEvent2,DialogOptionSelected,$option == vulp_barEvent2,FireAll VulpBarHubOptions,"""Right, sorry. I'm sure you're a busy person. My point was, I worked for Exodyne Biotech, and we were operating a research vessel out here. Cutting edge stuff, or at least it was back in the day. I guess it's way past that nowadays, that's a weird thought.""
+""What's important is that I can tell you the location of a treasure-trove of cutting-edge biotechology.""",vulp_barEvent2:Continue,
+vulp_barEvent2,DialogOptionSelected,$option == vulp_barEvent2,FireAll VulpBarHubOptions,"""Interested? Thought so. Here's the brief - I work, or rather worked, for Exodyne Biotech. Best biotech company in the Domain, you might be familiar with the Commercial Goods Biofactory?""
 
-He catches himself before he can get distracted again, ""What's important is that it's the life's work of a lot of people. There's technology aboard that could change this Sector for the better. It just needs someone, eh, capable. To go get it.""
+""Well that thing might be miraculous compared to 'modern' tech, but it's chump change compared to what we were working on. The literal bleeding edge of high-end bioforging, the same stuff that later-generation seedships use to terraform entire worlds, just way more sophisticated.""
 
-He's not a trained liar. There's something he's not telling you.",,
-vulp_barHubShipOption,VulpBarHubOptions,!$askedShip,,,"vulp_barHubShip:""This ship, what exactly is it?""",
+""All you need to do is fly out to the ship we were developing it on and get it. No need to pay me for it, I just want my life's work to get put to use.""",,
+vulp_barHubShipOption,VulpBarHubOptions,!$askedShip,,,"vulp_barHubShip:""Can you provide any details on the ship?""",
+vulp_barHubLeaveOption,VulpBarHubOptions,!$askedLeave,,,"vulp_barHubLeave:""Why did you leave the ship behind?""",
 vulp_barHubLootedOption,VulpBarHubOptions,!$askedLooted,,,"vulp_barHubLooted:""What makes you think it's still there?""",
-vulp_barHubCapableOption,VulpBarHubOptions,!$askedCapable,,,"vulp_barHubCapable:""What exactly do you mean by 'capable'?""",
-vulp_barHubDefendedOption,VulpBarHubOptions,"$canAskDefended
-!$askedDefended",,,"vulp_barHubDefended:""Are you saying the ship is defended by something?""",
+vulp_barHubDefendedOption,VulpBarHubOptions,!$askedDefended,,,"vulp_barHubDefended:""Anything I should be expecting out there?""",
 vulp_barHubAIOption,VulpBarHubOptions,"$askedDefended
 !$askedAI",,,"vulp_barHubAI:""It's AI, isn't it.""",
-vulp_barHubVulpoidOption,VulpBarHubOptions,!$askedVulpoid,,,"vulp_barHubVulpoid:""Is there something else you're not telling me?""",
+vulp_barHubVulpoidOption,VulpBarHubOptions,!$askedVulpoid,,,"vulp_barHubVulpoid:""What exactly is this fantastic technology?""",
 vulp_barHubAcceptOption,VulpBarHubOptions,,,,"vulp_barHubAccept:""Alright, where is it?""",
-vulp_barHubShip,DialogOptionSelected,$option == vulp_barHubShip,$askedShip = true,"""It's the EBTS Rellrait, a Citadel-class ship. An experimental ship, hadn't been publicly released yet when we got it. I, uh, guess that's not actually very helpful?""
+vulp_barHubShip,DialogOptionSelected,$option == vulp_barHubShip,"$askedShip = true
+FireAll VulpBarHubOptions","""The EBTS Rellrait, Citadel-class. I don't expect you've heard of that hull before, it was a pre-release model we leased from Tri-Tachyon.""
 
-""So the Citadel-class is a redesign of a Paragon? But if you fill in that donut hole in the middle so that it's one big... astropolis..."" He trails off.","vulp_barHubShip1:""...Astropolis?""",
-vulp_barHubShip1,DialogOptionSelected,$option == vulp_barHubShip1,FireAll VulpBarHubOptions,"""Sorry, I shouldn't have... That's a sensitive subject, right?"" He glances around, worried that the word might have attracted attention from one of the parties involved in the Mairaath atrocity.
+""In essence, it's an alteration of the Paragon-class hull. The central section is filled in with a habitation module that the labs are built into, that's where you're headed.""",,"# 'Habitation module' - he's not even _intentionally_ understating things, he just forgor that the Domain was insane"
+vulp_barHubLeave,DialogOptionSelected,$option == vulp_barHubLeave,"$askedLeave = true
+FireAll VulpBarHubOptions","His face sours. ""If it had been up to be, I would have stayed. Took all the clout I had just to convince them to leave the ship - jumping into hyperspace would have ruined entire cycles of experiments.""
 
-""Anyway, it's a high-tech capital ship, fresh out of the forges when we got it. 200 cycles old now though, so probably a little worse for wear.""",,
+""I got stuck into cryosleep, told that I'd be woken up as soon as things got back to normal and we could head back out. And then, well..."" He gestures broadly.
+
+""Apparently Exodyne went under while I was on ice, and the Rellrait was somehow left unaccounted for. And I don't have the money or lifespan to head back out myself.""",,
 vulp_barHubLooted,DialogOptionSelected,$option == vulp_barHubLooted,"$askedLooted = true
-$canAskDefended = true
-FireAll VulpBarHubOptions","""Oh, the ship is quite durable. Lots of, um, maintenance systems. It'll last basically forever, especially since there's no humans on board.""
+FireAll VulpBarHubOptions","""Hah!"" he laughs, ""A few hundred cycles is nothing to the kind of tech we were working with. And before we left we made sure to set things up to last, it'll be well-maintained.""
 
-A pause. He looks blankly at you for a moment, until he suddenly remembers the state that the Sector is in.
+A brief pause forms until he suddenly remembers the state that the Sector is in.
 
-""Oh did you mean looters? Or, er, salvagers? Sorry, I don't know the terms. But no, no. It has... countermeasures? Countermeasures. It'll be there.""",,
-vulp_barHubCapable,DialogOptionSelected,$option == vulp_barHubCapable,"$askedCapable = true
-$canAskDefended = true
-FireAll VulpBarHubOptions","""Well, you've got a spaceship, that's a good step one, right?"" He chuckles nervously.
-
-""But, it could be a bit, um, risky? I mean, you're going out into hyperspace, there could be pirates and things, right?""
-
-""...So maybe it would be a good idea to bring some warships just in case?""",,"# Note: He sees hyperspace as the home of pirates, from living under the Domain. Legitimate captains used the Gates."
+""Oh, or did you mean looters? Well, maybe nowadays you call them 'salvagers', eh? Look, if someone else had found it, we'd both have heard about it. No news means it's still out there.""",,
 vulp_barHubDefended,DialogOptionSelected,$option == vulp_barHubDefended,"$askedDefended = true
-$askedLooted = true
-$askedCapable = true
-FireAll VulpBarHubOptions","He flinches at the accusation, ""Well, no, I'm not saying it is, I'm just also saying that if it were to be then it'd be good to have some ships just in case.""
+FireAll VulpBarHubOptions","His confidence wavers for a split second. ""Well, nothing you haven't dealt with before, I'd wager. Post-apocalypse space captain, and all that.""
 
-""But I'm not saying it is. Just that it could be. Because you never know. I don't know. I haven't been there in 200 cycles, it could be anything.""",,
-vulp_barHubAI,DialogOptionSelected,$option == vulp_barHubAI,$askedAI = true,"He looks panicked, eyes shooting around the room as though a Hegemony officer is going to jump out from under a table and arrest him on the spot.
+""But... Maybe bring a couple warships, if you have them. Never know what's out there, right?""",,
+vulp_barHubAI,DialogOptionSelected,$option == vulp_barHubAI,"$askedAI = true
+FireAll VulpBarHubOptions","He nearly cringes out of his skin, and his eyes dart across the room as though a Hegemony inspector is going to drop in through a gravwell.
 
-""I thought we weren't supposed to talk about that!"" He hisses, ""Isn't it illegal to say that AI could still exist, or something like that?""
+""Okay, keep quiet about this, but yes. We had an Integrated Space Defense System on contract from Tri-Tachyon. Just don't go spreading that around, I don't want some maniac racing out there to destroy all our hard work just because it's defended by a few drones.""",,
+vulp_barHubVulpoid,DialogOptionSelected,$option == vulp_barHubVulpoid,$askedVulpoid = true,"""Like I said, bioforging. Same basic principles as a nanoforge, but wildly more complex. Load it up with a design, and it'll print endless near-identical copies of living things!""
 
-Your steady gaze and still-uncuffed wrists seem to convince him that he's overreacting. Slightly.",vulp_barHubAI1:Continue,
-vulp_barHubAI1,DialogOptionSelected,$option == vulp_barHubAI1,FireAll VulpBarHubOptions,"""Look, I don't want to get in trouble. If I'm not put back on ice in the next month or so, I'm dead. I cannot afford to get arrested.""
+He lets that statement hang in the air for a moment.
 
-""So... I'm not saying yes. But, uh, historical fun fact! Tri-Tachyon used to sell something called an Integrated Space Defense System. And now they... don't. But companies could buy it if they wanted to protect their orbital assets. Fun fact.""
+""That's nothing new of course, we've done it for animals for ages. The real prize is the specific design we were working on. THAT is what will change this sector forever.""","vulp_barHubVulpoid1:""…And what is this design?""",
+vulp_barHubVulpoid1,DialogOptionSelected,$option == vulp_barHubVulpoid1,,"""You want to know? Fantastic! Go out there and see for yourself!""","vulp_barHubVulpoid_pry:""Can't you just tell me now?""
+vulp_barHubVulpoid_letGo:Let it go",
+vulp_barHubVulpoid_pry,DialogOptionSelected,$option == vulp_barHubVulpoid_pry,FireAll VulpBarHubOptions,"""I could, but I won't. I want you to see first-hand what we've achieved, without any preconceptions.""
 
-So, yes. It's defended by an AI fleet.",,
-vulp_barHubVulpoid,DialogOptionSelected,$option == vulp_barHubVulpoid,$askedVulpoid = true,"A flicker of guilt crosses his face. ""I... yes. I'm sorry, but I haven't been awake long enough to understand how things work nowadays.""
+He smiles sincerely, ""And besides, curiosity is a great motivator! Now you've got another reason to pull this off!""",,
+vulp_barHubVulpoid_letGo,DialogOptionSelected,$option == vulp_barHubVulpoid_letGo,FireAll VulpBarHubOptions,,,
+vulp_barHubAccept,DialogOptionSelected,$option == vulp_barHubAccept,"Call $global.vulpFactory_ref showMap ""Last Known Location""","""I knew it! I knew you were the right call the moment I saw you. Here, let me send you the coordinates.""
 
-""So I'm not telling you everything. Just... when you get there, try to keep an open mind? And see the potential good they can do.""","vulp_barHubVulpoidTry:""I'll keep my perspective open.""
-vulp_barHubVulpoidNoPromise:""I can't promise anything.""
-vulp_barHubVulpoidThey:""'They'?""",
-vulp_barHubVulpoidTry,DialogOptionSelected,$option == vulp_barHubVulpoidTry,FireAll VulpBarHubOptions,"He looks relieved at that.
+His fingers dance across a modern TriPad with practiced ease. You review the data packet while he begins chatting.
 
-""Thank you. It's good to know that people like you are still around nowadays.""",,
-vulp_barHubVulpoidNoPromise,DialogOptionSelected,$option == vulp_barHubVulpoidNoPromise,FireAll VulpBarHubOptions,"He frowns, ""I guess that's fair, can't promise what you don't know... But please do think about it.""",,
-vulp_barHubVulpoidThey,DialogOptionSelected,$option == vulp_barHubVulpoidThey,FireAll VulpBarHubOptions,"""What? Did I say 'they'? Well, I..."" He fishes for an excuse.
+""We were doing some side-studies with Eridani-Utopia on some local lifeforms in that system. There was this one amoeba that-""","vulp_barHubAccept1:""Are there not any auth codes in this data?""",
+vulp_barHubAccept1,DialogOptionSelected,$option == vulp_barHubAccept1,ShowImageVisual vulp_bar_quest,"He hesitates.
 
-""...I was thinking of my coworkers. Who aren't aboard, but I forgot that, because I've been in cryosleep so it's all very recent for me. How silly of me.""
+""Do you mean computer passwords? You won't need to access them, they've just got research data. Hardware's what you're looking for.""","vulp_barHubAccept2:""For the ship.""",
+vulp_barHubAccept2,DialogOptionSelected,$option == vulp_barHubAccept2,,"Now he's concerned.
 
-As much as you'd like to press the issue, he seems skittish enough that you won't get any more out of him on this subject.",,
-vulp_barHubAccept,DialogOptionSelected,$option == vulp_barHubAccept,"Call $global.vulpFactory_ref showMap ""Last Known Location""","""Oh, thank you, thank you, thank you! This is such a relief. Here, let me send you the coordinates I have.""
-
-His fingers dance across a modern TriPad with practiced ease. Some things haven't changed much, it seems.
-
-""Our research was mostly directed towards high-end bioprinting solutions, but there were some interesting bioforms in this system that we'd hoped to study. There was this one amoeba that-""","vulp_barHubAccept1:""Are there not any auth codes in this data?""",
-vulp_barHubAccept1,DialogOptionSelected,$option == vulp_barHubAccept1,ShowImageVisual vulp_bar_quest,"A look of confusion crosses his face.
-
-""Do you mean computer passwords? I remember my personal one, but it's just research data, nothing really useful.""","vulp_barHubAccept2:""For the ship.""",
-vulp_barHubAccept2,DialogOptionSelected,$option == vulp_barHubAccept2,,"His expression shifts from confusion to worry.
-
-""Can you not just take a shuttle onboard? Once it's safe, I mean. Nothing on board will try to stop you, if you could just get to the command deck...""","vulp_barHubAccept3:""Does the ship have point-defenses?""",
-vulp_barHubAccept3,DialogOptionSelected,$option == vulp_barHubAccept3,,"""...Probably?""
+""Can you not just take a shuttle onboard? Nothing on board will try to stop you once you are, you could go to the command deck and... do... something?""","vulp_barHubAccept3:""Does the ship have point-defenses?""",
+vulp_barHubAccept3,DialogOptionSelected,$option == vulp_barHubAccept3,,"""...Probably? It's a redesign of a Paragon, those have point-defenses, right?""
 
 He looks nauseous.
 
 ""Maybe they're not turned on?""","vulp_barHubAccept4:""Maybe. There's nobody aboard, right?""",
-vulp_barHubAccept4,DialogOptionSelected,$option == vulp_barHubAccept4,,"He doesn't look any less nauseous.
+vulp_barHubAccept4,DialogOptionSelected,$option == vulp_barHubAccept4,,"A flash of guilt crosses his face.
 
-""Yeah... There's no humans aboard. So the defenses will probably be off, right? You'd just need to clear out anything else that's there, and can then you can board it, easy.""","vulp_barHubAcceptReassure:""I'll be careful, don't worry.""
-vulp_barHubAcceptConfident:""Doesn't matter, I can handle it.""
-vulp_barHubAcceptReluctant:""This could take some time.""",
-vulp_barHubAcceptReassure,DialogOptionSelected,$option == vulp_barHubAcceptReassure,,"""Thank you, please do be,"" he says, relieved. ""I wouldn't want you to get hurt, or anything aboard to get damaged.""",vulp_barHubAcceptFinal:Continue,
-vulp_barHubAcceptConfident,DialogOptionSelected,$option == vulp_barHubAcceptConfident,,"""Yeah, I guess you must be pretty tough, right?"" he says, somewhat reassured by your confidence. ""Just please try not to hurt, break, anything.""",vulp_barHubAcceptFinal:Continue,
-vulp_barHubAcceptReluctant,DialogOptionSelected,$option == vulp_barHubAcceptReluctant,,"""I mean, that's probably for the best, better to be cautious,"" he says. ""It's been 200 cycles, what's a few more, right?""",vulp_barHubAcceptFinal:Continue,
-vulp_barHubAcceptFinal,DialogOptionSelected,$option == vulp_barHubAcceptFinal,AcceptMission,"""I'm going to need to go back into cryosleep soon. I probably won't be around when you get back. So, goodbye, good luck, and thank you!""
+""No... no humans aboard. So the defenses will be off, right? You'll just need to get access to the ship and board it, no need to shoot at it.""","vulp_barHubAcceptReassure:""I'll be careful, don't worry.""
+vulp_barHubAcceptConfident:""I'm sure it can withstand a few shots.""
+vulp_barHubAcceptReluctant:""This might take some time.""",
+vulp_barHubAcceptReassure,DialogOptionSelected,$option == vulp_barHubAcceptReassure,,"He exhales. ""Good, thank you. I wouldn't want anything aboard to get damaged, I'd rather it stay out there until we can recover it safely, somehow. But as long as you think you can do it, I'll put my trust in you.""",vulp_barHubAcceptFinal:Continue,
+vulp_barHubAcceptConfident,DialogOptionSelected,$option == vulp_barHubAcceptConfident,,"He cringes. ""Please, try not to shoot at it! Some of those experiments are delicate, you could end up destroying centuries-old data!""
 
-He stands, shakes your hand vigorously, and hurries away to whatever other matters he needs to attend to in his short time awake.",vulp_barHubAcceptLeave:Leave,
+""Look, I'm sure it'll be fine. And if it isn't, just let it be. I'd rather things stayed in one piece to be recovered someday.""",vulp_barHubAcceptFinal:Continue,
+vulp_barHubAcceptReluctant,DialogOptionSelected,$option == vulp_barHubAcceptReluctant,,"He gives a small shrug. ""That's... fine, honestly. It's been out there for 200 cycles, I'd rather it wait another few but be recovered, as opposed to rushing in and breaking something.""",vulp_barHubAcceptFinal:Continue,
+vulp_barHubAcceptFinal,DialogOptionSelected,$option == vulp_barHubAcceptFinal,AcceptMission,"He slaps his hands to his thighs and stands upright. ""Whelp, that should be everything you need to know. I wish you the best of luck.""
+
+""Now if you'll excuse me, my cybernetics are telling me that their licenses will expire soon. I intend to take whatever's left in my company account and live my remaining lifespan to the fullest. Fly safely, and don't come back empty-handed!""
+
+A firm handshake and he's gone, leaving you with a set of coordinates and the promise of treasure.",vulp_barHubAcceptLeave:Leave,
 vulp_barHubAcceptLeave,DialogOptionSelected,$option == vulp_barHubAcceptLeave,BarCMD leaveBar,,,
 ,,,,,,
 ,,,,,,
