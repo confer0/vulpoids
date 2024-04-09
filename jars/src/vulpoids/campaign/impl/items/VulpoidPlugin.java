@@ -19,6 +19,7 @@ import com.fs.starfarer.api.fleet.FleetMemberAPI;
 import com.fs.starfarer.api.graphics.SpriteAPI;
 import com.fs.starfarer.api.impl.campaign.ids.Skills;
 import com.fs.starfarer.api.ui.Alignment;
+import com.fs.starfarer.api.ui.Fonts;
 import com.fs.starfarer.api.ui.TooltipMakerAPI;
 import com.fs.starfarer.api.util.Misc;
 import java.util.ArrayList;
@@ -99,7 +100,7 @@ public class VulpoidPlugin extends BaseSpecialItemPlugin {
             else person.setPostId(null);
             if(json.has("rankid"))person.setRankId(json.getString("rankid"));
             else person.setPostId(null);
-            if(json.has("relfloat"))person.getRelToPlayer().setRel(json.getLong("relfloat"));
+            if(json.has("relfloat"))person.getRelToPlayer().setRel((float)json.getDouble("relfloat"));
             if(json.has("skills")) {
                 JSONArray skill_array = json.getJSONArray("skills");
                 JSONArray skill_levels = null;
@@ -180,6 +181,8 @@ public class VulpoidPlugin extends BaseSpecialItemPlugin {
         }
         if (role_portrait != null) person.setPortraitSprite(role_portrait);
         
+        person.getMemoryWithoutUpdate().set(Vulpoids.KEY_PROFECTO_ASSIGNMENT, getId());
+        
         if(Vulpoids.SPECIAL_ITEM_ADMIN.equals(getId())) {
             person.getMemoryWithoutUpdate().set("$ome_isAdmin", true);
             if(person.getStats().hasSkill(Skills.INDUSTRIAL_PLANNING)) person.getMemoryWithoutUpdate().set("$ome_adminTier", 1);
@@ -220,6 +223,7 @@ public class VulpoidPlugin extends BaseSpecialItemPlugin {
                 Global.getSector().getCharacterData().addAdmin(person);
             }
         }
+        stack.getSpecialDataIfSpecial().setData(personToJson(person));
     }
     
     
@@ -300,6 +304,21 @@ public class VulpoidPlugin extends BaseSpecialItemPlugin {
             }
         }
     }
+    
+    public Color getColor() {
+        switch(getId()) {
+            case Vulpoids.SPECIAL_ITEM_DEFAULT:
+                return new Color(192,192,192);
+            case Vulpoids.SPECIAL_ITEM_EMBARKED:
+                return new Color(125,175,240);
+            case Vulpoids.SPECIAL_ITEM_OFFICER:
+                return new Color(240,130,130);
+            case Vulpoids.SPECIAL_ITEM_ADMIN:
+                return new Color(130,240,200);
+            default:
+                return new Color(226, 143, 173);
+        }
+    }
 
     @Override
     public void createTooltip(TooltipMakerAPI tooltip, boolean expanded, CargoTransferHandlerAPI transferHandler, Object stackSource) {
@@ -313,30 +332,8 @@ public class VulpoidPlugin extends BaseSpecialItemPlugin {
         Color b = Misc.getButtonTextColor();
         b = Misc.getPositiveHighlightColor();
         
-        Color body_color;
-        Color text_color;
-        switch(getId()) {
-            case Vulpoids.SPECIAL_ITEM_DEFAULT:
-                body_color = new Color(127,127,127);
-                text_color = new Color(255,255,255);
-                break;
-            case Vulpoids.SPECIAL_ITEM_EMBARKED:
-                body_color = new Color(125,175,240);
-                text_color = new Color(255,255,255);
-                break;
-            case Vulpoids.SPECIAL_ITEM_OFFICER:
-                body_color = new Color(240,130,130);
-                text_color = new Color(255,255,255);
-                break;
-            case Vulpoids.SPECIAL_ITEM_ADMIN:
-                body_color = new Color(130,240,200);
-                text_color = new Color(255,255,255);
-                break;
-            default:
-                body_color = new Color(226, 143, 173);
-                text_color = new Color(255,255,255);
-                break;
-        }
+        Color body_color = getColor();
+        Color text_color = new Color(255,255,255);
         
         
         TooltipMakerAPI portrait = tooltip.beginImageWithText(person.getPortraitSprite(), 128, tooltip.getWidthSoFar(), false);
@@ -434,7 +431,7 @@ public class VulpoidPlugin extends BaseSpecialItemPlugin {
         tooltip.addCustom(skillTooltip, opad);
         
         tooltip.addPara("Market value: %s", opad, Misc.getHighlightColor(), Misc.getDGSCredits(getPrice(null, null)));
-        tooltip.addPara("Right-click to cycle jobs", Misc.getHighlightColor(), opad);
+        if(stackSource!=null) tooltip.addPara("Right-click to cycle jobs", Misc.getHighlightColor(), opad);
     }
     
     private void addSkillsToTooltip(TooltipMakerAPI tooltip, ArrayList<SkillLevelAPI> skills, boolean expanded, boolean officer, boolean admin, float pad) {
@@ -497,7 +494,7 @@ public class VulpoidPlugin extends BaseSpecialItemPlugin {
         return false;
     }
     
-    private String disallowCycleReason() {
+    public String disallowCycleReason() {
         if (!isInPlayerCargo()) return "Not currently in your fleet.";
         
         if(getId().equals(Vulpoids.SPECIAL_ITEM_OFFICER)) {
@@ -523,7 +520,7 @@ public class VulpoidPlugin extends BaseSpecialItemPlugin {
         refreshPerson();
         return disallowCycleReason()==null;
     }
-
+    
     @Override
     public void performRightClickAction() {
         String disallowReason = disallowCycleReason();

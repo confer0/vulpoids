@@ -27,6 +27,7 @@ public class Vulpoids {
     public static final String KEY_OFFICER_PORTRAIT = "$vulp_officerPortrait";
     public static final String KEY_DEFAULT_POST = "$vulp_defaultPost";
     public static final String KEY_CARGO_ICON = "$vulp_cargoIcon";
+    public static final String KEY_PROFECTO_ASSIGNMENT = "$vulp_profectoAssignment";
     
     public static final String KEY_MARKET_VULPOID_ADMIN = "$vulp_marketVulpoidAdmin";
     public static final String KEY_MARKET_VULPOID_ADMIN_TIMESTAMP = "$vulp_marketVulpoidAdminTimestamp";

@@ -872,3 +872,52 @@ $contact_printedFirstReturnGreeting","ShowPersonVisual
 FireAll InventoryVulpPopulateOptions","""Is there anything else I can do for you $PlayerSirOrMadam?""",,
 vulp_askFunFactTEST,InventoryVulpPopulateOptions,,,,vulp_getFunFact:Make conversation,
 vulpconv_convOptionLeave,InventoryVulpPopulateOptions,,"SetShortcut cutCommLink ""ESCAPE""",,100:cutCommLink:Cut the comm link,
+,,,,,,
+,,,,,,
+,,,,,,
+# Conversation!,,,,,,
+,,,,,,
+vulpChat_openGeneric,OpenVulpoidChatDialog,,FireBest VulpoidChatGreeting,"You invite $personName to your cabin, and she arrives promptly.",,
+vulpChat_openVulpoid,OpenVulpoidChatDialog,$vulp_profectoAssignment == vulpoids,FireBest VulpoidChatGreeting,"You order a Vulpoid defrosted and sent to you. A short while later, she excitedly hurries through your cabin door.",,
+vulpChat_openSleeper,OpenVulpoidChatDialog,$vulp_profectoAssignment == special_vulpoid,FireBest VulpoidChatGreeting,"You order that $personName be defrosted and sent to you. A short while later, she arrives at your cabin.",,
+vulpChat_openEmbarked,OpenVulpoidChatDialog,$vulp_profectoAssignment == special_vulpoid_embarked,FireBest VulpoidChatGreeting,"You send a message to $personName asking that she meet with you, and she arrives promptly to your cabin.",,
+vulpChat_openOfficer,OpenVulpoidChatDialog,$vulp_profectoAssignment == special_vulpoid_officer,FireBest VulpoidChatGreeting,"You send a message to $personName asking that she meet with you. A short shuttle flight later, she arrives at your cabin.",,
+vulpChat_openAdmin,OpenVulpoidChatDialog,$vulp_profectoAssignment == special_vulpoid_admin,FireBest VulpoidChatGreeting,"You send a message to $personName asking that she meet with you, and she arrives promptly to your cabin.",,
+vulpChat_greetingGeneric,VulpoidChatGreeting,$vulp_profectoAssignment == vulpoids score:100,FireAll VulpoidChatTopLevelOptions,"""Hi $PlayerSirOrMadam! It's so nice to see you! Do you want to do anything?""",,
+vulpChat_greetingSleeperLow,VulpoidChatGreeting,"$rel < 0.75
+$vulp_profectoAssignment == special_vulpoid",FireAll VulpoidChatTopLevelOptions,"""Hello $PlayerSirOrMadam. I was having a lovely dream, but I suppose that's not important. Is there anything I can help you with?""",,
+vulpChat_greetingSleeperHigh,VulpoidChatGreeting,"$rel >= 0.75
+$vulp_profectoAssignment == special_vulpoid",FireAll VulpoidChatTopLevelOptions,"""Hello $PlayerSirOrMadam! It's always so nice to speak with you, almost like I'm still dreaming! What can I do for you?""",,
+vulpChat_greetingEmbarkedLow,VulpoidChatGreeting,"$rel < 0.75
+$vulp_profectoAssignment == special_vulpoid_embarked",FireAll VulpoidChatTopLevelOptions,"""Hello $PlayerSirOrMadam. Apologies for the short wait, I was middle of something. What can I help you with?""",,
+vulpChat_greetingEmbarkedHigh,VulpoidChatGreeting,"$rel >= 0.75
+$vulp_profectoAssignment == special_vulpoid_embarked",FireAll VulpoidChatTopLevelOptions,"""Hello $PlayerSirOrMadam! I came as soon as I got your message! What can I do for you?""",,
+vulpChat_greetingOfficerIdleLow,VulpoidChatGreeting,"$rel < 0.75
+!$profectoIsAssigned
+$vulp_profectoAssignment == special_vulpoid_officer",FireAll VulpoidChatTopLevelOptions,"""Hello $PlayerSirOrMadam. I'm ready to assume command of a vessel at your leisure. Until then, can I help you with anything?",,
+vulpChat_greetingOfficerIdleHigh,VulpoidChatGreeting,"$rel >= 0.75
+!$profectoIsAssigned
+$vulp_profectoAssignment == special_vulpoid_officer",FireAll VulpoidChatTopLevelOptions,"""Hello $PlayerSirOrMadam! I'm ready to command a vessel whenever you like! But for now, what can I do for you?",,
+vulpChat_greetingOfficerActiveLow,VulpoidChatGreeting,"$rel < 0.75
+$profectoIsAssigned
+$vulp_profectoAssignment == special_vulpoid_officer",FireAll VulpoidChatTopLevelOptions,"""Hello $PlayerSirOrMadam. All shipboard systems are nominal, but I suppose you didn’t need me in person for that. How can I help you?",,
+vulpChat_greetingOfficerActiveHigh,VulpoidChatGreeting,"$rel >= 0.75
+$profectoIsAssigned
+$vulp_profectoAssignment == special_vulpoid_officer",FireAll VulpoidChatTopLevelOptions,"""Hello $PlayerSirOrMadam! All systems are nominal, and crew morale is high! Can I do anything else for you?",,
+vulpChat_greetingAdminIdleLow,VulpoidChatGreeting,"$rel < 0.75
+!$profectoIsAssigned
+$vulp_profectoAssignment == special_vulpoid_admin",FireAll VulpoidChatTopLevelOptions,"""Hello $PlayerSirOrMadam. My workstations are ready to administrate a colony at your leisure. Until then, can I help you with anything?",,
+vulpChat_greetingAdminIdleHigh,VulpoidChatGreeting,"$rel >= 0.75
+!$profectoIsAssigned
+$vulp_profectoAssignment == special_vulpoid_admin",FireAll VulpoidChatTopLevelOptions,"""Hello $PlayerSirOrMadam! I've got everything set up for colony administration whenever you need me! For now though, what can I do for you?",,
+vulpChat_greetingAdminActiveLow,VulpoidChatGreeting,"$rel < 0.75
+$profectoIsAssigned
+$vulp_profectoAssignment == special_vulpoid_admin",FireAll VulpoidChatTopLevelOptions,"""Hello $PlayerSirOrMadam. Reports from the colony indicate everything is proceeding as well as can be expected. What can I help you with?",,
+vulpChat_greetingAdminActiveHigh,VulpoidChatGreeting,"$rel >= 0.75
+$profectoIsAssigned
+$vulp_profectoAssignment == special_vulpoid_admin",FireAll VulpoidChatTopLevelOptions,"""Hello $PlayerSirOrMadam! Reports from the colony show things are proceeding at or above expectation! Anything else I can do for you?",,
+,,,,,,
+,,,,,,
+,,,,,,
+vulpChat_exitOption,VulpoidChatTopLevelOptions,,"SetShortcut vulpChat_exit ""ESCAPE""",,vulpChat_exit:Leave,
+vulpChat_exit,DialogOptionSelected,$option == vulpChat_exit,OpenVulpoidChatMenu,,,

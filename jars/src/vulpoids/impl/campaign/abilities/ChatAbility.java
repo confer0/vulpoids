@@ -1,14 +1,20 @@
 package vulpoids.impl.campaign.abilities;
 
 import com.fs.starfarer.api.Global;
+import com.fs.starfarer.api.campaign.SectorEntityToken;
 import com.fs.starfarer.api.impl.campaign.abilities.BaseDurationAbility;
 import com.fs.starfarer.api.ui.TooltipMakerAPI;
+import vulpoids.impl.campaign.ProfectoInteractionDialogPlugin;
 
 public class ChatAbility extends BaseDurationAbility {
     @Override
     protected void activateImpl() {
-        Global.getSector().getCampaignUI().addMessage("ActivateImpl");
-        // PUT CODE HERE
+        ProfectoInteractionDialogPlugin plugin = new ProfectoInteractionDialogPlugin();
+        SectorEntityToken target = Global.getFactory().createJumpPoint("vulpoidconversation_dummyjumppoint", "DUMMY");
+        Global.getSector().getCampaignUI().showInteractionDialog(plugin, target);
+        
+        // TODO - test this? Or is the current method good enough.
+        //Global.getSector().getCampaignUI().getCurrentInteractionDialog().getVisualPanel().closeCoreUI();
     }
     
     @Override

@@ -1,6 +1,7 @@
 package vulpoids.impl.campaign;
 
 import com.fs.starfarer.api.Global;
+import com.fs.starfarer.api.campaign.RepLevel;
 import com.fs.starfarer.api.campaign.econ.MarketAPI;
 import com.fs.starfarer.api.characters.FullName;
 import com.fs.starfarer.api.characters.PersonAPI;
@@ -40,6 +41,7 @@ public class VulpoidCreator {
         person.getMemoryWithoutUpdate().set(MemFlags.OFFICER_SKILL_PICKS_PER_LEVEL, 10);
         person.setRankId(Vulpoids.RANK_PROFECTO);
         person.setPostId(null);
+        person.getRelToPlayer().setRel(0.5f);
         
         
         return person;

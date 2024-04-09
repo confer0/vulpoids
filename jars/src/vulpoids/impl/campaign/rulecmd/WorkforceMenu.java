@@ -1,7 +1,6 @@
 package vulpoids.impl.campaign.rulecmd;
 
 import com.fs.starfarer.api.campaign.InteractionDialogAPI;
-import com.fs.starfarer.api.campaign.InteractionDialogPlugin;
 import com.fs.starfarer.api.campaign.rules.MemoryAPI;
 import com.fs.starfarer.api.impl.campaign.rulecmd.BaseCommandPlugin;
 import com.fs.starfarer.api.util.Misc;
@@ -14,7 +13,6 @@ public class WorkforceMenu extends BaseCommandPlugin {
     public boolean execute(String ruleId, InteractionDialogAPI dialog, List<Misc.Token> params, Map<String, MemoryAPI> memoryMap) {
         if (dialog == null) return false;
         final WorkforceInteractionDialogPlugin plugin = new WorkforceInteractionDialogPlugin();
-        InteractionDialogPlugin prev_plugin = dialog.getPlugin();
         dialog.setPlugin(plugin);
         plugin.init(dialog);
         //dialog.setPlugin(prev_plugin);
