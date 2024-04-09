@@ -88,6 +88,9 @@
         -35
     ],
     "builtInMods": [
+		"advancedcore",
+		"biodome",
+		"improved_automatics",
 		"vast_hangar",
 	],
     "center": [
