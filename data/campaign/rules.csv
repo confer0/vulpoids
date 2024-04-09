@@ -202,7 +202,9 @@ PlaySound ui_raid_prepared","The boarding shuttles are released in a single wave
 It doesn't take long for the first teams to report contact.",vulp_exploreWreck_helmets:Continue,
 vulp_exploreWreck_nottalked,DialogOptionSelected,"$option == vulp_exploreWreck_helmets
 !$talkedOnComms","SetImportantName vulp_dummy_terran ""Opposition Crew""
+ResetVulpoidPortrait vulp_dummy_terran
 SetVulpoidClothing vulp_dummy_terran ""spacer""
+SetVulpoidExpression vulp_dummy_terran ""helmet""
 ShowPersonVisual true vulp_dummy_terran
 ShowSecondPerson vulp_dummy_terran
 ShowThirdPerson vulp_dummy_terran","The opposing crew is wearing distinctive space suits, with large panels that extend from their helmets. Perhaps decorative, or serving some esoteric purpose.
@@ -212,6 +214,7 @@ vulp_exploreWreck_talked,DialogOptionSelected,"$option == vulp_exploreWreck_helm
 $talkedOnComms","SetImportantName vulp_dummy_terran ""Opposition Crew""
 ResetVulpoidPortrait vulp_dummy_terran
 SetVulpoidClothing vulp_dummy_terran ""spacer""
+SetVulpoidExpression vulp_dummy_terran ""helmet""
 ShowPersonVisual true vulp_dummy_terran
 ShowSecondPerson vulp_dummy_terran
 ShowThirdPerson vulp_dummy_terran","The opposing crew is wearing the same type of suit that their captain wore on comms, with those same distinctive panels extending from the helmet.

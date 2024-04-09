@@ -163,6 +163,7 @@ public class VulpoidPlugin extends BaseSpecialItemPlugin {
         }
         person = jsonToPerson(jsonStr);
         
+        refreshPerson();
         
         switch(getId()) {
             case Vulpoids.SPECIAL_ITEM_DEFAULT:
@@ -189,12 +190,14 @@ public class VulpoidPlugin extends BaseSpecialItemPlugin {
             person.getMemoryWithoutUpdate().unset("$ome_isAdmin");
             person.getMemoryWithoutUpdate().unset("$ome_adminTier");
         }
-        
-        refreshPerson();
     }
     
     public void refreshPerson() {
-        if(Global.getSector().getPlayerFleet() != null && getId().equals(Vulpoids.SPECIAL_ITEM_OFFICER)) {
+        if (Global.getSector().getImportantPeople().getPerson(person.getId()) != null) {
+            person = Global.getSector().getImportantPeople().getPerson(person.getId());
+        }
+        
+        else if(Global.getSector().getPlayerFleet() != null && getId().equals(Vulpoids.SPECIAL_ITEM_OFFICER)) {
             boolean found_match = false;
             for (OfficerDataAPI officer : Global.getSector().getPlayerFleet().getFleetData().getOfficersCopy()) {
                 if (officer.getPerson().getId().equals(person.getId())) {
@@ -208,7 +211,7 @@ public class VulpoidPlugin extends BaseSpecialItemPlugin {
             }
         }
         
-        if(Global.getSector().getCharacterData() != null && getId().equals(Vulpoids.SPECIAL_ITEM_ADMIN)) {
+        else if(Global.getSector().getCharacterData() != null && getId().equals(Vulpoids.SPECIAL_ITEM_ADMIN)) {
             boolean found_match = false;
             for (AdminData admin : Global.getSector().getCharacterData().getAdmins()) {
                 if (admin.getPerson().getId().equals(person.getId())) {

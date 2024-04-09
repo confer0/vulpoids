@@ -56,11 +56,13 @@ public class VulpoidCreator {
     public static final String CLIMATE_TERRAN = "terran";
     public static final String CLIMATE_DESERT = "desert";
     public static final String CLIMATE_ARCTIC = "arctic";
+    public static final String CLIMATE_SUGAR = "sugar";
     public static final String CLIMATE_LAISA = "laisa";
     static String[] random_climates = new String[]{
         CLIMATE_TERRAN,
         CLIMATE_DESERT,
         CLIMATE_ARCTIC,
+        CLIMATE_SUGAR,
     };
     
     public static final String CLOTHING_CLOTHED = "clothed";
@@ -74,6 +76,7 @@ public class VulpoidCreator {
     public static final String EXPRESSION_CRY = "cry";
     public static final String EXPRESSION_DEFAULT = "default";
     public static final String EXPRESSION_FEAR = "fear";
+    public static final String EXPRESSION_HELMET = "helmet";
     
     
     public static String getIcon(String portrait) {
