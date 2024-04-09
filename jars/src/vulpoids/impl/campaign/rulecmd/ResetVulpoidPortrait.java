@@ -8,6 +8,7 @@ import com.fs.starfarer.api.impl.campaign.rulecmd.BaseCommandPlugin;
 import com.fs.starfarer.api.util.Misc;
 import java.util.List;
 import java.util.Map;
+import vulpoids.impl.campaign.VulpoidCreator;
 import vulpoids.impl.campaign.ids.Vulpoids;
 
 public class ResetVulpoidPortrait extends BaseCommandPlugin {
@@ -22,9 +23,8 @@ public class ResetVulpoidPortrait extends BaseCommandPlugin {
             if(person==null) person = (PersonAPI) params.get(0).getObject(memoryMap);
         }
         if (person == null) return false;
-        String portrait = person.getMemoryWithoutUpdate().getString(Vulpoids.KEY_DEFAULT_PORTRAIT);
-        if (portrait == null) return false;
-        person.setPortraitSprite(portrait);
+        VulpoidCreator.setPersonPortraitPropertyAtIndex(person, VulpoidCreator.INDEX_EXPRESSION, VulpoidCreator.EXPRESSION_DEFAULT);
+        VulpoidCreator.setPersonPortraitPropertyAtIndex(person, VulpoidCreator.INDEX_CLOTHING, VulpoidCreator.CLOTHING_NUDE);
         return true;
     }
     

@@ -31,102 +31,44 @@ public class VulpoidModPlugin extends BaseModPlugin {
         PersonAPI person;
         
         if (ip.getPerson(Vulpoids.PERSON_LAISA) == null) {
-            person = VulpoidCreator.createProfectoVulpoid(null);
+            person = VulpoidCreator.createProfectoVulpoid();
             person.setId(Vulpoids.PERSON_LAISA);
             person.setFaction(Vulpoids.FACTION_EXODYNE);
             person.setName(new FullName("Exodyne Captain", "", FullName.Gender.FEMALE));
             person.setRankId(null);
             person.setPostId(Ranks.POST_FLEET_COMMANDER);
             person.getRelToPlayer().setRel(-0.1f);
-            person.setPortraitSprite("graphics/portraits/vulpoid/spacer/military.png");
+            VulpoidCreator.setPersonPortraitPropertyAtIndex(person, VulpoidCreator.INDEX_CLIMATE, VulpoidCreator.CLIMATE_LAISA);
+            VulpoidCreator.setPersonPortraitPropertyAtIndex(person, VulpoidCreator.INDEX_CLOTHING, VulpoidCreator.CLOTHING_OFFICER);
             person.getStats().setSkillLevel(Vulpoids.SKILL_LAISA_ADMIN, 1);
             person.getStats().setSkillLevel(Vulpoids.SKILL_LAISA_OFFICER, 1);
             // TODO - Combat Skills
             person.getMemoryWithoutUpdate().set(MemFlags.OFFICER_MAX_LEVEL, 7);
             person.getMemoryWithoutUpdate().set(MemFlags.OFFICER_MAX_ELITE_SKILLS, 3);
-            person.getMemoryWithoutUpdate().set(Vulpoids.KEY_DEFAULT_PORTRAIT, "graphics/portraits/vulpoid/laisa/clothed/default.png");
-            person.getMemoryWithoutUpdate().set(Vulpoids.KEY_OFFICER_PORTRAIT, "graphics/portraits/vulpoid/laisa/laisa_special_admiral.png");
-            person.getMemoryWithoutUpdate().set(Vulpoids.KEY_CARGO_ICON, "graphics/icons/cargo/vulpoids/vulpoid_laisa.png");
+            //person.getMemoryWithoutUpdate().set(Vulpoids.KEY_DEFAULT_PORTRAIT, "graphics/portraits/vulpoid/laisa/clothed/default.png");
+            //person.getMemoryWithoutUpdate().set(Vulpoids.KEY_OFFICER_PORTRAIT, "graphics/portraits/vulpoid/laisa/laisa_special_admiral.png");
+            //person.getMemoryWithoutUpdate().set(Vulpoids.KEY_CARGO_ICON, "graphics/icons/cargo/vulpoids/vulpoid_laisa.png");
             ip.addPerson(person);
         }
         
         if(ip.getPerson(Vulpoids.PERSON_DUMMY_TERRAN) == null) {
-            person = VulpoidCreator.createNudeVulpoid(null);
+            person = VulpoidCreator.createVulpoid();
             person.setId(Vulpoids.PERSON_DUMMY_TERRAN);
-            VulpoidCreator.setDefaultClimate(person, "terran");
+            VulpoidCreator.setPersonPortraitPropertyAtIndex(person, VulpoidCreator.INDEX_CLIMATE, VulpoidCreator.CLIMATE_TERRAN);
             ip.addPerson(person);
         }
         if(ip.getPerson(Vulpoids.PERSON_DUMMY_DESERT) == null) {
-            person = VulpoidCreator.createNudeVulpoid(null);
-            VulpoidCreator.setDefaultClimate(person, "desert");
+            person = VulpoidCreator.createVulpoid();
+            VulpoidCreator.setPersonPortraitPropertyAtIndex(person, VulpoidCreator.INDEX_CLIMATE, VulpoidCreator.CLIMATE_DESERT);
             person.setId(Vulpoids.PERSON_DUMMY_DESERT);
             ip.addPerson(person);
         }
         if(ip.getPerson(Vulpoids.PERSON_DUMMY_ARCTIC) == null) {
-            person = VulpoidCreator.createNudeVulpoid(null);
-            VulpoidCreator.setDefaultClimate(person, "arctic");
+            person = VulpoidCreator.createVulpoid();
+            VulpoidCreator.setPersonPortraitPropertyAtIndex(person, VulpoidCreator.INDEX_CLIMATE, VulpoidCreator.CLIMATE_ARCTIC);
             person.setId(Vulpoids.PERSON_DUMMY_ARCTIC);
             ip.addPerson(person);
         }
-        
-        //Global.getSector().getFaction("hegemony").makeCommodityIllegal(Vulpoids.SPECIAL_ITEM_DEFAULT);
-        
-        
-        /*person = VulpoidCreator.createVulpoid(null);
-        person.setId("vulpoid_shiny_generic");
-        person.setName(new FullName("Profecto Vulpoid", "", FullName.Gender.FEMALE));
-        person.setPortraitSprite("graphics/portraits/terran_fox.png");
-        ip.removePerson(person.getId());
-        ip.addPerson(person);
-        
-        person = VulpoidCreator.createVulpoid(null);
-        person.setId("vulpoid_desert_generic");
-        person.setPortraitSprite("graphics/portraits/desert_fox.png");
-        ip.removePerson(person.getId());
-        ip.addPerson(person);
-        
-        person = VulpoidCreator.createVulpoid(null);
-        person.setId("vulpoid_terran_generic");
-        person.setPortraitSprite("graphics/portraits/terran_fox.png");
-        ip.removePerson(person.getId());
-        ip.addPerson(person);
-        
-        person = VulpoidCreator.createVulpoid(null);
-        person.setId("vulpoid_winter_generic");
-        person.setPortraitSprite("graphics/portraits/winter_fox.png");
-        ip.removePerson(person.getId());
-        ip.addPerson(person);
-        
-        person = VulpoidCreator.createVulpoid(null);
-        person.setId("vulpoid_space_desert_generic");
-        person.setPortraitSprite("graphics/portraits/space_desert_fox.png");
-        ip.removePerson(person.getId());
-        ip.addPerson(person);
-        
-        person = VulpoidCreator.createVulpoid(null);
-        person.setId("vulpoid_space_terran_generic");
-        person.setPortraitSprite("graphics/portraits/space_terran_fox.png");
-        ip.removePerson(person.getId());
-        ip.addPerson(person);
-        
-        person = VulpoidCreator.createVulpoid(null);
-        person.setId("vulpoid_space_winter_generic");
-        person.setPortraitSprite("graphics/portraits/space_winter_fox.png");
-        ip.removePerson(person.getId());
-        ip.addPerson(person);
-        
-        person = VulpoidCreator.createVulpoid(null);
-        person.setId("vulpoid_nude_terran_generic");
-        person.setPortraitSprite("graphics/portraits/nude_terran_fox.png");
-        ip.removePerson(person.getId());
-        ip.addPerson(person);
-        
-        person = VulpoidCreator.createVulpoid(null);
-        person.setId("vulpoid_barmaid");
-        person.setPostId("vulp_barmaid");
-        person.setPortraitSprite("graphics/portraits/nude_terran_fox.png");
-        ip.removePerson(person.getId());
-        ip.addPerson(person);*/
         
         
         

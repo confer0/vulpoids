@@ -31,8 +31,8 @@ public class VulpoidBrain {
             market.getMemoryWithoutUpdate().set(Vulpoids.KEY_MARKET_VULPOID_ADMIN, admin);
             market.getMemoryWithoutUpdate().set(Vulpoids.KEY_MARKET_VULPOID_ADMIN_TIMESTAMP, Global.getSector().getClock().getTimestamp());
             market.getCommDirectory().addPerson(admin, 0);
-            if(VulpoidCreator.marketIsSuitMarket(market)) admin.setPortraitSprite(VulpoidCreator.getPortraitForMarket(market, false, false));
-            else if(admin.getMemoryWithoutUpdate().contains(Vulpoids.KEY_DEFAULT_PORTRAIT)) admin.setPortraitSprite(admin.getMemoryWithoutUpdate().getString(Vulpoids.KEY_DEFAULT_PORTRAIT));
+            if(VulpoidCreator.marketIsSuitMarket(market)) admin.setPortraitSprite(VulpoidCreator.setPortraitPropertyAtIndex(admin.getPortraitSprite(), VulpoidCreator.INDEX_CLOTHING, VulpoidCreator.CLOTHING_SUIT));
+            //else if(admin.getMemoryWithoutUpdate().contains(Vulpoids.KEY_DEFAULT_PORTRAIT)) admin.setPortraitSprite(admin.getMemoryWithoutUpdate().getString(Vulpoids.KEY_DEFAULT_PORTRAIT));
         }
         @Override
         public void unapply(MarketAPI market, String id) {
@@ -41,8 +41,9 @@ public class VulpoidBrain {
                 market.getCommDirectory().removePerson(admin);
                 // This doesn't work for some reason. Haven't been able to figure it out.
                 for(AdminData player_admin : Global.getSector().getCharacterData().getAdmins()) if(player_admin.getPerson().getId().equals(admin.getId())) admin=player_admin.getPerson();
-                String default_portrait = admin.getMemoryWithoutUpdate().getString(Vulpoids.KEY_DEFAULT_PORTRAIT);
-                if (default_portrait != null) admin.setPortraitSprite(default_portrait);
+                //String default_portrait = admin.getMemoryWithoutUpdate().getString(Vulpoids.KEY_DEFAULT_PORTRAIT);
+                //if (default_portrait != null) admin.setPortraitSprite(default_portrait);
+                admin.setPortraitSprite(VulpoidCreator.setPortraitPropertyAtIndex(admin.getPortraitSprite(), VulpoidCreator.INDEX_CLOTHING, VulpoidCreator.CLOTHING_CLOTHED));
                 String default_post = admin.getMemoryWithoutUpdate().getString(Vulpoids.KEY_DEFAULT_POST);
                 if(default_post != null) admin.setPostId(default_post);
                 else admin.setPostId(null);

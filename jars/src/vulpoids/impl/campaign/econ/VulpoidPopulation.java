@@ -116,7 +116,7 @@ public class VulpoidPopulation extends BaseMarketConditionPlugin implements Mark
         advance(0);
         if(!market.getMemoryWithoutUpdate().contains(Vulpoids.KEY_WORKFORCES)) market.getMemoryWithoutUpdate().set(Vulpoids.KEY_WORKFORCES, 0);
         market.getMemoryWithoutUpdate().set(Vulpoids.KEY_WORKFORCE_CAP, workforce_cap);
-        PersonAPI vulpoid_comms = VulpoidCreator.createNudeVulpoid(market);
+        PersonAPI vulpoid_comms = VulpoidCreator.createVulpoid();
         vulpoid_comms.setId("vulpoid_rep");
         vulpoid_comms.setName(new FullName("Vulpoid Representative", "", FullName.Gender.FEMALE));
         vulpoid_comms.getMemoryWithoutUpdate().set("$isVulpoidRep", true);

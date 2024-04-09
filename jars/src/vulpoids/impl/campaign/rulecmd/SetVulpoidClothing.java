@@ -8,6 +8,7 @@ import com.fs.starfarer.api.impl.campaign.rulecmd.BaseCommandPlugin;
 import com.fs.starfarer.api.util.Misc;
 import java.util.List;
 import java.util.Map;
+import vulpoids.impl.campaign.VulpoidCreator;
 
 public class SetVulpoidClothing extends BaseCommandPlugin {
 
@@ -25,14 +26,7 @@ public class SetVulpoidClothing extends BaseCommandPlugin {
             clothing = params.get(1).getString(memoryMap);
         }
         if (person == null) return false;
-        String[] portrait_slices = person.getPortraitSprite().split("/");
-        String portrait = "";
-        for(int i=0; i<portrait_slices.length; i++) {
-            if(i!=portrait_slices.length-2) portrait += portrait_slices[i]+"/";
-            else portrait += clothing+"/";
-        }
-        portrait = portrait.substring(0, portrait.length()-1); // Cutting off the last slash.
-        person.setPortraitSprite(portrait);
+        VulpoidCreator.setPersonPortraitPropertyAtIndex(person, VulpoidCreator.INDEX_CLOTHING, clothing);
         return true;
     }
     

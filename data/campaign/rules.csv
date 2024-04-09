@@ -67,7 +67,7 @@ vulp_barHubVulpoid,DialogOptionSelected,$option == vulp_barHubVulpoid,$askedVulp
 
 He lets that statement hang in the air for a moment.
 
-""That's nothing new of course, we've done it for animals for ages. The real prize is the specific design we were working on. THAT is what will change this sector forever.""","vulp_barHubVulpoid1:""…And what is this design?""",
+""That's nothing new of course, we've done it for animals for ages. The real prize is the specific design we were working on. THAT is what will change this sector forever.""","vulp_barHubVulpoid1:""ï¿½And what is this design?""",
 vulp_barHubVulpoid1,DialogOptionSelected,$option == vulp_barHubVulpoid1,,"""You want to know? Fantastic! Go out there and see for yourself!""","vulp_barHubVulpoid_pry:""Can't you just tell me now?""
 vulp_barHubVulpoid_letGo:Let it go",
 vulp_barHubVulpoid_pry,DialogOptionSelected,$option == vulp_barHubVulpoid_pry,FireAll VulpBarHubOptions,"""I could, but I won't. I want you to see first-hand what we've achieved, without any preconceptions.""
@@ -202,7 +202,7 @@ PlaySound ui_raid_prepared","The boarding shuttles are released in a single wave
 It doesn't take long for the first teams to report contact.",vulp_exploreWreck_helmets:Continue,
 vulp_exploreWreck_nottalked,DialogOptionSelected,"$option == vulp_exploreWreck_helmets
 !$talkedOnComms","SetImportantName vulp_dummy_terran ""Opposition Crew""
-SetImportantPortrait vulp_dummy_terran ""graphics/portraits/vulpoid/spacer/admin_no_atmos.png""
+SetVulpoidClothing vulp_dummy_terran ""spacer""
 ShowPersonVisual true vulp_dummy_terran
 ShowSecondPerson vulp_dummy_terran
 ShowThirdPerson vulp_dummy_terran","The opposing crew is wearing distinctive space suits, with large panels that extend from their helmets. Perhaps decorative, or serving some esoteric purpose.
@@ -210,7 +210,8 @@ ShowThirdPerson vulp_dummy_terran","The opposing crew is wearing distinctive spa
 They're working to repair the damage to their vessel, but immediately stop and stare as soon as our teams arrive.","vulp_exploreWreck2:""Secure them.""",
 vulp_exploreWreck_talked,DialogOptionSelected,"$option == vulp_exploreWreck_helmets
 $talkedOnComms","SetImportantName vulp_dummy_terran ""Opposition Crew""
-SetImportantPortrait vulp_dummy_terran ""graphics/portraits/vulpoid/spacer/admin_no_atmos.png""
+ResetVulpoidPortrait vulp_dummy_terran
+SetVulpoidClothing vulp_dummy_terran ""spacer""
 ShowPersonVisual true vulp_dummy_terran
 ShowSecondPerson vulp_dummy_terran
 ShowThirdPerson vulp_dummy_terran","The opposing crew is wearing the same type of suit that their captain wore on comms, with those same distinctive panels extending from the helmet.

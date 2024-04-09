@@ -139,8 +139,7 @@ public class ProfectoInteractionDialogPlugin implements InteractionDialogPlugin 
                 person = plugin.getPerson();
                 person.getMemoryWithoutUpdate().set("$profectoIsAssigned", plugin.disallowCycleReason()!=null);
             } else {
-                person = VulpoidCreator.createNudeVulpoid(null);
-                person.getRelToPlayer().setRel(1);
+                person = VulpoidCreator.createVulpoid();
                 person.getMemoryWithoutUpdate().set(Vulpoids.KEY_PROFECTO_ASSIGNMENT, Vulpoids.CARGO_ITEM);
             }
             textPanel.clear();

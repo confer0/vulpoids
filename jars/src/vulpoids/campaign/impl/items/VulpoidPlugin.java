@@ -157,29 +157,27 @@ public class VulpoidPlugin extends BaseSpecialItemPlugin {
         super.init(stack);
         String jsonStr = stack.getSpecialDataIfSpecial().getData(); 
         if (jsonStr == null) {
-            PersonAPI new_person = VulpoidCreator.createProfectoVulpoid(null);
+            PersonAPI new_person = VulpoidCreator.createProfectoVulpoid();
             jsonStr = personToJson(new_person);
             stack.getSpecialDataIfSpecial().setData(jsonStr);
         }
         person = jsonToPerson(jsonStr);
         
         
-        String role_portrait = null;
         switch(getId()) {
             case Vulpoids.SPECIAL_ITEM_DEFAULT:
-                role_portrait = person.getMemoryWithoutUpdate().getString(Vulpoids.KEY_DEFAULT_PORTRAIT);
+                VulpoidCreator.setPersonPortraitPropertyAtIndex(person, VulpoidCreator.INDEX_CLOTHING, VulpoidCreator.CLOTHING_NUDE);
                 break;
             case Vulpoids.SPECIAL_ITEM_EMBARKED:
-                role_portrait = person.getMemoryWithoutUpdate().getString(Vulpoids.KEY_DEFAULT_PORTRAIT);
+                VulpoidCreator.setPersonPortraitPropertyAtIndex(person, VulpoidCreator.INDEX_CLOTHING, VulpoidCreator.CLOTHING_CLOTHED);
                 break;
             case Vulpoids.SPECIAL_ITEM_OFFICER:
-                role_portrait = person.getMemoryWithoutUpdate().getString(Vulpoids.KEY_OFFICER_PORTRAIT);
+                VulpoidCreator.setPersonPortraitPropertyAtIndex(person, VulpoidCreator.INDEX_CLOTHING, VulpoidCreator.CLOTHING_OFFICER);
                 break;
             case Vulpoids.SPECIAL_ITEM_ADMIN:
-                role_portrait = person.getMemoryWithoutUpdate().getString(Vulpoids.KEY_DEFAULT_PORTRAIT);
+                VulpoidCreator.setPersonPortraitPropertyAtIndex(person, VulpoidCreator.INDEX_CLOTHING, VulpoidCreator.CLOTHING_CLOTHED);
                 break;
         }
-        if (role_portrait != null) person.setPortraitSprite(role_portrait);
         
         person.getMemoryWithoutUpdate().set(Vulpoids.KEY_PROFECTO_ASSIGNMENT, getId());
         
@@ -267,13 +265,8 @@ public class VulpoidPlugin extends BaseSpecialItemPlugin {
         float trY = cy+40;
         float brX = cx+40;
         float brY = cy-40;
-
-        // TODO - use a proper icon instead.
-        //SpriteAPI sprite = Global.getSettings().getSprite(person.getPortraitSprite());
-        SpriteAPI sprite = Global.getSettings().getSprite("cargo", "vulp_shiny");
-        // TODO - this should be somewhere else.
-        String person_sprite = person.getMemoryWithoutUpdate().getString(Vulpoids.KEY_CARGO_ICON);
-        if(person_sprite != null) sprite = Global.getSettings().getSprite(person_sprite);
+        
+        SpriteAPI sprite = Global.getSettings().getSprite(VulpoidCreator.getIcon(person.getPortraitSprite()));
         //sprite.setAlphaMult(alphaMult);
         //sprite.setNormalBlend();
         sprite.renderWithCorners(blX, blY, tlX, tlY, trX, trY, brX, brY);
@@ -432,6 +425,7 @@ public class VulpoidPlugin extends BaseSpecialItemPlugin {
         
         tooltip.addPara("Market value: %s", opad, Misc.getHighlightColor(), Misc.getDGSCredits(getPrice(null, null)));
         if(stackSource!=null) tooltip.addPara("Right-click to cycle jobs", Misc.getHighlightColor(), opad);
+        if(Global.getSector().getMemoryWithoutUpdate().getBoolean("$isDevMode")) tooltip.addPara(personToJson(person), opad);
     }
     
     private void addSkillsToTooltip(TooltipMakerAPI tooltip, ArrayList<SkillLevelAPI> skills, boolean expanded, boolean officer, boolean admin, float pad) {
