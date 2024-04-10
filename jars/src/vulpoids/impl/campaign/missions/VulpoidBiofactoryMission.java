@@ -17,6 +17,7 @@ import com.fs.starfarer.api.campaign.listeners.FleetEventListener;
 import com.fs.starfarer.api.campaign.rules.MemoryAPI;
 import com.fs.starfarer.api.characters.PersonAPI;
 import com.fs.starfarer.api.combat.BattleCreationContext;
+import com.fs.starfarer.api.combat.ShipHullSpecAPI;
 import com.fs.starfarer.api.combat.ShipVariantAPI;
 import com.fs.starfarer.api.fleet.FleetMemberAPI;
 import com.fs.starfarer.api.impl.campaign.DerelictShipEntityPlugin;
@@ -30,6 +31,7 @@ import com.fs.starfarer.api.impl.campaign.ids.Commodities;
 import com.fs.starfarer.api.impl.campaign.ids.Entities;
 import com.fs.starfarer.api.impl.campaign.ids.Factions;
 import com.fs.starfarer.api.impl.campaign.ids.FleetTypes;
+import com.fs.starfarer.api.impl.campaign.ids.HullMods;
 import com.fs.starfarer.api.impl.campaign.ids.MemFlags;
 import com.fs.starfarer.api.impl.campaign.ids.Tags;
 import com.fs.starfarer.api.impl.campaign.missions.cb.CustomBountyCreator.CustomBountyData;
@@ -186,8 +188,8 @@ public class VulpoidBiofactoryMission extends HubMissionWithSearch implements Fl
         triggerAutoAdjustFleetSize(size, size.next());
         //triggerSetFleetFaction(Factions.REMNANTS);
         triggerSetFleetFaction(Vulpoids.FACTION_EXODYNE);
-        triggerFleetSetNoFactionInName();
-        triggerFleetSetName("Abnormal Automated Fleet");
+        //triggerFleetSetNoFactionInName();
+        triggerFleetSetName("Research Flotilla");
         triggerFleetAddTags(Tags.NEUTRINO_HIGH);
         triggerMakeNonHostile();
         triggerMakeFleetIgnoreOtherFleets();
@@ -218,8 +220,10 @@ public class VulpoidBiofactoryMission extends HubMissionWithSearch implements Fl
         v.addTag(Tags.TAG_NO_AUTOFIT);
         v.addTag(Tags.SHIP_LIMITED_TOOLTIP);
         v.addTag(Tags.VARIANT_UNBOARDABLE);
+        v.getHints().add(ShipHullSpecAPI.ShipTypeHints.CIVILIAN);  // TODO: I believe this makes it deploy last?
         //v.addTag(Tags.TAG_AUTOMATED_NO_PENALTY);
         v.addPermaMod("supercomputer", true);  //S-mod targeting supercomputer. Makes the boss a monster, but you loose it on recovery.
+        v.removeMod(HullMods.ADVANCED_TARGETING_CORE);  // Removing this so it doesn't stack, it's effectively the replacement.
         member.setVariant(v, false, true);
         fleet.setCommander(flagship_captain);
         
@@ -320,7 +324,8 @@ public class VulpoidBiofactoryMission extends HubMissionWithSearch implements Fl
                     copy.variant = Global.getSettings().getVariant(copy.variantId).clone();
                     copy.variantId = null;
                     copy.variant.addTag(Tags.SHIP_CAN_NOT_SCUTTLE);
-                    //copy.variant.addTag(Tags.SHIP_UNIQUE_SIGNATURE);
+                    copy.variant.addTag(Tags.SHIP_UNIQUE_SIGNATURE);
+                    copy.variant.clearHullMods();
                     data.addShip(copy);
 
                     Misc.setSalvageSpecial(entity, data);

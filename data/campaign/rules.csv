@@ -942,25 +942,6 @@ testOption,PopulateOptions,,,,testOption2:TEST - See animation and get Laisa,
 testOption2,DialogOptionSelected,$option == testOption2,"TESTOPTION
 AddVulpoidFromImportant laisa",,,
 ,,,,,,
-testSelectorOption,PopulateOptions,,,,testSelectorOption2:TEST - Chat with a Vulpoid,
-testSelectorOption2,DialogOptionSelected,$option == testSelectorOption2,"VulpoidPicker selectVulpoid
-$vulpoidselectedoption = chat",,,
-,,,,,,
-testSelectorOption3,VulpoidSelected,$vulpoidselectedoption == chat,"BeginConversation $global.selectedVulpoid
-FireBest GreetInventoryVulp",,,
-,,,,,,
-vulp_GreetingDefault,GreetInventoryVulp,"$isVulpoid
-!$contact_printedFirstReturnGreeting","$contact_printedFirstReturnGreeting = true 0
-ShowPersonVisual
-FireAll InventoryVulpPopulateOptions","After a short wait, your connection request is accepted and you're met with the barely-restrained smile of your Vulpoid administrator.
-
-""Hello $PlayerSirOrMadam! Can I do anything for you?""",,
-vulp_Greeting2Default,GreetInventoryVulp,"$isVulpoid
-$contact_printedFirstReturnGreeting","ShowPersonVisual
-FireAll InventoryVulpPopulateOptions","""Is there anything else I can do for you $PlayerSirOrMadam?""",,
-vulp_askFunFactTEST,InventoryVulpPopulateOptions,,,,vulp_getFunFact:Make conversation,
-vulpconv_convOptionLeave,InventoryVulpPopulateOptions,,"SetShortcut cutCommLink ""ESCAPE""",,100:cutCommLink:Cut the comm link,
-,,,,,,
 ,,,,,,
 ,,,,,,
 # Conversation!,,,,,,

@@ -19,6 +19,7 @@ import com.fs.starfarer.api.characters.PersonAPI;
 import com.fs.starfarer.api.impl.campaign.ids.Commodities;
 import com.fs.starfarer.api.impl.campaign.ids.MemFlags;
 import com.fs.starfarer.api.impl.campaign.ids.Ranks;
+import com.fs.starfarer.api.impl.campaign.ids.Skills;
 import vulpoids.impl.campaign.VulpoidCreator;
 import vulpoids.impl.campaign.ids.Vulpoids;
 
@@ -43,9 +44,16 @@ public class VulpoidModPlugin extends BaseModPlugin {
             VulpoidCreator.setPersonPortraitPropertyAtIndex(person, VulpoidCreator.INDEX_EXPRESSION, VulpoidCreator.EXPRESSION_HELMET);
             person.getStats().setSkillLevel(Vulpoids.SKILL_LAISA_ADMIN, 1);
             person.getStats().setSkillLevel(Vulpoids.SKILL_LAISA_OFFICER, 1);
-            // TODO - Combat Skills
+            // TODO - make 5 of these Elite
+            person.getStats().setSkillLevel(Skills.HELMSMANSHIP, 2);
+            person.getStats().setSkillLevel(Skills.COMBAT_ENDURANCE, 2);
+            person.getStats().setSkillLevel(Skills.DAMAGE_CONTROL, 1);
+            person.getStats().setSkillLevel(Skills.FIELD_MODULATION, 2);
+            person.getStats().setSkillLevel(Skills.TARGET_ANALYSIS, 2);
+            person.getStats().setSkillLevel(Skills.GUNNERY_IMPLANTS, 1);
+            person.getStats().setSkillLevel(Skills.ORDNANCE_EXPERTISE, 2);
             person.getMemoryWithoutUpdate().set(MemFlags.OFFICER_MAX_LEVEL, 7);
-            person.getMemoryWithoutUpdate().set(MemFlags.OFFICER_MAX_ELITE_SKILLS, 3);
+            person.getMemoryWithoutUpdate().set(MemFlags.OFFICER_MAX_ELITE_SKILLS, 5);
             //person.getMemoryWithoutUpdate().set(Vulpoids.KEY_DEFAULT_PORTRAIT, "graphics/portraits/vulpoid/laisa/clothed/default.png");
             //person.getMemoryWithoutUpdate().set(Vulpoids.KEY_OFFICER_PORTRAIT, "graphics/portraits/vulpoid/laisa/laisa_special_admiral.png");
             //person.getMemoryWithoutUpdate().set(Vulpoids.KEY_CARGO_ICON, "graphics/icons/cargo/vulpoids/vulpoid_laisa.png");

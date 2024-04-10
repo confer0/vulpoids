@@ -24,7 +24,7 @@ public class VulpoidOfficer {
         @Override
         public void unapply(MutableShipStatsAPI mssapi, ShipAPI.HullSize hs, String string) {}
         @Override
-        public String getEffectDescription(float level) {return "Maximum elite skills: 2";}
+        public String getEffectDescription(float level) {return "Maximum elite skills: 3";}
         @Override
         public String getEffectPerLevelDescription() {return null;}
         @Override
@@ -37,7 +37,7 @@ public class VulpoidOfficer {
         @Override
         public void unapply(MutableShipStatsAPI mssapi, ShipAPI.HullSize hs, String string) {}
         @Override
-        public String getEffectDescription(float level) {return "Skill picks: 10";}
+        public String getEffectDescription(float level) {return "10 skill picks on levelling up";}
         @Override
         public String getEffectPerLevelDescription() {return null;}
         @Override
@@ -50,7 +50,7 @@ public class VulpoidOfficer {
         @Override
         public void unapply(MutableShipStatsAPI mssapi, ShipAPI.HullSize hs, String string) {}
         @Override
-        public String getEffectDescription(float level) {return "Not affected by Officer Training";}
+        public String getEffectDescription(float level) {return "Not affected by Officer Training or Cybernetic Augmentation";}
         @Override
         public String getEffectPerLevelDescription() {return null;}
         @Override

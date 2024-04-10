@@ -23,7 +23,7 @@ public class VulpoidCreator {
         //person.getStats().setSkillLevel("vulpoid_luxury", 1);
         person.getStats().setSkillLevel(Vulpoids.SKILL_OFFICER, 1);
         person.getMemoryWithoutUpdate().set(MemFlags.OFFICER_MAX_LEVEL, 6);
-        person.getMemoryWithoutUpdate().set(MemFlags.OFFICER_MAX_ELITE_SKILLS, 2);
+        person.getMemoryWithoutUpdate().set(MemFlags.OFFICER_MAX_ELITE_SKILLS, 3);
         person.getMemoryWithoutUpdate().set(MemFlags.OFFICER_SKILL_PICKS_PER_LEVEL, 10);
         person.setRankId(Vulpoids.RANK_PROFECTO);
         person.setPostId(null);
