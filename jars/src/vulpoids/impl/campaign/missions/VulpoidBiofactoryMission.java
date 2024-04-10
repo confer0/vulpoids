@@ -303,7 +303,7 @@ public class VulpoidBiofactoryMission extends HubMissionWithSearch implements Fl
                     //Global.getSector().getMemoryWithoutUpdate().set(DEFEATED_ZIGGURAT_KEY, true);
                     
                     PerShipData ship = new PerShipData("vulp_geck_Hull", ShipCondition.WRECKED, 0f);
-                    ship.shipName = "EBTS Rellrait";
+                    ship.shipName = "XBS Rellrait";
                     DerelictShipData params = new DerelictShipData(ship, false);
                     CustomCampaignEntityAPI entity = (CustomCampaignEntityAPI) BaseThemeGenerator.addSalvageEntity(
                             fleet.getContainingLocation(),

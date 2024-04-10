@@ -28,10 +28,10 @@ public class ChatAbility extends BaseDurationAbility {
     public void createTooltip(TooltipMakerAPI tooltip, boolean expanded) {
         float pad = 10f;
         if (Global.getSector().getMemoryWithoutUpdate().getBoolean(Vulpoids.KEY_GOT_FACTORY)) {
-            tooltip.addTitle("Chat With Vulpoid");
+            tooltip.addTitle("Chat with a Vulpoid");
             tooltip.addPara("Talk with a Vulpoid aboard your fleet.", pad);
         } else {
-            tooltip.addTitle("Interrogate a Prisoner");
+            tooltip.addTitle("Interrogate the Captain");
             tooltip.addPara("You've captured the captain of the Exodyne ship. Now you just need to get your answers.", pad);
         }
     }
