@@ -14,6 +14,7 @@ import com.fs.starfarer.api.util.Misc.Token;
 import java.util.List;
 import java.util.Map;
 import vulpoids.campaign.impl.items.VulpoidPlugin;
+import vulpoids.impl.campaign.ids.Vulpoids;
 
 public class AddVulpoidFromImportant extends BaseCommandPlugin {
 
@@ -27,7 +28,11 @@ public class AddVulpoidFromImportant extends BaseCommandPlugin {
         TextPanelAPI text = dialog.getTextPanel();
         CargoAPI cargo = Global.getSector().getPlayerFleet().getCargo();
         
-        SpecialItemData data = new SpecialItemData("special_vulpoid", VulpoidPlugin.personToJson(person));
+        String item_id;
+        if(params.size()>=2) item_id = params.get(1).getString(memoryMap);
+        else item_id = Vulpoids.SPECIAL_ITEM_DEFAULT;
+        
+        SpecialItemData data = new SpecialItemData(item_id, VulpoidPlugin.personToJson(person));
         cargo.addSpecial(data, 1);
         AddRemoveCommodity.addItemGainText(data, 1, text);
         return true;

@@ -5,6 +5,7 @@ import com.fs.starfarer.api.campaign.SectorEntityToken;
 import com.fs.starfarer.api.impl.campaign.abilities.BaseDurationAbility;
 import com.fs.starfarer.api.ui.TooltipMakerAPI;
 import vulpoids.impl.campaign.ProfectoInteractionDialogPlugin;
+import vulpoids.impl.campaign.ids.Vulpoids;
 
 public class ChatAbility extends BaseDurationAbility {
     @Override
@@ -25,9 +26,14 @@ public class ChatAbility extends BaseDurationAbility {
     
     @Override
     public void createTooltip(TooltipMakerAPI tooltip, boolean expanded) {
-        tooltip.addTitle("Chat With Vulpoid");
         float pad = 10f;
-        tooltip.addPara("Talk with a Vulpoid aboard your fleet.", pad);
+        if (Global.getSector().getMemoryWithoutUpdate().getBoolean(Vulpoids.KEY_GOT_FACTORY)) {
+            tooltip.addTitle("Chat With Vulpoid");
+            tooltip.addPara("Talk with a Vulpoid aboard your fleet.", pad);
+        } else {
+            tooltip.addTitle("Interrogate a Prisoner");
+            tooltip.addPara("You've captured the captain of the Exodyne ship. Now you just need to get your answers.", pad);
+        }
     }
     
     @Override

@@ -364,6 +364,19 @@ vulp_interrogation1:Head straight to the brig",# TODO - change options
 ,,,,,,
 ,,,,,,
 ,,,,,,
+vulpChat_openInterrogation,OpenVulpoidChatDialog,$importantCall score:1000,unset $importantCall,You make your way to the brig where the Exodyne captain is being held. TODO,"tempfastendoption:Test option - skip ahead
+vulpChat_exit:Leave",
+tempfastendoption,DialogOptionSelected,$option == tempfastendoption,"AddVulpoidFromImportant laisa special_vulpoid_embarked
+SetVulpoidExpression blush
+SetImportantName laisa ""Laisa""
+$global.vulp_gotFactory = true
+AddRemoveAnyItem SPECIAL vulpoid_biofactory 1
+MakeVulpoidsIllegal",,vulpChat_exit:Leave,# Note - the code in here will be broken up in the full version.
+,,,,,,# TODO - Consider adding her as Embarked. Would be good for visuals and for introducing that concept.
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
 ,,,,,,
 # Reports,,,,,,
 ,,,,,,
@@ -938,9 +951,8 @@ He taps his datapad and offers it, and you perform the mundane ritual which will
 ,,,,,,
 ,,,,,,
 ,,,,,,
-testOption,PopulateOptions,,,,testOption2:TEST - See animation and get Laisa,
-testOption2,DialogOptionSelected,$option == testOption2,"TESTOPTION
-AddVulpoidFromImportant laisa",,,
+,,,,,,
+,,,,,,
 ,,,,,,
 ,,,,,,
 ,,,,,,
