@@ -67,7 +67,7 @@ vulp_barHubVulpoid,DialogOptionSelected,$option == vulp_barHubVulpoid,$askedVulp
 
 He lets that statement hang in the air for a moment.
 
-""That's nothing new of course, we've done it for animals for ages. The real prize is the specific design we were working on. THAT is what will change this sector forever.""","vulp_barHubVulpoid1:""�And what is this design?""",
+""That's nothing new of course, we've done it for animals for ages. The real prize is the specific design we were working on. THAT is what will change this sector forever.""","vulp_barHubVulpoid1:""...And what is this design?""",
 vulp_barHubVulpoid1,DialogOptionSelected,$option == vulp_barHubVulpoid1,,"""You want to know? Fantastic! Go out there and see for yourself!""","vulp_barHubVulpoid_pry:""Can't you just tell me now?""
 vulp_barHubVulpoid_letGo:Let it go",
 vulp_barHubVulpoid_pry,DialogOptionSelected,$option == vulp_barHubVulpoid_pry,FireAll VulpBarHubOptions,"""I could, but I won't. I want you to see first-hand what we've achieved, without any preconceptions.""
@@ -256,9 +256,7 @@ vulp_exploreWreck7,DialogOptionSelected,$option == vulp_exploreWreck7,,"The team
 The simultaneous conversations are difficult to follow through comms, but you grasp that nothing of consequence is being said - it appears that the creatures are just extremely curious about humans. ""Do you eat food?"" is a highlight.
 
 The team is promptly persuaded to get back in gear, and these apparent non-humans are placed under arrest. Your science officer is has dispatched analysis teams to board the vessel and hopefully get some clear answers.",vulp_exploreWreck8:Continue,
-vulp_exploreWreck8,DialogOptionSelected,$option == vulp_exploreWreck8,"HideFirstPerson
-HideSecondPerson
-HideThirdPerson","Your bridge is on edge with the alien nature of the ship's crew, but the boarding continues all the same.
+vulp_exploreWreck8,DialogOptionSelected,$option == vulp_exploreWreck8,ShowImageVisual citadel_biodome,"Your bridge is on edge with the alien nature of the ship's crew, but the boarding continues all the same.
 
 Tactical's chewing out of the first team did the trick, and there are no further incidents as additional teams encounter unsuited crew and place them under arrest.
 
@@ -358,7 +356,12 @@ vulp_exploreBiodomeLeaveOption,VulpBiodomeOptions,,,,vulp_exploreCIC:Wrap up the
 vulp_exploreCIC,DialogOptionSelected,$option == vulp_exploreCIC,HideVisual,"Tactical draws your attention to the team moving up on the CIC. It's in a different location than a traditional Paragon-class, but the crew was perfectly willing to guide a team there.
 
 As the team approaches the bulkhead door, it begins to cycle open. Salvors duck for cover and security takes firing positions.",vulp_exploreCIC1:Breathe in,
-vulp_exploreCIC1,DialogOptionSelected,$option == vulp_exploreCIC1,ShowImageVisual citadel_cic,"No gunfire emerges from the open door. Instead, another member of the crew steps forward out of the breach. It's wearing something that could be a uniform, and its arms are raised in surrender.
+vulp_exploreCIC1_nottalked,DialogOptionSelected,"$option == vulp_exploreCIC1
+!$talkedOnComms",ShowImageVisual citadel_cic,"No gunfire emerges from the open door. Instead, another member of the crew steps forward out of the breach. She's wearing a suit similar to the ones the teams in the depressurized areas were wearing, though has already taken off her helmet.
+
+The presumed captain is quickly placed under arrest while the teams secure the CIC. Tactical quietly notes that none of the other crew had the presence of mind to surrender. Science nods in agreement, and you can see on their display that they're already taking a passive psyche profile.",vulp_exploreCIC2:Breathe out,
+vulp_exploreCIC1_talked,DialogOptionSelected,"$option == vulp_exploreCIC1
+$talkedOnComms",ShowImageVisual citadel_cic,"No gunfire emerges from the open door. Instead, another member of the crew steps forward out of the breach. She's not wearing her helmet, but you believe that this is who spoke to you over comms.
 
 The presumed captain is quickly placed under arrest while the teams secure the CIC. Tactical quietly notes that none of the other crew had the presence of mind to surrender. Science nods in agreement, and you can see on their display that they're already taking a passive psyche profile.",vulp_exploreCIC2:Breathe out,
 vulp_exploreCIC2,DialogOptionSelected,$option == vulp_exploreCIC2,HideVisual,"Salvor teams report that the CIC is - partially - secure. Domain vessel safety protocols require that it always be possible to override the reactor and other key systems, and this vessel is no exception.
@@ -369,15 +372,18 @@ Your ops chief confirms that you'll need the codes to disable that system before
 vulp_exploreCIC3,DialogOptionSelected,$option == vulp_exploreCIC3,"AddAbility vulpoid_chat
 $tookCaptain = true
 $option = vulp_exploreCIC3_unlock
-FireBest DialogOptionSelected","For the time being, the ship will be placed in a low-power mode, with its crew in cryosleep.
+FireBest DialogOptionSelected","For the time being the ship will be placed in a low-power mode, and its crew loaded into cryosleep.
 
-The captain is currently being transferred to a brig aboard your $shipOrFleet. She'll have the codes you need.",,
+The captain is currently being transferred to a brig aboard your $shipOrFleet. If anyone has the codes, it'd be her.",,
 vulp_exploreCIC3_unlock,DialogOptionSelected,$option == vulp_exploreCIC3_unlock,"SetTextHighlights ""\""Interrogate the Captain\"""" ""\""next\""""","Use the ""Interrogate the Captain"" ability to speak with her. If you cannot see the ability, use the ""next"" button on the ability bar, or right-click an existing ability and select it.",defaultLeave:Leave,
 ,,,,,,
 ,,,,,,
 ,,,,,,
 ,,,,,,
-vulpChat_openInterrogation,OpenVulpoidChatDialog,$importantCall score:1000,unset $importantCall,You make your way to the brig where the Exodyne captain is being held. TODO,"tempfastendoption:Test option - skip ahead
+vulpChat_openInterrogation,OpenVulpoidChatDialog,$importantCall score:1000,"unset $importantCall
+SetVulpoidExpression angry
+SetPersonRank unknown
+SetPersonPost null",You make your way to the brig where the Exodyne captain is being held. She's been ,"tempfastendoption:Test option - skip ahead
 vulpChat_exit:Leave",
 tempfastendoption,DialogOptionSelected,$option == tempfastendoption,"SetImportantName laisa ""Laisa""
 AddVulpoidFromImportant laisa special_vulpoid_embarked
