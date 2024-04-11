@@ -516,11 +516,11 @@ UpdateMemory","You stand and walk around the table, and she looks at you with co
 
 The moment your arms wrap around her, you can hear her tail thumping against the back of her chair as it wags back and forth.",vulp_interrogationBombshellHug2:Continue,
 vulp_interrogationBombshellHug2_notnice,DialogOptionSelected,"$option == vulp_interrogationBombshellHug2
-$rel < -0.201",ShowImageVisual laisa_hug2,"She allows the hug to continue for a moment, before slowly easing back.
+$rel < -0.251",ShowImageVisual laisa_hug2,"She allows the hug to continue for a moment, before slowly easing back.
 
 ""That was... nice, thank you. I think I'm ready to talk now.""",vulp_interrogationProperStart:Continue,
 vulp_interrogationBombshellHug2_nice,DialogOptionSelected,"$option == vulp_interrogationBombshellHug2
-$rel >= -0.201","AdjustRepActivePerson COOPERATIVE 5
+$rel >= -0.251","AdjustRepActivePerson COOPERATIVE 5
 ShowImageVisual laisa_hug3","Her arms tighten around you, and her snout nuzzles into your shoulder. You can feel the motion of her tail through her entire body as it wags back and forth.
 
 The watchful gaze of your guard prickles on the back of your neck, but the moment is still and calm.
@@ -676,11 +676,27 @@ SetVulpoidExpression default","""Why do you ask? Did your expert eye for biology
 ""Or were you referring to my adipose tissue? Which end, thorax or posterior?""
 
 She wiggles her chest and hips as she says this, in a mocking imitation of more provocative gestures.",vulp_interrogationHubFemale1:Continue,
-vulp_interrogationHubFemale1,DialogOptionSelected,$option == vulp_interrogationHubFemale1,FireAll VulpInterrogationHubOptions,"""To give you a real answer, we're monosex because it makes bioengineering easier. We're still in development, so sexual differentiation was one less thing they wanted to deal with.""
+vulp_interrogationHubFemale1,DialogOptionSelected,$option == vulp_interrogationHubFemale1,FireAll VulpInterrogationHubPrettyHubOptions,"""To give you a real answer, we're monosex because it makes bioengineering easier. We're still in development, so sexual differentiation was one less thing they wanted to deal with.""
 
 ""As for being female? Well, there's statistically longer life expectancy, differences in hormonal expression... But for the real reason, just ask marketing.""
 
 She gives a second wiggle, in case the point wasn't clear enough.",,
+vulp_interrogationHubFemalePrettyOption,VulpInterrogationHubPrettyHubOptions,,,,"vulp_interrogationHubFemalePretty:""You do look pretty.""",
+vulp_interrogationHubFemaleNotPrettyOption,VulpInterrogationHubPrettyHubOptions,,,,"vulp_interrogationHubFemaleNotPretty:""I don't see the appeal.""",
+vulp_interrogationHubFemaleMoveOnOption,VulpInterrogationHubPrettyHubOptions,,,,vulp_interrogationHubFemaleMoveOn:Move on,
+vulp_interrogationHubFemalePretty,DialogOptionSelected,$option == vulp_interrogationHubFemalePretty,"AdjustRepActivePerson COOPERATIVE 5
+SetVulpoidExpression blush
+FireAll VulpInterrogationHubOptions","""Hehe, thank you!"" she giggles.
+
+""I'll give credit where it's due, the designers did a great job with us!""",,
+vulp_interrogationHubFemaleNotPretty,DialogOptionSelected,$option == vulp_interrogationHubFemaleNotPretty,"SetVulpoidExpression cry
+AdjustRepActivePerson VENGEFUL -5
+FireAll VulpInterrogationHubOptions","She takes this much worse than expected, looking almost completely crushed.
+
+""Oh... okay. I guess everyone's different. Sorry for assuming...""
+
+""Let's just move on.""",,
+vulp_interrogationHubFemaleMoveOn,DialogOptionSelected,$option == vulp_interrogationHubFemaleMoveOn,FireAll VulpInterrogationHubOptions,,,
 vulp_interrogationHubShip,DialogOptionSelected,$option == vulp_interrogationHubShip,"$askedShip = true 0
 SetVulpoidExpression default","""Ah, never seen a hull like this? We got an early model on lease from Tri-Tachyon, along with that Space Defense System that you blew up.""
 
@@ -770,10 +786,10 @@ vulp_interrogationWrapupScientist4,DialogOptionSelected,$option == vulp_interrog
 ""You might as well get a head start by grabbing the dummies already on the ship. Make sure they get plenty of work, they get upset if they can't be useful. I usually had them turn on the showers and mop if we ever ran out of things to do.""","vulp_interrogationWhatAboutYou:""And what about you?""",
 ,,,,,,
 vulp_interrogationWhatAboutYou_mean,DialogOptionSelected,"$option == vulp_interrogationWhatAboutYou
-$rep <= -40",,TODO MEAN DIALOG,,
+$rep <= -0.40",,TODO MEAN DIALOG,,
 vulp_interrogationWhatAboutYou_neutral,DialogOptionSelected,$option == vulp_interrogationWhatAboutYou,,TODO NEUTRAL DIALOG,,
 vulp_interrogationWhatAboutYou_nice,DialogOptionSelected,"$option == vulp_interrogationWhatAboutYou
-$rep > -1",,TODO NICE DIALOG,,
+$rep > -0.01",,TODO NICE DIALOG,,
 ,,,,,,
 ,,,,,,
 ,,,,,,
