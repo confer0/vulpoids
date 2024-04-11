@@ -57,7 +57,7 @@ public class VulpoidBiofactoryMission extends HubMissionWithSearch implements Fl
     
     protected CustomBountyData data;
     protected PersonAPI flagship_captain;
-    
+    protected boolean gotDronesHint;
     
     @Override
     public void reportFleetDespawnedToListener(CampaignFleetAPI fleet, CampaignEventListener.FleetDespawnReason reason, Object param) {
@@ -107,7 +107,9 @@ public class VulpoidBiofactoryMission extends HubMissionWithSearch implements Fl
 
     public static enum Stage {
             ACTIVE,
-            BEATFLEET,
+            BOARDING,
+            INTERROGATION,
+            WRAPUP,
             COMPLETED,
             FAILED,
     }
@@ -133,12 +135,14 @@ public class VulpoidBiofactoryMission extends HubMissionWithSearch implements Fl
         setRepFactionChangesNone();
         setRepPersonChangesNone();
         
-        //connectWithMemoryFlag(Stage.ACTIVE, Stage.COMPLETED, Global.getSector().getMemoryWithoutUpdate(), completedKey);
-        connectWithMemoryFlag(Stage.ACTIVE, Stage.BEATFLEET, Global.getSector().getMemoryWithoutUpdate(), "$vulp_beatFactoryFleet");
-        connectWithMemoryFlag(Stage.BEATFLEET, Stage.COMPLETED, Global.getSector().getMemoryWithoutUpdate(), Vulpoids.KEY_GOT_FACTORY);
-        connectWithMemoryFlag(Stage.BEATFLEET, Stage.FAILED, Global.getSector().getMemoryWithoutUpdate(), "$vulp_didBadEnding");
-        
         createFleet();
+        
+        //connectWithMemoryFlag(Stage.ACTIVE, Stage.COMPLETED, Global.getSector().getMemoryWithoutUpdate(), completedKey);
+        connectWithMemoryFlag(Stage.ACTIVE, Stage.BOARDING, Global.getSector().getMemoryWithoutUpdate(), "$vulp_beatFactoryFleet");
+        connectWithMemoryFlag(Stage.BOARDING, Stage.INTERROGATION, Global.getSector().getMemoryWithoutUpdate(), "$vulp_tookCaptain");
+        connectWithMemoryFlag(Stage.INTERROGATION, Stage.WRAPUP, Global.getSector().getMemoryWithoutUpdate(), "$vulp_didInterrogation");
+        connectWithMemoryFlag(Stage.WRAPUP, Stage.COMPLETED, Global.getSector().getMemoryWithoutUpdate(), Vulpoids.KEY_GOT_FACTORY);
+        connectWithMemoryFlag(Stage.BOARDING, Stage.FAILED, Global.getSector().getMemoryWithoutUpdate(), "$vulp_didBadEnding");
 
         return true;
     }
@@ -308,7 +312,7 @@ public class VulpoidBiofactoryMission extends HubMissionWithSearch implements Fl
                     CustomCampaignEntityAPI entity = (CustomCampaignEntityAPI) BaseThemeGenerator.addSalvageEntity(
                             fleet.getContainingLocation(),
                             Entities.WRECK, Factions.NEUTRAL, params);
-                    Misc.makeImportant(entity, "vulpFactoryShip");
+                    //Misc.makeImportant(entity, "vulpFactoryShip");
                     entity.getMemoryWithoutUpdate().set("$vulpFactoryShip", true);
                     Global.getSector().getMemoryWithoutUpdate().set("$vulpFactoryShip", entity);
                     if(Global.getSector().getImportantPeople().getPerson(Vulpoids.PERSON_LAISA).getMemoryWithoutUpdate().contains("$talkedOnComms")) entity.getMemoryWithoutUpdate().set("$talkedOnComms", true);
@@ -329,6 +333,10 @@ public class VulpoidBiofactoryMission extends HubMissionWithSearch implements Fl
                     data.addShip(copy);
 
                     Misc.setSalvageSpecial(entity, data);
+                    
+                    ((VulpoidBiofactoryMission)Global.getSector().getMemoryWithoutUpdate().get("$vulpFactory_ref")).makeImportant(entity, "$vulpFactoryShip", Stage.BOARDING);
+                    ((VulpoidBiofactoryMission)Global.getSector().getMemoryWithoutUpdate().get("$vulpFactory_ref")).makeImportant(entity, "$vulpFactoryShip", Stage.INTERROGATION);
+                    ((VulpoidBiofactoryMission)Global.getSector().getMemoryWithoutUpdate().get("$vulpFactory_ref")).makeImportant(entity, "$vulpFactoryShip", Stage.WRAPUP);
 
                     dialog.setInteractionTarget(entity);
                     RuleBasedInteractionDialogPluginImpl plugin = new RuleBasedInteractionDialogPluginImpl("VulpoidBiofactoryFleetDefeated");
@@ -358,16 +366,29 @@ public class VulpoidBiofactoryMission extends HubMissionWithSearch implements Fl
         Color h = Misc.getHighlightColor();
         if (currentStage == Stage.ACTIVE) {
             if (data.system != null) {
-                info.addPara("You've been informed of an AI dronefleet that allegedly showed unusual behaviour. You've been tasked to eliminate it.", opad);
-                info.addPara("The fleet was reported to be in the " + data.system.getNameWithLowercaseType() + ".", opad);
+                info.addPara("You've been given the location of a ship from the long-gone Exodyne "+
+                        "Biotech corporation. You were told it contains valuable technology.", opad);
+                info.addPara("The ship was reported to be in the " + data.system.getNameWithLowercaseType() + ".", opad);
+                if(gotDronesHint) info.addPara("It is defended by a number AI droneships.", opad);
             }
             //creator.addFleetDescription(info, width, height, this, data);
-        } else if (currentStage == Stage.BEATFLEET) {
+        } else if (currentStage == Stage.BOARDING) {
             if (data.system != null) {
-                info.addPara("The fleet has been defeated, but the wreck of the unusual ship has yet to be searched. It may hold answers, or valuable Domain-era artifacts.", opad);
+                info.addPara("The ship and its escort are defeated. A boarding action will be "+
+                        "required to locate any technology aboard that survived the engagement.", opad);
                 info.addPara("The derelict is located in the " + data.system.getNameWithLowercaseType() + ".", opad);
             }
             //creator.addFleetDescription(info, width, height, this, data);
+        } else if (currentStage == Stage.INTERROGATION) {
+            info.addPara("You've successfully secured the vessel, but are unable to salvage it due "+
+                    "to an anti-tampering system. Interrogate the captain to obtain the override codes.", opad);
+            info.addPara("Use the 'Interrogate the Captain' button on your ability bar.", opad);
+        } else if (currentStage == Stage.WRAPUP) {
+            if (data.system != null) {
+                info.addPara("You've obtained the override codes from Laisa, and can now safely retrieve "+
+                        "the Vulpoid Bioforge from the wreck.", opad);
+                info.addPara("The derelict is located in the " + data.system.getNameWithLowercaseType() + ".", opad);
+            }
         }
     }
 
@@ -376,16 +397,20 @@ public class VulpoidBiofactoryMission extends HubMissionWithSearch implements Fl
         Color h = Misc.getHighlightColor();
         if (currentStage == Stage.ACTIVE) {
             if (data.system != null) {
-                if (data.system != null) {
-                    info.addPara("Target fleet is in the " + data.system.getNameWithLowercaseTypeShort() + ".", tc, pad);
-		}
+                info.addPara("Target fleet is in the " + data.system.getNameWithLowercaseTypeShort() + ".", tc, pad);
                 return true;
             }
-        } else if (currentStage == Stage.BEATFLEET) {
+        } else if (currentStage == Stage.BOARDING) {
             if (data.system != null) {
-                if (data.system != null) {
-                    info.addPara("Board the derelict vessel in the " + data.system.getNameWithLowercaseTypeShort() + ".", tc, pad);
-		}
+                info.addPara("Board the derelict vessel in the " + data.system.getNameWithLowercaseTypeShort() + ".", tc, pad);
+                return true;
+            }
+        } else if (currentStage == Stage.INTERROGATION) {
+            info.addPara("Interrogate the Exodyne captain.", tc, pad);
+            return true;
+        } else if (currentStage == Stage.WRAPUP) {
+            if (data.system != null) {
+                info.addPara("Reboard the derelict vessel in the " + data.system.getNameWithLowercaseTypeShort() + ".", tc, pad);
                 return true;
             }
         }
@@ -414,7 +439,10 @@ public class VulpoidBiofactoryMission extends HubMissionWithSearch implements Fl
     @Override
     public boolean callEvent(String ruleId, InteractionDialogAPI dialog, List<Misc.Token> params, Map<String, MemoryAPI> memoryMap) {
         String action = params.get(0).getString(memoryMap);
-        if("applyPunishment".equals(action)) {
+        if("giveDronesHint".equals(action)) {
+            gotDronesHint = true;
+        }
+        else if("applyPunishment".equals(action)) {
             
             Random random = new Random();
             float crMult = 1;
@@ -436,7 +464,8 @@ public class VulpoidBiofactoryMission extends HubMissionWithSearch implements Fl
             CustomCampaignEntityAPI derelict_ship = (CustomCampaignEntityAPI)Global.getSector().getMemoryWithoutUpdate().get("$vulpFactoryShip");
             derelict_ship.setExpired(true);
             
-        } else {
+        }
+        else {
             return super.callEvent(ruleId, dialog, params, memoryMap);
         }
         return true;

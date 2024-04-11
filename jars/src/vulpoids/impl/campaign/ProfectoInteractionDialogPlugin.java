@@ -53,7 +53,7 @@ public class ProfectoInteractionDialogPlugin implements InteractionDialogPlugin 
         int vulps = 0;
         pages = new ArrayList();
         pages.add(new Object[MAX_ITEMS_PER_PAGE]);
-        if (Global.getSector().getMemoryWithoutUpdate().getBoolean(Vulpoids.KEY_GOT_FACTORY)) {
+        if (Global.getSector().getMemoryWithoutUpdate().getBoolean("$vulp_didInterrogation")) {
             for(CargoStackAPI stack : Global.getSector().getPlayerFleet().getCargo().getStacksCopy()) {
                 if(Vulpoids.CARGO_ITEM.equals(stack.getCommodityId())) {
                     pages.get(0)[0] = stack;
@@ -99,7 +99,7 @@ public class ProfectoInteractionDialogPlugin implements InteractionDialogPlugin 
                 case "INIT":
                     textPanel.clear();
                     options.clearOptions();
-                    if (Global.getSector().getMemoryWithoutUpdate().getBoolean(Vulpoids.KEY_GOT_FACTORY)) {
+                    if (Global.getSector().getMemoryWithoutUpdate().getBoolean("$vulp_didInterrogation")) {
                         textPanel.addPara("You review the manifest of the Vulpoids aboard your fleet.");
                     } else {
                         textPanel.addPara("You review the brig records for prisoners of interest from the Exodyne ship.");

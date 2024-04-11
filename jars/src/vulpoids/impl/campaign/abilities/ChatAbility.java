@@ -27,7 +27,7 @@ public class ChatAbility extends BaseDurationAbility {
     @Override
     public void createTooltip(TooltipMakerAPI tooltip, boolean expanded) {
         float pad = 10f;
-        if (Global.getSector().getMemoryWithoutUpdate().getBoolean(Vulpoids.KEY_GOT_FACTORY)) {
+        if (Global.getSector().getMemoryWithoutUpdate().getBoolean("$vulp_didInterrogation")) {
             tooltip.addTitle("Chat with a Vulpoid");
             tooltip.addPara("Talk with a Vulpoid aboard your fleet.", pad);
         } else {
