@@ -51,14 +51,15 @@ public class OrganFarm extends BaseIndustry {
         demand(Commodities.ORGANICS, size + 2);
         demand(Commodities.HEAVY_MACHINERY, size - 3);  // Same as Mining
         if(Vulpoids.INDUSTRY_ORGANFARM.equals(getId())) {
-            supply(Commodities.ORGANS, size - 4);
-        } else if(Vulpoids.INDUSTRY_BIOFACILITY.equals(getId())) {
             supply(Commodities.ORGANS, size - 3);
+        } else if(Vulpoids.INDUSTRY_BIOFACILITY.equals(getId())) {
+            supply(Commodities.ORGANS, size - 2);
             //supply(Commodities.DRUGS, size - 1);
         }
         
         Pair<String, Integer> deficit = getMaxDeficit(Commodities.ORGANICS, Commodities.FOOD);
-        applyDeficitToProduction(1, deficit, Commodities.ORGANS, Commodities.DRUGS);
+        // Need to do this check so the deficit doesn't appear when production is meant to be disabled.
+        if (!isOrganFarmVulpBiofactory()) applyDeficitToProduction(1, deficit, Commodities.ORGANS, Commodities.DRUGS);
         deficit = getMaxDeficit(Commodities.ORGANICS, Commodities.FOOD, Commodities.HEAVY_MACHINERY);
         Pair<String, Integer> rare_deficit = getMaxDeficit(Commodities.RARE_METALS);
         if(rare_deficit.two > 0) {
@@ -113,13 +114,14 @@ public class OrganFarm extends BaseIndustry {
         if (isOrganFarmVulpBiofactory()) {
             return Global.getSettings().getSpriteName("industry", "organfarmvulp");
         }
+        // Note - Using size 4 as the small instead of 3, because they can only be built on 4+.
         if (Vulpoids.INDUSTRY_BIOFACILITY.equals(getId())) {
             if (hasBiofactory()) {
-                if(market.getSize() <= 3) return Global.getSettings().getSpriteName("industry", "biotechlowvulp");
+                if(market.getSize() <= 4) return Global.getSettings().getSpriteName("industry", "biotechlowvulp");
                 if(market.getSize() >= 6) return Global.getSettings().getSpriteName("industry", "biotechhighvulp");
                 return Global.getSettings().getSpriteName("industry", "biotechmedvulp");
             }
-            if(market.getSize() <= 3) return Global.getSettings().getSpriteName("industry", "biotechlow");
+            if(market.getSize() <= 4) return Global.getSettings().getSpriteName("industry", "biotechlow");
             if(market.getSize() >= 6) return Global.getSettings().getSpriteName("industry", "biotechhigh");
         }
         return super.getCurrentImage();
@@ -142,15 +144,14 @@ public class OrganFarm extends BaseIndustry {
     @Override
     protected String getDescriptionOverride() {
         if (isOrganFarmVulpBiofactory()) {
-            return "With the power of a fully-operational bioforge, adorable fluffies can be printed at industrial scale."+
-///spacecraft is NOT easy to print xd
+            return "With the power of a fully-operational bioforge, adorable fluffy friends can be printed at industrial scale."+
                     "The phrase 'how the sausage is made' is often used to describe operations, "+
                     "and many steps in the bioforging process do in fact have an unpleasant resemblance to sausage meat.";
         }
         if (isBiofacilityVulpBiofactory()) {
-            return "The pinnacle of Exodyne Biotech's aspirations for the Sector. With a bioforge at its heart, "+
+            return "The pinnacle of Exodyne Biotech's technological achievement. With a bioforge at its heart, "+
                     "this sleek and advanced megacomplex is capable of producing an endless flow of fluffy friends, "+
-                    "while cast-offs are reprocessed to supplement the baseline production of assorted biological goods.";
+                    "while cast-offs are reprocessed to supplement the pre-existing organ production.";
         }
         if (isBiofacilityAndNotUnlocked()) {
             return "Without Domain-era technology, this is advanced as is possible in the Sector.";
@@ -180,6 +181,19 @@ public class OrganFarm extends BaseIndustry {
             //getSupply(Commodities.DRUGS).getQuantity().unmodifyFlat(getModId(3));
             getSupply(Vulpoids.CARGO_ITEM).getQuantity().unmodifyFlat(getModId(3));
         }
+    }
+    
+    @Override
+    public void addImproveDesc(TooltipMakerAPI info, ImprovementDescriptionMode mode) {
+        float opad = 10f;
+        Color highlight = Misc.getHighlightColor();
+        if (mode == ImprovementDescriptionMode.INDUSTRY_TOOLTIP) {
+            info.addPara("Production increased by %s unit.", 0f, highlight, ""+1);
+        } else {
+            info.addPara("Increases production by %s unit.", 0f, highlight, ""+1);
+        }
+        info.addSpacer(opad);
+        super.addImproveDesc(info, mode);
     }
     
     @Override

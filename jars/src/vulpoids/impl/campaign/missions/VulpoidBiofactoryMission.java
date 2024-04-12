@@ -92,6 +92,7 @@ public class VulpoidBiofactoryMission extends HubMissionWithSearch implements Fl
         
         
         fleet.getMemoryWithoutUpdate().set("$wasAttacked", true);
+        fleet.getMemoryWithoutUpdate().set("$ignorePlayerCommRequests", true);
         if (fleet.getFlagship() != null) {
             if (fleet.getFlagship().getCaptain() != flagship_captain) {
                 fleet.getMemoryWithoutUpdate().set("$geckDestroyed", true);
@@ -140,7 +141,7 @@ public class VulpoidBiofactoryMission extends HubMissionWithSearch implements Fl
         //connectWithMemoryFlag(Stage.ACTIVE, Stage.COMPLETED, Global.getSector().getMemoryWithoutUpdate(), completedKey);
         connectWithMemoryFlag(Stage.ACTIVE, Stage.BOARDING, Global.getSector().getMemoryWithoutUpdate(), "$vulp_beatFactoryFleet");
         connectWithMemoryFlag(Stage.BOARDING, Stage.INTERROGATION, Global.getSector().getMemoryWithoutUpdate(), "$vulp_tookCaptain");
-        connectWithMemoryFlag(Stage.INTERROGATION, Stage.WRAPUP, Global.getSector().getMemoryWithoutUpdate(), "$vulp_didInterrogation");
+        connectWithMemoryFlag(Stage.INTERROGATION, Stage.WRAPUP, Global.getSector().getMemoryWithoutUpdate(), "$vulp_didInterrogationForMission");
         connectWithMemoryFlag(Stage.WRAPUP, Stage.COMPLETED, Global.getSector().getMemoryWithoutUpdate(), Vulpoids.KEY_GOT_FACTORY);
         connectWithMemoryFlag(Stage.BOARDING, Stage.FAILED, Global.getSector().getMemoryWithoutUpdate(), "$vulp_didBadEnding");
 
@@ -370,6 +371,7 @@ public class VulpoidBiofactoryMission extends HubMissionWithSearch implements Fl
                         "Biotech corporation. You were told it contains valuable technology.", opad);
                 info.addPara("The ship was reported to be in the " + data.system.getNameWithLowercaseType() + ".", opad);
                 if(gotDronesHint) info.addPara("It is defended by a number AI droneships.", opad);
+                if(data.fleet.getMemoryWithoutUpdate().getBoolean("$talkedOnComms")) info.addPara("Your attempts to communicate were rebuffed due to your lack of credentials. However the ship does appear to have a human captain, in contrast to the original brief.", opad);
             }
             //creator.addFleetDescription(info, width, height, this, data);
         } else if (currentStage == Stage.BOARDING) {

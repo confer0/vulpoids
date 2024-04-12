@@ -163,7 +163,7 @@ public class ProfectoInteractionDialogPlugin implements InteractionDialogPlugin 
             Object entry = pages.get(page)[(Integer)optionData];
             PersonAPI person = null;
             if (entry instanceof String) {
-                person = Global.getSector().getImportantPeople().getPerson(Vulpoids.PERSON_LAISA);
+                person = Global.getSector().getImportantPeople().getPerson((String)entry);
                 person.getMemoryWithoutUpdate().set("$importantCall", true, 0);
             } else if (entry instanceof CargoStackAPI) {
                 CargoStackAPI stack = (CargoStackAPI) entry;
