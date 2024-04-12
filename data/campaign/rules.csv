@@ -196,7 +196,7 @@ vulp_exploreWreckFinishedInterrogation1,DialogOptionSelected,$option == vulp_exp
 New sets of command codes are promptly generated, and your chief engineer reports full control over the ship systems.",vulp_exploreWreckFinishedInterrogation2:Continue,
 vulp_exploreWreckFinishedInterrogation2,DialogOptionSelected,$option == vulp_exploreWreckFinishedInterrogation2,"$global.vulp_gotFactory = true
 AddRemoveAnyItem SPECIAL vulpoid_biofactory 1
-AddCommodity vulpoids 500
+AddCommodity vulpoids 100
 AddTextSmall ""Gained Biofacility Components"" good
 SetTextHighlights ""Biofacility Components""
 MakeVulpoidsIllegal","With the computers at your side, it's trivially easy to locate and extract the core of the bioforge. Slightly damaged, but Domain-era technology is known for its self-repair capabilities.
@@ -720,7 +720,7 @@ vulp_interrogationHubFemaleMoveOn,DialogOptionSelected,$option == vulp_interroga
 vulp_interrogationHubShip,DialogOptionSelected,$option == vulp_interrogationHubShip,"$askedShip = true 0
 SetVulpoidExpression default","""Ah, never seen a hull like this? We got an early model on lease from Tri-Tachyon, along with that Space Defense System that you blew up.""
 
-""It's a Citadel-class, meant for ultra-rich folks who live deep enough in the Orion arm that not even money can buy land on planets.""So heavily automated that it can fly with barely anyone more than the bridge crew - or in my case, one person smart enough to do all their jobs at once!""",vulp_interrogationHubShip1:Continue,
+""It's a Citadel-class, meant for ultra-rich folks who live deep enough in the Orion arm that not even money can buy land on planets. Next-gen automation systems mean we need a fraction of the crew, thank goodness. Even with my tutelage the dummies are barely half as capable as a trained spacer.""",vulp_interrogationHubShip1:Continue,
 vulp_interrogationHubShip1,DialogOptionSelected,$option == vulp_interrogationHubShip1,FireAll VulpInterrogationHubOptions,"""Now, the official story says that Exodyne was considering options for deep-space research platforms, then came across the Citadel and struck a deal with Tri-Tachyon.""
 
 ""Personally I suspect it happened the other way around - some executive saw the big shiny ship and needed to come up with a reason to buy one. Either way though, that's why we're not on a more traditional station.""",,
