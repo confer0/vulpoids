@@ -72,6 +72,7 @@ public class VulpoidPopulation extends BaseMarketConditionPlugin implements Mark
         workforce_cap = Math.min(workforce_cap, MAX_WORKFORCE_CAP);
         market.getMemoryWithoutUpdate().set(Vulpoids.KEY_WORKFORCE_CAP, workforce_cap);
         market.getMemoryWithoutUpdate().set(Vulpoids.KEY_VULPOID_POP_AMOUNT, population);
+        market.getMemoryWithoutUpdate().set(Vulpoids.KEY_VULPS_FOR_NEXT_POP, Misc.getWithDGS((int)Math.pow(10, (int)(population+1))));
     }
     private int getPopCap() {
         try {

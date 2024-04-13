@@ -298,7 +298,7 @@ vulp_exploreWreck9,DialogOptionSelected,$option == vulp_exploreWreck9,SetOptionC
 
 The exploration of the biodome has yet to start in earnest. You could step in and oversee it personally.","vulp_exploreBiodomeHub:Oversee the biodome exploration
 vulp_exploreCIC:Just wait for a team to reach the CIC
-vulp_badEndingHubImmediate:Consider the fate of the crew",
+vulp_badEndingHubImmediate:Consider doing something about the crew",
 ,,,,,,
 # Bad Ending,,,,,,
 ,,,,,,
@@ -309,7 +309,7 @@ If you ordered your boarding teams to begin executing the crew, they'd do so. Sp
 
 Still, it would be easier to swallow if you had a justification.",,
 vulp_badEndingHubAfterExplore,DialogOptionSelected,$option == vulp_badEndingHubAfterExplore,"$backtrackBadEndOption = vulp_exploreBiodomeEnding
-FireAll VulpBadEndJustifications","After exploring the biodome, you feel as though you have a clearer picture of what these non-human crew are. The question is, what's to be done about them?
+FireAll VulpBadEndJustifications","After exploring the biodome, you feel as though you have a clearer picture regarding these non-human crew. The question is, should you be keeping them around?
 
 If you ordered your boarding teams to begin executing the crew, they'd do so. Spacers will follow nearly any order, and your crew trusts you to make informed decisions.
 
@@ -370,20 +370,126 @@ Whatever Domain technology was on that ship has been utterly destroyed, along wi
 # Biodome Exploration,,,,,,
 ,,,,,,
 vulp_exploreBiodomeHub,DialogOptionSelected,$option == vulp_exploreBiodomeHub,"FireAll VulpBiodomeOptions
-ShowImageVisual citadel_biodome",,,# TODO - mini exploration game here
+ShowImageVisual citadel_biodome",,,
 vulp_exploreBiodomeHubReturn,DialogOptionSelected,$option == vulp_exploreBiodomeHubReturn,"FireAll VulpBiodomeOptions
 ShowImageVisual citadel_biodome",,,
 vulp_exploreBiodomeExodyneOption,VulpBiodomeOptions,!$didBiodomeExodyne,,The imitation skyline is dominated by a massive tower bearing the Exodyne logo.,vulp_exploreBiodomeExodyne:Check the Exodyne tower,
 vulp_exploreBiodomeExodyneAlreadyDone,VulpBiodomeOptions,$didBiodomeExodyne,,The Exodyne tower has been thoroughly searched through.,,
-vulp_exploreBiodomeDomainOption,VulpBiodomeOptions,!$didBiodomeDomain,,"An office for the Domain Colonial Security Force stands firm, but empty.",vulp_exploreBiodomeDomain:Check the Domain Marshal Bureau,
-vulp_exploreBiodomeDomainAlreadyDone,VulpBiodomeOptions,$didBiodomeDomain,,,,
+vulp_exploreBiodomeDomainOption,VulpBiodomeOptions,!$didBiodomeDomain,,An office for the Domain Colonial Security Force stands proudly in the central square.,vulp_exploreBiodomeDomain:Check the Domain CSF office,
+vulp_exploreBiodomeDomainAlreadyDone,VulpBiodomeOptions,$didBiodomeDomain,,The Domain CSF office is as now as empty as the Gates.,,
 vulp_exploreBiodomeTTOption,VulpBiodomeOptions,!$didBiodomeTT,,,vulp_exploreBiodomeTT:Check the Tri-Tachyon branch office,
 vulp_exploreBiodomeTTAlreadyDone,VulpBiodomeOptions,$didBiodomeTT,,,,
 vulp_exploreBiodomeUtopiaOption,VulpBiodomeOptions,!$didBiodomeUtopia,,,vulp_exploreBiodomeUtopia:Check the Eridani-Utopia branch office,
 vulp_exploreBiodomeUtopiaAlreadyDone,VulpBiodomeOptions,$didBiodomeUtopia,,,,
-vulp_exploreBiodomeSuburbOption,VulpBiodomeOptions,!$didBiodomeSuburb,,Surrounding the central urban area are wide arcs of suburban habitation areas.,vulp_exploreBiodomeSuburb:Check the suburban areas,
-vulp_exploreBiodomeSuburbAlreadyDone,VulpBiodomeOptions,$didBiodomeSuburb,,The suburban areas have been scoured.,,
-vulp_exploreBiodomeLeaveOption,VulpBiodomeOptions,,,,vulp_exploreCIC:Wrap up the exploration,
+vulp_exploreBiodomeSuburbOption,VulpBiodomeOptions,!$didBiodomeSuburb,,Long rows of suburban habitation districts arc outwards in geometric patterns.,vulp_exploreBiodomeSuburb:Check the suburban areas,
+vulp_exploreBiodomeSuburbAlreadyDone,VulpBiodomeOptions,$didBiodomeSuburb,,The suburban areas have been thoroughly scoured.,,
+vulp_exploreBiodomeLeaveOption,VulpBiodomeOptions,,,,vulp_exploreBiodomeEnding:Wrap up the exploration,
+,,,,,,
+vulp_exploreBiodomeEnding,DialogOptionSelected,$option == vulp_exploreBiodomeEnding,"HideVisual
+SetOptionColor vulp_badEndingHubAfterExplore bad",Exploration of the biodome has been carried out to your satisfaction. All that remains is waiting for a team to reach the vessel's CIC.,"vulp_exploreCIC:Continue
+vulp_badEndingHubAfterExplore:Consider doing something about the crew",
+,,,,,,
+# Exodyne Tower,,,,,,
+vulp_exploreBiodomeExodyne,DialogOptionSelected,$option == vulp_exploreBiodomeExodyne,"HideVisual
+$didBiodomeExodyne = true",,,
+,,,,,,
+# Domain CSF,,,,,,
+vulp_exploreBiodomeDomain,DialogOptionSelected,$option == vulp_exploreBiodomeDomain,"HideVisual
+$didBiodomeDomain = true","Buildings like this one are found in practically every set of ruins in the Sector, and are usually part of a salvor's standard training.
+
+The entry makes for a comfortable return to routine.",vulp_exploreBiodomeDomain1:Continue,
+vulp_exploreBiodomeDomain1,DialogOptionSelected,$option == vulp_exploreBiodomeDomain1,,"The building's design resembles a mix of standard planetary and orbital designs, reflective of the interesting environment it's been constructed in.
+
+None of the deviations impair your crew's ability to swiftly locate the main computer cores, and unlock them with access codes that were cracked over a century ago.",vulp_exploreBiodomeDomain2:Continue,
+vulp_exploreBiodomeDomain2,DialogOptionSelected,$option == vulp_exploreBiodomeDomain2,,"As is typical, most of the data is corrupt. The panoptic security system was made with decades of storage, but it's been centuries and the footage has overwrote itself several times over.
+
+All the same, the databanks are dumped and transmitted to your analysis teams in the hopes of being able to extract something useful.
+
+What few sections are relatively untouched by corruption are immediately identified, reviewed, and promptly sent to your datapad.",vulp_exploreBiodomeDomain3:Continue,
+vulp_exploreBiodomeDomain3,DialogOptionSelected,$option == vulp_exploreBiodomeDomain3,,"It's mostly footage from the early days, pre-Collapse. Through the haze of minor corruption artifacts you can see Exodyne researchers walking down streets, often with members of the non-human crew following close behind.
+
+The footage jumps ahead, and the streets are filled with cargo drones transporting personal effects. You can see a small group of scientists - including the one who sent you here - having a heated debate with some of the Domain CSF officers. The audio channel is all but unintelligible, but a sub-AI analysis system suggests that the argument is regarding whether the vessel can be placed under 'her' command.
+
+Unfortunately neither party cares to exposit about who 'she' is, only that the CSF is concerned about safety, while the researchers believe there's no better alternative. Eventually the CSF officers relent, after being convinced that the Domain Armada will be able to handle anything that could happen in the short time until the Gates are restored.",vulp_exploreBiodomeDomain4:Continue,
+vulp_exploreBiodomeDomain4,DialogOptionSelected,$option == vulp_exploreBiodomeDomain4,,"What little uncorrupted post-evacuation footage is all but indistinguishable from the scene your team arrived to. The non-human crew scurries through the empty town, occasionally performing maintenance duties.
+
+A few conversations between them are recorded, but are positively banal. They talk about the now-absent humans in much the same way that youths discuss their favorite Fikenhild holo-celebrities, and wonder aloud when they'll return. The timestamp on the most recent clip states that it's 4 years post-Collapse - everything after that has yet to be recovered.
+
+There's little else to be found inside the CSF building. At the very least, this would seem to indicate that the crew's behavior is either not an elaborate ruse, or is an *extremely* elaborate ruse.",vulp_exploreBiodomeHubReturn:Conclude the search,
+,,,,,,
+,,,,,,
+# TT Branch Office,,,,,,
+vulp_exploreBiodomeTT,DialogOptionSelected,$option == vulp_exploreBiodomeTT,"HideVisual
+$didBiodomeTT = true","Your forces carefully make their entry into the Tri-Tachyon building. The fear of ancient AI remnants runs deep when this far out from the Core.
+
+The rooms are dark, devoid of any activity. Desks are cleared out, and computers have been thoroughly wiped. Typical for Tri-Tachyon, they've spared no expense in ensuring there's nothing for an enterprising salvor to find here.",vulp_exploreBiodomeTT1:Continue,
+vulp_exploreBiodomeTT1,DialogOptionSelected,$option == vulp_exploreBiodomeTT1,,"This is one case where the Collapse actually works in your favor. Things that would be grounds for an immediate Hegemony inspection were commonplace under the Domain, and the Tri-Tachyon personnel of the day had no reason to destroy evidence of then-legal activities.
+
+The office spaces have given way to racks of coolant cradles and spools of high-capacity data lines. The pipes are drained and the data lines cleanly coiled, but the purpose is clear: these were AI core interfaces.",vulp_exploreBiodomeTT2:Continue,
+vulp_exploreBiodomeTT2,DialogOptionSelected,$option == vulp_exploreBiodomeTT2,,"Studying the labels of the cradles and connections indicates that this space served as a 'switchboard' for a wide assortment of AI cores to communicate with various facilities throughout the biodome.
+
+A majority of the cables are indicated to connect to laboratories or other research facilities, suggesting that the cores were being used to assist the human scientists in their research.",vulp_exploreBiodomeTT3:Continue,
+vulp_exploreBiodomeTT3,DialogOptionSelected,$option == vulp_exploreBiodomeTT3,"SetStoryOption vulp_exploreBiodomeTTStory general ""Performed a thorough search for an ancient beta core""",Further sweeps through the building reveal little else. Any valuable technology or information has been gone for as long as the staff has.,"vulp_exploreBiodomeHubReturn:Conclude the search
+vulp_exploreBiodomeTTStory:Make one more sweep",
+vulp_exploreBiodomeTTStory,DialogOptionSelected,$option == vulp_exploreBiodomeTTStory,AddCommodity beta_core 1,"Something in your gut tells you you've missed something. Tri-Tachyon is thorough, but not flawless. You order your salvors to revisit several areas, and to their credit they refrain from grumbling.
+
+Most turn up nothing new, but one team reports an unexpected find. An emergency intelligence incinerator seems to have malfunctioned and not properly destroyed a beta core that was deposited inside it.
+
+Had the ship been powered up again, the incinerator would have rebooted and finally destroyed it after 200 cycles of waiting.
+
+Instead, you order the core secured and delivered to your $shipOrFleet.",vulp_exploreBiodomeHubReturn:Conclude the search,
+,,,,,,
+# EU Branch Office,,,,,,
+vulp_exploreBiodomeUtopia,DialogOptionSelected,$option == vulp_exploreBiodomeUtopia,"HideVisual
+$didBiodomeUtopia = true","The Eridani-Utopia building appears to be composed of a mix of office spaces and laboratories, with both receiving attention as your teams move in.
+
+The labs provide the most immediate information. They're packed with every form of environmental sensor imaginable, from atmospherics to soil quality. Not unexpected for the terraforming corporation, of course.",vulp_exploreBiodomeUtopia1:Continue,
+vulp_exploreBiodomeUtopia1,DialogOptionSelected,$option == vulp_exploreBiodomeUtopia1,,"Quick checks of the samples still present in the lab indicate that the vast majority are from the biodome itself, rather than any planet in the system.
+
+In the meantime, the office teams have reported a breakthrough. The computers aren't wiped, and several have responded to older security codes that leaked to the public after the Qaras takeover.",vulp_exploreBiodomeUtopia2:Continue,
+vulp_exploreBiodomeUtopia2,DialogOptionSelected,$option == vulp_exploreBiodomeUtopia2,,"Internal communications show tension between the Eridani and Exodyne staff. Apparently the Eridani crew was responsible for maintaining the biodome's conditions as close as possible to a habitable planetary environment.
+
+The Exodyne crew, on the other hand, was of the opinion that Eridani wasn't doing a good enough job. They kept requesting minor tweaks that ran the Eridani crew ragged as they tried to keep up.",vulp_exploreBiodomeUtopia3:Continue,
+vulp_exploreBiodomeUtopia3,DialogOptionSelected,$option == vulp_exploreBiodomeUtopia3,"SetStoryOption vulp_exploreBiodomeUtopiaStory general ""Discovered the location of some soil nanites""","The very environmental controls Eridani used should be controllable from this office, but all attempts so far have been rebuffed by a security program that doesn't respond to any known codes.
+
+Error messages indicate that it should be possible for the vessel's bridge crew to override the system. Something to be done once a team arrives at the CIC.","vulp_exploreBiodomeHubReturn:Conclude the search
+vulp_exploreBiodomeUtopiaStory:Check for additional information",
+vulp_exploreBiodomeUtopiaStory,DialogOptionSelected,$option == vulp_exploreBiodomeUtopiaStory,Call $global.vulpFactory_ref generateEridaniBonus,"The infosec on Eridani's part has been lackluster. You authorize your analysis teams to make use of additional supercomputer time to see if any of the encryption can be broken.
+
+The majority of packets can't be, and the majority of the the broken ones are duds. But all it takes is one.
+
+A weak password on an account is cracked, and used to gain access to a comms log. The log's buffer is pulled to recover a message chain regarding tech requisitions, and an off-hand remark mentions a location.
+
+",vulp_exploreBiodomeHubReturn:Conclude the search,
+,,,,,,
+# Suburbs,,,,,,
+vulp_exploreBiodomeSuburb,DialogOptionSelected,$option == vulp_exploreBiodomeSuburb,"HideVisual
+$didBiodomeSuburb = true","Teams fan out to cover the large, spread-out suburban areas. Detached houses with grass lawns are unnerving to see under an artificial sky, a stark reminder of the sheer wealth and power wielded by the Domain at its peak.
+
+You immediately note that although the homes look unoccupied, they're clearly being maintained. The front gardens are tended and pruned, the real-grass lawns are freshly cut, and the hedges are smoothly trimmed.
+
+Were it not for the dome, you could almost believe this is what Gilead once looked like.",vulp_exploreBiodomeSuburb1:Continue,
+vulp_exploreBiodomeSuburb1,DialogOptionSelected,$option == vulp_exploreBiodomeSuburb1,,"Salvors begin entering individual homes, and find something unusual - housekeepers. In spite of the damage to their ship, the crew has seen fit to continue tending to these unoccupied houses.
+
+Why they feel that straightening shelves and sweeping up dust should take priority over sealing hull breaches is unclear.","vulp_exploreBiodomeSuburbAsk:Try asking for their reasoning
+vulp_exploreBiodomeSuburb2:Just continue the search",
+vulp_exploreBiodomeSuburbAsk,DialogOptionSelected,$option == vulp_exploreBiodomeSuburbAsk,,"The security teams make an attempt at questioning, to limited success.
+
+The crew seems truly baffled by the idea that anything else would take natural precedence over housekeeping. They immediately offer to assist with hull repairs when the question is raised, but don't seem to comprehend that they should have come to that conclusion on their own.",vulp_exploreBiodomeSuburbAsk1:Continue,
+vulp_exploreBiodomeSuburbAsk1,DialogOptionSelected,$option == vulp_exploreBiodomeSuburbAsk1,,"One agitated salvor tries explaining that a hull breach can be fatal. This gets through to the non-human... who realizes that if they're dead, they can't take care of the house.
+
+They promptly become quite upset at this idea, and need to be awkwardly reassured that other teams have already performed the hull repairs.
+
+Needless to say, this is behavior that you've never seen from a spacer.",vulp_exploreBiodomeSuburb2:Search the homes,
+vulp_exploreBiodomeSuburb2,DialogOptionSelected,$option == vulp_exploreBiodomeSuburb2,,"The home interiors are orderly and well-kept, but your ops chief is able to point out signs of an evacuation. Small and sentimental items are notably absent, while larger items have been left behind.
+
+Unfortunately personal computers number among the items that the inhabitents took with them, preventing much concrete information from being recovered.",vulp_exploreBiodomeSuburb3:Continue,
+vulp_exploreBiodomeSuburb3,DialogOptionSelected,$option == vulp_exploreBiodomeSuburb3,AddCredits 10000,"With little in the way of informational wealth, your salvors turn to material. They begin carrying out anything that appears particularly valuable, with ops keeping a close eye on helmet feeds to ensure nobody gets too loot-happy.
+
+The crew raises virtually no protest as your teams strip these centuries-old homes bare, requiring only an assurance that the removed goods will be put to good use.",vulp_exploreBiodomeHubReturn:Conclude the search,
+,,,,,,
+,,,,,,
+,,,,,,
 ,,,,,,
 # Continuing exploration,,,,,,
 ,,,,,,
@@ -413,7 +519,7 @@ The captain is currently being transferred to a brig aboard your $shipOrFleet. I
 vulp_exploreCIC3_unlock,DialogOptionSelected,$option == vulp_exploreCIC3_unlock,"SetTextHighlights ""\""Interrogate the Captain\"""" ""\""next\""""","Use the ""Interrogate the Captain"" ability to speak with her. If you cannot see the ability, use the ""next"" button on the ability bar, or right-click an existing ability and select it.",defaultLeave:Leave,
 ,,,,,,
 ,,,,,,
-,,,,,,
+# The Interrogation,,,,,,
 ,,,,,,
 vulpChat_openInterrogation,OpenVulpoidChatDialog,"$importantCall score:1000
 $id == laisa","unset $importantCall
@@ -426,7 +532,6 @@ She glares as you sit down at the table across from her, but keeps quiet until y
 ""You're in command here, I take it?""","vulp_interrogationIntroYes:""Yes, I am.""
 vulp_interrogationIntroNo:""No, just here to talk.""
 vulp_interrogationIntroSilent:Stay silent",
-,,,,,,
 ,,,,,,
 vulp_interrogationIntroYes,DialogOptionSelected,$option == vulp_interrogationIntroYes,SetVulpoidExpression default,"""Ah, excellent!"" she says with a faux-cheery voice, ""Then we can get right down to business!""",vulp_interrogationIntro:Continue,
 vulp_interrogationIntroNo_nottalked,DialogOptionSelected,"$option == vulp_interrogationIntroNo
@@ -936,8 +1041,22 @@ FireAll PopulateOptions","After a short wait, your connection request is accepte
 vulp_Greeting2Rep,PickGreeting,"$isVulpoidRep
 $contact_printedFirstReturnGreeting","ShowPersonVisual
 FireAll PopulateOptions","""Wanna do anything else $PlayerSirOrMadam?""",,
-vulp_trainingProgram,PopulateOptions,$isVulpoidRep,,,vulp_trainingProgramHub:Manage workforces,
+vulp_trainingProgramOption,PopulateOptions,$isVulpoidRep,FireBest DisableWorkforceOptionIfNeeded,,vulp_trainingProgramHub:Manage workforces,
+vulp_disableTrainingProgramOption,DisableWorkforceOptionIfNeeded,"$market.workforce_cap == 0
+$market.workforces == 0","SetTooltip vulp_trainingProgramHub ""This planet does not have enough Vulpoids to muster a trained workforce.""
+SetEnabled vulp_trainingProgramHub false",,,
 vulp_trainingProgramHub,DialogOptionSelected,$option == vulp_trainingProgramHub,WorkforceMenu,,,
+#vulp_increasePopSizeOption,PopulateOptions,"$isVulpoidRep
+$market.vulpsForNextPop > 0","SetTooltip vulp_increasePopSize ""Directly contribute $market.vulpsForNextPop Vulpoids to the colony's reserves, increasing the population size. You have $player.vulpoids Vulpoids.""
+SetTooltipHighlights vulp_increasePopSize $market.vulpsForNextPop $player.vulpoids
+FireBest DisableIncreaseVulpPopOptionIfNeeded",,vulp_increasePopSize:Assign additional Vulpoids,
+#vulp_disableIncreasePopSizeOptionNotEnough,DisableIncreaseVulpPopOptionIfNeeded,!PlayerHasCargo vulpoids $market.vulpsForNextPop,"SetTooltip vulp_increasePopSize ""You need $market.vulpsForNextPop Vulpoids to manually increase the Vulpoid population. You have $player.vulpoids Vulpoids.""
+SetTooltipHighlights vulp_increasePopSize $market.vulpsForNextPop $player.vulpoids
+SetEnabled vulp_increasePopSize false",,,
+#vulp_disableIncreasePopSizeOptionBombard,DisableIncreaseVulpPopOptionIfNeeded,$recentlyBombarded score:1000,"SetTooltip vulp_increasePopSize ""A recent orbital bombardment has devastated the colony's Vulpoid population. You'll need to wait up to a month for the population to stabilize.""
+SetEnabled vulp_increasePopSize false",,,
+#vulp_increasePopSize,DialogOptionSelected,$option == vulp_increasePopSize,"RemoveCommodity vulpoids $market.vulpsForNextPop
+FireAll PopulateOptions",TODO,,
 vulp_askFunFact,PopulateOptions,$isVulpoidRep,,,vulp_getFunFact:Make conversation,
 ,,,,,,
 ,,,,,,
@@ -960,19 +1079,19 @@ $market.vulpoidPopulation <= 3",ShowImageVisual vulp_pop_low,"As you enter the b
 bar_descVulpoidHigh,BarPrintDesc,"$market.mc:vulpoid_population
 $market.vulpoidPopulation >= 6",ShowImageVisual vulp_pop_high,"As you enter the bar you are buffeted by the human white-noise of conversation and revelry. Ad-holos buzz softly from ceiling-mounted units, shining garish highlights through glasses and bottles as spacer crews mingle with merchants and locals trading drinks for rumor, jobs, and opportunities. Vulpoids are manning the bar, serving food and drinks, and having cheery conversations with anyone who cares to.",,
 bar_descVulpoidMed,BarPrintDesc,$market.mc:vulpoid_population,ShowImageVisual vulp_pop_med,"As you enter the bar you are buffeted by the human white-noise of conversation and revelry. Ad-holos buzz softly from ceiling-mounted units, shining garish highlights through glasses and bottles as spacer crews mingle with merchants and locals trading drinks for rumor, jobs, and opportunities. There's not a single place you can look where there aren't Vulpoids, who are almost competing with each other to be the first to answer to every person's whims.",,
-vulp_barInteractionPrompt,AddBarEvents,$market.mc:vulpoid_population,"AddBarEvent vulp_barInteraction ""Talk to the Vulpoid"" ""One of the Vulpoids notices you, and quickly bounds up to see if you want anything.""",,,
-vulp_barInteraction,DialogOptionSelected,"$option == vulp_barInteraction
+#vulp_barInteractionPrompt,AddBarEvents,$market.mc:vulpoid_population,"AddBarEvent vulp_barInteraction ""Talk to the Vulpoid"" ""One of the Vulpoids notices you, and quickly bounds up to see if you want anything.""",,,
+#vulp_barInteraction,DialogOptionSelected,"$option == vulp_barInteraction
 !$printedFirstReturnGreeting","ShowPersonVisual false vulpoid_barmaid
 $printedFirstReturnGreeting = true 0
 FireAll VulpBarOption","""Hi $PlayerSirOrMadam! Can I get you something?""",,
-vulp_barInteraction2,DialogOptionSelected,"$option == vulp_barInteraction
+#vulp_barInteraction2,DialogOptionSelected,"$option == vulp_barInteraction
 $printedFirstReturnGreeting","ShowPersonVisual false vulpoid_barmaid
 FireAll VulpBarOption","""Can I do anything else for you $PlayerSirOrMadam?""",,
-vulp_barInteractionPetOption,VulpBarOption,,,,vulp_barInteractionPet:Pet her,
-vulp_barInteractionSmoochOption,VulpBarOption,,,,vulp_barInteractionSmooch:Smooch her,
-bulp_barLeaveOption,VulpBarOption,,,,backToBar:Dismiss her,
-vulp_barInteractionPet,DialogOptionSelected,$option == vulp_barInteractionPet,ShowImageVisual vulpoid_petting,,vulp_barInteraction:Continue,
-vulp_barInteractionSmooch,DialogOptionSelected,$option == vulp_barInteractionSmooch,ShowImageVisual vulpoid_smooch,,vulp_barInteraction:Continue,
+#vulp_barInteractionPetOption,VulpBarOption,,,,vulp_barInteractionPet:Pet her,
+#vulp_barInteractionSmoochOption,VulpBarOption,,,,vulp_barInteractionSmooch:Smooch her,
+#bulp_barLeaveOption,VulpBarOption,,,,backToBar:Dismiss her,
+#vulp_barInteractionPet,DialogOptionSelected,$option == vulp_barInteractionPet,ShowImageVisual vulpoid_petting,,vulp_barInteraction:Continue,
+#vulp_barInteractionSmooch,DialogOptionSelected,$option == vulp_barInteractionSmooch,ShowImageVisual vulpoid_smooch,,vulp_barInteraction:Continue,
 ,,,,,,
 vulp_BarOwnColFreeDrink0,DialogOptionSelected,"$option == barOOCfreeDrink
 $market.mc:vulpoid_population",$player.gotFreeDrinkFromOwnColony = true,"A Vulpoid barmaid appears by your side, a glass of what looks exactly like your favorite drink on a silver tray.

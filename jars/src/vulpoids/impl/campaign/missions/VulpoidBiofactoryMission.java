@@ -32,8 +32,11 @@ import com.fs.starfarer.api.impl.campaign.ids.Entities;
 import com.fs.starfarer.api.impl.campaign.ids.Factions;
 import com.fs.starfarer.api.impl.campaign.ids.FleetTypes;
 import com.fs.starfarer.api.impl.campaign.ids.HullMods;
+import com.fs.starfarer.api.impl.campaign.ids.Items;
 import com.fs.starfarer.api.impl.campaign.ids.MemFlags;
 import com.fs.starfarer.api.impl.campaign.ids.Tags;
+import com.fs.starfarer.api.impl.campaign.intel.bar.events.historian.SpecialItemOffer;
+import com.fs.starfarer.api.impl.campaign.intel.bar.events.historian.SpecialItemOfferCreator;
 import com.fs.starfarer.api.impl.campaign.missions.cb.CustomBountyCreator.CustomBountyData;
 import com.fs.starfarer.api.impl.campaign.missions.hub.HubMissionWithSearch;
 import com.fs.starfarer.api.impl.campaign.missions.hub.ReqMode;
@@ -466,6 +469,11 @@ public class VulpoidBiofactoryMission extends HubMissionWithSearch implements Fl
             CustomCampaignEntityAPI derelict_ship = (CustomCampaignEntityAPI)Global.getSector().getMemoryWithoutUpdate().get("$vulpFactoryShip");
             derelict_ship.setExpired(true);
             
+        }
+        else if("generateEridaniBonus".equals(action)) {
+            SectorEntityToken entity = SpecialItemOfferCreator.createEntity(new Random());
+            SpecialItemOffer offer = new SpecialItemOffer(entity, 2, Items.SOIL_NANITES);
+            offer.init(dialog);
         }
         else {
             return super.callEvent(ruleId, dialog, params, memoryMap);
