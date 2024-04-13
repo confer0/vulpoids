@@ -91,7 +91,6 @@
 		"advancedcore",
 		"biodome",
 		"improved_automatics",
-		"vast_hangar",
 	],
     "center": [
         164,
@@ -224,30 +223,30 @@
     "style": "HIGH_TECH",
     "viewOffset": 0,
     "weaponSlots": [
-        {
-            "angle": 0,
-            "arc": 5,
-            "id": "WS 001",
-            "locations": [
-                163,
-                16
-            ],
-            "mount": "HARDPOINT",
-            "size": "LARGE",
-            "type": "ENERGY"
-        },
-        {
-            "angle": 0,
-            "arc": 5,
-            "id": "WS 002",
-            "locations": [
-                163,
-                -16
-            ],
-            "mount": "HARDPOINT",
-            "size": "LARGE",
-            "type": "ENERGY"
-        },
+        #{
+        #    "angle": 0,
+        #    "arc": 5,
+        #    "id": "WS 001",
+        #    "locations": [
+        #        163,
+        #        16
+        #    ],
+        #    "mount": "HARDPOINT",
+        #    "size": "LARGE",
+        #    "type": "ENERGY"
+        #},
+        #{
+        #    "angle": 0,
+        #    "arc": 5,
+        #    "id": "WS 002",
+        #    "locations": [
+        #        163,
+        #        -16
+        #    ],
+        #    "mount": "HARDPOINT",
+        #    "size": "LARGE",
+        #    "type": "ENERGY"
+        #},
         {
             "angle": 80,
             "arc": 220,
@@ -500,7 +499,7 @@
             "size": "SMALL",
             "type": "ENERGY"
         },
-		
+		# Side Bay
 		{
             "angle": 90,
             "arc": 5,
@@ -517,6 +516,7 @@
             "size": "LARGE",
             "type": "LAUNCH_BAY"
         },
+		# Side Bay
 		{
             "angle": -90,
             "arc": 5,
@@ -528,6 +528,40 @@
 				-130,
 				-7,
 				-131
+            ],
+            "mount": "HIDDEN",
+            "size": "LARGE",
+            "type": "LAUNCH_BAY"
+        },
+		# Front Bay 1
+		{
+            "angle": 0,
+            "arc": 5,
+            "id": "WS 026",
+            "locations": [
+				163,
+				16,
+				163,
+				-16,
+				133,
+				0
+            ],
+            "mount": "HIDDEN",
+            "size": "LARGE",
+            "type": "LAUNCH_BAY"
+        },
+		# Front Bay 2
+		{
+            "angle": 0,
+            "arc": 5,
+            "id": "WS 027",
+            "locations": [
+                163,
+				16,
+				163,
+				-16,
+				133,
+				0
             ],
             "mount": "HIDDEN",
             "size": "LARGE",
