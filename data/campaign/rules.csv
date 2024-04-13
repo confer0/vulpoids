@@ -374,13 +374,13 @@ ShowImageVisual citadel_biodome",,,
 vulp_exploreBiodomeHubReturn,DialogOptionSelected,$option == vulp_exploreBiodomeHubReturn,"FireAll VulpBiodomeOptions
 ShowImageVisual citadel_biodome",,,
 vulp_exploreBiodomeExodyneOption,VulpBiodomeOptions,!$didBiodomeExodyne,,The imitation skyline is dominated by a massive tower bearing the Exodyne logo.,vulp_exploreBiodomeExodyne:Check the Exodyne tower,
-vulp_exploreBiodomeExodyneAlreadyDone,VulpBiodomeOptions,$didBiodomeExodyne,,The Exodyne tower has been thoroughly searched through.,,
-vulp_exploreBiodomeDomainOption,VulpBiodomeOptions,!$didBiodomeDomain,,An office for the Domain Colonial Security Force stands proudly in the central square.,vulp_exploreBiodomeDomain:Check the Domain CSF office,
+vulp_exploreBiodomeExodyneAlreadyDone,VulpBiodomeOptions,$didBiodomeExodyne,,The Exodyne facilities are locked down until you reach the bridge.,,
+vulp_exploreBiodomeDomainOption,VulpBiodomeOptions,!$didBiodomeDomain,,A Colonial Security Force office proudly flies the flag of the Domain.,vulp_exploreBiodomeDomain:Check the Domain CSF office,
 vulp_exploreBiodomeDomainAlreadyDone,VulpBiodomeOptions,$didBiodomeDomain,,The Domain CSF office is as now as empty as the Gates.,,
-vulp_exploreBiodomeTTOption,VulpBiodomeOptions,!$didBiodomeTT,,,vulp_exploreBiodomeTT:Check the Tri-Tachyon branch office,
-vulp_exploreBiodomeTTAlreadyDone,VulpBiodomeOptions,$didBiodomeTT,,,,
-vulp_exploreBiodomeUtopiaOption,VulpBiodomeOptions,!$didBiodomeUtopia,,,vulp_exploreBiodomeUtopia:Check the Eridani-Utopia branch office,
-vulp_exploreBiodomeUtopiaAlreadyDone,VulpBiodomeOptions,$didBiodomeUtopia,,,,
+vulp_exploreBiodomeTTOption,VulpBiodomeOptions,!$didBiodomeTT,,Stark white panels and sleek diamond-matrix windows denote a Tri-Tachyon branch office.,vulp_exploreBiodomeTT:Check the Tri-Tachyon branch office,
+vulp_exploreBiodomeTTAlreadyDone,VulpBiodomeOptions,$didBiodomeTT,,The Tri-Tachyon building was cleared out long ago.,,
+vulp_exploreBiodomeUtopiaOption,VulpBiodomeOptions,!$didBiodomeUtopia,,A small complex of industrial buildings bear the Eridani-Utopia logo.,vulp_exploreBiodomeUtopia:Check the Eridani-Utopia branch office,
+vulp_exploreBiodomeUtopiaAlreadyDone,VulpBiodomeOptions,$didBiodomeUtopia,,The Eridani-Utopia control systems are locked down until you reach the bridge.,,
 vulp_exploreBiodomeSuburbOption,VulpBiodomeOptions,!$didBiodomeSuburb,,Long rows of suburban habitation districts arc outwards in geometric patterns.,vulp_exploreBiodomeSuburb:Check the suburban areas,
 vulp_exploreBiodomeSuburbAlreadyDone,VulpBiodomeOptions,$didBiodomeSuburb,,The suburban areas have been thoroughly scoured.,,
 vulp_exploreBiodomeLeaveOption,VulpBiodomeOptions,,,,vulp_exploreBiodomeEnding:Wrap up the exploration,
@@ -391,7 +391,31 @@ vulp_badEndingHubAfterExplore:Consider doing something about the crew",
 ,,,,,,
 # Exodyne Tower,,,,,,
 vulp_exploreBiodomeExodyne,DialogOptionSelected,$option == vulp_exploreBiodomeExodyne,"HideVisual
-$didBiodomeExodyne = true",,,
+$didBiodomeExodyne = true","The massive tower and its associated complexes require a number of teams to search, entering through multiple access points to swiftly cover ground.
+
+Administrative offices and board rooms form the bulk of the tower's interior. An entire sub-division of the Exodyne Biotech company was once hosted here, with everything from accounting to marketing.",vulp_exploreBiodomeExodyne1:Continue,
+vulp_exploreBiodomeExodyne1,DialogOptionSelected,$option == vulp_exploreBiodomeExodyne1,,"Most of the data has been encrypted or outright removed, but your technicians are able to recover some pieces of marketing material.
+
+It appears to focus on the non-human crew using an assortment of images and slogans to appeal to one's curiosity while providing little information. They urge you to 'call now' for a quote, but the listed comms ID hasn't been active since the Collapse.",vulp_exploreBiodomeExodyne2:Continue,
+vulp_exploreBiodomeExodyne2,DialogOptionSelected,$option == vulp_exploreBiodomeExodyne2,,"Your analysis teams produce a summary for you. The word 'Vulpoid' features frequently, and is either the name of the non-humans, or at least related to the product line.
+
+It's also apparent that the non-humans are, in fact, the product that's being sold. Full-body pictures feature prominently, and there's even mention of them being licensed under Domain AI regulatory standards.
+
+Their exact intended usage hasn't been conclusively pinned down, but the advertisements seem consistent with the target audience being wealthy individuals or businesses.",vulp_exploreBiodomeExodyne3:Continue,
+vulp_exploreBiodomeExodyne3,DialogOptionSelected,$option == vulp_exploreBiodomeExodyne3,,"The teams in the outlying complex, on the other hand, have been largely stymied. Many of the major facilities are locked down, and your ops chief and chief engineer have agreed that any attempt at breaching them is likely to cause them to self-destruct as an espionage prevention measure.
+
+Mechanisms like these are rare, but not unheard of, especially when it comes to cutting-edge research. It's almost certainly possible to disable it from the bridge.",vulp_exploreBiodomeExodyne4:Continue,
+vulp_exploreBiodomeExodyne4,DialogOptionSelected,$option == vulp_exploreBiodomeExodyne4,,"What information has been recovered from the facilities is largely as-expected. Cutting-edge biotechnology centered on organism design. The most valuable piece of data that's managed to be extracted is an anatomical diagram, which can be cross-referenced with the scans of the crew that your teams previously took.
+
+They line up extremely well with the diagram, even better than would be predicted with standard generational genetic drift models. Ther low observed bone and muscle density are shown to actually be slightly stronger than design spec, calling into question their suitability as spacers.",vulp_exploreBiodomeExodyne5:Continue,
+vulp_exploreBiodomeExodyne5,DialogOptionSelected,$option == vulp_exploreBiodomeExodyne5,,"Most notably, the diagram makes mention of additional documentation for the brain structure. Unfortunately your teams have been unable to locate it, but the cursory labels still enable some basic analysis.
+
+Your science officer points out different regions to you, explaining which ones appear under and over-developed relative to a standard human.
+
+Their language and social centers are fairly impressive, and appear to have strong connections to their own emotional state. Logical reasoning, on the other hand, is fairly flimsy. Science even tenatively suggests that certain structures resemble a hardware implementation of the loyalty-assurance algorithms used in delta-level AI.",vulp_exploreBiodomeExodyne6:Continue,
+vulp_exploreBiodomeExodyne6,DialogOptionSelected,$option == vulp_exploreBiodomeExodyne6,AddRemoveAnyItem SPECIAL industry_bp population 1,"Other minor physical traits are noted and cataloged. A nerve cluster on the back of the neck to link to the hypothalamus, possibly inducing sleep or social affection. This fact is passed on to the security teams.
+
+Little else of note is discovered within the Exodyne facilities. The next-most exciting find is a high-level specification on the technologies and techniques used to maintain the arcology's infrastructure. Unfortunately, there's little within that isn't already reflected in the Sector's colonization techniques.",vulp_exploreBiodomeHubReturn:Conclude the search,
 ,,,,,,
 # Domain CSF,,,,,,
 vulp_exploreBiodomeDomain,DialogOptionSelected,$option == vulp_exploreBiodomeDomain,"HideVisual
@@ -417,7 +441,6 @@ A few conversations between them are recorded, but are positively banal. They ta
 
 There's little else to be found inside the CSF building. At the very least, this would seem to indicate that the crew's behavior is either not an elaborate ruse, or is an *extremely* elaborate ruse.",vulp_exploreBiodomeHubReturn:Conclude the search,
 ,,,,,,
-,,,,,,
 # TT Branch Office,,,,,,
 vulp_exploreBiodomeTT,DialogOptionSelected,$option == vulp_exploreBiodomeTT,"HideVisual
 $didBiodomeTT = true","Your forces carefully make their entry into the Tri-Tachyon building. The fear of ancient AI remnants runs deep when this far out from the Core.
@@ -441,7 +464,7 @@ Instead, you order the core secured and delivered to your $shipOrFleet.",vulp_ex
 ,,,,,,
 # EU Branch Office,,,,,,
 vulp_exploreBiodomeUtopia,DialogOptionSelected,$option == vulp_exploreBiodomeUtopia,"HideVisual
-$didBiodomeUtopia = true","The Eridani-Utopia building appears to be composed of a mix of office spaces and laboratories, with both receiving attention as your teams move in.
+$didBiodomeUtopia = true","The Eridani-Utopia buildings appear to be composed of a mix of office spaces and laboratories, with both receiving attention as your teams move in.
 
 The labs provide the most immediate information. They're packed with every form of environmental sensor imaginable, from atmospherics to soil quality. Not unexpected for the terraforming corporation, of course.",vulp_exploreBiodomeUtopia1:Continue,
 vulp_exploreBiodomeUtopia1,DialogOptionSelected,$option == vulp_exploreBiodomeUtopia1,,"Quick checks of the samples still present in the lab indicate that the vast majority are from the biodome itself, rather than any planet in the system.
@@ -449,7 +472,7 @@ vulp_exploreBiodomeUtopia1,DialogOptionSelected,$option == vulp_exploreBiodomeUt
 In the meantime, the office teams have reported a breakthrough. The computers aren't wiped, and several have responded to older security codes that leaked to the public after the Qaras takeover.",vulp_exploreBiodomeUtopia2:Continue,
 vulp_exploreBiodomeUtopia2,DialogOptionSelected,$option == vulp_exploreBiodomeUtopia2,,"Internal communications show tension between the Eridani and Exodyne staff. Apparently the Eridani crew was responsible for maintaining the biodome's conditions as close as possible to a habitable planetary environment.
 
-The Exodyne crew, on the other hand, was of the opinion that Eridani wasn't doing a good enough job. They kept requesting minor tweaks that ran the Eridani crew ragged as they tried to keep up.",vulp_exploreBiodomeUtopia3:Continue,
+The Exodyne crew, on the other hand, kept insisting that the conditions were not sufficient for their growth vats to work flawlessly. They kept requesting minor tweaks that ran the Eridani crew ragged as they tried to keep up.",vulp_exploreBiodomeUtopia3:Continue,
 vulp_exploreBiodomeUtopia3,DialogOptionSelected,$option == vulp_exploreBiodomeUtopia3,"SetStoryOption vulp_exploreBiodomeUtopiaStory general ""Discovered the location of some soil nanites""","The very environmental controls Eridani used should be controllable from this office, but all attempts so far have been rebuffed by a security program that doesn't respond to any known codes.
 
 Error messages indicate that it should be possible for the vessel's bridge crew to override the system. Something to be done once a team arrives at the CIC.","vulp_exploreBiodomeHubReturn:Conclude the search
@@ -484,7 +507,8 @@ Needless to say, this is behavior that you've never seen from a spacer.",vulp_ex
 vulp_exploreBiodomeSuburb2,DialogOptionSelected,$option == vulp_exploreBiodomeSuburb2,,"The home interiors are orderly and well-kept, but your ops chief is able to point out signs of an evacuation. Small and sentimental items are notably absent, while larger items have been left behind.
 
 Unfortunately personal computers number among the items that the inhabitents took with them, preventing much concrete information from being recovered.",vulp_exploreBiodomeSuburb3:Continue,
-vulp_exploreBiodomeSuburb3,DialogOptionSelected,$option == vulp_exploreBiodomeSuburb3,AddCredits 10000,"With little in the way of informational wealth, your salvors turn to material. They begin carrying out anything that appears particularly valuable, with ops keeping a close eye on helmet feeds to ensure nobody gets too loot-happy.
+vulp_exploreBiodomeSuburb3,DialogOptionSelected,$option == vulp_exploreBiodomeSuburb3,"AddCommodity domestic_goods 50
+AddCommodity luxury_goods 20","With little in the way of informational wealth, your salvors turn to material. They begin carrying out anything that appears particularly valuable, with ops keeping a close eye on helmet feeds to ensure nobody gets too loot-happy.
 
 The crew raises virtually no protest as your teams strip these centuries-old homes bare, requiring only an assurance that the removed goods will be put to good use.",vulp_exploreBiodomeHubReturn:Conclude the search,
 ,,,,,,
