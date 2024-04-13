@@ -32,6 +32,7 @@ import com.fs.starfarer.api.impl.campaign.ids.Entities;
 import com.fs.starfarer.api.impl.campaign.ids.Factions;
 import com.fs.starfarer.api.impl.campaign.ids.FleetTypes;
 import com.fs.starfarer.api.impl.campaign.ids.HullMods;
+import com.fs.starfarer.api.impl.campaign.ids.Industries;
 import com.fs.starfarer.api.impl.campaign.ids.Items;
 import com.fs.starfarer.api.impl.campaign.ids.MemFlags;
 import com.fs.starfarer.api.impl.campaign.ids.Tags;
@@ -474,6 +475,9 @@ public class VulpoidBiofactoryMission extends HubMissionWithSearch implements Fl
             SectorEntityToken entity = SpecialItemOfferCreator.createEntity(new Random());
             SpecialItemOffer offer = new SpecialItemOffer(entity, 2, Items.SOIL_NANITES);
             offer.init(dialog);
+        }
+        else if("generateExodyneBonus".equals(action)) {
+            Global.getSector().getPlayerFaction().addKnownIndustry(Industries.POPULATION);
         }
         else {
             return super.callEvent(ruleId, dialog, params, memoryMap);

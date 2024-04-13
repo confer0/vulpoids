@@ -413,7 +413,8 @@ vulp_exploreBiodomeExodyne5,DialogOptionSelected,$option == vulp_exploreBiodomeE
 Your science officer points out different regions to you, explaining which ones appear under and over-developed relative to a standard human.
 
 Their language and social centers are fairly impressive, and appear to have strong connections to their own emotional state. Logical reasoning, on the other hand, is fairly flimsy. Science even tenatively suggests that certain structures resemble a hardware implementation of the loyalty-assurance algorithms used in delta-level AI.",vulp_exploreBiodomeExodyne6:Continue,
-vulp_exploreBiodomeExodyne6,DialogOptionSelected,$option == vulp_exploreBiodomeExodyne6,AddRemoveAnyItem SPECIAL industry_bp population 1,"Other minor physical traits are noted and cataloged. A nerve cluster on the back of the neck to link to the hypothalamus, possibly inducing sleep or social affection. This fact is passed on to the security teams.
+vulp_exploreBiodomeExodyne6,DialogOptionSelected,$option == vulp_exploreBiodomeExodyne6,"AddRemoveAnyItem SPECIAL industry_bp population 1
+Call $global.vulpFactory_ref generateExodyneBonus","Other minor physical traits are noted and cataloged. A nerve cluster on the back of the neck to link to the hypothalamus, possibly inducing sleep or social affection. This fact is passed on to the security teams.
 
 Little else of note is discovered within the Exodyne facilities. The next-most exciting find is a high-level specification on the technologies and techniques used to maintain the arcology's infrastructure. Unfortunately, there's little within that isn't already reflected in the Sector's colonization techniques.",vulp_exploreBiodomeHubReturn:Conclude the search,
 ,,,,,,
