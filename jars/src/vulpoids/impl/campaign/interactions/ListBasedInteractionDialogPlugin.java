@@ -108,6 +108,7 @@ public abstract class ListBasedInteractionDialogPlugin implements InteractionDia
         }
         
         if (!delegated) {
+            if(text!=null) dialog.addOptionSelectedText(optionData);
             lastNonRuleOption = optionData;
             
             if(optionData instanceof OptionId) {
