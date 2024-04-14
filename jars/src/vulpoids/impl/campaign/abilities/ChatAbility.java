@@ -4,13 +4,13 @@ import com.fs.starfarer.api.Global;
 import com.fs.starfarer.api.campaign.SectorEntityToken;
 import com.fs.starfarer.api.impl.campaign.abilities.BaseDurationAbility;
 import com.fs.starfarer.api.ui.TooltipMakerAPI;
-import vulpoids.impl.campaign.ProfectoInteractionDialogPlugin;
+import vulpoids.impl.campaign.interactions.VulpoidChatTopDialogPlugin;
 import vulpoids.impl.campaign.ids.Vulpoids;
 
 public class ChatAbility extends BaseDurationAbility {
     @Override
     protected void activateImpl() {
-        ProfectoInteractionDialogPlugin plugin = new ProfectoInteractionDialogPlugin();
+        VulpoidChatTopDialogPlugin plugin = new VulpoidChatTopDialogPlugin();
         SectorEntityToken target = Global.getFactory().createJumpPoint("vulpoidconversation_dummyjumppoint", "DUMMY");
         Global.getSector().getCampaignUI().showInteractionDialog(plugin, target);
         
