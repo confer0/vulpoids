@@ -1,9 +1,13 @@
 package vulpoids.impl.campaign.abilities;
 
 import com.fs.starfarer.api.Global;
+import com.fs.starfarer.api.campaign.CargoStackAPI;
 import com.fs.starfarer.api.campaign.SectorEntityToken;
 import com.fs.starfarer.api.impl.campaign.abilities.BaseDurationAbility;
 import com.fs.starfarer.api.ui.TooltipMakerAPI;
+import com.fs.starfarer.api.util.Misc;
+import java.awt.Color;
+import vulpoids.campaign.impl.items.VulpoidPlugin;
 import vulpoids.impl.campaign.interactions.VulpoidChatTopDialogPlugin;
 import vulpoids.impl.campaign.ids.Vulpoids;
 
@@ -20,8 +24,12 @@ public class ChatAbility extends BaseDurationAbility {
     
     @Override
     public boolean isUsable() {
-        // TODO - require Vulpoids
-        return true;
+        if (!Global.getSector().getMemoryWithoutUpdate().getBoolean("$vulp_didInterrogation")) return true;
+        for (CargoStackAPI stack : Global.getSector().getPlayerFleet().getCargo().getStacksCopy()) {
+            if(Vulpoids.CARGO_ITEM.equals(stack.getCommodityId())) return true;
+            if(stack.getPlugin() instanceof VulpoidPlugin) return true;
+        }
+        return false;
     }
     
     @Override
@@ -33,6 +41,9 @@ public class ChatAbility extends BaseDurationAbility {
         } else {
             tooltip.addTitle("Interrogate the Captain");
             tooltip.addPara("You've captured the captain of the Exodyne ship. Now you just need to get your answers.", pad);
+        }
+        if(!isUsable()) {
+            tooltip.addPara("There are no Vulpoids aboard your fleet.", Misc.getNegativeHighlightColor(), pad);
         }
     }
     
