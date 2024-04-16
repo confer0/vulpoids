@@ -35,7 +35,8 @@ public class BaseWorkforce extends BaseMarketConditionPlugin {
             int virtual = 0;
             if(for_placement) virtual = 1;
             if(market.getMemoryWithoutUpdate().getInt(Vulpoids.KEY_WORKFORCES) + virtual > market.getMemoryWithoutUpdate().getInt(Vulpoids.KEY_WORKFORCE_CAP)) unmet_requirements.add("sufficient workforce capacity");
-            int vulp_pop = ((VulpoidPopulation)market.getCondition(Vulpoids.CONDITION_VULPOID_POPULATION).getPlugin()).getPopulation();
+            int vulp_pop = 0;
+            if(market.hasCondition(Vulpoids.CONDITION_VULPOID_POPULATION)) vulp_pop = ((VulpoidPopulation)market.getCondition(Vulpoids.CONDITION_VULPOID_POPULATION).getPlugin()).getPopulation();
             for (String requirement : getRequirements()) {
                 switch(requirement) {
                     case VULP_POP_6: if(vulp_pop<6) {unmet_requirements.add(VULP_POP_6);} break;

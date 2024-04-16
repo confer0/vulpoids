@@ -47,6 +47,7 @@ public class Vulpoids {
     
     public static final String CONDITION_VULPOID_DEMAND = "vulpoid_demand";
     public static final String CONDITION_VULPOID_POPULATION = "vulpoid_population";
+    public static final String CONDITION_VULPOID_BLOCKADE = "vulpoid_blockade";
     
     public static final String SKILL_OFFICER = "vulpoid_officer";
     public static final String SKILL_ADMIN = "vulpoid_brain";

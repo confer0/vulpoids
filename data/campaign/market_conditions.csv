@@ -3,6 +3,8 @@ Vulpoid Population,vulpoid_condition,,TRUE,vulpoids.impl.campaign.econ.VulpoidCo
 Vulpoid Demand,vulpoid_demand,,,vulpoids.impl.campaign.econ.VulpoidDemandCondition,Hidden condition that adds Vulpoid demand.,,1000
 Vulpoid Population,vulpoid_population,,TRUE,vulpoids.impl.campaign.econ.VulpoidPopulation,,,30
 ,,,,,,,
+Anti-Vulpoid Sanctions,vulpoid_blockade,,TRUE,vulpoids.impl.campaign.econ.VulpoidBlockade,"Political sanctions and religious proclamations regarding Vulpoid manufacture are significantly impairing trade to and from $market. Any prospective trader is forced to cut through massive swathes of red tape, and any failure to abide by the strict and convoluted regulations could see the revocation of licenses or even seizure of assets.",graphics/icons/campaign/vulpoidAcceptance_sanctions.png,1390
+,,,,,,,
 Vulpoid Customs Agents,vulpoid_traders,,TRUE,vulpoids.impl.campaign.econ.workforces.TraderWorkforce,"Effective customer service work at spaceports requires a working knowledge of cargo logistics and spacecraft operations. While Vulpoids may not be able to handle everything, with enough training they can still serve as effective tier-one support.
 
 A spaceport catered by Vulpoids will provide a top-tier experience for visiting traders, and encourage them to visit more frequently even if another port might offer slightly higher profits. Those lost margins end up bolstering colony revenue instead.",graphics/icons/markets/workforce_traders.png,31

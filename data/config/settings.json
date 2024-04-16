@@ -59,6 +59,14 @@
 			"vulp_shiny_sugar":"graphics/icons/cargo/vulpoids/vulpoid_sugar.png",
 			"vulp_laisa":"graphics/icons/cargo/vulpoids/vulpoid_laisa.png",
 		},
+		"events":{
+			"vulpoidAcceptance_icon":"graphics/icons/campaign/vulpoidAcceptance_icon.png",
+			"vulpoidAcceptance_sanctions":"graphics/icons/campaign/vulpoidAcceptance_sanctions.png",
+			"vulpoidAcceptance_sanctionsLifted":"graphics/icons/campaign/vulpoidAcceptance_sanctionsLifted.png",
+			"vulpoidAcceptance_knightAttack":"graphics/icons/campaign/vulpoidAcceptance_knightAttack.png",
+			"vulpoidAcceptance_knightBombardment":"graphics/icons/campaign/vulpoidAcceptance_knightBombardment.png",
+			"vulpoidAcceptance_success":"graphics/icons/campaign/vulpoidAcceptance_success.png",
+		}
 	}
 }
 

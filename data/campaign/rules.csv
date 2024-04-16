@@ -1034,7 +1034,7 @@ FireBest DialogOptionSelected",,,,
 vulp_interrogationLeave,DialogOptionSelected,$option == vulp_interrogationLeave,"HideVisual
 $global.vulp_didInterrogation = true
 $global.vulp_didInterrogationForMission = true
-Call $global.vulpFactory_ref updateStage","Returning to the bridge, you double-check the override codes you received from Laisa. Once input into the Rellrait's computers, you should have access to both the ship itself, and the bioforge.",vulpChat_exit:Leave,,
+Call $global.vulpFactory_ref updateStage","Returning to the bridge, you double-check the override codes you received from Laisa. Once input into the Rellrait's computers, you should have access to both the ship itself, and the bioforge.",defaultLeave:Leave,,
 ,,,,,,,
 ,,,,,,,
 ,,,,,,,
