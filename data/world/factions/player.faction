@@ -1,0 +1,18 @@
+{
+	id:"player",
+	
+	"flags":[
+		{
+			"logo":"graphics/factions/custom/player_logo_vulp1_flag.png",
+			"crest":"graphics/factions/custom/player_logo_vulp1_crest.png"
+		},
+		{
+			"logo":"graphics/factions/custom/player_logo_vulp2_flag.png",
+			"crest":"graphics/factions/custom/player_logo_vulp2_crest.png"
+		},
+		{
+			"logo":"graphics/factions/custom/player_logo_vulp3_flag.png",
+			"crest":"graphics/factions/custom/player_logo_vulp3_crest.png"
+		},
+	]
+},

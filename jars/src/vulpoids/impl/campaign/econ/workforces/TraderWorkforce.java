@@ -9,7 +9,7 @@ public class TraderWorkforce extends BaseWorkforce {
     public void apply(String id) {
         super.apply(id);
         if(shouldApply()) {
-            market.getIncomeMult().modifyPercent(id, INCOME_BONUS, "Vulpoid customs agents");
+            market.getIncomeMult().modifyPercent(id, INCOME_BONUS, getName());
         }
     }
     @Override
@@ -22,7 +22,7 @@ public class TraderWorkforce extends BaseWorkforce {
         super.createTooltipAfterDescription(tooltip, expanded);
         if(shouldApply()) {
             float opad = 10f;
-            tooltip.addPara("Our Vulpoids are catering to visiting traders at the spaceports, offering free headpats and encouraging more trade.", opad);
+            //tooltip.addPara("Our Vulpoids are catering to visiting traders at the spaceports, offering free headpats and encouraging more trade.", opad);
             tooltip.addPara("%s colony income", opad, Misc.getHighlightColor(), "+" + (int)INCOME_BONUS + "%");
         }
     }

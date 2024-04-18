@@ -27,7 +27,8 @@ public class VulpoidPopulation extends BaseMarketConditionPlugin implements Mark
     
     private int workforce_cap = 0;
     final int MIN_POPULATION_FOR_WORKFORCE = 3;
-    final float POPULATION_WORKFORCE_MULT = 0.5f; // 3>0, 4>1, 5>1, 6>2, 7>3.
+    //final float POPULATION_WORKFORCE_MULT = 0.5f; // 3>0, 4>1, 5>1, 6>2, 7>3.
+    final float POPULATION_WORKFORCE_MULT = 1; // 3>1, 4>2, 5>3, 6>4, 7>4.
     final int MAX_WORKFORCE_CAP = 4;
     
     final int MIN_AVAILABILITY = -6;  // 1 Vulpoid per 1M Humans
@@ -117,11 +118,13 @@ public class VulpoidPopulation extends BaseMarketConditionPlugin implements Mark
         advance(0);
         if(!market.getMemoryWithoutUpdate().contains(Vulpoids.KEY_WORKFORCES)) market.getMemoryWithoutUpdate().set(Vulpoids.KEY_WORKFORCES, 0);
         market.getMemoryWithoutUpdate().set(Vulpoids.KEY_WORKFORCE_CAP, workforce_cap);
-        PersonAPI vulpoid_comms = VulpoidCreator.createVulpoid();
-        vulpoid_comms.setId("vulpoid_rep");
-        vulpoid_comms.setName(new FullName("Vulpoid Representative", "", FullName.Gender.FEMALE));
-        vulpoid_comms.getMemoryWithoutUpdate().set("$isVulpoidRep", true);
-        market.getCommDirectory().addPerson(vulpoid_comms);
+        if(market.isPlayerOwned()) {
+            PersonAPI vulpoid_comms = VulpoidCreator.createVulpoid();
+            vulpoid_comms.setId("vulpoid_rep");
+            vulpoid_comms.setName(new FullName("Vulpoid Representative", "", FullName.Gender.FEMALE));
+            vulpoid_comms.getMemoryWithoutUpdate().set("$isVulpoidRep", true);
+            market.getCommDirectory().addPerson(vulpoid_comms);
+        }
         
         market.getStability().modifyFlat(id, getAvailabilityStability(), "Vulpoid Availability");
         market.addTransientImmigrationModifier(this);
@@ -129,7 +132,7 @@ public class VulpoidPopulation extends BaseMarketConditionPlugin implements Mark
 
     @Override
     public void unapply(String id) {
-        market.getCommDirectory().removeEntry(market.getCommDirectory().getEntryForPerson("vulpoid_rep"));
+        if(market.getCommDirectory().getEntryForPerson("vulpoid_rep")!=null) market.getCommDirectory().removeEntry(market.getCommDirectory().getEntryForPerson("vulpoid_rep"));
         market.removeTransientImmigrationModifier(this);
     }
     

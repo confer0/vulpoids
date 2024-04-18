@@ -18,7 +18,7 @@ public class ClerkWorkforce extends BaseWorkforce {
         super.apply(id);
         if(shouldApply()) {
             market.getStats().getDynamic().getMod(Stats.MAX_INDUSTRIES).modifyFlat(id, BONUS_INDUSTRIES);
-            market.getIncomeMult().modifyMult(id, INCOME_MULT, "Vulpoid Clerks");
+            market.getIncomeMult().modifyMult(id, INCOME_MULT, getName());
         }
     }
     @Override
@@ -32,7 +32,7 @@ public class ClerkWorkforce extends BaseWorkforce {
         super.createTooltipAfterDescription(tooltip, expanded);
         if(shouldApply()) {
             float opad = 10f;
-            tooltip.addPara("Our Vulpoids are working client service and basic white-collar jobs, freeing human workers for higher-skilled labor.", opad);
+            //tooltip.addPara("Our Vulpoids are working client service and basic white-collar jobs, freeing human workers for higher-skilled labor.", opad);
             tooltip.addPara("%s available industries", opad, Misc.getHighlightColor(), "+" + BONUS_INDUSTRIES);
             tooltip.addPara("%s colony income", opad, Misc.getNegativeHighlightColor(), "x" + INCOME_MULT);
         }

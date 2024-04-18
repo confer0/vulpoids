@@ -178,7 +178,7 @@ public class VulpoidAcceptanceEventIntel extends BaseEventIntel {
         if (stageId == Stage.START) {
             LabelAPI label = info.addPara("Vulpoids have been reintroduced to the Sector. The "+
                     "Hegemony and Luddic Church have banned them as a matter of course, but it will take a continuous "+
-                    "supply before major factions feel the need to establish an official stance.", opad);
+                    "supply before other major factions feel the need to establish an official stance.", opad);
             label.setHighlight("Hegemony", "Luddic Church");
             label.setHighlightColors(heg, lc);
             info.addPara("It should be possible to drive their acceptance %s by seeking out parties who "+

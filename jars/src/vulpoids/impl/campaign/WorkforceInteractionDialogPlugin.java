@@ -11,12 +11,14 @@ import com.fs.starfarer.api.campaign.VisualPanelAPI;
 import com.fs.starfarer.api.campaign.econ.MarketAPI;
 import com.fs.starfarer.api.campaign.rules.MemKeys;
 import com.fs.starfarer.api.campaign.rules.MemoryAPI;
+import com.fs.starfarer.api.characters.MarketConditionSpecAPI;
 import com.fs.starfarer.api.combat.EngagementResultAPI;
 import com.fs.starfarer.api.impl.campaign.DevMenuOptions;
 import com.fs.starfarer.api.impl.campaign.RuleBasedInteractionDialogPluginImpl;
 import com.fs.starfarer.api.impl.campaign.rulecmd.FireAll;
 import com.fs.starfarer.api.util.Misc;
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,18 +26,6 @@ import vulpoids.impl.campaign.econ.workforces.*;
 
 
 public class WorkforceInteractionDialogPlugin implements InteractionDialogPlugin {
-    
-    /*private static enum OptionId {
-        INIT,
-        ADD_STABLE_CONFIRM,
-        ADD_STABLE_DESCRIBE,
-        //SCAN_BlACK_HOLE,
-        DUMP_PLANETKILLER,
-        DUMP_PLANETKILLER_ON_SECOND_THOUGHT,
-        DUMP_PLANETKILLER_CONT_1,
-        ADD_STABLE_NEVER_MIND,
-        LEAVE,
-    }*/
     
     private InteractionDialogAPI dialog;
     private TextPanelAPI textPanel;
@@ -45,22 +35,7 @@ public class WorkforceInteractionDialogPlugin implements InteractionDialogPlugin
     private MarketAPI market;
     
     Map<BaseWorkforce, Boolean> plugins;
-    String[] conditions = new String[] {
-        "vulpoid_traders",
-        "vulpoid_security",
-        "vulpoid_miners",
-        "vulpoid_maintenance",
-        "vulpoid_servants",
-        "vulpoid_clerks",
-    };
-    /*Class[] test = new Class[]{
-        TraderWorkforce.class,
-        SecurityWorkforce.class,
-        MinerWorkforce.class,
-        ClerkWorkforce.class,
-        MaintenanceWorkforce.class,
-        ServantWorkforce.class,
-    };*/
+    List<String> conditions;
     
     @Override
     public void init(InteractionDialogAPI dialog) {
@@ -70,15 +45,15 @@ public class WorkforceInteractionDialogPlugin implements InteractionDialogPlugin
         visual = dialog.getVisualPanel();
         market = dialog.getInteractionTarget().getMarket();
         
-        //visual.setVisualFade(0.25f, 0.25f);
-
-        /*if (planet.getCustomInteractionDialogImageVisual() != null) {
-                visual.showImageVisual(planet.getCustomInteractionDialogImageVisual());
-        } else {
-                if (!Global.getSettings().getBoolean("3dPlanetBGInInteractionDialog")) {
-                        visual.showPlanetInfo(planet);
+        conditions = new ArrayList<String>();
+        for (MarketConditionSpecAPI spec : Global.getSettings().getAllMarketConditionSpecs()) {
+            try {
+                Class conditionClass = Class.forName(spec.getScriptClass());
+                if(conditionClass!=null && BaseWorkforce.class.isAssignableFrom(conditionClass)) {
+                    conditions.add(spec.getId());
                 }
-        }*/
+            } catch (ClassNotFoundException ex) {}
+        }
         
         dialog.setOptionOnEscape("Leave", "LEAVE");
 

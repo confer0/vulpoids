@@ -18,16 +18,8 @@ public class MakeVulpoidsIllegal extends BaseCommandPlugin {
 
     public boolean execute(String ruleId, InteractionDialogAPI dialog, List<Token> params, Map<String, MemoryAPI> memoryMap) {
         
-        /*for(FactionAPI faction : Global.getSector().getAllFactions()) {
-            if(faction.getCustomBoolean("vulpoidsAlwaysIllegal")) {
-                faction.makeCommodityIllegal("vulpoids");
-            } else if(!faction.getCustomBoolean("vulpoidsAlwaysLegal") && faction.isIllegal("ai_cores")) {
-                //faction.makeCommodityIllegal("vulpoids_shiny");
-            }
-        }*/
-        
         new VulpoidAcceptanceEventIntel(null, true);
-
+        
         return true;
     }
 

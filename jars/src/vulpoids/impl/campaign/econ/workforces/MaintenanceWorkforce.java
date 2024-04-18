@@ -15,7 +15,7 @@ public class MaintenanceWorkforce extends BaseWorkforce {
     public void apply(String id) {
         super.apply(id);
         if(shouldApply()) {
-            market.getAccessibilityMod().modifyFlat(id, ACCESS_BONUS/100f, "Vulpoid Orbital Workers");
+            market.getAccessibilityMod().modifyFlat(id, ACCESS_BONUS/100f, getName());
         }
     }
     @Override
@@ -28,7 +28,7 @@ public class MaintenanceWorkforce extends BaseWorkforce {
         super.createTooltipAfterDescription(tooltip, expanded);
         if(shouldApply()) {
             float opad = 10f;
-            tooltip.addPara("Our Vulpoids are assisting in orbital operations and stellar communications, greatly improving logistics.", opad);
+            //tooltip.addPara("Our Vulpoids are assisting in orbital operations and stellar communications, greatly improving logistics.", opad);
             tooltip.addPara("%s colony accessibility", opad, Misc.getHighlightColor(), "+"+ACCESS_BONUS+"%");
         }
     }

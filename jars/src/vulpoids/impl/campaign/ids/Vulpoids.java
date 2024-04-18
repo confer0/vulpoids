@@ -5,6 +5,7 @@ public class Vulpoids {
     
     public static final String BIOFORGE_ITEM = "vulpoid_biofactory";
     public static final String CORRUPT_BIOFORGE_ITEM = "vulpoid_biofactory_broken";
+    public static final String AIR_FILTER_ITEM = "air_filter_core";
     
     public static final String INDUSTRY_ORGANFARM = "organfarms";
     public static final String INDUSTRY_BIOFACILITY = "biofacility";
@@ -48,6 +49,7 @@ public class Vulpoids {
     public static final String CONDITION_VULPOID_DEMAND = "vulpoid_demand";
     public static final String CONDITION_VULPOID_POPULATION = "vulpoid_population";
     public static final String CONDITION_VULPOID_BLOCKADE = "vulpoid_blockade";
+    public static final String CONDITION_FILTERED_AIR = "filtered_air";
     
     public static final String SKILL_OFFICER = "vulpoid_officer";
     public static final String SKILL_ADMIN = "vulpoid_brain";

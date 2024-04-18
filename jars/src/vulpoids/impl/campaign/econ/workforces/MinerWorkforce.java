@@ -12,9 +12,9 @@ public class MinerWorkforce extends BaseWorkforce {
     public void apply(String id) {
         super.apply(id);
         if(shouldApply()) {
-            market.getStability().modifyFlat(id, STAB_PENALTY, "Vulpoid mine laborers");
+            market.getStability().modifyFlat(id, STAB_PENALTY, getName());
             Industry industry = market.getIndustry(Industries.MINING);
-            if(industry != null) industry.getSupplyBonusFromOther().modifyFlat(id, PROD_BONUS, "Vulpoid mine laborers");
+            if(industry != null) industry.getSupplyBonusFromOther().modifyFlat(id, PROD_BONUS, getName());
         }
     }
     @Override
@@ -31,7 +31,7 @@ public class MinerWorkforce extends BaseWorkforce {
         super.createTooltipAfterDescription(tooltip, expanded);
         if(shouldApply()) {
             float opad = 10f;
-            tooltip.addPara("Our Vulpoids labor alongside our miners. These fluffies yearn for the mines!", opad);
+            //tooltip.addPara("Our Vulpoids labor alongside our miners. These fluffies yearn for the mines!", opad);
             tooltip.addPara("%s mining production", opad, Misc.getHighlightColor(), "+" + PROD_BONUS);
             tooltip.addPara("%s stability", opad, Misc.getNegativeHighlightColor(), "" + STAB_PENALTY);
         }

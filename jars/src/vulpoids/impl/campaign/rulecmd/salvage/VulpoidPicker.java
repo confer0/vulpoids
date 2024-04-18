@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package vulpoids.impl.campaign.rulecmd.salvage;
 
 import com.fs.starfarer.api.Global;
@@ -23,10 +19,6 @@ import java.util.Map;
 import vulpoids.campaign.impl.items.VulpoidPlugin;
 import vulpoids.impl.campaign.ids.Vulpoids;
 
-/**
- *
- * @author Owner
- */
 public class VulpoidPicker extends BaseCommandPlugin {
     
     protected SectorEntityToken entity;

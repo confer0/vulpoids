@@ -19,10 +19,10 @@ public class ServantWorkforce extends BaseWorkforce {
     public void apply(String id) {
         super.apply(id);
         if(shouldApply()) {
-            market.getStability().modifyFlat(id, STABILITY_BONUS, "Vulpoid Servants");
-            market.getIndustry(Industries.POPULATION).getDemand(Commodities.DRUGS).getQuantity().modifyFlat(id, -DRUG_DEMAND_REDUCTION, "Vulpoid Servants");
+            market.getStability().modifyFlat(id, STABILITY_BONUS, getName());
+            market.getIndustry(Industries.POPULATION).getDemand(Commodities.DRUGS).getQuantity().modifyFlat(id, -DRUG_DEMAND_REDUCTION, getName());
             Industry mining = market.getIndustry(Industries.MINING);
-            if(mining!=null) mining.getDemand(Commodities.DRUGS).getQuantity().modifyFlat(id, -DRUG_DEMAND_REDUCTION, "Vulpoid Servants");
+            if(mining!=null) mining.getDemand(Commodities.DRUGS).getQuantity().modifyFlat(id, -DRUG_DEMAND_REDUCTION, getName());
         }
     }
     @Override
@@ -39,7 +39,7 @@ public class ServantWorkforce extends BaseWorkforce {
         super.createTooltipAfterDescription(tooltip, expanded);
         if(shouldApply()) {
             float opad = 10f;
-            tooltip.addPara("Our Vulpoids are distributed across households and public spaces, ensuring the entire population is attended to.", opad);
+            //tooltip.addPara("Our Vulpoids are distributed across households and public spaces, ensuring the entire population is attended to.", opad);
             tooltip.addPara("%s stability", opad, Misc.getHighlightColor(), "+"+STABILITY_BONUS);
             tooltip.addPara("%s recreational drugs demand", opad, Misc.getHighlightColor(), "-"+DRUG_DEMAND_REDUCTION);
         }

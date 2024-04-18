@@ -1039,6 +1039,53 @@ Call $global.vulpFactory_ref updateStage","Returning to the bridge, you double-c
 ,,,,,,,
 ,,,,,,,
 ,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+vulp_planetThreshold,OpenInteractionDialog,"$id == vulp_planetThreshold
+$vulp_planetThreshold score:1000",ShowDefaultVisual,,,,
+,,,,,,,
+vulp_bivouacFusionLamp,OpenInteractionDialog,$vulp_bivouacLamp score:2000,ShowDefaultVisual,"Your comms officer tries to establish a connection to the fusion lamp's governor interface, but the connection fails, leaving you with a blank display and the quiet hiss of static.
+
+Your sensors officer reports that the lamp appears to be sustained by a thin wisp of volatiles expelled up from the ice giant by its own magnetic field.
+
+Such a formation occurring naturally is all but impossible, yet there's no sign of any infrastructure to produce the effect. Perhaps some sort of Domain-era technology, buried deep in the giant's heart.",100:defaultLeave:Leave,,
+,,,,,,,
+#vulp_planetBivouac,OpenInteractionDialog,"$id == vulp_planetBivouac
+$vulp_planetBivouac score:1000",SalvageDefenderInteraction,Test Text,,,
+,,,ShowLargePlanet,,,,
+,,,,,,,
+,,,,,,,
+vulp_redPlanetOpenDialog,OpenInteractionDialog,$vulp_planetBivouac score:1000,"SalvageGenFromSeed
+ShowDefaultVisual
+FireBest SalvageCheckHostile","Your $shipOrFleet approaches $entityName.
+
+The sensors are having a hard time evaluating the tenuous megastructure enveloping its entire surface. Your sensors officer takes the initiative and applies some exotic parameters to the interferometer feed; inputs go green and a few seconds later the sub-AI tentatively identifies a stable planetary-scale energy field with highly unusual properties.",,,
+vulp_redPlanetOpenDialogReturn,OpenInteractionDialog,"$vulp_planetBivouac score:1000
+$gotAirFilterCore","ShowDefaultVisual
+SetShortcut defaultLeave ESCAPE","Your $shipOrFleet approaches $entityName.
+
+TODO: Text describing it for the second time, like alpha site","0:alphaSiteExplore1:Replay the recording
+100:defaultLeave:Leave",,
+vulp_defenderDesc,TriggerAutomatedDefenses,$vulp_planetBivouac score:1000,SalvageDefenderInteraction,"As your $shipOrFleet moves in closer, sensors detect multiple contacts rising up from the murky red depths.",,,
+vulp_continuePostDefenders,BeatDefendersContinue,$vulp_planetBivouac score:1000,,Your $shipOrFleet finishes its approach to $entityName without further incident.,0:salBeatDefendersContinue:Continue,,
+vulp_beatDefenders,BeginSalvage,$vulp_planetBivouac score:1000,SetShortcut defaultLeave ESCAPE,"Further scans reveal that the energy field is not entirely uniform - perhaps owing to a running-down power source - and your bridge crew is able to pick up a distress beacon transmitting from the surface.
+
+The transmission is set on repeat and garbled in ways that are indicative of aging equipment. You make out enough to gather that part of a research team was stranded here - at a secret Tri-Tachyon research facility - after the fully automated defenses over-weighed certain executive security contingency orders in the wake of one of the AI Wars and decided it was now imperative to shoot down any craft attempting to leave the planet.","0:vulp_explore:Send a salvage team down to the facility
+100:defaultLeave:Leave",,
+vulp_exploreFacility,DialogOptionSelected,$option == vulp_explore,,"A tiny shuttle with a jury-rigged shield generator darts through a spot failure in the shield. A landing at the primary control center is achieved without incident and the crew is able to deactivate the shield entirely upon breaching the facility. Follow-up shuttles with heavier equipment launch quickly thereafter, and soon the salvage operation is in full swing.",0:vulp_salvage:Pick through the salvage,,
+vulp_salvage,DialogOptionSelected,$option == vulp_salvage,"VulpUtopiaTerraformer genLoot
+$gotAirFilterCore = true",,,,
+,,,,,,,
+,,,,,,,
+UtopiaTerraformerDefeated,UtopiaTerraformerDefeated,,,TODO: Post-action text explaining how the fleet is weird.,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
 vulp_decivRecoverBiofactory,OpenInteractionDialog,$market.hasDecivBiofactory score:1000,"$market.hasDecivBiofactory = false
 AddRemoveAnyItem SPECIAL vulpoid_biofactory 1","$marketName has descended into chaos, and it appears that any Vulpoids left on the planet have been quickly snatched up by gangs of looters. No doubt a thriving slave market has already formed.
 
@@ -1099,11 +1146,14 @@ vulp_funFactAging,VulpFunFact,,,"""One of my sisters told me she went through a 
 vulp_funFactFruit,VulpFunFact,,,"""Have you ever smelled one of us? It's all nice and fruity, right? They say it's because of tiny plants in our fur, but I've never found any leaves, so I dunno!""",,,
 vulp_funFactSpaceSuit,VulpFunFact,,,"""I bet you wear space suits all the time, right? I know how to wear them, but they're so tight around the tail. It'd be nicer to not wear anything, but then you couldn't go to space!""",,,
 ,,,,,,,
-bar_descVulpoidLow,BarPrintDesc,"$market.mc:vulpoid_population
+bar_descVulpoidLow,BarPrintDesc,"$market.isPlayerOwned
+$market.mc:vulpoid_population
 $market.vulpoidPopulation <= 3",ShowImageVisual vulp_pop_low,"As you enter the bar you are buffeted by the human white-noise of conversation and revelry. Ad-holos buzz softly from ceiling-mounted units, shining garish highlights through glasses and bottles as spacer crews mingle with merchants and locals trading drinks for rumor, jobs, and opportunities. A few Vulpoids dart from table to table, distributing drinks and earnestly thanking catcallers for the 'compliments'.",,,
-bar_descVulpoidHigh,BarPrintDesc,"$market.mc:vulpoid_population
-$market.vulpoidPopulation >= 6",ShowImageVisual vulp_pop_high,"As you enter the bar you are buffeted by the human white-noise of conversation and revelry. Ad-holos buzz softly from ceiling-mounted units, shining garish highlights through glasses and bottles as spacer crews mingle with merchants and locals trading drinks for rumor, jobs, and opportunities. Vulpoids are manning the bar, serving food and drinks, and having cheery conversations with anyone who cares to.",,,
-bar_descVulpoidMed,BarPrintDesc,$market.mc:vulpoid_population,ShowImageVisual vulp_pop_med,"As you enter the bar you are buffeted by the human white-noise of conversation and revelry. Ad-holos buzz softly from ceiling-mounted units, shining garish highlights through glasses and bottles as spacer crews mingle with merchants and locals trading drinks for rumor, jobs, and opportunities. There's not a single place you can look where there aren't Vulpoids, who are almost competing with each other to be the first to answer to every person's whims.",,,
+bar_descVulpoidMed,BarPrintDesc,"$market.isPlayerOwned
+$market.mc:vulpoid_population",ShowImageVisual vulp_pop_med,"As you enter the bar you are buffeted by the human white-noise of conversation and revelry. Ad-holos buzz softly from ceiling-mounted units, shining garish highlights through glasses and bottles as spacer crews mingle with merchants and locals trading drinks for rumor, jobs, and opportunities. Vulpoids are manning the bar, serving food and drinks, and having cheery conversations with anyone who cares to.",,,
+bar_descVulpoidHigh,BarPrintDesc,"$market.isPlayerOwned
+$market.mc:vulpoid_population
+$market.vulpoidPopulation >= 6",ShowImageVisual vulp_pop_high,"As you enter the bar you are buffeted by the human white-noise of conversation and revelry. Ad-holos buzz softly from ceiling-mounted units, shining garish highlights through glasses and bottles as spacer crews mingle with merchants and locals trading drinks for rumor, jobs, and opportunities. There's not a single place you can look where there aren't Vulpoids, who are almost competing with each other to be the first to answer to every person's whims.",,,
 #vulp_barInteractionPrompt,AddBarEvents,$market.mc:vulpoid_population,"AddBarEvent vulp_barInteraction ""Talk to the Vulpoid"" ""One of the Vulpoids notices you, and quickly bounds up to see if you want anything.""",,,,
 #vulp_barInteraction,DialogOptionSelected,"$option == vulp_barInteraction
 !$printedFirstReturnGreeting","ShowPersonVisual false vulpoid_barmaid
