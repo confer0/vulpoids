@@ -169,20 +169,23 @@ public class VulpoidModPlugin extends BaseModPlugin {
         });
         
         ItemEffectsRepo.ITEM_EFFECTS.put(Vulpoids.AIR_FILTER_ITEM, new BaseInstallableItemEffect(Vulpoids.AIR_FILTER_ITEM) {
-            float carryOverPollutionRemovalTimer=0;
+            float carryOverPollutionRemovalTimer=-1;
             protected void addItemDescriptionImpl(Industry industry, TooltipMakerAPI text, SpecialItemData data,
                     InstallableItemDescriptionMode mode, String pre, float pad) {
                 text.addPara(pre + "Improves local atmospheric conditions.", pad);
             }
             public void apply(Industry industry) {
                 if(!industry.getMarket().hasCondition(Vulpoids.CONDITION_FILTERED_AIR)) industry.getMarket().addCondition(Vulpoids.CONDITION_FILTERED_AIR);
-                ((FilteredAir)industry.getMarket().getCondition(Vulpoids.CONDITION_FILTERED_AIR).getPlugin()).setPollutionRemovalTimer(carryOverPollutionRemovalTimer);
+                FilteredAir plugin = (FilteredAir)industry.getMarket().getCondition(Vulpoids.CONDITION_FILTERED_AIR).getPlugin();
+                if(carryOverPollutionRemovalTimer!=-1) plugin.setPollutionRemovalTimer(carryOverPollutionRemovalTimer);
+                if(plugin.shouldRemovePollution()) industry.getMarket().removeCondition(Conditions.POLLUTION);
             }
             public void unapply(Industry industry) {
                 if(industry.getMarket().hasCondition(Vulpoids.CONDITION_FILTERED_AIR)) {
                     carryOverPollutionRemovalTimer = ((FilteredAir)industry.getMarket().getCondition(Vulpoids.CONDITION_FILTERED_AIR).getPlugin()).getPollutionRemovalTimer();
+                } else {
+                    carryOverPollutionRemovalTimer = -1;
                 }
-                if(carryOverPollutionRemovalTimer==0) industry.getMarket().removeCondition(Conditions.POLLUTION);
                 industry.getMarket().removeCondition(Vulpoids.CONDITION_FILTERED_AIR);
             }
             @Override
