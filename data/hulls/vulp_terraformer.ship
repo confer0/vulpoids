@@ -99,7 +99,11 @@
 		271,
 		20
     ],
-    "builtInMods": ["advancedoptics"],
+    "builtInMods": [
+		"advancedcore",
+		"missile_reload",
+		"surveying_equipment"
+	],
     "center": [
         161,
         155
