@@ -16,7 +16,20 @@ public class FilteredAir extends BaseMarketConditionPlugin {
     };
     float HAZARD_IF_COMFORTABLE = -0.25f;
     
-    // TODO TIMER TO REMOVE POLLUTION
+    float DAYS_TO_REMOVE_POLLUTION = 5;
+    float pollutionRemovalTimer = DAYS_TO_REMOVE_POLLUTION;
+    @Override
+    public void advance(float amount) {
+        //if(pollutionRemovalTimer==0 && market.hasCondition(Conditions.POLLUTION)) pollutionRemovalTimer = DAYS_TO_REMOVE_POLLUTION;
+        pollutionRemovalTimer -= Misc.getDays(amount);
+        if(pollutionRemovalTimer<=0) pollutionRemovalTimer = 0;
+        if(!market.hasCondition(Conditions.POLLUTION)) pollutionRemovalTimer = 0;
+    }
+    public float getPollutionRemovalTimer() {return pollutionRemovalTimer;}
+    public void setPollutionRemovalTimer(float amount) {pollutionRemovalTimer=amount;}
+    public boolean shouldRemovePollution() {
+        return pollutionRemovalTimer<=0;
+    }
     
     public void apply(String id) {
         boolean nothingSuppressed = true;
@@ -52,5 +65,11 @@ public class FilteredAir extends BaseMarketConditionPlugin {
         } else {
             tooltip.addPara("Countering the effects of " + Misc.getAndJoined(conds) + ".", 10f);
         }
+        if(pollutionRemovalTimer>0 && market.hasCondition(Conditions.POLLUTION)) {
+            tooltip.addPara("%s days until pollution removal", 10f, Misc.getHighlightColor(), (int)(pollutionRemovalTimer)+"");
+        }
     }
+    
+    @Override
+    public boolean isTransient() {return false;}
 }

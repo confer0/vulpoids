@@ -17,10 +17,12 @@ import com.fs.starfarer.api.characters.FullName;
 import com.fs.starfarer.api.characters.ImportantPeopleAPI;
 import com.fs.starfarer.api.characters.PersonAPI;
 import com.fs.starfarer.api.impl.campaign.ids.Commodities;
+import com.fs.starfarer.api.impl.campaign.ids.Conditions;
 import com.fs.starfarer.api.impl.campaign.ids.MemFlags;
 import com.fs.starfarer.api.impl.campaign.ids.Ranks;
 import com.fs.starfarer.api.impl.campaign.ids.Skills;
 import vulpoids.impl.campaign.VulpoidCreator;
+import vulpoids.impl.campaign.econ.FilteredAir;
 import vulpoids.impl.campaign.ids.Vulpoids;
 
 public class VulpoidModPlugin extends BaseModPlugin {
@@ -167,14 +169,20 @@ public class VulpoidModPlugin extends BaseModPlugin {
         });
         
         ItemEffectsRepo.ITEM_EFFECTS.put(Vulpoids.AIR_FILTER_ITEM, new BaseInstallableItemEffect(Vulpoids.AIR_FILTER_ITEM) {
+            float carryOverPollutionRemovalTimer=0;
             protected void addItemDescriptionImpl(Industry industry, TooltipMakerAPI text, SpecialItemData data,
                     InstallableItemDescriptionMode mode, String pre, float pad) {
                 text.addPara(pre + "Improves local atmospheric conditions.", pad);
             }
             public void apply(Industry industry) {
                 if(!industry.getMarket().hasCondition(Vulpoids.CONDITION_FILTERED_AIR)) industry.getMarket().addCondition(Vulpoids.CONDITION_FILTERED_AIR);
+                ((FilteredAir)industry.getMarket().getCondition(Vulpoids.CONDITION_FILTERED_AIR).getPlugin()).setPollutionRemovalTimer(carryOverPollutionRemovalTimer);
             }
             public void unapply(Industry industry) {
+                if(industry.getMarket().hasCondition(Vulpoids.CONDITION_FILTERED_AIR)) {
+                    carryOverPollutionRemovalTimer = ((FilteredAir)industry.getMarket().getCondition(Vulpoids.CONDITION_FILTERED_AIR).getPlugin()).getPollutionRemovalTimer();
+                }
+                if(carryOverPollutionRemovalTimer==0) industry.getMarket().removeCondition(Conditions.POLLUTION);
                 industry.getMarket().removeCondition(Vulpoids.CONDITION_FILTERED_AIR);
             }
             @Override
