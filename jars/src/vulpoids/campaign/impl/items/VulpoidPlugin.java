@@ -19,13 +19,11 @@ import com.fs.starfarer.api.fleet.FleetMemberAPI;
 import com.fs.starfarer.api.graphics.SpriteAPI;
 import com.fs.starfarer.api.impl.campaign.ids.Skills;
 import com.fs.starfarer.api.ui.Alignment;
-import com.fs.starfarer.api.ui.Fonts;
 import com.fs.starfarer.api.ui.TooltipMakerAPI;
 import com.fs.starfarer.api.util.Misc;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.List;
 import java.util.Random;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -385,7 +383,7 @@ public class VulpoidPlugin extends BaseSpecialItemPlugin {
         
         String assignment_title = "Assignment";
         switch(getId()) {
-            case Vulpoids.SPECIAL_ITEM_DEFAULT: assignment_title = "No Assignment"; break;
+            case Vulpoids.SPECIAL_ITEM_DEFAULT: assignment_title = "Stored in Cryosleep"; break;
             case Vulpoids.SPECIAL_ITEM_EMBARKED: assignment_title = "Embarked on Fleet"; break;
             case Vulpoids.SPECIAL_ITEM_OFFICER: assignment_title = "Serving as Officer"; break;
             case Vulpoids.SPECIAL_ITEM_ADMIN: assignment_title = "Serving as Administrator"; break;
@@ -514,6 +512,10 @@ public class VulpoidPlugin extends BaseSpecialItemPlugin {
     public String disallowCycleReason() {
         if (!isInPlayerCargo()) return "Not currently in your fleet.";
         
+        if(getId().equals(Vulpoids.SPECIAL_ITEM_EMBARKED)) {
+            if(person.getMemoryWithoutUpdate().contains(Vulpoids.KEY_RESEARCH_PROJECT)) return "Currently performing research.";
+        }
+        
         if(getId().equals(Vulpoids.SPECIAL_ITEM_OFFICER)) {
             for (FleetMemberAPI ship : Global.getSector().getPlayerFleet().getFleetData().getMembersListCopy()) {
                 if (ship.getCaptain()!=null && person.getId().equals(ship.getCaptain().getId())) return "Currently captaining the "+ship.getShipName()+".";
@@ -521,11 +523,6 @@ public class VulpoidPlugin extends BaseSpecialItemPlugin {
         }
         
         if(getId().equals(Vulpoids.SPECIAL_ITEM_ADMIN)) {
-            /*for (AdminData admin : Global.getSector().getCharacterData().getAdmins()) {
-                if (person.getId().equals(admin.getPerson().getId())) {
-                    if (admin.getMarket() != null) return "Currently administrating "+admin.getMarket().getName()+".";
-                }
-            }*/
             if (person.getMarket()!=null) return "Currently administrating "+person.getMarket().getName()+".";
         }
         

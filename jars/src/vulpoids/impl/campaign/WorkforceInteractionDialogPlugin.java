@@ -18,10 +18,14 @@ import com.fs.starfarer.api.impl.campaign.RuleBasedInteractionDialogPluginImpl;
 import com.fs.starfarer.api.impl.campaign.rulecmd.FireAll;
 import com.fs.starfarer.api.util.Misc;
 import java.awt.Color;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import vulpoids.impl.campaign.econ.workforces.*;
 
 
@@ -50,7 +54,10 @@ public class WorkforceInteractionDialogPlugin implements InteractionDialogPlugin
             try {
                 Class conditionClass = Class.forName(spec.getScriptClass());
                 if(conditionClass!=null && BaseWorkforce.class.isAssignableFrom(conditionClass)) {
-                    conditions.add(spec.getId());
+                    try {
+                        BaseWorkforce b = (BaseWorkforce)conditionClass.newInstance();
+                        if(b.isAvailableToPlayer()) conditions.add(spec.getId());
+                    } catch (InstantiationException | IllegalAccessException ex) {}
                 }
             } catch (ClassNotFoundException ex) {}
         }

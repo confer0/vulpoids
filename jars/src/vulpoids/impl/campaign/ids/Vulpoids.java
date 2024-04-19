@@ -35,6 +35,9 @@ public class Vulpoids {
     public static final String KEY_MARKET_VULPOID_ADMIN_TIMESTAMP = "$vulp_marketVulpoidAdminTimestamp";
     public static final String KEY_ADMIN_XP_DAYS = "$vulp_adminXpDays";
     
+    public static final String KEY_RESEARCH_PROJECT = "$vulp_researchProject";
+    public static final String KEY_RESEARCH_IN_PROGRESS = "$vulp_researchInProgress";
+    
     public static final String KEY_VULPOID_POP_AMOUNT = "$vulpoidPopulation";
     public static final String KEY_WORKFORCE_CAP = "$workforce_cap";
     public static final String KEY_WORKFORCES = "$workforces";

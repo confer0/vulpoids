@@ -1450,40 +1450,50 @@ vulpChat_greetingFailsafe,VulpoidChatGreeting,,FireAll VulpoidChatTopLevelOption
 ,,,,,,,
 ,,,,,,,
 ,,,,,,,
-vulpChat_fireClearOptions,VulpoidChatTopLevelOptions,,FireBest VulpoidChatClearOptions,,,,
-vulpChat_fireMarketOption,VulpoidChatTopLevelOptions,,FireBest VulpoidChatMarketOptions true,,,,
-vulpChat_fireExitOption,VulpoidChatTopLevelOptions,,FireBest VulpoidChatExitOptions true,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+vulpChatSurroundingsOption,VulpoidChatTopLevelOptions,,,,vulpChatSurroundings:Discuss Surroundings,,
+vulpChatSurroundings,DialogOptionSelected,$option == vulpChatSurroundings,OpenVulpoidLocalEntitiesDialog VulpoidChatTopLevelOptions,,,,
+,,,,,,,
+vulpChatAssignmentOption,VulpoidChatTopLevelOptions,,,,vulpChatAssignment:Discuss Assignment,,
+vulpChatAssignment,DialogOptionSelected,$option == vulpChatAssignment,FireAll VulpoidChatAssignmentOptions,,,,
+,,,,,,,
+vulpChat_exitOption,VulpoidChatTopLevelOptions,,"SetShortcut vulpChat_exit ""ESCAPE""",,100:vulpChat_exit:Leave,,
 vulpChat_exit,DialogOptionSelected,$option == vulpChat_exit,"HideFirstPerson
 ExitRulesToPlugin",,,,
 ,,,,,,,
-vulpChat_clearOptions,VulpoidChatClearOptions,,,,,,
-,,,,,,,
-vulpChatSurroundingsOption,VulpoidChatMarketOptions,,,,vulpChatSurroundings:Discuss Surroundings,,
-vulpChatSurroundings,DialogOptionSelected,$option == vulpChatSurroundings,OpenVulpoidLocalEntitiesDialog VulpoidChatTopLevelOptions,,,,
 ,,,,,,,
 ,,,,,,,
 ,,,,,,,
-vulpChat_exitOption,VulpoidChatExitOptions,,"SetShortcut vulpChat_exit ""ESCAPE""",,100:vulpChat_exit:Leave,,
+vulpChatAssignment_inquireOption,VulpoidChatAssignmentOptions,,,,vulpChatAssignment_inquire:Inquire about assignment,,
+vulpChatAssignment_inquireDefault,DialogOptionSelected,$option == vulpChatAssignment_inquire,,"""Not much to say, really.""",,"# Generic, should not fire",
+vulpChatAssignment_inquireDummy,DialogOptionSelected,"$option == vulpChatAssignment_inquire
+$vulp_profectoAssignment == vulpoids",,"""Oh it's great! I get to stay asleep, and wake up whenever you want me to do something! You're so nice!""",,# Dummy,
+vulpChatAssignment_inquireIdle,DialogOptionSelected,"$option == vulpChatAssignment_inquire
+$vulp_profectoAssignment == special_vulpoid",,"""Could be worse. Not that I love being in cryosleep, but it means I get to skip the boring parts.""",,# Cryosleeping,
+vulpChatAssignment_inquireEmbarked,DialogOptionSelected,"$option == vulpChatAssignment_inquire
+$vulp_profectoAssignment == special_vulpoid_embarked",,"""I'm having fun! Your crew's pretty nice, they draw lots to decide who gets to pamper me each day.""",,"# Embarked, not doing anything",
+vulpChatAssignment_inquireEmbarkedDoingResearch,DialogOptionSelected,"$option == vulpChatAssignment_inquire
+$vulp_profectoAssignment == special_vulpoid_embarked
+$vulp_researchProject
+$vulp_researchInProgress",,"""Research is going well! Any chance of getting more assistants? I'd like to have at least two free for petting at at given time.""",,"# Embarked, actively researching",
+vulpChatAssignment_inquireEmbarkedResearchFailsafe,DialogOptionSelected,"$option == vulpChatAssignment_inquire
+$vulp_profectoAssignment == special_vulpoid_embarked
+$vulp_researchProject
+!$vulp_researchInProgress",,ERROR - NO RULE FOR RESEARCH. REPORT THIS.,,# Research complete - see below,
+#vulpChatAssignment_inquireDefault,DialogOptionSelected,$option == vulpChatAssignment_inquire,,"""Not much to say, really.""",,,
+#vulpChatAssignment_inquireDefault,DialogOptionSelected,$option == vulpChatAssignment_inquire,,"""Not much to say, really.""",,,
 ,,,,,,,
 ,,,,,,,
 ,,,,,,,
 ,,,,,,,
 ,,,,,,,
 ,,,,,,,
-#test,VulpoidChatSurroundingsOptions,,,,"test1:test option
-test2:second test option",,
-#test1,DialogOptionSelected,$option == test1,"$option = test1_1
-FireBest DialogOptionSelected","Test 1 test: $name
-$topic.name",test2:Continue,,
-#test1_1,DialogOptionSelected,$option == test1_1,,Test 1_1 test: $name,,,
-#test2,DialogOptionSelected,$option == test2,ExitRulesToPlugin,Test 2 text $rank,,,
-#test5,VulpoidChatSurroundingsOptions,$market.mc:population_3,,,"test3:test option3
-test4:second test option4",,
 ,,,,,,,
-#vulpChatSurroundings_jangalaOption,VulpoidChatSurroundingsOptions,$topicMarket.id == jangala,,,"vulpChatSurroundings_jangala:Discuss Jangala
-vulpChatSurroundings_jangalaStation:Discuss Jangala Station",,
-#vulpChatSurroundings_jangala,DialogOptionSelected,$option == vulpChatSurroundings_jangala,ExitRulesToPlugin,TODO JANGALA,,,
-#vulpChatSurroundings_jangalaStation,DialogOptionSelected,$option == vulpChatSurroundings_jangalaStation,ExitRulesToPlugin,TODO JANGALA STATION,,,
 ,,,,,,,
 ,,,,,,,
 vulpChatSurroundings_defaultOption,VulpoidChatSurroundingsOptions,,,,,,

@@ -49,6 +49,9 @@ public class BaseWorkforce extends BaseMarketConditionPlugin {
     public String[] getRequirements() {
         return new String[]{};
     }
+    public boolean isAvailableToPlayer() {
+        return true;  // Use this for unlockable or NPC-only workforces.
+    }
     @Override
     public String getIconName() {
         if(shouldApply()) return condition.getSpec().getIcon();
