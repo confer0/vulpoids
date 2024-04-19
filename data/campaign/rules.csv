@@ -1045,42 +1045,66 @@ Call $global.vulpFactory_ref updateStage","Returning to the bridge, you double-c
 ,,,,,,,
 ,,,,,,,
 vulp_planetThreshold,OpenInteractionDialog,"$id == vulp_planetThreshold
-$vulp_planetThreshold score:1000",ShowDefaultVisual,,,,
+$vulp_planetThreshold score:1000",ShowDefaultVisual,"Your $shipOrFleet approaches $entityName.
+
+The ice giant spins below your $shipOrFleet, lit only by the barest light of the galaxy, warmed only by the internal pressure of gravity and the barest flicker of atomic decay. Unlikely to form naturally in interstellar space, this planet must have been thrown from its home system by some cataclysmic interaction in aeons past. Adrift, it is doomed to shrink and cool toward the interstellar medium over billions of cycles.",100:defaultLeave:Leave,# Pulled straight from the nameless ice giant the Gate hauler orbits.,
 ,,,,,,,
-vulp_bivouacFusionLamp,OpenInteractionDialog,$vulp_bivouacLamp score:2000,ShowDefaultVisual,"Your comms officer tries to establish a connection to the fusion lamp's governor interface, but the connection fails, leaving you with a blank display and the quiet hiss of static.
+vulp_bivouacFusionLamp,OpenInteractionDialog,$vulp_bivouacLamp score:2000,ShowDefaultVisual,"Your comms officer tries to establish a connection to the fusion lamp's governor interface, but the connection fails, leaving you with a blank display and the quiet hiss of interstellar static.
 
 Your sensors officer reports that the lamp appears to be sustained by a thin wisp of volatiles expelled up from the ice giant by its own magnetic field.
 
 Such a formation occurring naturally is all but impossible, yet there's no sign of any infrastructure to produce the effect. Perhaps some sort of Domain-era technology, buried deep in the giant's heart.",100:defaultLeave:Leave,,
 ,,,,,,,
-#vulp_planetBivouac,OpenInteractionDialog,"$id == vulp_planetBivouac
-$vulp_planetBivouac score:1000",SalvageDefenderInteraction,Test Text,,,
-,,,ShowLargePlanet,,,,
 ,,,,,,,
-,,,,,,,
-vulp_redPlanetOpenDialog,OpenInteractionDialog,$vulp_planetBivouac score:1000,"SalvageGenFromSeed
+vulp_bivouacOpenDialog,OpenInteractionDialog,$vulp_planetBivouac score:1000,"SalvageGenFromSeed
 ShowDefaultVisual
 FireBest SalvageCheckHostile","Your $shipOrFleet approaches $entityName.
 
-The sensors are having a hard time evaluating the tenuous megastructure enveloping its entire surface. Your sensors officer takes the initiative and applies some exotic parameters to the interferometer feed; inputs go green and a few seconds later the sub-AI tentatively identifies a stable planetary-scale energy field with highly unusual properties.",,,
-vulp_redPlanetOpenDialogReturn,OpenInteractionDialog,"$vulp_planetBivouac score:1000
-$gotAirFilterCore","ShowDefaultVisual
-SetShortcut defaultLeave ESCAPE","Your $shipOrFleet approaches $entityName.
+The world below you defies belief - a flawless green marble, spinning under the sunless sky of the Orion-Perseus Abyss. Your sensors officer confirms - after triple-checking their readings - that the planet is of nominal temperature, has a breathable atmosphere, and in fact even has an incredibly mild climate.
 
-TODO: Text describing it for the second time, like alpha site","0:alphaSiteExplore1:Replay the recording
-100:defaultLeave:Leave",,
-vulp_defenderDesc,TriggerAutomatedDefenses,$vulp_planetBivouac score:1000,SalvageDefenderInteraction,"As your $shipOrFleet moves in closer, sensors detect multiple contacts rising up from the murky red depths.",,,
-vulp_continuePostDefenders,BeatDefendersContinue,$vulp_planetBivouac score:1000,,Your $shipOrFleet finishes its approach to $entityName without further incident.,0:salBeatDefendersContinue:Continue,,
-vulp_beatDefenders,BeginSalvage,$vulp_planetBivouac score:1000,SetShortcut defaultLeave ESCAPE,"Further scans reveal that the energy field is not entirely uniform - perhaps owing to a running-down power source - and your bridge crew is able to pick up a distress beacon transmitting from the surface.
+This world cannot have formed like this. It must have been terraformed under lamplight, with extraordinarily advanced technology by people with no better options.",,,
+vulp_bivouacDefenderDesc,TriggerAutomatedDefenses,$vulp_planetBivouac score:1000,SalvageDefenderInteraction,"As your $shipOrFleet moves in closer, sensors detect multiple contacts rising up from the glittering surface.
 
-The transmission is set on repeat and garbled in ways that are indicative of aging equipment. You make out enough to gather that part of a research team was stranded here - at a secret Tri-Tachyon research facility - after the fully automated defenses over-weighed certain executive security contingency orders in the wake of one of the AI Wars and decided it was now imperative to shoot down any craft attempting to leave the planet.","0:vulp_explore:Send a salvage team down to the facility
+The orange hulls and angular forms of the Domain XIV Battlegroup ships are unmistakable, but they're accompanied by another, more advanced vessel as well.",,,
+UtopiaTerraformerDefeated,UtopiaTerraformerDefeated,,UtopiaFleetDefeated,"Your sensors officer reports in a hushed voice that no escape pods were detected leaving the ships at any point.
+
+At the heart of the debris field, the Eridani-Utopia vessel has remained in one piece, ready to be boarded.",,,
+,,,,,,,
+# TODO INTERACT WITH DERELICT SHIP - HAS TAG $vulp_terraformer,,,,,,,
+,,,,,,,
+#vulp_continuePostDefenders,BeatDefendersContinue,$vulp_planetBivouac score:1000,,Your $shipOrFleet finishes its approach to $entityName without further incident.,0:salBeatDefendersContinue:Continue,,
+vulp_bivouacContinuePostDefenders,BeatDefendersContinue,$vulp_planetBivouac score:1000,,"As your $shipOrFleet recovers from the engagement, you step back and evaluate whether to begin with the wreck of the Eridani ship, or the moon below.",100:defaultLeave:Leave,,
+vulp_bivouacBeatDefenders,BeginSalvage,$vulp_planetBivouac score:1000,SetShortcut defaultLeave ESCAPE,"Detailed scans of the planet confirm that, despite the extraordinary locale, it is a flawlessly terraformed world. A rival to even Gilead, lost out here in the abyss.
+
+Minimal signs of past human activity are detected, a network of terraforming machines criss-crossing the surface that has yet to be disassembled. But despite the clear success, there's no sign that anyone actually descended to the surface to live there.","0:vulp_bivouacExplore:Send down a salvage team
 100:defaultLeave:Leave",,
-vulp_exploreFacility,DialogOptionSelected,$option == vulp_explore,,"A tiny shuttle with a jury-rigged shield generator darts through a spot failure in the shield. A landing at the primary control center is achieved without incident and the crew is able to deactivate the shield entirely upon breaching the facility. Follow-up shuttles with heavier equipment launch quickly thereafter, and soon the salvage operation is in full swing.",0:vulp_salvage:Pick through the salvage,,
-vulp_salvage,DialogOptionSelected,$option == vulp_salvage,"VulpUtopiaTerraformer genLoot
-$gotAirFilterCore = true",,,,
+vulp_bivouacExplore,DialogOptionSelected,$option == vulp_bivouacExplore ,ShowLargePlanet,"Shuttles soar through the pristine atmosphere without resistance. Clouds part before them as they approach the primary control center.
+
+It takes little effort to breach the facility. These vast terraforming machines may be capable of reshaping entire worlds, but they were once torn down by the unarmed followers of Ludd.",vulp_bivouacExplore1:Continue,,
+vulp_bivouacExplore1,DialogOptionSelected,$option == vulp_bivouacExplore1,PlaySound hit_heavy,"Your salvors are much better equipped, and the Collapse did not give Eridani-Utopia time to improve their security. Not that it would matter much, with no humans left to defend it.",vulp_bivouacExplore2:Continue,,
+vulp_bivouacExplore2,DialogOptionSelected,$option == vulp_bivouacExplore2,,"It's clear that these terraformers are of a style even more advanced than those that created the worlds of the Persean Sector.
+
+As the systems are shut down, your sensors officer detects fluctuations in the planet's upper atmosphere. What previously appeared to be a part of the planet's magnetosphere was apparently part of an exotic energy field being projected by the machines.",vulp_bivouacExplore3:Continue,,
+vulp_bivouacExplore3,DialogOptionSelected,$option == vulp_bivouacExplore3,,"Science teams pore over the data, and a report is soon delivered to your datapad. Air samples contained highly advanced nanites, resembling those used in the Vulpoid Bioforge.
+
+Manufactured on the ground, the fields then funneled them into the sky and formed them into a vast utility fog, able to manipulate the atmosphere at a grand scale.",vulp_bivouacExplore4:Continue,,
+vulp_bivouacExplore4,DialogOptionSelected,$option == vulp_bivouacExplore4,"AddRemoveAnyItem SPECIAL air_filter_core 1
+$gotAirFilter = true
+$missionImportant = false
+$missionImportant_vulp_terraformerplanet = false","To your great fortune, these grand machines use the same self-assembly techniques as most Domain colonial technology. Your salvage teams are able to shut down and disassemble the equipment until it's been reduced to a single core, ready to be built out again on a world of your choosing.",vulp_bivouacExplore5:Continue,,
+vulp_bivouacExplore5,DialogOptionSelected,$option == vulp_bivouacExplore5,,"Throughout all of this, there's not a single sign of human habitation.
+
+It's as though they came down, built the machines, then returned to the sky.",100:defaultLeave:Leave,,
+vulp_bivouacInteractionAfterFilter,OpenInteractionDialog,"$vulp_planetBivouac score:1000
+$gotAirFilter",ShowDefaultVisual,"Your $shipOrFleet approaches $entityName.
+
+Even without the terraforming machines operating, this world has remained pristinely beautiful. A second Gilead, lost in the depths of the hyperspace abyss.
+
+What could have been.",,,
 ,,,,,,,
 ,,,,,,,
-UtopiaTerraformerDefeated,UtopiaTerraformerDefeated,,,TODO: Post-action text explaining how the fleet is weird.,,,
+,,,,,,,
+,,,,,,,
 ,,,,,,,
 ,,,,,,,
 ,,,,,,,
@@ -1158,7 +1182,9 @@ $market.vulpoidPopulation >= 6",ShowImageVisual vulp_pop_high,"As you enter the 
 #bar_descVulpoidPirate,BarPrintDesc,$faction.id == pirates,ShowImageVisual pirate_bar,"The space is dark and filled with shouts, sweat, and pulsing music. Every wall and surface is pitted and stained by rough spacers banging their mugs and laughing as a couple of pirate crews posture for a fight. You can only assume that one of the heavily augmented bouncers will spoil the fun before weapons are drawn. Gangers and pirate captains watch the scene smugly from smoke-filled booths at the back.",,,
 #bar_descVulpoidDiktat,BarPrintDesc,$faction.id == sindrian_diktat,ShowImageVisual space_bar,"You enter the bar, leaving the noisome propaganda broadcasts of the throughway behind. Off-duty laborers drink away their ration credits dutifully at benches set beneath Diktat insignia. In one corner a cadre of finely dressed officer-bureaucrats calls for another round. Even here, a larger-than-life holo of the Lion of Sindria looks down on you as you decide what to do.",,,
 #bar_descVulpoidPerseanLeague,BarPrintDesc,$faction.id == persean,ShowImageVisual space_bar,"As you enter the bar, you sense a lively tension between the crews from across the League worlds. Dour Kazeronians in fine uniforms drink spirits while proud but poor Mayasurans down pints of rice-beer. A crew of Tylians trade rounds and boasts with a couple Zaganian bridge officers who are making a poor example of Luddic temperance. Glowing displays show media feeds from all the worlds of the League, and their speakers contribute to a dull roar of human white noise.",,,
-#bar_descVulpoidLuddicChurch,BarPrintDesc,$faction.id == luddic_church,ShowImageVisual teahouse,You duck past notices encouraging temperance and restraint as you enter the bar. Someone is playing a stringed instrument in an alcove. A row of handworked samovars suggests that tea is served as often as the weak grain-brew favored by the crew of rough-looking laborers at the bar. Many of the patrons at tables or booths seem to be off-worlders or local unbelievers huddling in the closest analog to a den of sin that can be found.,,,
+#bar_descVulpoidLuddicChurch,BarPrintDesc,$faction.id == luddic_church,ShowImageVisual teahouse,"You duck past notices encouraging temperance and restraint as you enter the bar. Someone is playing a stringed instrument in an alcove. A row of handworked samovars suggests that tea is served as often as the weak grain-brew favored by the crew of rough-looking laborers at the bar. Many of the patrons at tables or booths seem to be off-worlders or local unbelievers huddling in the closest analog to a den of sin that can be found.
+
+Vulpoids in nuns' garb cater to tables, pouring out tea and Ludd's blessings in equal measure.",,,
 #bar_descVulpoidBaetis,,,,,,,
 ,,,,,,,
 #vulp_barInteractionPrompt,AddBarEvents,$market.mc:vulpoid_population,"AddBarEvent vulp_barInteraction ""Talk to the Vulpoid"" ""One of the Vulpoids notices you, and quickly bounds up to see if you want anything.""",,,,
