@@ -1469,7 +1469,18 @@ ExitRulesToPlugin",,,,
 ,,,,,,,
 ,,,,,,,
 ,,,,,,,
-vulpChatAssignment_inquireOption,VulpoidChatAssignmentOptions,,,,vulpChatAssignment_inquire:Inquire about assignment,,
+vulpChatAssignment_inquireOptionDefault,VulpoidChatAssignmentOptions,,,,vulpChatAssignment_inquire:Inquire about assignment,,
+#vulpChatAssignment_inquireOptionResearchDone,VulpoidChatAssignmentOptions,VulpoidResearch isComplete,SetOptionColor vulpChatAssignment_getResearch highlight,,vulpChatAssignment_getResearch:Follow up on research project,# Handled on greeting instead.,
+vulpChatAssignment_pickResearchOption,VulpoidChatAssignmentOptions,$vulp_profectoAssignment == special_vulpoid_embarked,FireBest VulpoidChatDisableResearchIfActive,,vulpChatAssignment_pickResearch:Assign a research project,,
+vulpChatAssignment_disableResearchOptionIfAlreadyActive,VulpoidChatDisableResearchIfActive,$vulp_researchProject != null,"SetEnabled vulpChatAssignment_pickResearch false
+SetTooltip vulpChatAssignment_pickResearch ""$name is already working on a project.""",,,,
+vulpChatAssignment_pickResearch,DialogOptionSelected,$option == vulpChatAssignment_pickResearch,FireAll VulpoidPickResearchOptions,,,,
+vulpChatAssignment_testOption,VulpoidChatAssignmentOptions,,,,vulpChatAssignment_test:TEST,,
+vulpChatAssignment_test,DialogOptionSelected,$option == vulpChatAssignment_test,VulpoidResearch setProject test 1,TODO TEST OPTION,,,
+vulpChatAssignment_exitOption,VulpoidChatAssignmentOptions,,"SetShortcut vulpChatAssignment_exit ""ESCAPE""",,100:vulpChatAssignment_exit:Back,,
+vulpChatAssignment_exit,DialogOptionSelected,$option == vulpChatAssignment_exit,FireAll VulpoidChatTopLevelOptions,,,,
+,,,,,,,
+# Chitchat about current assignment,,,,,,,
 vulpChatAssignment_inquireDefault,DialogOptionSelected,$option == vulpChatAssignment_inquire,,"""Not much to say, really.""",,"# Generic, should not fire",
 vulpChatAssignment_inquireDummy,DialogOptionSelected,"$option == vulpChatAssignment_inquire
 $vulp_profectoAssignment == vulpoids",,"""Oh it's great! I get to stay asleep, and wake up whenever you want me to do something! You're so nice!""",,# Dummy,
@@ -1477,21 +1488,31 @@ vulpChatAssignment_inquireIdle,DialogOptionSelected,"$option == vulpChatAssignme
 $vulp_profectoAssignment == special_vulpoid",,"""Could be worse. Not that I love being in cryosleep, but it means I get to skip the boring parts.""",,# Cryosleeping,
 vulpChatAssignment_inquireEmbarked,DialogOptionSelected,"$option == vulpChatAssignment_inquire
 $vulp_profectoAssignment == special_vulpoid_embarked",,"""I'm having fun! Your crew's pretty nice, they draw lots to decide who gets to pamper me each day.""",,"# Embarked, not doing anything",
-vulpChatAssignment_inquireEmbarkedDoingResearch,DialogOptionSelected,"$option == vulpChatAssignment_inquire
+vulpChatAssignment_inquireEmbarkedResearch_Working,DialogOptionSelected,"$option == vulpChatAssignment_inquire
 $vulp_profectoAssignment == special_vulpoid_embarked
-$vulp_researchProject
-$vulp_researchInProgress",,"""Research is going well! Any chance of getting more assistants? I'd like to have at least two free for petting at at given time.""",,"# Embarked, actively researching",
-vulpChatAssignment_inquireEmbarkedResearchFailsafe,DialogOptionSelected,"$option == vulpChatAssignment_inquire
-$vulp_profectoAssignment == special_vulpoid_embarked
-$vulp_researchProject
-!$vulp_researchInProgress",,ERROR - NO RULE FOR RESEARCH. REPORT THIS.,,# Research complete - see below,
-#vulpChatAssignment_inquireDefault,DialogOptionSelected,$option == vulpChatAssignment_inquire,,"""Not much to say, really.""",,,
-#vulpChatAssignment_inquireDefault,DialogOptionSelected,$option == vulpChatAssignment_inquire,,"""Not much to say, really.""",,,
+$vulp_researchProject != null",,"""Research is going well! Any chance of getting more assistants? I could use another one to brush my tail while I'm getting headpats.""",,"# Embarked, actively researching",
+vulpChatAssignment_inquireOfficer,DialogOptionSelected,"$option == vulpChatAssignment_inquire
+$vulp_profectoAssignment == special_vulpoid_officer",,"""Command is going smoothly. The crew love me, of course, but it's hard having to send them into danger.""",,"# TODO - use a command to reference the commanded ship, if any. Have callouts for unassigned, assigned civ, assigned combat, zig, etc.",
+vulpChatAssignment_inquireAdmin,DialogOptionSelected,"$option == vulpChatAssignment_inquire
+$vulp_profectoAssignment == special_vulpoid_admin",,"""Colony administration is going nicely! I might make an in-person visit some time, see if the rec facilities are up to standard.""",,"# TODO - use a command to reference the administrated colony, if any",
 ,,,,,,,
+# Research picker options,,,,,,,
+vulpChatAssignment_pickResearchOption_exit,VulpoidPickResearchOptions,,,,100:vulpChatAssignment_pickResearch_exit:Back,,
+vulpChatAssignment_pickResearch_exit,DialogOptionSelected,$option == vulpChatAssignment_pickResearch_exit,FireAll VulpoidChatAssignmentOptions,,,,
+vulpChatAssignment_pickResearchOption_terraformer,VulpoidPickResearchOptions,"$id == laisa
+!$player.vulp_gotTerraformerMission",,,vulpChatAssignment_pickResearch_terraformer:Insights into the Citadel,,
+vulpChatAssignment_pickResearch_terraformer,DialogOptionSelected,$option == vulpChatAssignment_pickResearch_terraformer,"SetStoryOption vulpChatAssignment_pickResearch_terraformerConfirm 4 general ""Had Laisa perform research into old Citadel transmission logs""","""Most of what's left is just encrypted computer records. Basically impossible to crack. I'd have to skim the metadata to get anything at all.""
+
+""...There is actually one thing I can think of. Some old post-Collapse transmission logs that showed some odd activity. I might be able to get something big out of it, but it'll definitely take a while.""","vulpChatAssignment_pickResearch_terraformerConfirm:Confirm
+vulpChatAssignment_pickResearch:Cancel",,
+vulpChatAssignment_pickResearch_terraformerConfirm,DialogOptionSelected,$option == vulpChatAssignment_pickResearch_terraformerConfirm,"VulpoidResearch setProject terraformer 1
+FireAll VulpoidChatAssignmentOptions",,,# TODO - set longer duration,
 ,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
+# Greeting overrides for completed research,,,,,,,
+vulpChat_greetingResearchComplete,VulpoidChatGreeting,VulpoidResearch isComplete score:1000,"FireBest VulpoidResearchComplete
+unset $vulp_researchProject",,,,
+vulpChat_researchComplete_terraformer,VulpoidResearchComplete,$vulp_researchProject == terraformer,$player.vulp_gotTerraformerMission = true,"""Fantastic news $playerSirOrMadam! I've completed the TEST RESEARCH OPTION!""",vulpChat_researchCompleteFinish:Continue,# TODO: Actual terraformer dialog,
+vulpChat_researchCompleteFinish,DialogOptionSelected,$option == vulpChat_researchCompleteFinish,FireAll VulpoidChatTopLevelOptions,,,,
 ,,,,,,,
 ,,,,,,,
 ,,,,,,,
