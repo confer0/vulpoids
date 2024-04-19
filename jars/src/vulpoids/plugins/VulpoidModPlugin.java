@@ -190,7 +190,7 @@ public class VulpoidModPlugin extends BaseModPlugin {
             }
             @Override
             public String[] getSimpleReqs(Industry industry) {
-                return new String [] {};
+                return new String [] {ItemEffectsRepo.HABITABLE};
             }
         });
         

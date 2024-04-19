@@ -1,0 +1,57 @@
+{
+    "displayName": "Standard",
+    "fluxCapacitors": 43,
+    "fluxVents": 50,
+    "goalVariant": true,
+    "hullId": "vulp_terraformer",
+    "hullMods": [
+        "advancedoptics",
+        "hardenedshieldemitter",
+        "fluxbreakers",
+    ],
+    "permaMods": [],
+    "sMods": [],
+    "variantId": "vulp_terraformer_Standard",
+    "weaponGroups": [
+        {
+            "autofire": false,
+            "mode": "ALTERNATING",
+            "weapons": {
+                "WS 011": "squall",
+                "WS 012": "squall"
+            }
+        },
+		{
+            "autofire": true,
+            "mode": "LINKED",
+            "weapons": {
+                "WS 013": "ionbeam",
+            }
+        },
+		{
+            "autofire": true,
+            "mode": "LINKED",
+            "weapons": {
+                "WS 014": "ionbeam",
+            }
+        },
+		{
+            "autofire": true,
+            "mode": "LINKED",
+            "weapons": {
+                "WS 023": "ionbeam",
+            }
+        },
+		{
+            "autofire": true,
+            "mode": "LINKED",
+            "weapons": {
+                "WS 024": "ionbeam",
+            }
+        },
+    ],
+	"wings": [
+        "longbow_wing",
+        "longbow_wing",
+    ]
+}

@@ -102,7 +102,7 @@
     "builtInMods": [
 		"advancedcore",
 		"missile_reload",
-		"surveying_equipment"
+		"surveying_equipment",
 	],
     "center": [
         161,
@@ -287,34 +287,10 @@
         {
             "angle": 0,
             "arc": 235,
-            "id": "WS 006",
-            "locations": [
-                166,
-                86
-            ],
-            "mount": "TURRET",
-            "size": "SMALL",
-            "type": "ENERGY"
-        },
-        {
-            "angle": 0,
-            "arc": 235,
             "id": "WS 007",
             "locations": [
-                166,
-                -90
-            ],
-            "mount": "TURRET",
-            "size": "SMALL",
-            "type": "ENERGY"
-        },
-        {
-            "angle": 0,
-            "arc": 200,
-            "id": "WS 008",
-            "locations": [
-                196,
-                78
+                181,
+                -114
             ],
             "mount": "TURRET",
             "size": "SMALL",
@@ -369,118 +345,38 @@
             "type": "ENERGY"
         },
         {
-            "angle": 45,
-            "arc": 210,
-            "id": "WS 015",
-            "locations": [
-                134,
-                92
-            ],
-            "mount": "TURRET",
-            "size": "MEDIUM",
-            "type": "ENERGY"
-        },
-        {
-            "angle": 0,
+            "angle": -90,
             "arc": 360,
             "id": "WS 016",
             "locations": [
-                22,
-                69,
-                11,
-                53
+                95,
+                -120,
+                95,
+                -121
             ],
             "mount": "HIDDEN",
             "size": "LARGE",
             "type": "LAUNCH_BAY"
         },
-        {
-            "angle": 0,
-            "arc": 360,
-            "id": "WS 017",
-            "locations": [
-                82,
-                41,
-                68,
-                26
-            ],
-            "mount": "HIDDEN",
-            "size": "LARGE",
-            "type": "LAUNCH_BAY"
-        },
-        {
-            "angle": -90,
-            "arc": 360,
-            "id": "WS 018",
-            "locations": [
-                91,
-                -103,
-                77,
-                -100
-            ],
-            "mount": "HIDDEN",
-            "size": "MEDIUM",
-            "type": "LAUNCH_BAY"
-        },
-        {
-            "angle": 0,
-            "arc": 5,
-            "id": "WS 019",
-            "locations": [
-                102,
-                -60
-            ],
-            "mount": "HIDDEN",
-            "size": "SMALL",
-            "type": "SYSTEM"
-        },
-        {
-            "angle": 0,
-            "arc": 360,
-            "id": "WS 020",
-            "locations": [
-                5,
-                34,
-                16,
-                14
-            ],
-            "mount": "HIDDEN",
-            "size": "LARGE",
-            "type": "LAUNCH_BAY"
-        },
-        {
-            "angle": 0,
-            "arc": 360,
-            "id": "WS 021",
-            "locations": [
-                68,
-                1,
-                99,
-                -24
-            ],
-            "mount": "HIDDEN",
-            "size": "LARGE",
-            "type": "LAUNCH_BAY"
-        },
-        {
-            "angle": -90,
-            "arc": 360,
-            "id": "WS 022",
-            "locations": [
-                66,
-                -109
-            ],
-            "mount": "HIDDEN",
-            "size": "MEDIUM",
-            "type": "LAUNCH_BAY"
-        },
+        #{
+        #    "angle": 0,
+        #    "arc": 5,
+        #    "id": "WS 019",
+        #    "locations": [
+        #        102,
+        #        -60
+        #    ],
+        #    "mount": "HIDDEN",
+        #    "size": "SMALL",
+        #    "type": "SYSTEM"
+        #},
         {
             "angle": -50,
             "arc": 200,
             "id": "WS 023",
             "locations": [
-                121,
-                -99
+                136,
+                -123
             ],
             "mount": "TURRET",
             "size": "MEDIUM",

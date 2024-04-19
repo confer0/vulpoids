@@ -10,14 +10,14 @@ import java.util.List;
 
 public class FilteredAir extends BaseMarketConditionPlugin {
     
-    String[] suppressableConditions = new String[]{
+    static String[] suppressableConditions = new String[]{
         Conditions.POLLUTION,
         Conditions.EXTREME_WEATHER,
         Conditions.TOXIC_ATMOSPHERE
     };
-    float HAZARD_IF_COMFORTABLE = -0.25f;
+    static float HAZARD_IF_COMFORTABLE = -0.25f;
     
-    float DAYS_TO_REMOVE_POLLUTION = 365;
+    static float DAYS_TO_REMOVE_POLLUTION = 365;
     float pollutionRemovalTimer = DAYS_TO_REMOVE_POLLUTION;
     @Override
     public void advance(float amount) {
