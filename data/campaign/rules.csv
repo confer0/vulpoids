@@ -1567,7 +1567,7 @@ vulpChatSurroundings_dummiesNotWelcome,DialogOptionSelected,$option == vulpChatS
 ExitRulesToPlugin","""We're not allowed to go there. They say the people there don't like us. That's really sad!""",,,
 ,,,,,,,
 # Al Gebbar,,,,,,,
-vulpChatSurroundings_epiphanyOption,VulpoidChatSurroundingsOptions,$topic.terrainId == epiphany score:1000,,,vulpChatSurroundings_epiphany:Epiphany,,epiphany
+vulpChatSurroundings_epiphanyOption,VulpoidChatSurroundingsOptions,$topic.id == epiphany score:1000,,,vulpChatSurroundings_epiphany:Epiphany,,epiphany
 vulpChatSurroundings_epiphany,DialogOptionSelected,$option == vulpChatSurroundings_epiphany,"SetVulpoidExpression bruh
 ExitRulesToPlugin","""It's a Pather world, so not really a safe place for me. Have to wear a human space suit and keep the visor tinted, but at least it's not too suspicious without atmo.""
 
@@ -1577,19 +1577,19 @@ $vulp_profectoAssignment == vulpoids","$option = vulpChatSurroundings_dummiesNot
 FireBest DialogOptionSelected",,,,
 ,,,,,,,
 # Arcadia,,,,,,,
-vulpChatSurroundings_nomiosOption,VulpoidChatSurroundingsOptions,$topic.terrainId == nomios score:1000,,,vulpChatSurroundings_nomios:Nomios,,nomios
+vulpChatSurroundings_nomiosOption,VulpoidChatSurroundingsOptions,$topic.id == nomios score:1000,,,vulpChatSurroundings_nomios:Nomios,,nomios
 vulpChatSurroundings_nomios,DialogOptionSelected,$option == vulpChatSurroundings_nomios,"SetVulpoidExpression default
 ExitRulesToPlugin",TODO: nomios,,,
 vulpChatSurroundings_nomiosDummy,DialogOptionSelected,"$option == vulpChatSurroundings_nomios
 $vulp_profectoAssignment == vulpoids","SetVulpoidExpression default
 ExitRulesToPlugin",TODO: nomios dummy,,,
-vulpChatSurroundings_citadelArcadiaOption,VulpoidChatSurroundingsOptions,$topic.terrainId == arcadia_station score:1000,,,vulpChatSurroundings_citadelArcadia:Citadel Arcadia,,citadelArcadia
+vulpChatSurroundings_citadelArcadiaOption,VulpoidChatSurroundingsOptions,$topic.id == arcadia_station score:1000,,,vulpChatSurroundings_citadelArcadia:Citadel Arcadia,,citadelArcadia
 vulpChatSurroundings_citadelArcadia,DialogOptionSelected,$option == vulpChatSurroundings_citadelArcadia,"SetVulpoidExpression default
 ExitRulesToPlugin",TODO: citadelArcadia,,,
 vulpChatSurroundings_citadelArcadiaDummy,DialogOptionSelected,"$option == vulpChatSurroundings_citadelArcadia
 $vulp_profectoAssignment == vulpoids","$option = vulpChatSurroundings_dummiesNotWelcome
 FireBest DialogOptionSelected",,,,
-vulpChatSurroundings_agreusOption,VulpoidChatSurroundingsOptions,$topic.terrainId == agreus score:1000,,,vulpChatSurroundings_agreus:Agreus,,agreus
+vulpChatSurroundings_agreusOption,VulpoidChatSurroundingsOptions,$topic.id == agreus score:1000,,,vulpChatSurroundings_agreus:Agreus,,agreus
 vulpChatSurroundings_agreus,DialogOptionSelected,$option == vulpChatSurroundings_agreus,"SetVulpoidExpression default
 ExitRulesToPlugin",TODO: agreus,,,
 vulpChatSurroundings_agreusDummy,DialogOptionSelected,"$option == vulpChatSurroundings_agreus
@@ -1597,31 +1597,31 @@ $vulp_profectoAssignment == vulpoids","SetVulpoidExpression default
 ExitRulesToPlugin",TODO: agreus dummy,,,
 ,,,,,,,
 # Askonia,,,,,,,
-vulpChatSurroundings_sindriaOption,VulpoidChatSurroundingsOptions,$topic.terrainId == sindria score:1000,,,vulpChatSurroundings_sindria:Sindria,,sindria
+vulpChatSurroundings_sindriaOption,VulpoidChatSurroundingsOptions,$topic.id == sindria score:1000,,,vulpChatSurroundings_sindria:Sindria,,sindria
 vulpChatSurroundings_sindria,DialogOptionSelected,$option == vulpChatSurroundings_sindria,"SetVulpoidExpression default
 ExitRulesToPlugin",TODO: sindria,,,
 vulpChatSurroundings_sindriaDummy,DialogOptionSelected,"$option == vulpChatSurroundings_sindria
 $vulp_profectoAssignment == vulpoids","SetVulpoidExpression default
 ExitRulesToPlugin",TODO: sindria dummy,,,
-vulpChatSurroundings_cruorOption,VulpoidChatSurroundingsOptions,$topic.terrainId == cruor score:1000,,,vulpChatSurroundings_cruor:Cruor,,cruor
+vulpChatSurroundings_cruorOption,VulpoidChatSurroundingsOptions,$topic.id == cruor score:1000,,,vulpChatSurroundings_cruor:Cruor,,cruor
 vulpChatSurroundings_cruor,DialogOptionSelected,$option == vulpChatSurroundings_cruor,"SetVulpoidExpression default
 ExitRulesToPlugin",TODO: cruor,,,
 vulpChatSurroundings_cruorDummy,DialogOptionSelected,"$option == vulpChatSurroundings_cruor
 $vulp_profectoAssignment == vulpoids","SetVulpoidExpression default
 ExitRulesToPlugin",TODO: cruor dummy,,,
-vulpChatSurroundings_volturnOption,VulpoidChatSurroundingsOptions,$topic.terrainId == volturn score:1000,,,vulpChatSurroundings_volturn:Volturn,,volturn
+vulpChatSurroundings_volturnOption,VulpoidChatSurroundingsOptions,$topic.id == volturn score:1000,,,vulpChatSurroundings_volturn:Volturn,,volturn
 vulpChatSurroundings_volturn,DialogOptionSelected,$option == vulpChatSurroundings_volturn,"SetVulpoidExpression default
 ExitRulesToPlugin",TODO: volturn,,,
 vulpChatSurroundings_volturnDummy,DialogOptionSelected,"$option == vulpChatSurroundings_volturn
 $vulp_profectoAssignment == vulpoids","SetVulpoidExpression default
 ExitRulesToPlugin",TODO: volturn dummy,,,
-vulpChatSurroundings_nortiaOption,VulpoidChatSurroundingsOptions,$topic.terrainId == nortia score:1000,,,vulpChatSurroundings_nortia:Nortia,,nortia
+vulpChatSurroundings_nortiaOption,VulpoidChatSurroundingsOptions,$topic.id == nortia score:1000,,,vulpChatSurroundings_nortia:Nortia,,nortia
 vulpChatSurroundings_nortia,DialogOptionSelected,$option == vulpChatSurroundings_nortia,"SetVulpoidExpression default
 ExitRulesToPlugin",TODO: nortia,,,
 vulpChatSurroundings_nortiaDummy,DialogOptionSelected,"$option == vulpChatSurroundings_nortia
 $vulp_profectoAssignment == vulpoids","SetVulpoidExpression default
 ExitRulesToPlugin",TODO: nortia dummy,,,
-vulpChatSurroundings_umbraOption,VulpoidChatSurroundingsOptions,$topic.terrainId == umbra score:1000,,,vulpChatSurroundings_umbra:Umbra,,umbra
+vulpChatSurroundings_umbraOption,VulpoidChatSurroundingsOptions,$topic.id == umbra score:1000,,,vulpChatSurroundings_umbra:Umbra,,umbra
 vulpChatSurroundings_umbra,DialogOptionSelected,$option == vulpChatSurroundings_umbra,"SetVulpoidExpression default
 ExitRulesToPlugin",TODO: umbra,,,
 vulpChatSurroundings_umbraDummy,DialogOptionSelected,"$option == vulpChatSurroundings_umbra
@@ -1629,13 +1629,13 @@ $vulp_profectoAssignment == vulpoids","SetVulpoidExpression default
 ExitRulesToPlugin",TODO: umbra dummy,,,
 ,,,,,,,
 # Aztlan,,,,,,,
-vulpChatSurroundings_chicomoztocOption,VulpoidChatSurroundingsOptions,$topic.terrainId == chicomoztoc score:1000,,,vulpChatSurroundings_chicomoztoc:Chicomoztoc,,chicomoztoc
+vulpChatSurroundings_chicomoztocOption,VulpoidChatSurroundingsOptions,$topic.id == chicomoztoc score:1000,,,vulpChatSurroundings_chicomoztoc:Chicomoztoc,,chicomoztoc
 vulpChatSurroundings_chicomoztoc,DialogOptionSelected,$option == vulpChatSurroundings_chicomoztoc,"SetVulpoidExpression default
 ExitRulesToPlugin",TODO: chicomoztoc,,,
 vulpChatSurroundings_chicomoztocDummy,DialogOptionSelected,"$option == vulpChatSurroundings_chicomoztoc
 $vulp_profectoAssignment == vulpoids","$option = vulpChatSurroundings_dummiesNotWelcome
 FireBest DialogOptionSelected",,,,
-vulpChatSurroundings_coatlOption,VulpoidChatSurroundingsOptions,$topic.terrainId == coatl score:1000,,,"vulpChatSurroundings_coatl:Coatl
+vulpChatSurroundings_coatlOption,VulpoidChatSurroundingsOptions,$topic.id == coatl score:1000,,,"vulpChatSurroundings_coatl:Coatl
 vulpChatSurroundings_coatlBastion:Coatl Bastion",,coatl
 vulpChatSurroundings_coatl,DialogOptionSelected,$option == vulpChatSurroundings_coatl,"SetVulpoidExpression default
 ExitRulesToPlugin",TODO: coatl,,,
@@ -1649,7 +1649,7 @@ $vulp_profectoAssignment == vulpoids","$option = vulpChatSurroundings_dummiesNot
 FireBest DialogOptionSelected",,,,
 ,,,,,,,
 # Canaan,,,,,,,
-vulpChatSurroundings_gileadOption,VulpoidChatSurroundingsOptions,$topic.terrainId == gilead score:1000,,,vulpChatSurroundings_gilead:Gilead,,gilead
+vulpChatSurroundings_gileadOption,VulpoidChatSurroundingsOptions,$topic.id == gilead score:1000,,,vulpChatSurroundings_gilead:Gilead,,gilead
 vulpChatSurroundings_gilead,DialogOptionSelected,$option == vulpChatSurroundings_gilead,"SetVulpoidExpression default
 ExitRulesToPlugin","""Of all the Luddic worlds that could be friendly to us, I'm glad it's Gilead! Such a gorgeous world, I can see why they made a religion out of this.""
 
@@ -1657,7 +1657,7 @@ ExitRulesToPlugin","""Of all the Luddic worlds that could be friendly to us, I'm
 vulpChatSurroundings_gileadDummy,DialogOptionSelected,"$option == vulpChatSurroundings_gilead
 $vulp_profectoAssignment == vulpoids","SetVulpoidExpression default
 ExitRulesToPlugin","""This place is nice! The humans are really friendly, and they pet us a lot! And it's so pretty!""",,,
-vulpChatSurroundings_asherOption,VulpoidChatSurroundingsOptions,$topic.terrainId == asher score:1000,,,vulpChatSurroundings_asher:Asher,,asher
+vulpChatSurroundings_asherOption,VulpoidChatSurroundingsOptions,$topic.id == asher score:1000,,,vulpChatSurroundings_asher:Asher,,asher
 vulpChatSurroundings_asher,DialogOptionSelected,$option == vulpChatSurroundings_asher,"SetVulpoidExpression angry
 ExitRulesToPlugin","""Ah, Asher. The moon-sized guilt complex. It's miserable there, the people always assume you should feel as bad about yourself as they do. They always try to push us to 'seek pennance' by working in some mine or factory.""",,,
 vulpChatSurroundings_asherDummy,DialogOptionSelected,"$option == vulpChatSurroundings_asher
@@ -1665,13 +1665,13 @@ $vulp_profectoAssignment == vulpoids","SetVulpoidExpression bruh
 ExitRulesToPlugin","""It's a bit sad here, the humans are always grouchy. They like it when we help out with stuff though, they say it's 'pennance'?",,,
 ,,,,,,,
 # Corvus,,,,,,,
-vulpChatSurroundings_asharuOption,VulpoidChatSurroundingsOptions,$topic.terrainId == asharu score:1000,,,vulpChatSurroundings_asharu:Asharu,,asharu
+vulpChatSurroundings_asharuOption,VulpoidChatSurroundingsOptions,$topic.id == asharu score:1000,,,vulpChatSurroundings_asharu:Asharu,,asharu
 vulpChatSurroundings_asharu,DialogOptionSelected,$option == vulpChatSurroundings_asharu,"SetVulpoidExpression default
 ExitRulesToPlugin",TODO: asharu,,,
 vulpChatSurroundings_asharuDummy,DialogOptionSelected,"$option == vulpChatSurroundings_asharu
 $vulp_profectoAssignment == vulpoids","SetVulpoidExpression default
 ExitRulesToPlugin",TODO: asharu dummy,,,
-vulpChatSurroundings_jangalaOption,VulpoidChatSurroundingsOptions,$topic.terrainId == jangala score:1000,,,"vulpChatSurroundings_jangala:Jangala
+vulpChatSurroundings_jangalaOption,VulpoidChatSurroundingsOptions,$topic.id == jangala score:1000,,,"vulpChatSurroundings_jangala:Jangala
 vulpChatSurroundings_jangalaStation:Jangala Station",,jangala
 vulpChatSurroundings_jangala,DialogOptionSelected,$option == vulpChatSurroundings_jangala,"SetVulpoidExpression default
 ExitRulesToPlugin",TODO: jangala,,,
@@ -1683,7 +1683,7 @@ ExitRulesToPlugin",TODO: jangala station,,,
 vulpChatSurroundings_jangalaStationDummy,DialogOptionSelected,"$option == vulpChatSurroundings_jangalaStation
 $vulp_profectoAssignment == vulpoids","$option = vulpChatSurroundings_dummiesNotWelcome
 FireBest DialogOptionSelected",,,,
-vulpChatSurroundings_garnirOption,VulpoidChatSurroundingsOptions,$topic.terrainId == corvus_IIIa score:1000,,,"vulpChatSurroundings_garnir:Garnir
+vulpChatSurroundings_garnirOption,VulpoidChatSurroundingsOptions,$topic.id == corvus_IIIa score:1000,,,"vulpChatSurroundings_garnir:Garnir
 vulpChatSurroundings_garnirDepot:Garnir Extraction Depot",,garnir
 vulpChatSurroundings_garnir,DialogOptionSelected,$option == vulpChatSurroundings_garnir,"SetVulpoidExpression default
 ExitRulesToPlugin",TODO: garnir,,,
@@ -1697,13 +1697,13 @@ $vulp_profectoAssignment == vulpoids","SetVulpoidExpression default
 ExitRulesToPlugin",TODO: garnir depot dummy,,,
 ,,,,,,,
 # Duzahk,,,,,,,
-vulpChatSurroundings_akaMainyuOption,VulpoidChatSurroundingsOptions,$topic.terrainId == duzahk1 score:1000,,,vulpChatSurroundings_akaMainyu:Aka Mainyu,,akaMainyu
+vulpChatSurroundings_akaMainyuOption,VulpoidChatSurroundingsOptions,$topic.id == duzahk1 score:1000,,,vulpChatSurroundings_akaMainyu:Aka Mainyu,,akaMainyu
 vulpChatSurroundings_akaMainyu,DialogOptionSelected,$option == vulpChatSurroundings_akaMainyu,"SetVulpoidExpression default
 ExitRulesToPlugin",TODO: akaMainyu,,,
 vulpChatSurroundings_akaMainyuDummy,DialogOptionSelected,"$option == vulpChatSurroundings_akaMainyu
 $vulp_profectoAssignment == vulpoids","SetVulpoidExpression default
 ExitRulesToPlugin",TODO: akaMainyu Dummy,,,
-vulpChatSurroundings_drujOption,VulpoidChatSurroundingsOptions,$topic.terrainId == duzahk2 score:1000,,,vulpChatSurroundings_druj:Druj,,druj
+vulpChatSurroundings_drujOption,VulpoidChatSurroundingsOptions,$topic.id == duzahk2 score:1000,,,vulpChatSurroundings_druj:Druj,,druj
 vulpChatSurroundings_druj,DialogOptionSelected,$option == vulpChatSurroundings_druj,"SetVulpoidExpression default
 ExitRulesToPlugin",TODO: druj,,,
 vulpChatSurroundings_drujDummy,DialogOptionSelected,"$option == vulpChatSurroundings_druj
@@ -1711,7 +1711,7 @@ $vulp_profectoAssignment == vulpoids","SetVulpoidExpression default
 ExitRulesToPlugin",TODO: druj Dummy,,,
 ,,,,,,,
 # Eos Exodus,,,,,,,
-vulpChatSurroundings_tartessusOption,VulpoidChatSurroundingsOptions,$topic.terrainId == tartessus score:1000,,,vulpChatSurroundings_tartessus:Tartessus,,tartessus
+vulpChatSurroundings_tartessusOption,VulpoidChatSurroundingsOptions,$topic.id == tartessus score:1000,,,vulpChatSurroundings_tartessus:Tartessus,,tartessus
 vulpChatSurroundings_tartessus,DialogOptionSelected,$option == vulpChatSurroundings_tartessus,"SetVulpoidExpression default
 ExitRulesToPlugin","""The spaceports and major cities are pretty closely overseen by the Knights, so I can't really get out much there.""
 
@@ -1719,7 +1719,7 @@ ExitRulesToPlugin","""The spaceports and major cities are pretty closely oversee
 vulpChatSurroundings_tartessusDummy,DialogOptionSelected,"$option == vulpChatSurroundings_tartessus
 $vulp_profectoAssignment == vulpoids","$option = vulpChatSurroundings_dummiesNotWelcome
 FireBest DialogOptionSelected",,,,
-vulpChatSurroundings_baetisOption,VulpoidChatSurroundingsOptions,$topic.terrainId == baetis score:1000,,,vulpChatSurroundings_baetis:Baetis,,baetis
+vulpChatSurroundings_baetisOption,VulpoidChatSurroundingsOptions,$topic.id == baetis score:1000,,,vulpChatSurroundings_baetis:Baetis,,baetis
 vulpChatSurroundings_baetis,DialogOptionSelected,$option == vulpChatSurroundings_baetis,"SetVulpoidExpression default
 ExitRulesToPlugin","""Honestly, I don't mind Baetis. Have to slip past the Knights at the spaceport, but once you're through it's party city! Great place for shore leave.""
 
@@ -1727,19 +1727,19 @@ ExitRulesToPlugin","""Honestly, I don't mind Baetis. Have to slip past the Knigh
 vulpChatSurroundings_baetisDummy,DialogOptionSelected,"$option == vulpChatSurroundings_baetis
 $vulp_profectoAssignment == vulpoids","SetVulpoidExpression default
 ExitRulesToPlugin","""Oh it's great there! The humans are so happy, and love being with us! They always tell us how pretty we look!""",,,
-vulpChatSurroundings_hesperusOption,VulpoidChatSurroundingsOptions,$topic.terrainId == hesperus score:1000,,,vulpChatSurroundings_hesperus:Hesperus,,hesperus
+vulpChatSurroundings_hesperusOption,VulpoidChatSurroundingsOptions,$topic.id == hesperus score:1000,,,vulpChatSurroundings_hesperus:Hesperus,,hesperus
 vulpChatSurroundings_hesperus,DialogOptionSelected,$option == vulpChatSurroundings_hesperus,"SetVulpoidExpression default
 ExitRulesToPlugin",TODO: hesperus,,,
 vulpChatSurroundings_hesperusDummy,DialogOptionSelected,"$option == vulpChatSurroundings_hesperus
 $vulp_profectoAssignment == vulpoids","$option = vulpChatSurroundings_dummiesNotWelcome
 FireBest DialogOptionSelected",,,,
-vulpChatSurroundings_ceyxOption,VulpoidChatSurroundingsOptions,$topic.terrainId == ceyx score:1000,,,vulpChatSurroundings_ceyx:Ceyx,,ceyx
+vulpChatSurroundings_ceyxOption,VulpoidChatSurroundingsOptions,$topic.id == ceyx score:1000,,,vulpChatSurroundings_ceyx:Ceyx,,ceyx
 vulpChatSurroundings_ceyx,DialogOptionSelected,$option == vulpChatSurroundings_ceyx,"SetVulpoidExpression angry
 ExitRulesToPlugin","""Homeplace of the soldiers of a religion of nonviolence. Bunch of hypocrites. They get to go against their prophet's orders because it's 'practical'. But me just wanting to not be killed? Oh no, that's a bridge too far.""",,,
 vulpChatSurroundings_ceyxDummy,DialogOptionSelected,"$option == vulpChatSurroundings_ceyx
 $vulp_profectoAssignment == vulpoids","$option = vulpChatSurroundings_dummiesNotWelcome
 FireBest DialogOptionSelected",,,,
-vulpChatSurroundings_daedaleonOption,VulpoidChatSurroundingsOptions,$topic.terrainId == daedaleon score:1000,,,vulpChatSurroundings_daedaleon:Daedaleon,,daedaleon
+vulpChatSurroundings_daedaleonOption,VulpoidChatSurroundingsOptions,$topic.id == daedaleon score:1000,,,vulpChatSurroundings_daedaleon:Daedaleon,,daedaleon
 vulpChatSurroundings_daedaleon,DialogOptionSelected,$option == vulpChatSurroundings_daedaleon,"SetVulpoidExpression fear
 ExitRulesToPlugin","""Nasty stuff down there. Not that I like to agree with the Knights on anything, but things like this make me appreciate the term 'technological sin'.""",,,
 vulpChatSurroundings_daedaleonDummy,DialogOptionSelected,"$option == vulpChatSurroundings_daedaleon
@@ -1747,7 +1747,7 @@ $vulp_profectoAssignment == vulpoids","SetVulpoidExpression fear
 ExitRulesToPlugin","""Oh, that planet's scary! It's a good thing nobody's allowed to go there. I hope nobody was hurt when the thing broke.""",,,
 ,,,,,,,
 # Galatia,,,,,,,
-vulpChatSurroundings_ancyraOption,VulpoidChatSurroundingsOptions,$topic.terrainId == ancyra score:1000,,,"vulpChatSurroundings_ancyra:Ancyra
+vulpChatSurroundings_ancyraOption,VulpoidChatSurroundingsOptions,$topic.id == ancyra score:1000,,,"vulpChatSurroundings_ancyra:Ancyra
 vulpChatSurroundings_ancyraStation:Ancyra Orbital Facility",,ancyra
 vulpChatSurroundings_ancyra,DialogOptionSelected,$option == vulpChatSurroundings_ancyra,"SetVulpoidExpression default
 ExitRulesToPlugin",TODO: ancyra,,,
@@ -1759,13 +1759,13 @@ ExitRulesToPlugin",TODO: ancyraStation,,,
 vulpChatSurroundings_ancyraStationDummy,DialogOptionSelected,"$option == vulpChatSurroundings_ancyraStation
 $vulp_profectoAssignment == vulpoids","SetVulpoidExpression default
 ExitRulesToPlugin",TODO: ancyraStation Dummy,,,
-vulpChatSurroundings_derinkuyuOption,VulpoidChatSurroundingsOptions,$topic.terrainId == derinkuyu_station score:1000,,,vulpChatSurroundings_derinkuyu:Derinkuyu Mining Station,,derinkuyu
+vulpChatSurroundings_derinkuyuOption,VulpoidChatSurroundingsOptions,$topic.id == derinkuyu_station score:1000,,,vulpChatSurroundings_derinkuyu:Derinkuyu Mining Station,,derinkuyu
 vulpChatSurroundings_derinkuyu,DialogOptionSelected,$option == vulpChatSurroundings_derinkuyu,"SetVulpoidExpression default
 ExitRulesToPlugin",TODO: derinkuyu,,,
 vulpChatSurroundings_derinkuyuDummy,DialogOptionSelected,"$option == vulpChatSurroundings_derinkuyu
 $vulp_profectoAssignment == vulpoids","SetVulpoidExpression default
 ExitRulesToPlugin",TODO: derinkuyu Dummy,,,
-vulpChatSurroundings_academyOption,VulpoidChatSurroundingsOptions,$topic.terrainId == station_galatia_academy score:1000,,,vulpChatSurroundings_academy:Galatia Academy,,academy
+vulpChatSurroundings_academyOption,VulpoidChatSurroundingsOptions,$topic.id == station_galatia_academy score:1000,,,vulpChatSurroundings_academy:Galatia Academy,,academy
 vulpChatSurroundings_academy,DialogOptionSelected,$option == vulpChatSurroundings_academy,"SetVulpoidExpression default
 ExitRulesToPlugin",TODO: academy,,,
 vulpChatSurroundings_academyDummy,DialogOptionSelected,"$option == vulpChatSurroundings_academy
@@ -1773,7 +1773,7 @@ $vulp_profectoAssignment == vulpoids","SetVulpoidExpression default
 ExitRulesToPlugin",TODO: academy Dummy,,,
 ,,,,,,,
 # Hybrasil,,,,,,,
-vulpChatSurroundings_culannOption,VulpoidChatSurroundingsOptions,$topic.terrainId == culann score:1000,,,"vulpChatSurroundings_culann:Culann
+vulpChatSurroundings_culannOption,VulpoidChatSurroundingsOptions,$topic.id == culann score:1000,,,"vulpChatSurroundings_culann:Culann
 vulpChatSurroundings_culannStarforge:Culann Starforge",,culann
 vulpChatSurroundings_culann,DialogOptionSelected,$option == vulpChatSurroundings_culann,"SetVulpoidExpression fear
 ExitRulesToPlugin","""It's a bit creepy planetside, if I'm to be honest. Factories and military bases are miserable places, but the customer service reps always have those big fake smiles. Skeeves me out.""",,,
@@ -1787,25 +1787,25 @@ ExitRulesToPlugin","""Fun for a day trip. Free refreshments as you browse all th
 vulpChatSurroundings_culannStarforgeDummy,DialogOptionSelected,"$option == vulpChatSurroundings_culannStarforge
 $vulp_profectoAssignment == vulpoids","SetVulpoidExpression default
 ExitRulesToPlugin",TODO: culann starforge dummy,,,
-vulpChatSurroundings_eochuBresOption,VulpoidChatSurroundingsOptions,$topic.terrainId == eochu_bres score:1000,,,vulpChatSurroundings_eochuBres:Eochu Bres,,eochuBres
+vulpChatSurroundings_eochuBresOption,VulpoidChatSurroundingsOptions,$topic.id == eochu_bres score:1000,,,vulpChatSurroundings_eochuBres:Eochu Bres,,eochuBres
 vulpChatSurroundings_eochuBres,DialogOptionSelected,$option == vulpChatSurroundings_eochuBres,"SetVulpoidExpression default
 ExitRulesToPlugin",TODO: eochuBres,,,
 vulpChatSurroundings_eochuBresDummy,DialogOptionSelected,"$option == vulpChatSurroundings_eochuBres
 $vulp_profectoAssignment == vulpoids","SetVulpoidExpression default
 ExitRulesToPlugin",TODO: eochuBres dummy,,,
-vulpChatSurroundings_cromCruachOption,VulpoidChatSurroundingsOptions,$topic.terrainId == crom_cruach score:1000,,,vulpChatSurroundings_cromCruach:cromCruach,,cromCruach
+vulpChatSurroundings_cromCruachOption,VulpoidChatSurroundingsOptions,$topic.id == crom_cruach score:1000,,,vulpChatSurroundings_cromCruach:cromCruach,,cromCruach
 vulpChatSurroundings_cromCruach,DialogOptionSelected,$option == vulpChatSurroundings_cromCruach,"SetVulpoidExpression default
 ExitRulesToPlugin",TODO: cromCruach,,,
 vulpChatSurroundings_cromCruachDummy,DialogOptionSelected,"$option == vulpChatSurroundings_cromCruach
 $vulp_profectoAssignment == vulpoids","SetVulpoidExpression default
 ExitRulesToPlugin",TODO: cromCruach Dummy,,,
-vulpChatSurroundings_cethlennOption,VulpoidChatSurroundingsOptions,$topic.terrainId == cethlenn score:1000,,,vulpChatSurroundings_cethlenn:Cethlenn,,cethlenn
+vulpChatSurroundings_cethlennOption,VulpoidChatSurroundingsOptions,$topic.id == cethlenn score:1000,,,vulpChatSurroundings_cethlenn:Cethlenn,,cethlenn
 vulpChatSurroundings_cethlenn,DialogOptionSelected,$option == vulpChatSurroundings_cethlenn,"SetVulpoidExpression bruh
 ExitRulesToPlugin","""Cethlenn? Honestly, I forget it exists sometimes. It's got what, one city and a couple mining rigs? And some pretty auroras, I suppose.""",,,
 vulpChatSurroundings_cethlennDummy,DialogOptionSelected,"$option == vulpChatSurroundings_cethlenn
 $vulp_profectoAssignment == vulpoids","SetVulpoidExpression default
 ExitRulesToPlugin","""It's kinda neat! It's got all those big ads from Tri-Tachyon, but it's also so small and cozy! Plus the sky is so pretty!""",,,
-vulpChatSurroundings_donnOption,VulpoidChatSurroundingsOptions,$topic.terrainId == donn score:1000,,,vulpChatSurroundings_donn:Donn,,donn
+vulpChatSurroundings_donnOption,VulpoidChatSurroundingsOptions,$topic.id == donn score:1000,,,vulpChatSurroundings_donn:Donn,,donn
 vulpChatSurroundings_donn,DialogOptionSelected,$option == vulpChatSurroundings_donn,"SetVulpoidExpression default
 ExitRulesToPlugin",TODO: donn,,,
 vulpChatSurroundings_donnDummy,DialogOptionSelected,"$option == vulpChatSurroundings_donn
@@ -1813,19 +1813,19 @@ $vulp_profectoAssignment == vulpoids","SetVulpoidExpression default
 ExitRulesToPlugin",TODO: donn dummy,,,
 ,,,,,,,
 # Isirah,,,,,,,
-vulpChatSurroundings_laicailleOption,VulpoidChatSurroundingsOptions,$topic.terrainId == laicaille_habitat score:1000,,,vulpChatSurroundings_laicaille:Laicaille Habitat,,laicaille
+vulpChatSurroundings_laicailleOption,VulpoidChatSurroundingsOptions,$topic.id == laicaille_habitat score:1000,,,vulpChatSurroundings_laicaille:Laicaille Habitat,,laicaille
 vulpChatSurroundings_laicaille,DialogOptionSelected,$option == vulpChatSurroundings_laicaille,"SetVulpoidExpression default
 ExitRulesToPlugin",TODO: laicaille,,,
 vulpChatSurroundings_laicailleDummy,DialogOptionSelected,"$option == vulpChatSurroundings_laicaille
 $vulp_profectoAssignment == vulpoids","SetVulpoidExpression default
 ExitRulesToPlugin",TODO: laicaille dummy,,,
-vulpChatSurroundings_kapteynOption,VulpoidChatSurroundingsOptions,$topic.terrainId == station_kapteyn score:1000,,,vulpChatSurroundings_kapteyn:Kapteyn Starworks,,kapteyn
+vulpChatSurroundings_kapteynOption,VulpoidChatSurroundingsOptions,$topic.id == station_kapteyn score:1000,,,vulpChatSurroundings_kapteyn:Kapteyn Starworks,,kapteyn
 vulpChatSurroundings_kapteyn,DialogOptionSelected,$option == vulpChatSurroundings_kapteyn,"SetVulpoidExpression default
 ExitRulesToPlugin",TODO: kapteyn,,,
 vulpChatSurroundings_kapteynDummy,DialogOptionSelected,"$option == vulpChatSurroundings_kapteyn
 $vulp_profectoAssignment == vulpoids","SetVulpoidExpression default
 ExitRulesToPlugin",TODO: kapteyn dummy,,,
-vulpChatSurroundings_groombridgeOption,VulpoidChatSurroundingsOptions,$topic.terrainId == groombridge_habitat score:1000,,,vulpChatSurroundings_groombridge:Groombridge Habitat,,groombridge
+vulpChatSurroundings_groombridgeOption,VulpoidChatSurroundingsOptions,$topic.id == groombridge_habitat score:1000,,,vulpChatSurroundings_groombridge:Groombridge Habitat,,groombridge
 vulpChatSurroundings_groombridge,DialogOptionSelected,$option == vulpChatSurroundings_groombridge,"SetVulpoidExpression default
 ExitRulesToPlugin",TODO: groombridge,,,
 vulpChatSurroundings_groombridgeDummy,DialogOptionSelected,"$option == vulpChatSurroundings_groombridge
@@ -1833,38 +1833,38 @@ $vulp_profectoAssignment == vulpoids","SetVulpoidExpression default
 ExitRulesToPlugin",TODO: groombridge Dummy,,,
 ,,,,,,,
 # Kumari Kandam,,,,,,,
-vulpChatSurroundings_kumariAruOption,VulpoidChatSurroundingsOptions,$topic.terrainId == kumari_aru score:1000,,,vulpChatSurroundings_kumariAru:Kumari Aru,,kumariAru
+vulpChatSurroundings_kumariAruOption,VulpoidChatSurroundingsOptions,$topic.id == kumari_aru score:1000,,,vulpChatSurroundings_kumariAru:Kumari Aru,,kumariAru
 vulpChatSurroundings_kumariAru,DialogOptionSelected,$option == vulpChatSurroundings_kumariAru,"SetVulpoidExpression default
 ExitRulesToPlugin",TODO: kumariAru,,,
 vulpChatSurroundings_kumariAruDummy,DialogOptionSelected,"$option == vulpChatSurroundings_kumariAru
 $vulp_profectoAssignment == vulpoids","SetVulpoidExpression default
 ExitRulesToPlugin",TODO: kumariAru Dummy,,,
-vulpChatSurroundings_beholderStationOption,VulpoidChatSurroundingsOptions,$topic.terrainId == beholder_station score:1000,,,vulpChatSurroundings_beholderStation:Beholder Station,,beholderStation
+vulpChatSurroundings_beholderStationOption,VulpoidChatSurroundingsOptions,$topic.id == beholder_station score:1000,,,vulpChatSurroundings_beholderStation:Beholder Station,,beholderStation
 vulpChatSurroundings_beholderStation,DialogOptionSelected,$option == vulpChatSurroundings_beholderStation,"SetVulpoidExpression default
 ExitRulesToPlugin",TODO: beholderStation,,,
 vulpChatSurroundings_beholderStationDummy,DialogOptionSelected,"$option == vulpChatSurroundings_beholderStation
 $vulp_profectoAssignment == vulpoids","SetVulpoidExpression default
 ExitRulesToPlugin",TODO: beholderStation Dummy,,,
-vulpChatSurroundings_chalcedonOption,VulpoidChatSurroundingsOptions,$topic.terrainId == chalcedon score:1000,,,vulpChatSurroundings_chalcedon:Chalcedon,,chalcedon
+vulpChatSurroundings_chalcedonOption,VulpoidChatSurroundingsOptions,$topic.id == chalcedon score:1000,,,vulpChatSurroundings_chalcedon:Chalcedon,,chalcedon
 vulpChatSurroundings_chalcedon,DialogOptionSelected,$option == vulpChatSurroundings_chalcedon,"SetVulpoidExpression default
 ExitRulesToPlugin",TODO: chalcedon,,,
 vulpChatSurroundings_chalcedonDummy,DialogOptionSelected,"$option == vulpChatSurroundings_chalcedon
 $vulp_profectoAssignment == vulpoids","$option = vulpChatSurroundings_dummiesNotWelcome
 FireBest DialogOptionSelected",,,,
-vulpChatSurroundings_kumariSpacedockOption,VulpoidChatSurroundingsOptions,"$topic.terrainId == abandoned_station score:1000
+vulpChatSurroundings_kumariSpacedockOption,VulpoidChatSurroundingsOptions,"$topic.id == abandoned_station score:1000
 $topic.locationId == ""kumari kandam""",,,vulpChatSurroundings_kumariSpacedock:Abandoned Spacedock,,kumariSpacedock
 vulpChatSurroundings_kumariSpacedock,DialogOptionSelected,$option == vulpChatSurroundings_kumariSpacedock,"SetVulpoidExpression default
 ExitRulesToPlugin",TODO: kumariSpacedock,,,
 vulpChatSurroundings_kumariSpacedockDummy,DialogOptionSelected,"$option == vulpChatSurroundings_kumariSpacedock
 $vulp_profectoAssignment == vulpoids","SetVulpoidExpression default
 ExitRulesToPlugin",TODO: kumariSpacedock Dummy,,,
-vulpChatSurroundings_olinaduOption,VulpoidChatSurroundingsOptions,$topic.terrainId == olinadu score:1000,,,vulpChatSurroundings_olinadu:Olinadu,,olinadu
+vulpChatSurroundings_olinaduOption,VulpoidChatSurroundingsOptions,$topic.id == olinadu score:1000,,,vulpChatSurroundings_olinadu:Olinadu,,olinadu
 vulpChatSurroundings_olinadu,DialogOptionSelected,$option == vulpChatSurroundings_olinadu,"SetVulpoidExpression default
 ExitRulesToPlugin",TODO: olinadu,,,
 vulpChatSurroundings_olinaduDummy,DialogOptionSelected,"$option == vulpChatSurroundings_olinadu
 $vulp_profectoAssignment == vulpoids","SetVulpoidExpression default
 ExitRulesToPlugin",TODO: olinadu dummy,,,
-vulpChatSurroundings_kanniOption,VulpoidChatSurroundingsOptions,$topic.terrainId == kanni score:1000,,,vulpChatSurroundings_kanni:Kanni,,kanni
+vulpChatSurroundings_kanniOption,VulpoidChatSurroundingsOptions,$topic.id == kanni score:1000,,,vulpChatSurroundings_kanni:Kanni,,kanni
 vulpChatSurroundings_kanni,DialogOptionSelected,$option == vulpChatSurroundings_kanni,"SetVulpoidExpression default
 ExitRulesToPlugin",TODO: kanni,,,
 vulpChatSurroundings_kanniDummy,DialogOptionSelected,"$option == vulpChatSurroundings_kanni
@@ -1872,31 +1872,31 @@ $vulp_profectoAssignment == vulpoids","SetVulpoidExpression default
 ExitRulesToPlugin",TODO: kanni dummy,,,
 ,,,,,,,
 # Magec,,,,,,,
-vulpChatSurroundings_chaxiraxiOption,VulpoidChatSurroundingsOptions,$topic.terrainId == chaxiraxi score:1000,,,vulpChatSurroundings_chaxiraxi:chaxiraxi,,chaxiraxi
+vulpChatSurroundings_chaxiraxiOption,VulpoidChatSurroundingsOptions,$topic.id == chaxiraxi score:1000,,,vulpChatSurroundings_chaxiraxi:chaxiraxi,,chaxiraxi
 vulpChatSurroundings_chaxiraxi,DialogOptionSelected,$option == vulpChatSurroundings_chaxiraxi,"SetVulpoidExpression default
 ExitRulesToPlugin",TODO: chaxiraxi,,,
 vulpChatSurroundings_chaxiraxiDummy,DialogOptionSelected,"$option == vulpChatSurroundings_chaxiraxi
 $vulp_profectoAssignment == vulpoids","SetVulpoidExpression default
 ExitRulesToPlugin",TODO: chaxiraxi Dummy,,,
-vulpChatSurroundings_maxiosOption,VulpoidChatSurroundingsOptions,$topic.terrainId == maxios score:1000,,,vulpChatSurroundings_maxios:maxios,,maxios
+vulpChatSurroundings_maxiosOption,VulpoidChatSurroundingsOptions,$topic.id == maxios score:1000,,,vulpChatSurroundings_maxios:maxios,,maxios
 vulpChatSurroundings_maxios,DialogOptionSelected,$option == vulpChatSurroundings_maxios,"SetVulpoidExpression default
 ExitRulesToPlugin",TODO: maxios,,,
 vulpChatSurroundings_maxiosDummy,DialogOptionSelected,"$option == vulpChatSurroundings_maxios
 $vulp_profectoAssignment == vulpoids","SetVulpoidExpression default
 ExitRulesToPlugin",TODO: maxios Dummy,,,
-vulpChatSurroundings_novaMaxiosOption,VulpoidChatSurroundingsOptions,$topic.terrainId == new_maxios score:1000,,,vulpChatSurroundings_novaMaxios:Nova Maxios,,novaMaxios
+vulpChatSurroundings_novaMaxiosOption,VulpoidChatSurroundingsOptions,$topic.id == new_maxios score:1000,,,vulpChatSurroundings_novaMaxios:Nova Maxios,,novaMaxios
 vulpChatSurroundings_novaMaxios,DialogOptionSelected,$option == vulpChatSurroundings_novaMaxios,"SetVulpoidExpression default
 ExitRulesToPlugin",TODO: novaMaxios,,,
 vulpChatSurroundings_novaMaxiosDummy,DialogOptionSelected,"$option == vulpChatSurroundings_novaMaxios
 $vulp_profectoAssignment == vulpoids","SetVulpoidExpression default
 ExitRulesToPlugin",TODO: novaMaxios dummy,,,
-vulpChatSurroundings_kantasDenOption,VulpoidChatSurroundingsOptions,$topic.terrainId == kantas_den score:1000,,,vulpChatSurroundings_kantasDen:Kanta's Den,,kantasDen
+vulpChatSurroundings_kantasDenOption,VulpoidChatSurroundingsOptions,$topic.id == kantas_den score:1000,,,vulpChatSurroundings_kantasDen:Kanta's Den,,kantasDen
 vulpChatSurroundings_kantasDen,DialogOptionSelected,$option == vulpChatSurroundings_kantasDen,"SetVulpoidExpression default
 ExitRulesToPlugin",TODO: kantasDen,,,
 vulpChatSurroundings_kantasDenDummy,DialogOptionSelected,"$option == vulpChatSurroundings_kantasDen
 $vulp_profectoAssignment == vulpoids","SetVulpoidExpression default
 ExitRulesToPlugin",TODO: kantasDen dummy,,,
-vulpChatSurroundings_tibicenaOption,VulpoidChatSurroundingsOptions,$topic.terrainId == tibicena score:1000,,,"vulpChatSurroundings_tibicena:Tibicena
+vulpChatSurroundings_tibicenaOption,VulpoidChatSurroundingsOptions,$topic.id == tibicena score:1000,,,"vulpChatSurroundings_tibicena:Tibicena
 vulpChatSurroundings_achamanEnterprise:Achaman Enterprise Station",,tibicena
 vulpChatSurroundings_tibicena,DialogOptionSelected,$option == vulpChatSurroundings_tibicena,"SetVulpoidExpression default
 ExitRulesToPlugin",TODO: tibicena,,,
@@ -1910,19 +1910,19 @@ $vulp_profectoAssignment == vulpoids","SetVulpoidExpression default
 ExitRulesToPlugin",TODO: achaman enterprise dummy,,,
 ,,,,,,,
 # Mayasura,,,,,,,
-vulpChatSurroundings_mairaathOption,VulpoidChatSurroundingsOptions,$topic.terrainId == mairaath score:1000,,,vulpChatSurroundings_mairaath:Mairaath,,mairaath
+vulpChatSurroundings_mairaathOption,VulpoidChatSurroundingsOptions,$topic.id == mairaath score:1000,,,vulpChatSurroundings_mairaath:Mairaath,,mairaath
 vulpChatSurroundings_mairaath,DialogOptionSelected,$option == vulpChatSurroundings_mairaath,"SetVulpoidExpression cry
 ExitRulesToPlugin","""Mairaath... Pardon me, it's hard not to get emotional when thinking about human death. Such a senseless tragedy. Hard to say whether even a lick of good came out of it.""",,,
 vulpChatSurroundings_mairaathDummy,DialogOptionSelected,"$option == vulpChatSurroundings_mairaath
 $vulp_profectoAssignment == vulpoids","SetVulpoidExpression cry
 ExitRulesToPlugin","""Oh, I heard about this! It's so sad what happened to them, why would people do that?""",,,
-vulpChatSurroundings_lostAstropolisOption,VulpoidChatSurroundingsOptions,$topic.terrainId == mairaath_abandoned_station2 score:1000,,,vulpChatSurroundings_lostAstropolis:Lost Astropolis,,lostAstropolis
+vulpChatSurroundings_lostAstropolisOption,VulpoidChatSurroundingsOptions,$topic.id == mairaath_abandoned_station2 score:1000,,,vulpChatSurroundings_lostAstropolis:Lost Astropolis,,lostAstropolis
 vulpChatSurroundings_lostAstropolis,DialogOptionSelected,$option == vulpChatSurroundings_lostAstropolis,"SetVulpoidExpression fear
 ExitRulesToPlugin","""I would prefer not to visit. We're not completely immune to radiation, and I'd rather not suffer any mutations. What if it gave me a finite lifespan, or made my fur less fluffy!?""",,,# Priorities lol
 vulpChatSurroundings_lostAstropolisDummy,DialogOptionSelected,"$option == vulpChatSurroundings_lostAstropolis
 $vulp_profectoAssignment == vulpoids","SetVulpoidExpression default
 ExitRulesToPlugin",TODO: lostAstropolis dummy,,,
-vulpChatSurroundings_portTseOption,VulpoidChatSurroundingsOptions,$topic.terrainId == port_tse score:1000,,,vulpChatSurroundings_portTse:Port Tse Franchise Station,,portTse
+vulpChatSurroundings_portTseOption,VulpoidChatSurroundingsOptions,$topic.id == port_tse score:1000,,,vulpChatSurroundings_portTse:Port Tse Franchise Station,,portTse
 vulpChatSurroundings_portTse,DialogOptionSelected,$option == vulpChatSurroundings_portTse,"SetVulpoidExpression default
 ExitRulesToPlugin",TODO: portTse,,,
 vulpChatSurroundings_portTseDummy,DialogOptionSelected,"$option == vulpChatSurroundings_portTse
@@ -1930,13 +1930,13 @@ $vulp_profectoAssignment == vulpoids","SetVulpoidExpression default
 ExitRulesToPlugin",TODO: portTse dummy,,,
 ,,,,,,,
 # Naraka,,,,,,,
-vulpChatSurroundings_yamaOption,VulpoidChatSurroundingsOptions,$topic.terrainId == yama score:1000,,,vulpChatSurroundings_yama:Yama,,yama
+vulpChatSurroundings_yamaOption,VulpoidChatSurroundingsOptions,$topic.id == yama score:1000,,,vulpChatSurroundings_yama:Yama,,yama
 vulpChatSurroundings_yama,DialogOptionSelected,$option == vulpChatSurroundings_yama,"SetVulpoidExpression default
 ExitRulesToPlugin",TODO: yama,,,
 vulpChatSurroundings_yamaDummy,DialogOptionSelected,"$option == vulpChatSurroundings_yama
 $vulp_profectoAssignment == vulpoids","$option = vulpChatSurroundings_dummiesNotWelcome
 FireBest DialogOptionSelected",,,,
-vulpChatSurroundings_nachiketaOption,VulpoidChatSurroundingsOptions,$topic.terrainId == nachiketa score:1000,,,vulpChatSurroundings_nachiketa:Nachiketa,,nachiketa
+vulpChatSurroundings_nachiketaOption,VulpoidChatSurroundingsOptions,$topic.id == nachiketa score:1000,,,vulpChatSurroundings_nachiketa:Nachiketa,,nachiketa
 vulpChatSurroundings_nachiketa,DialogOptionSelected,$option == vulpChatSurroundings_nachiketa,"SetVulpoidExpression default
 ExitRulesToPlugin",TODO: nachiketa,,,
 vulpChatSurroundings_nachiketaDummy,DialogOptionSelected,"$option == vulpChatSurroundings_nachiketa
@@ -1944,31 +1944,31 @@ $vulp_profectoAssignment == vulpoids","$option = vulpChatSurroundings_dummiesNot
 FireBest DialogOptionSelected",,,,
 ,,,,,,,
 # Penelope's Star,,,,,,,
-vulpChatSurroundings_ithacaOption,VulpoidChatSurroundingsOptions,$topic.terrainId == ithaca score:1000,,,vulpChatSurroundings_ithaca:Ithaca,,ithaca
+vulpChatSurroundings_ithacaOption,VulpoidChatSurroundingsOptions,$topic.id == ithaca score:1000,,,vulpChatSurroundings_ithaca:Ithaca,,ithaca
 vulpChatSurroundings_ithaca,DialogOptionSelected,$option == vulpChatSurroundings_ithaca,"SetVulpoidExpression default
 ExitRulesToPlugin",TODO: ithaca,,,
 vulpChatSurroundings_ithacaDummy,DialogOptionSelected,"$option == vulpChatSurroundings_ithaca
 $vulp_profectoAssignment == vulpoids","SetVulpoidExpression default
 ExitRulesToPlugin",TODO: ithaca Dummy,,,
-vulpChatSurroundings_ogygiaOption,VulpoidChatSurroundingsOptions,$topic.terrainId == ogygia score:1000,,,vulpChatSurroundings_ogygia:Ogygia,,ogygia
+vulpChatSurroundings_ogygiaOption,VulpoidChatSurroundingsOptions,$topic.id == ogygia score:1000,,,vulpChatSurroundings_ogygia:Ogygia,,ogygia
 vulpChatSurroundings_ogygia,DialogOptionSelected,$option == vulpChatSurroundings_ogygia,"SetVulpoidExpression default
 ExitRulesToPlugin",TODO: ogygia,,,
 vulpChatSurroundings_ogygiaDummy,DialogOptionSelected,"$option == vulpChatSurroundings_ogygia
 $vulp_profectoAssignment == vulpoids","SetVulpoidExpression default
 ExitRulesToPlugin",TODO: ogygia Dummy,,,
-vulpChatSurroundings_teleplyusStationOption,VulpoidChatSurroundingsOptions,$topic.terrainId == teleplyus_station score:1000,,,vulpChatSurroundings_teleplyusStation:Teleplyus Station,,teleplyusStation
+vulpChatSurroundings_teleplyusStationOption,VulpoidChatSurroundingsOptions,$topic.id == teleplyus_station score:1000,,,vulpChatSurroundings_teleplyusStation:Teleplyus Station,,teleplyusStation
 vulpChatSurroundings_teleplyusStation,DialogOptionSelected,$option == vulpChatSurroundings_teleplyusStation,"SetVulpoidExpression default
 ExitRulesToPlugin",TODO: teleplyusStation,,,
 vulpChatSurroundings_teleplyusStationDummy,DialogOptionSelected,"$option == vulpChatSurroundings_teleplyusStation
 $vulp_profectoAssignment == vulpoids","SetVulpoidExpression default
 ExitRulesToPlugin",TODO: teleplyusStation Dummy,,,
-vulpChatSurroundings_calypsoOption,VulpoidChatSurroundingsOptions,$topic.terrainId == calypso score:1000,,,vulpChatSurroundings_calypso:Calypso,,calypso
+vulpChatSurroundings_calypsoOption,VulpoidChatSurroundingsOptions,$topic.id == calypso score:1000,,,vulpChatSurroundings_calypso:Calypso,,calypso
 vulpChatSurroundings_calypso,DialogOptionSelected,$option == vulpChatSurroundings_calypso,"SetVulpoidExpression default
 ExitRulesToPlugin",TODO: calypso,,,
 vulpChatSurroundings_calypsoDummy,DialogOptionSelected,"$option == vulpChatSurroundings_calypso
 $vulp_profectoAssignment == vulpoids","SetVulpoidExpression default
 ExitRulesToPlugin",TODO: calypso Dummy,,,
-vulpChatSurroundings_ismaraOption,VulpoidChatSurroundingsOptions,$topic.terrainId == ismara score:1000,,,vulpChatSurroundings_ismara:Ismara,,ismara
+vulpChatSurroundings_ismaraOption,VulpoidChatSurroundingsOptions,$topic.id == ismara score:1000,,,vulpChatSurroundings_ismara:Ismara,,ismara
 vulpChatSurroundings_ismara,DialogOptionSelected,$option == vulpChatSurroundings_ismara,"SetVulpoidExpression default
 ExitRulesToPlugin",TODO: ismara,,,
 vulpChatSurroundings_ismaraDummy,DialogOptionSelected,"$option == vulpChatSurroundings_ismara
@@ -1976,25 +1976,25 @@ $vulp_profectoAssignment == vulpoids","SetVulpoidExpression default
 ExitRulesToPlugin",TODO: ismara Dummy,,,
 ,,,,,,,
 # Samarra,,,,,,,
-vulpChatSurroundings_tigraCityOption,VulpoidChatSurroundingsOptions,$topic.terrainId == tigra_city score:1000,,,vulpChatSurroundings_tigraCity:Tigra City,,tigraCity
+vulpChatSurroundings_tigraCityOption,VulpoidChatSurroundingsOptions,$topic.id == tigra_city score:1000,,,vulpChatSurroundings_tigraCity:Tigra City,,tigraCity
 vulpChatSurroundings_tigraCity,DialogOptionSelected,$option == vulpChatSurroundings_tigraCity,"SetVulpoidExpression default
 ExitRulesToPlugin",TODO: tigraCity,,,
 vulpChatSurroundings_tigraCityDummy,DialogOptionSelected,"$option == vulpChatSurroundings_tigraCity
 $vulp_profectoAssignment == vulpoids","$option = vulpChatSurroundings_dummiesNotWelcome
 FireBest DialogOptionSelected",,,,
-vulpChatSurroundings_eventideOption,VulpoidChatSurroundingsOptions,$topic.terrainId == eventide score:1000,,,vulpChatSurroundings_eventide:Eventide,,eventide
+vulpChatSurroundings_eventideOption,VulpoidChatSurroundingsOptions,$topic.id == eventide score:1000,,,vulpChatSurroundings_eventide:Eventide,,eventide
 vulpChatSurroundings_eventide,DialogOptionSelected,$option == vulpChatSurroundings_eventide,"SetVulpoidExpression default
 ExitRulesToPlugin",TODO: eventide,,,
 vulpChatSurroundings_eventideDummy,DialogOptionSelected,"$option == vulpChatSurroundings_eventide
 $vulp_profectoAssignment == vulpoids","$option = vulpChatSurroundings_dummiesNotWelcome
 FireBest DialogOptionSelected",,,,
-vulpChatSurroundings_orthusOption,VulpoidChatSurroundingsOptions,$topic.terrainId == orthus score:1000,,,vulpChatSurroundings_orthus:Orthus,,orthus
+vulpChatSurroundings_orthusOption,VulpoidChatSurroundingsOptions,$topic.id == orthus score:1000,,,vulpChatSurroundings_orthus:Orthus,,orthus
 vulpChatSurroundings_orthus,DialogOptionSelected,$option == vulpChatSurroundings_orthus,"SetVulpoidExpression default
 ExitRulesToPlugin",TODO: orthus,,,
 vulpChatSurroundings_orthusDummy,DialogOptionSelected,"$option == vulpChatSurroundings_orthus
 $vulp_profectoAssignment == vulpoids","SetVulpoidExpression default
 ExitRulesToPlugin",TODO: orthus dummy,,,
-vulpChatSurroundings_sphinxOption,VulpoidChatSurroundingsOptions,$topic.terrainId == sphinx score:1000,,,vulpChatSurroundings_sphinx:Sphinx,,sphinx
+vulpChatSurroundings_sphinxOption,VulpoidChatSurroundingsOptions,$topic.id == sphinx score:1000,,,vulpChatSurroundings_sphinx:Sphinx,,sphinx
 vulpChatSurroundings_sphinx,DialogOptionSelected,$option == vulpChatSurroundings_sphinx,"SetVulpoidExpression default
 ExitRulesToPlugin",TODO: sphinx,,,
 vulpChatSurroundings_sphinxDummy,DialogOptionSelected,"$option == vulpChatSurroundings_sphinx
@@ -2002,19 +2002,19 @@ $vulp_profectoAssignment == vulpoids","$option = vulpChatSurroundings_dummiesNot
 FireBest DialogOptionSelected",,,,
 ,,,,,,,
 # Thule,,,,,,,
-vulpChatSurroundings_kazeronOption,VulpoidChatSurroundingsOptions,$topic.terrainId == kazeron score:1000,,,vulpChatSurroundings_kazeron:Kazeron,,kazeron
+vulpChatSurroundings_kazeronOption,VulpoidChatSurroundingsOptions,$topic.id == kazeron score:1000,,,vulpChatSurroundings_kazeron:Kazeron,,kazeron
 vulpChatSurroundings_kazeron,DialogOptionSelected,$option == vulpChatSurroundings_kazeron,"SetVulpoidExpression default
 ExitRulesToPlugin",TODO: kazeron,,,
 vulpChatSurroundings_kazeronDummy,DialogOptionSelected,"$option == vulpChatSurroundings_kazeron
 $vulp_profectoAssignment == vulpoids","SetVulpoidExpression default
 ExitRulesToPlugin",TODO: kazeron dummy,,,
-vulpChatSurroundings_eldfellOption,VulpoidChatSurroundingsOptions,$topic.terrainId == eldfell score:1000,,,vulpChatSurroundings_eldfell:Eldfell,,eldfell
+vulpChatSurroundings_eldfellOption,VulpoidChatSurroundingsOptions,$topic.id == eldfell score:1000,,,vulpChatSurroundings_eldfell:Eldfell,,eldfell
 vulpChatSurroundings_eldfell,DialogOptionSelected,$option == vulpChatSurroundings_eldfell,"SetVulpoidExpression default
 ExitRulesToPlugin",TODO: eldfell,,,
 vulpChatSurroundings_eldfellDummy,DialogOptionSelected,"$option == vulpChatSurroundings_eldfell
 $vulp_profectoAssignment == vulpoids","SetVulpoidExpression default
 ExitRulesToPlugin",TODO: eldfell dummy,,,
-vulpChatSurroundings_thulianRaiderOption,VulpoidChatSurroundingsOptions,$topic.terrainId == thule_pirate_station score:1000,,,vulpChatSurroundings_thulianRaider:Thulian Raider Base,,thulianRaider
+vulpChatSurroundings_thulianRaiderOption,VulpoidChatSurroundingsOptions,$topic.id == thule_pirate_station score:1000,,,vulpChatSurroundings_thulianRaider:Thulian Raider Base,,thulianRaider
 vulpChatSurroundings_thulianRaider,DialogOptionSelected,$option == vulpChatSurroundings_thulianRaider,"SetVulpoidExpression default
 ExitRulesToPlugin",TODO: thulianRaider,,,
 vulpChatSurroundings_thulianRaiderDummy,DialogOptionSelected,"$option == vulpChatSurroundings_thulianRaider
@@ -2022,7 +2022,7 @@ $vulp_profectoAssignment == vulpoids","SetVulpoidExpression default
 ExitRulesToPlugin",TODO: thulianRaider dummy,,,
 ,,,,,,,
 # Tia-Ta'xet,,,,,,,
-vulpChatSurroundings_tiaResearchStationOption,VulpoidChatSurroundingsOptions,"$topic.terrainId == abandoned_spacedock score:1000
+vulpChatSurroundings_tiaResearchStationOption,VulpoidChatSurroundingsOptions,"$topic.id == abandoned_spacedock score:1000
 $topic.locationId == tia",,,vulpChatSurroundings_tiaResearchStation:Abandoned Research Station,,tiaResearchStation
 vulpChatSurroundings_tiaResearchStation,DialogOptionSelected,$option == vulpChatSurroundings_tiaResearchStation,"SetVulpoidExpression default
 ExitRulesToPlugin",TODO: tiaResearchStation,,,
@@ -2031,13 +2031,13 @@ $vulp_profectoAssignment == vulpoids","SetVulpoidExpression default
 ExitRulesToPlugin",TODO: tiaResearchStation Dummy,,,
 ,,,,,,,
 # Tyle,,,,,,,
-vulpChatSurroundings_cibolaOption,VulpoidChatSurroundingsOptions,$topic.terrainId == cibola score:1000,,,vulpChatSurroundings_cibola:Cibola,,cibola
+vulpChatSurroundings_cibolaOption,VulpoidChatSurroundingsOptions,$topic.id == cibola score:1000,,,vulpChatSurroundings_cibola:Cibola,,cibola
 vulpChatSurroundings_cibola,DialogOptionSelected,$option == vulpChatSurroundings_cibola,"SetVulpoidExpression default
 ExitRulesToPlugin",TODO: cibola,,,
 vulpChatSurroundings_cibolaDummy,DialogOptionSelected,"$option == vulpChatSurroundings_cibola
 $vulp_profectoAssignment == vulpoids","SetVulpoidExpression default
 ExitRulesToPlugin",TODO: cibola dummy,,,
-vulpChatSurroundings_madeiraOption,VulpoidChatSurroundingsOptions,$topic.terrainId == madeira score:1000,,,vulpChatSurroundings_madeira:Madeira,,madeira
+vulpChatSurroundings_madeiraOption,VulpoidChatSurroundingsOptions,$topic.id == madeira score:1000,,,vulpChatSurroundings_madeira:Madeira,,madeira
 vulpChatSurroundings_madeira,DialogOptionSelected,$option == vulpChatSurroundings_madeira,"SetVulpoidExpression default
 ExitRulesToPlugin",TODO: madeira,,,
 vulpChatSurroundings_madeiraDummy,DialogOptionSelected,"$option == vulpChatSurroundings_madeira
@@ -2045,13 +2045,13 @@ $vulp_profectoAssignment == vulpoids","SetVulpoidExpression default
 ExitRulesToPlugin",TODO: madeira dummy,,,
 ,,,,,,,
 # Valhalla,,,,,,,
-vulpChatSurroundings_raesvelgOption,VulpoidChatSurroundingsOptions,$topic.terrainId == raesvelg score:1000,,,vulpChatSurroundings_raesvelg:Raesvelg,,raesvelg
+vulpChatSurroundings_raesvelgOption,VulpoidChatSurroundingsOptions,$topic.id == raesvelg score:1000,,,vulpChatSurroundings_raesvelg:Raesvelg,,raesvelg
 vulpChatSurroundings_raesvelg,DialogOptionSelected,$option == vulpChatSurroundings_raesvelg,"SetVulpoidExpression default
 ExitRulesToPlugin",TODO: raesvelg,,,
 vulpChatSurroundings_raesvelgDummy,DialogOptionSelected,"$option == vulpChatSurroundings_raesvelg
 $vulp_profectoAssignment == vulpoids","$option = vulpChatSurroundings_dummiesNotWelcome
 FireBest DialogOptionSelected",,,,
-vulpChatSurroundings_skathiOption,VulpoidChatSurroundingsOptions,$topic.terrainId == skathi score:1000,,,"vulpChatSurroundings_skathi:Skathi
+vulpChatSurroundings_skathiOption,VulpoidChatSurroundingsOptions,$topic.id == skathi score:1000,,,"vulpChatSurroundings_skathi:Skathi
 vulpChatSurroundings_mimirSiphon:Mimir Siphon Platform",,skathi
 vulpChatSurroundings_skathi,DialogOptionSelected,$option == vulpChatSurroundings_skathi,"SetVulpoidExpression default
 ExitRulesToPlugin",TODO: skathi,,,
@@ -2063,7 +2063,7 @@ ExitRulesToPlugin",TODO: mimir siphon,,,
 vulpChatSurroundings_mimirSiphonDummy,DialogOptionSelected,"$option == vulpChatSurroundings_mimirSiphon
 $vulp_profectoAssignment == vulpoids","SetVulpoidExpression default
 ExitRulesToPlugin",TODO: mimir siphon dummy,,,
-vulpChatSurroundings_ragnarComplexOption,VulpoidChatSurroundingsOptions,$topic.terrainId == ragnar_complex score:1000,,,vulpChatSurroundings_ragnarComplex:Ragnar Complex,,ragnarComplex
+vulpChatSurroundings_ragnarComplexOption,VulpoidChatSurroundingsOptions,$topic.id == ragnar_complex score:1000,,,vulpChatSurroundings_ragnarComplex:Ragnar Complex,,ragnarComplex
 vulpChatSurroundings_ragnarComplex,DialogOptionSelected,$option == vulpChatSurroundings_ragnarComplex,"SetVulpoidExpression default
 ExitRulesToPlugin",TODO: ragnarComplex,,,
 vulpChatSurroundings_ragnarComplexDummy,DialogOptionSelected,"$option == vulpChatSurroundings_ragnarComplex
@@ -2071,25 +2071,25 @@ $vulp_profectoAssignment == vulpoids","$option = vulpChatSurroundings_dummiesNot
 FireBest DialogOptionSelected",,,,
 ,,,,,,,
 # Westernesse,,,,,,,
-vulpChatSurroundings_athulfOption,VulpoidChatSurroundingsOptions,$topic.terrainId == athulf score:1000,,,vulpChatSurroundings_athulf:Athulf,,athulf
+vulpChatSurroundings_athulfOption,VulpoidChatSurroundingsOptions,$topic.id == athulf score:1000,,,vulpChatSurroundings_athulf:Athulf,,athulf
 vulpChatSurroundings_athulf,DialogOptionSelected,$option == vulpChatSurroundings_athulf,"SetVulpoidExpression default
 ExitRulesToPlugin",TODO: athulf,,,
 vulpChatSurroundings_athulfDummy,DialogOptionSelected,"$option == vulpChatSurroundings_athulf
 $vulp_profectoAssignment == vulpoids","SetVulpoidExpression default
 ExitRulesToPlugin",TODO: athulf dummy,,,
-vulpChatSurroundings_fikenhildOption,VulpoidChatSurroundingsOptions,$topic.terrainId == fikenhild score:1000,,,vulpChatSurroundings_fikenhild:Fikenhild,,fikenhild
+vulpChatSurroundings_fikenhildOption,VulpoidChatSurroundingsOptions,$topic.id == fikenhild score:1000,,,vulpChatSurroundings_fikenhild:Fikenhild,,fikenhild
 vulpChatSurroundings_fikenhild,DialogOptionSelected,$option == vulpChatSurroundings_fikenhild,"SetVulpoidExpression default
 ExitRulesToPlugin",TODO: fikenhild,,,
 vulpChatSurroundings_fikenhildDummy,DialogOptionSelected,"$option == vulpChatSurroundings_fikenhild
 $vulp_profectoAssignment == vulpoids","SetVulpoidExpression default
 ExitRulesToPlugin",TODO: fikenhild dummy,,,
-vulpChatSurroundings_suddeneOption,VulpoidChatSurroundingsOptions,$topic.terrainId == suddene score:1000,,,vulpChatSurroundings_suddene:Suddene,,suddene
+vulpChatSurroundings_suddeneOption,VulpoidChatSurroundingsOptions,$topic.id == suddene score:1000,,,vulpChatSurroundings_suddene:Suddene,,suddene
 vulpChatSurroundings_suddene,DialogOptionSelected,$option == vulpChatSurroundings_suddene,"SetVulpoidExpression default
 ExitRulesToPlugin",TODO: suddene,,,
 vulpChatSurroundings_suddeneDummy,DialogOptionSelected,"$option == vulpChatSurroundings_suddene
 $vulp_profectoAssignment == vulpoids","SetVulpoidExpression default
 ExitRulesToPlugin",TODO: suddene dummy,,,
-vulpChatSurroundings_ailmarOption,VulpoidChatSurroundingsOptions,$topic.terrainId == ailmar score:1000,,,vulpChatSurroundings_ailmar:Ailmar,,ailmar
+vulpChatSurroundings_ailmarOption,VulpoidChatSurroundingsOptions,$topic.id == ailmar score:1000,,,vulpChatSurroundings_ailmar:Ailmar,,ailmar
 vulpChatSurroundings_ailmar,DialogOptionSelected,$option == vulpChatSurroundings_ailmar,"SetVulpoidExpression default
 ExitRulesToPlugin",TODO: ailmar,,,
 vulpChatSurroundings_ailmarDummy,DialogOptionSelected,"$option == vulpChatSurroundings_ailmar
@@ -2097,25 +2097,25 @@ $vulp_profectoAssignment == vulpoids","SetVulpoidExpression default
 ExitRulesToPlugin",TODO: ailmar dummy,,,
 ,,,,,,,
 # Yma,,,,,,,
-vulpChatSurroundings_hananPachaOption,VulpoidChatSurroundingsOptions,$topic.terrainId == hanan_pacha score:1000,,,vulpChatSurroundings_hananPacha:hananPacha,,hananPacha
+vulpChatSurroundings_hananPachaOption,VulpoidChatSurroundingsOptions,$topic.id == hanan_pacha score:1000,,,vulpChatSurroundings_hananPacha:hananPacha,,hananPacha
 vulpChatSurroundings_hananPacha,DialogOptionSelected,$option == vulpChatSurroundings_hananPacha,"SetVulpoidExpression default
 ExitRulesToPlugin",TODO: hananPacha,,,
 vulpChatSurroundings_hananPachaDummy,DialogOptionSelected,"$option == vulpChatSurroundings_hananPacha
 $vulp_profectoAssignment == vulpoids","SetVulpoidExpression default
 ExitRulesToPlugin",TODO: hananPacha Dummy,,,
-vulpChatSurroundings_killaOption,VulpoidChatSurroundingsOptions,$topic.terrainId == killa score:1000,,,vulpChatSurroundings_killa:killa,,killa
+vulpChatSurroundings_killaOption,VulpoidChatSurroundingsOptions,$topic.id == killa score:1000,,,vulpChatSurroundings_killa:killa,,killa
 vulpChatSurroundings_killa,DialogOptionSelected,$option == vulpChatSurroundings_killa,"SetVulpoidExpression default
 ExitRulesToPlugin",TODO: killa,,,
 vulpChatSurroundings_killaDummy,DialogOptionSelected,"$option == vulpChatSurroundings_killa
 $vulp_profectoAssignment == vulpoids","SetVulpoidExpression default
 ExitRulesToPlugin",TODO: killa Dummy,,,
-vulpChatSurroundings_salamancaOption,VulpoidChatSurroundingsOptions,$topic.terrainId == salamanca score:1000,,,vulpChatSurroundings_salamanca:Salamanca,,salamanca
+vulpChatSurroundings_salamancaOption,VulpoidChatSurroundingsOptions,$topic.id == salamanca score:1000,,,vulpChatSurroundings_salamanca:Salamanca,,salamanca
 vulpChatSurroundings_salamanca,DialogOptionSelected,$option == vulpChatSurroundings_salamanca,"SetVulpoidExpression default
 ExitRulesToPlugin",TODO: salamanca,,,
 vulpChatSurroundings_salamancaDummy,DialogOptionSelected,"$option == vulpChatSurroundings_salamanca
 $vulp_profectoAssignment == vulpoids","SetVulpoidExpression default
 ExitRulesToPlugin",TODO: salamanca dummy,,,
-vulpChatSurroundings_qarasOption,VulpoidChatSurroundingsOptions,$topic.terrainId == qaras score:1000,,,vulpChatSurroundings_qaras:Qaras,,qaras
+vulpChatSurroundings_qarasOption,VulpoidChatSurroundingsOptions,$topic.id == qaras score:1000,,,vulpChatSurroundings_qaras:Qaras,,qaras
 vulpChatSurroundings_qaras,DialogOptionSelected,$option == vulpChatSurroundings_qaras,"SetVulpoidExpression default
 ExitRulesToPlugin",TODO: qaras,,,
 vulpChatSurroundings_qarasDummy,DialogOptionSelected,"$option == vulpChatSurroundings_qaras
@@ -2123,7 +2123,7 @@ $vulp_profectoAssignment == vulpoids","SetVulpoidExpression default
 ExitRulesToPlugin",TODO: qaras dummy,,,
 ,,,,,,,
 # Zagan,,,,,,,
-vulpChatSurroundings_mazalotOption,VulpoidChatSurroundingsOptions,$topic.terrainId == mazalot score:1000,,,vulpChatSurroundings_mazalot:Mazalot,,mazalot
+vulpChatSurroundings_mazalotOption,VulpoidChatSurroundingsOptions,$topic.id == mazalot score:1000,,,vulpChatSurroundings_mazalot:Mazalot,,mazalot
 vulpChatSurroundings_mazalot,DialogOptionSelected,$option == vulpChatSurroundings_mazalot,"SetVulpoidExpression default
 ExitRulesToPlugin","""You'd think a world with such strong ties to the Path would be troublesome, but Mazalot is actually great! The people there really like Vulpoids, and are quick to speak up if someone objectifies us.""
 
@@ -2131,13 +2131,13 @@ ExitRulesToPlugin","""You'd think a world with such strong ties to the Path woul
 vulpChatSurroundings_mazalotDummy,DialogOptionSelected,"$option == vulpChatSurroundings_mazalot
 $vulp_profectoAssignment == vulpoids","SetVulpoidExpression default
 ExitRulesToPlugin","""Oh the humans there are so friendly! They always ask nicely if we want to help them with things! I dunno why they don't like buying us.""",,,
-vulpChatSurroundings_ilmOption,VulpoidChatSurroundingsOptions,$topic.terrainId == ilm score:1000,,,vulpChatSurroundings_ilm:Ilm,,ilm
+vulpChatSurroundings_ilmOption,VulpoidChatSurroundingsOptions,$topic.id == ilm score:1000,,,vulpChatSurroundings_ilm:Ilm,,ilm
 vulpChatSurroundings_ilm,DialogOptionSelected,$option == vulpChatSurroundings_ilm,"SetVulpoidExpression default
 ExitRulesToPlugin",TODO: ilm,,,
 vulpChatSurroundings_ilmDummy,DialogOptionSelected,"$option == vulpChatSurroundings_ilm
 $vulp_profectoAssignment == vulpoids","SetVulpoidExpression default
 ExitRulesToPlugin",TODO: ilm dummy,,,
-vulpChatSurroundings_yesodOption,VulpoidChatSurroundingsOptions,$topic.terrainId == yesod score:1000,,,vulpChatSurroundings_yesod:Yesod,,yesod
+vulpChatSurroundings_yesodOption,VulpoidChatSurroundingsOptions,$topic.id == yesod score:1000,,,vulpChatSurroundings_yesod:Yesod,,yesod
 vulpChatSurroundings_yesod,DialogOptionSelected,$option == vulpChatSurroundings_yesod,"SetVulpoidExpression default
 ExitRulesToPlugin",TODO: yesod,,,
 vulpChatSurroundings_yesodDummy,DialogOptionSelected,"$option == vulpChatSurroundings_yesod
@@ -2145,7 +2145,7 @@ $vulp_profectoAssignment == vulpoids","SetVulpoidExpression default
 ExitRulesToPlugin",TODO: yesod dummy,,,
 ,,,,,,,
 # Alpha Site,,,,,,,
-vulpChatSurroundings_alphaSiteOption,VulpoidChatSurroundingsOptions,$topic.terrainId == site_alpha score:1000,,,vulpChatSurroundings_alphaSite:alphaSite,,alphaSite
+vulpChatSurroundings_alphaSiteOption,VulpoidChatSurroundingsOptions,$topic.id == site_alpha score:1000,,,vulpChatSurroundings_alphaSite:alphaSite,,alphaSite
 vulpChatSurroundings_alphaSite,DialogOptionSelected,$option == vulpChatSurroundings_alphaSite,"SetVulpoidExpression default
 ExitRulesToPlugin",TODO: alphaSite,,,
 vulpChatSurroundings_alphaSiteDummy,DialogOptionSelected,"$option == vulpChatSurroundings_alphaSite

@@ -2,11 +2,10 @@ package vulpoids.impl.campaign.abilities;
 
 import com.fs.starfarer.api.Global;
 import com.fs.starfarer.api.campaign.CargoStackAPI;
-import com.fs.starfarer.api.campaign.SectorEntityToken;
+import com.fs.starfarer.api.campaign.InteractionDialogAPI;
 import com.fs.starfarer.api.impl.campaign.abilities.BaseDurationAbility;
 import com.fs.starfarer.api.ui.TooltipMakerAPI;
 import com.fs.starfarer.api.util.Misc;
-import java.awt.Color;
 import vulpoids.campaign.impl.items.VulpoidPlugin;
 import vulpoids.impl.campaign.interactions.VulpoidChatTopDialogPlugin;
 import vulpoids.impl.campaign.ids.Vulpoids;
@@ -15,9 +14,10 @@ public class ChatAbility extends BaseDurationAbility {
     @Override
     protected void activateImpl() {
         VulpoidChatTopDialogPlugin plugin = new VulpoidChatTopDialogPlugin();
-        SectorEntityToken target = Global.getFactory().createJumpPoint("vulpoidconversation_dummyjumppoint", "DUMMY");
-        Global.getSector().getCampaignUI().showInteractionDialog(plugin, target);
-        
+        Misc.showRuleDialog(Global.getSector().getPlayerFleet(), "OpenInteractionDialog");
+        InteractionDialogAPI dialog = Global.getSector().getCampaignUI().getCurrentInteractionDialog();
+        plugin.init(dialog);
+        dialog.setPlugin(plugin);
         // TODO - test this? Or is the current method good enough.
         //Global.getSector().getCampaignUI().getCurrentInteractionDialog().getVisualPanel().closeCoreUI();
     }
