@@ -1511,11 +1511,44 @@ FireAll VulpoidChatAssignmentOptions",,,# TODO - set longer duration,
 # Greeting overrides for completed research,,,,,,,
 vulpChat_greetingResearchComplete,VulpoidChatGreeting,VulpoidResearch isComplete score:1000,"FireBest VulpoidResearchComplete
 unset $vulp_researchProject",,,,
-vulpChat_researchComplete_terraformer,VulpoidResearchComplete,$vulp_researchProject == terraformer,$player.vulp_gotTerraformerMission = true,"""Fantastic news $playerSirOrMadam! I've completed the TEST RESEARCH OPTION!""",vulpChat_researchCompleteFinish:Continue,# TODO: Actual terraformer dialog,
-vulpChat_researchCompleteFinish,DialogOptionSelected,$option == vulpChat_researchCompleteFinish,FireAll VulpoidChatTopLevelOptions,,,,
+vulpChat_researchCompleteFinish,DialogOptionSelected,$option == vulpChat_researchCompleteFinish,FireAll VulpoidChatTopLevelOptions,"""Was there anything else you wanted to discuss, $playerSirOrMadam?""",,,
+vulpChat_researchComplete_terraformer,VulpoidResearchComplete,$vulp_researchProject == terraformer,,"She enters carrying a small library of datapads, which she eagerly lays out in presentation.
+
+""Great news $playerSirOrMadam. I've had a breakthrough in my analysis.""",vulpChat_researchComplete_terraformer1:Continue,,
+vulpChat_researchComplete_terraformer1,DialogOptionSelected,$option == vulpChat_researchComplete_terraformer1,,"She presents you with a datapad showing the encrypted transmission logs from the Citadel. A particular comms address has been highlighted, with records dating up to several decades post-Collapse.
+
+""This is an old Eridani-Utopia record I'd always had interest in. Never knew exactly who it was, but it must have been a ship, because after the Collapse the spectrum indicated hyperspace travel. Heading towards the Persean Sector at about burn 7, going by the redshift.""",vulpChat_researchComplete_terraformer2:Continue,,
+vulpChat_researchComplete_terraformer2,DialogOptionSelected,$option == vulpChat_researchComplete_terraformer2,,"""Here's what's new,"" she highlights a particular section, ""After the Collapse the encryption algorithm changed from the cross-corporate standard to a more secure one that I could never crack.""
+
+""From historical records, now I know why I didn't have a hope. The encoding they switched to was a Domain Navy standard.""","vulpChat_researchComplete_terraformer3:""The Fourteenth Battlegroup.""",,
+vulpChat_researchComplete_terraformer3,DialogOptionSelected,$option == vulpChat_researchComplete_terraformer3,,"She gives you a satisfied nod, then points out a specific transmission.
+
+""This one, here. Massive interference, never seen anything like that. Whole transmission got corrupted. Must have destroyed their comms array too, because everything after that came through on the experimental phased array.""","vulpChat_researchComplete_terraformer4:Keep Listening
+vulpChat_researchComplete_terraformer3Clever:""So they would've lost contact with the XIV.""",,
+vulpChat_researchComplete_terraformer3Clever,DialogOptionSelected,$option == vulpChat_researchComplete_terraformer3Clever,,"""Yes!"" she jumps excitedly, ""Presumably they wanted us to relay the message, but all the humans had evacuated by then. Eridani never gave me their codes, so all I knew is that they were trying to tell us something.""",vulpChat_researchComplete_terraformer4:Continue,,
+vulpChat_researchComplete_terraformer4,DialogOptionSelected,$option == vulpChat_researchComplete_terraformer4,,"""Now, hyperwave phasing is a lot more complex then regular hypercomms. I couldn’t track the origin of the transmissions with that array... At least not with what I had at the time.""
+
+With that she highlights a whole set of datapads. Centuries of hyperspace topography readings, models used in the construction of makeshift hyperwave infrastructure, declassified phase-tech from the Second AI War...",vulpChat_researchComplete_terraformer5:Nod along understandingly,,
+vulpChat_researchComplete_terraformer5,DialogOptionSelected,$option == vulpChat_researchComplete_terraformer5,,"""And here,"" she points, ""is the executive summary.""
+
+You quickly skim through. She has managed to triangulate each transmission’s position from their single data point, and has charted out the mystery ship’s course.
+
+Whatever damaged its comms must have also impaired its navigation and separated it from the rest of the XIV flotilla. Its trajectory arced wildly to the galactic west, missing the Core Worlds and diving headlong into the Orion-Perseus Abyss.",vulpChat_researchComplete_terraformer6:Continue,,
+vulpChat_researchComplete_terraformer6,DialogOptionSelected,$option == vulpChat_researchComplete_terraformer6,FireBest VulpoidTerraformerBriefTransverseBlurb,"An involuntary shiver runs down your spine as you recognize byte flags in the final calls. Distress signals, for a fleet running dangerously low on fuel.
+
+Laisa reaches over your shoulder and points. ""All those were made from hyperspace, except the very last. That one came from the bottom of a grav-well, and had additional data attached to the packet.""",vulpChat_researchComplete_terraformer7:Continue,,
+vulpChat_researchComplete_terraformer6_doesntKnowTransverse,VulpoidTerraformerBriefTransverseBlurb,!$player.ability:fracture_jump,,"The rogue bodies in abyssal hyperspace don’t have jump-points. Wherever they ended up, it would be impossible to leave.",,,
+vulpChat_researchComplete_terraformer6_knowsTransverse,VulpoidTerraformerBriefTransverseBlurb,$player.ability:fracture_jump,,"The rogue bodies in abyssal hyperspace don’t have jump-points. Wherever they ended up, it was inescapable without Transverse Jump.",,,
+vulpChat_researchComplete_terraformer7,DialogOptionSelected,$option == vulpChat_researchComplete_terraformer7,$player.vulp_gotTerraformerMission = true,"""None of the information I had access to described that ship. But it must have been something special, especially if the XIV tried to escort it instead of scrapping it for parts.""
+
+You thank her for the information and send the final coordinates to your nav officer. A site so deep in abyssal hyperspace is almost certainly untouched, but will be difficult to reach and return from. A well-stocked expedition is called for.",vulpChat_researchCompleteFinish:Continue,# TODO: Terraformer intel,
 ,,,,,,,
 ,,,,,,,
 ,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+# SURROUNDINGS,,,,,,,
 ,,,,,,,
 vulpChatSurroundings_defaultOption,VulpoidChatSurroundingsOptions,,,,,,
 ,,,,,,,
