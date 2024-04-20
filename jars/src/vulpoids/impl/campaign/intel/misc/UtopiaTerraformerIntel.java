@@ -2,11 +2,13 @@ package vulpoids.impl.campaign.intel.misc;
 
 import com.fs.starfarer.api.Global;
 import com.fs.starfarer.api.campaign.CampaignPlugin.PickPriority;
+import com.fs.starfarer.api.campaign.InteractionDialogAPI;
 import com.fs.starfarer.api.campaign.PlanetAPI;
 import com.fs.starfarer.api.campaign.SectorAPI;
 import com.fs.starfarer.api.campaign.SectorEntityToken;
 import com.fs.starfarer.api.campaign.StarSystemAPI;
 import com.fs.starfarer.api.campaign.TextPanelAPI;
+import com.fs.starfarer.api.campaign.rules.MemoryAPI;
 import com.fs.starfarer.api.impl.campaign.ids.Conditions;
 import com.fs.starfarer.api.impl.campaign.ids.Entities;
 import com.fs.starfarer.api.impl.campaign.ids.Factions;
@@ -15,27 +17,28 @@ import com.fs.starfarer.api.impl.campaign.ids.Planets;
 import com.fs.starfarer.api.impl.campaign.ids.Tags;
 import com.fs.starfarer.api.impl.campaign.intel.BaseIntelPlugin;
 import com.fs.starfarer.api.impl.campaign.procgen.DefenderDataOverride;
+import com.fs.starfarer.api.impl.campaign.procgen.StarSystemGenerator;
 import com.fs.starfarer.api.impl.campaign.procgen.StarSystemGenerator.StarSystemType;
 import com.fs.starfarer.api.impl.campaign.procgen.themes.BaseThemeGenerator;
 import com.fs.starfarer.api.impl.campaign.procgen.themes.BaseThemeGenerator.EntityLocation;
 import com.fs.starfarer.api.ui.SectorMapAPI;
+import com.fs.starfarer.api.ui.TooltipMakerAPI;
 import com.fs.starfarer.api.util.Misc;
+import com.fs.starfarer.api.util.Misc.Token;
 import java.awt.Color;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import vulpoids.impl.campaign.procgen.themes.UtopiaDefenderPlugin;
 
 public class UtopiaTerraformerIntel extends BaseIntelPlugin {
     
-    public static enum Stage {
-        TALK_TO_PILOT,
-        GO_TO_PLANET,
-        DONE,
-    }
-    
     protected StarSystemAPI system;
     protected PlanetAPI planet;
-
-    protected Stage stage;
+    
+    boolean beatFleet = false;
+    boolean exploredTerraformer = false;
+    boolean exploredBivouac = false;
 
     public UtopiaTerraformerIntel(TextPanelAPI text) {
         Global.getSector().getGenericPlugins().addPlugin(new UtopiaDefenderPlugin());
@@ -43,11 +46,12 @@ public class UtopiaTerraformerIntel extends BaseIntelPlugin {
         generate(Global.getSector());
         
         Global.getSector().getIntelManager().addIntel(this, false, text);
+        Global.getSector().getMemoryWithoutUpdate().set("$vulp_terraformingIntel", this);
     }
     
     @Override
     public String getIcon() {
-        return Global.getSettings().getSpriteName("intel", "red_planet");
+        return "graphics/icons/missions/dead_drop.png";
     }
 
     @Override
@@ -64,28 +68,55 @@ public class UtopiaTerraformerIntel extends BaseIntelPlugin {
     public IntelSortTier getSortTier() {
         return IntelSortTier.TIER_2;
     }
-
+    @Override
     public String getSortString() {
-        return "Red Planet";
+        return "Lost in the Dark";
     }
-
+    @Override
     public String getName() {
         if (isEnded() || isEnding()) {
-            return "Red Planet - Completed";
+            return "Lost in the Dark - Completed";
         }
-        return "Red Planet";
+        return "Lost in the Dark";
     }
-
+    @Override
     public String getSmallDescriptionTitle() {
             return getName();
     }
-
+    @Override
+    public void createSmallDescription(TooltipMakerAPI info, float width, float height) {
+        info.addPara("Laisa has calculated the location of a unique vessel operated by Eridani-Utopia before the Collapse. "+
+                "The Fourteenth Battlegroup attempted to escort it to the Persean Sector, but it was thrown off course "+
+                "for an unknown reason and plummeted into the Orion-Perseus Abyss.", 10f);
+        if(!beatFleet) {
+            info.addPara("Warning: The location is deep in abyssal hyperspace.", Misc.getNegativeHighlightColor(), 10f);
+        } else {
+            if(!exploredTerraformer) info.addPara("The massive vessel has been disabled in battle, and awaits boarding.", 10f);
+            if(!exploredBivouac) info.addPara("The terraformed moon's defenders have been disabled, opening it for exploration.", 10f);
+        }
+    }
     @Override
     public SectorEntityToken getMapLocation(SectorMapAPI map) {
         return system.getHyperspaceAnchor();
     }
     
-    
+    @Override
+    public boolean callEvent(String ruleId, InteractionDialogAPI dialog, List<Token> params, Map<String, MemoryAPI> memoryMap) {
+        String action = params.get(0).getString(memoryMap);
+        switch(action) {
+            case "beatFleet":
+                beatFleet = true;
+                break;
+            case "exploredTerraformer":
+                exploredTerraformer = true;
+                break;
+            case "exploredBivouac":
+                exploredBivouac = true;
+                break;
+        }
+        if(exploredTerraformer && exploredBivouac) endAfterDelay();
+        return true;
+    }
     
     protected void generate(SectorAPI sector) {
         system = sector.createStarSystem("Deep Space");
@@ -127,7 +158,7 @@ public class UtopiaTerraformerIntel extends BaseIntelPlugin {
         
         planet = system.addPlanet("vulp_planetBivouac", giant, "Bivouac", Planets.PLANET_TERRAN_ECCENTRIC, moon_angle, moon_radius, moon_orbit, moon_orbit_days);
         planet.getMemoryWithoutUpdate().set("$vulp_planetBivouac", true);
-        planet.setCustomDescriptionId("limbo_hades");
+        planet.setCustomDescriptionId("vulp_bivouac");
         planet.getMarket().addCondition(Conditions.HABITABLE);
         planet.getMarket().addCondition(Conditions.MILD_CLIMATE);
         //planet.getMarket().addCondition(Conditions.VERY_COLD);
@@ -144,6 +175,10 @@ public class UtopiaTerraformerIntel extends BaseIntelPlugin {
         lamp.entity.getMemoryWithoutUpdate().set("$core_lampGlowColor", new Color(255,100,255,175));
         lamp.entity.getMemoryWithoutUpdate().set("$core_lampLightColor", new Color(255,100,255,175));
         lamp.entity.getMemoryWithoutUpdate().set("$vulp_bivouacLamp", true);
+        
+        SectorEntityToken lagrange = system.addCustomEntity(null,null, "sensor_array",Factions.NEUTRAL);
+        lagrange.getMemoryWithoutUpdate().set("$objectiveNonFunctional", true);
+        lagrange.setCircularOrbitPointingDown(giant, moon_angle+60, moon_orbit, moon_orbit_days);
         
         system.autogenerateHyperspaceJumpPoints(true, false);
     }

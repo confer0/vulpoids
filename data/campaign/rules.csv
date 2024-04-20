@@ -1066,11 +1066,55 @@ This world cannot have formed like this. It must have been terraformed under lam
 vulp_bivouacDefenderDesc,TriggerAutomatedDefenses,$vulp_planetBivouac score:1000,SalvageDefenderInteraction,"As your $shipOrFleet moves in closer, sensors detect multiple contacts rising up from the glittering surface.
 
 The orange hulls and angular forms of the Domain XIV Battlegroup ships are unmistakable, but they're accompanied by another, more advanced vessel as well.",,,
-UtopiaTerraformerDefeated,UtopiaTerraformerDefeated,,UtopiaFleetDefeated,"Your sensors officer reports in a hushed voice that no escape pods were detected leaving the ships at any point.
+UtopiaTerraformerDefeated,UtopiaTerraformerDefeated,,"VulpoidTerraformer fleetDefeated
+CallEvent $global.vulp_terraformingIntel beatFleet","Your sensors officer reports in a hushed voice that no escape pods were detected leaving the ships at any point.
 
 At the heart of the debris field, the Eridani-Utopia vessel has remained in one piece, ready to be boarded.",,,
 ,,,,,,,
 # TODO INTERACT WITH DERELICT SHIP - HAS TAG $vulp_terraformer,,,,,,,
+vulp_terraformerOpenDialogAfterExplore,CheckSalvageSpecial,"$vulp_terraformer score:1000
+$explored",SalvageSpecialInteraction,"There's little else to be gleaned here. The ship is available for recovery, should you so desire. Rumors among the crew state that the ship is undoubtedly haunted, but you know they'll fly it nonetheless.
+
+The fuel consumption of such a massive capital ship may be of concern while trying to leave the abyss. Should your reserves be borderline, it may be wiser to leave the vessel here and return with additional fuel.",,,
+vulp_terraformerOpenDialogAfterExplore_knowsWormhole,CheckSalvageSpecial,"$vulp_terraformer score:1000
+$explored
+$player.gotWormholeCalibrationData",SalvageSpecialInteraction,"There's little else to be gleaned here. The ship is available for recovery, should you so desire. Rumors among the crew state that the ship is undoubtedly haunted, but you know they'll fly it nonetheless.
+
+The fuel consumption of such a massive capital ship may be of concern while trying to leave the abyss. It may be wiser to leave the vessel here and return with additional fuel, or to deploy a wormhole anchor and bypass the abyss entirely.",,,
+vulp_terraformerOpenDialog,CheckSalvageSpecial,$vulp_terraformer score:1000,,"Unlike what was observed with the Citadel, scans show no indications of life aboard the vessel.
+
+Nonetheless, discretion remains the better part of valor, and your ops chief coordinates a by-the-book boarding action with practiced ease.",vulp_exploreTerraformer:Continue,,
+vulp_exploreTerraformer,DialogOptionSelected,$option == vulp_exploreTerraformer,"$explored = true
+CallEvent $global.vulp_terraformingIntel exploredTerraformer
+unset $missionImportant
+unset $missionImportant_vulp_terraformer","Standard reports pour in as your salvors move through the vessel, but you catch a deeper-than-usual frown on the face of your ops chief.","vulp_exploreTerraformer1:""Something wrong, ops?""",,
+vulp_exploreTerraformer1,DialogOptionSelected,$option == vulp_exploreTerraformer1,,"""The bodies, $playerSirOrMadam. Don't seem right.""","vulp_exploreTerraformer2:""They didn't launch escape pods.""",,
+vulp_exploreTerraformer2,DialogOptionSelected,$option == vulp_exploreTerraformer2,,"""Aye, that'd be strange even for Pathers. But it's where the bodies fell that's not right.""
+
+""If it were battle damage that got them, that's all well and good. But we're finding corpses lying on deckplates without a scuff on them. Like they dropped dead on their feet.""","vulp_exploreTerraformer3:""Science, get me some autopsies.""",,
+vulp_exploreTerraformer3,DialogOptionSelected,$option == vulp_exploreTerraformer3,,"The boarding continues quietly, and before long you have reports from science and ops in front of you. Neither are happy.",vulp_exploreTerraformer4:Read science's report,,
+vulp_exploreTerraformer4,DialogOptionSelected,$option == vulp_exploreTerraformer4,,"The autopsy reports are infuriatingly inconclusive. The best answer they have for the uninjured bodies is total organ failure, perhaps from suffocation. But the ship's life support appears undamaged, and many of their suits have full oxygen tanks.
+
+Even more unnervingly, the medics had great difficulty ascertaining time of death for all the bodies, injured or not. They're confident that the injuries line up with the timing of the engagement, but only reluctantly assign them as the cause of death.
+
+It's as if the entire crew dropped dead when the ship was disabled, and not a moment sooner.",vulp_exploreTerraformer5:Read ops' report,,
+vulp_exploreTerraformer5,DialogOptionSelected,$option == vulp_exploreTerraformer5,,"The salvor's report isn't any more reassuring. The computer cores have been scrubbed down to the crystal, not a single byte of data remains on the entire vessel. A wipe like this should take days to weeks at a minimum, and there's no indication that the ship's computers were powered up at all after the reactor failed.
+
+The next-best explanation would be that the cores were wiped prior to the engagement, except that would be nonsensical. Even an Invictus requires computer systems just to fly, and this is a high-tech, highly automated capital ship that fully engaged your $shipOrFleet in battle. The computers had to have been working.
+
+And yet, they aren't.",vulp_exploreTerraformer6:Continue,,
+vulp_exploreTerraformer6,DialogOptionSelected,$option == vulp_exploreTerraformer6,,"Cargo reports are less disturbing, and more simply disappointing. The ship's vast cargo bays are all but empty. Nearly every scrap of material and equipment has been used, leaving nothing left for your teams to scoop up.
+
+As you're reviewing the lackluster manifest, your chief engineer opens comms, in a much better mood than your other senior officers.","vulp_exploreTerraformer7:""Give me good news, chief.""",,
+vulp_exploreTerraformer7,DialogOptionSelected,$option == vulp_exploreTerraformer7,,"""With pleasure, $playerSirOrMadam! As best I can tell, this ship was intended to act as a next-generation terraforming platform. It's got bays and equipment mounts for every type and class of terraforming equipment imaginable. This thing could have turned any barren rock into a garden world.""
+
+A quick glance at the viewscreen, showing the brilliant green planet below, would seem to confirm this.","vulp_exploreTerraformer8:""Past-tense. What can it do now?""",,
+vulp_exploreTerraformer8,DialogOptionSelected,$option == vulp_exploreTerraformer8,,"Your engineer looks slightly abashed. ""Well, unfortunately that equipment appears to be gone. Used up, or jettisoned somewhere. If we got our hands on some new kit we'd be able to outfit it again, but for now that option's not available.""
+
+""But the ship itself is in good condition!"" they brighten, ""We should be able to repair it without much difficulty. The software won't be a problem, we've got fresh copies of standard libraries just for this sort of occasion.""","vulp_exploreTerraformer9:""Thank you chief.""",,
+vulp_exploreTerraformer9,DialogOptionSelected,$option == vulp_exploreTerraformer9,FireBest CheckSalvageSpecial,,,,
+,,,,,,,
+,,,,,,,
 ,,,,,,,
 #vulp_continuePostDefenders,BeatDefendersContinue,$vulp_planetBivouac score:1000,,Your $shipOrFleet finishes its approach to $entityName without further incident.,0:salBeatDefendersContinue:Continue,,
 vulp_bivouacContinuePostDefenders,BeatDefendersContinue,$vulp_planetBivouac score:1000,,"As your $shipOrFleet recovers from the engagement, you step back and evaluate whether to begin with the wreck of the Eridani ship, or the moon below.",100:defaultLeave:Leave,,
@@ -1090,8 +1134,9 @@ vulp_bivouacExplore3,DialogOptionSelected,$option == vulp_bivouacExplore3,,"Scie
 Manufactured on the ground, the fields then funneled them into the sky and formed them into a vast utility fog, able to manipulate the atmosphere at a grand scale.",vulp_bivouacExplore4:Continue,,
 vulp_bivouacExplore4,DialogOptionSelected,$option == vulp_bivouacExplore4,"AddRemoveAnyItem SPECIAL air_filter_core 1
 $gotAirFilter = true
-$missionImportant = false
-$missionImportant_vulp_terraformerplanet = false","To your great fortune, these grand machines use the same self-assembly techniques as most Domain colonial technology. Your salvage teams are able to shut down and disassemble the equipment until it's been reduced to a single core, ready to be built out again on a world of your choosing.",vulp_bivouacExplore5:Continue,,
+unset $missionImportant
+unset $missionImportant_vulp_terraformerplanet
+CallEvent $global.vulp_terraformingIntel exploredBivouac","To your great fortune, these grand machines use the same self-assembly techniques as most Domain colonial technology. Your salvage teams are able to shut down and disassemble the equipment until it's been reduced to a single core, ready to be built out again on a world of your choosing.",vulp_bivouacExplore5:Continue,,
 vulp_bivouacExplore5,DialogOptionSelected,$option == vulp_bivouacExplore5,,"Throughout all of this, there's not a single sign of human habitation.
 
 It's as though they came down, built the machines, then returned to the sky.",100:defaultLeave:Leave,,
@@ -1475,8 +1520,12 @@ vulpChatAssignment_pickResearchOption,VulpoidChatAssignmentOptions,$vulp_profect
 vulpChatAssignment_disableResearchOptionIfAlreadyActive,VulpoidChatDisableResearchIfActive,$vulp_researchProject != null,"SetEnabled vulpChatAssignment_pickResearch false
 SetTooltip vulpChatAssignment_pickResearch ""$name is already working on a project.""",,,,
 vulpChatAssignment_pickResearch,DialogOptionSelected,$option == vulpChatAssignment_pickResearch,FireAll VulpoidPickResearchOptions,,,,
-vulpChatAssignment_testOption,VulpoidChatAssignmentOptions,,,,vulpChatAssignment_test:TEST,,
-vulpChatAssignment_test,DialogOptionSelected,$option == vulpChatAssignment_test,VulpoidResearch setProject test 1,TODO TEST OPTION,,,
+vulpChatAssignment_levelDownOfficerOption,VulpoidChatAssignmentOptions,$vulp_profectoAssignment == special_vulpoid_officer,,,vulpChatAssignment_levelDownOfficer:Retrain a skill,# TODO - IMPLEMENT THIS,
+,,,,,,,
+vulpChatAssignment_devFinishResearchOption,VulpoidChatAssignmentOptions,"$global.isDevMode
+$vulp_researchCompletionDay > 0",SetOptionColor vulpChatAssignment_devFinishResearch gray,,200:vulpChatAssignment_devFinishResearch:>> (dev) Instantly finish research,,
+vulpChatAssignment_devFinishResearch,DialogOptionSelected,$option == vulpChatAssignment_devFinishResearch,"$vulp_researchCompletionDay = 0
+DismissDialog",,,,
 vulpChatAssignment_exitOption,VulpoidChatAssignmentOptions,,"SetShortcut vulpChatAssignment_exit ""ESCAPE""",,100:vulpChatAssignment_exit:Back,,
 vulpChatAssignment_exit,DialogOptionSelected,$option == vulpChatAssignment_exit,FireAll VulpoidChatTopLevelOptions,,,,
 ,,,,,,,
@@ -1501,12 +1550,12 @@ vulpChatAssignment_pickResearchOption_exit,VulpoidPickResearchOptions,,,,100:vul
 vulpChatAssignment_pickResearch_exit,DialogOptionSelected,$option == vulpChatAssignment_pickResearch_exit,FireAll VulpoidChatAssignmentOptions,,,,
 vulpChatAssignment_pickResearchOption_terraformer,VulpoidPickResearchOptions,"$id == laisa
 !$player.vulp_gotTerraformerMission",,,vulpChatAssignment_pickResearch_terraformer:Insights into the Citadel,,
-vulpChatAssignment_pickResearch_terraformer,DialogOptionSelected,$option == vulpChatAssignment_pickResearch_terraformer,"SetStoryOption vulpChatAssignment_pickResearch_terraformerConfirm 4 general ""Had Laisa perform research into old Citadel transmission logs""","""Most of what's left is just encrypted computer records. Basically impossible to crack. I'd have to skim the metadata to get anything at all.""
+vulpChatAssignment_pickResearch_terraformer,DialogOptionSelected,$option == vulpChatAssignment_pickResearch_terraformer,"SetStoryOption vulpChatAssignment_pickResearch_terraformerConfirm 4 vulpChatAssignment_pickResearch_terraformerConfirm general ""Had Laisa perform research into old Citadel transmission logs""","""Most of what's left is just encrypted computer records. Basically impossible to crack. I'd have to skim the metadata to get anything at all.""
 
 ""...There is actually one thing I can think of. Some old post-Collapse transmission logs that showed some odd activity. I might be able to get something big out of it, but it'll definitely take a while.""","vulpChatAssignment_pickResearch_terraformerConfirm:Confirm
 vulpChatAssignment_pickResearch:Cancel",,
-vulpChatAssignment_pickResearch_terraformerConfirm,DialogOptionSelected,$option == vulpChatAssignment_pickResearch_terraformerConfirm,"VulpoidResearch setProject terraformer 1
-FireAll VulpoidChatAssignmentOptions",,,# TODO - set longer duration,
+vulpChatAssignment_pickResearch_terraformerConfirm,DialogOptionSelected,$option == vulpChatAssignment_pickResearch_terraformerConfirm,"VulpoidResearch setProject terraformer 360
+FireAll VulpoidChatAssignmentOptions","""Alright, I'll look into it!""",,,
 ,,,,,,,
 # Greeting overrides for completed research,,,,,,,
 vulpChat_greetingResearchComplete,VulpoidChatGreeting,VulpoidResearch isComplete score:1000,"FireBest VulpoidResearchComplete
@@ -1523,25 +1572,26 @@ vulpChat_researchComplete_terraformer2,DialogOptionSelected,$option == vulpChat_
 ""From historical records, now I know why I didn't have a hope. The encoding they switched to was a Domain Navy standard.""","vulpChat_researchComplete_terraformer3:""The Fourteenth Battlegroup.""",,
 vulpChat_researchComplete_terraformer3,DialogOptionSelected,$option == vulpChat_researchComplete_terraformer3,,"She gives you a satisfied nod, then points out a specific transmission.
 
-""This one, here. Massive interference, never seen anything like that. Whole transmission got corrupted. Must have destroyed their comms array too, because everything after that came through on the experimental phased array.""","vulpChat_researchComplete_terraformer4:Keep Listening
+""This one, here. Massive interference, never seen anything like that. Whole transmission got corrupted. Must have destroyed their comms array too, because everything after that came through on the experimental phased array.""","vulpChat_researchComplete_terraformer4:Keep listening
 vulpChat_researchComplete_terraformer3Clever:""So they would've lost contact with the XIV.""",,
 vulpChat_researchComplete_terraformer3Clever,DialogOptionSelected,$option == vulpChat_researchComplete_terraformer3Clever,,"""Yes!"" she jumps excitedly, ""Presumably they wanted us to relay the message, but all the humans had evacuated by then. Eridani never gave me their codes, so all I knew is that they were trying to tell us something.""",vulpChat_researchComplete_terraformer4:Continue,,
-vulpChat_researchComplete_terraformer4,DialogOptionSelected,$option == vulpChat_researchComplete_terraformer4,,"""Now, hyperwave phasing is a lot more complex then regular hypercomms. I couldn’t track the origin of the transmissions with that array... At least not with what I had at the time.""
+vulpChat_researchComplete_terraformer4,DialogOptionSelected,$option == vulpChat_researchComplete_terraformer4,,"""Now, hyperwave phasing is a lot more complex then regular hypercomms. I couldn't track the origin of the transmissions with that array... At least not with what I had at the time.""
 
 With that she highlights a whole set of datapads. Centuries of hyperspace topography readings, models used in the construction of makeshift hyperwave infrastructure, declassified phase-tech from the Second AI War...",vulpChat_researchComplete_terraformer5:Nod along understandingly,,
 vulpChat_researchComplete_terraformer5,DialogOptionSelected,$option == vulpChat_researchComplete_terraformer5,,"""And here,"" she points, ""is the executive summary.""
 
-You quickly skim through. She has managed to triangulate each transmission’s position from their single data point, and has charted out the mystery ship’s course.
+You quickly skim through. She has managed to triangulate each transmission's position from their single data point, and has charted out the mystery ship's course.
 
 Whatever damaged its comms must have also impaired its navigation and separated it from the rest of the XIV flotilla. Its trajectory arced wildly to the galactic west, missing the Core Worlds and diving headlong into the Orion-Perseus Abyss.",vulpChat_researchComplete_terraformer6:Continue,,
 vulpChat_researchComplete_terraformer6,DialogOptionSelected,$option == vulpChat_researchComplete_terraformer6,FireBest VulpoidTerraformerBriefTransverseBlurb,"An involuntary shiver runs down your spine as you recognize byte flags in the final calls. Distress signals, for a fleet running dangerously low on fuel.
 
 Laisa reaches over your shoulder and points. ""All those were made from hyperspace, except the very last. That one came from the bottom of a grav-well, and had additional data attached to the packet.""",vulpChat_researchComplete_terraformer7:Continue,,
-vulpChat_researchComplete_terraformer6_doesntKnowTransverse,VulpoidTerraformerBriefTransverseBlurb,!$player.ability:fracture_jump,,"The rogue bodies in abyssal hyperspace don’t have jump-points. Wherever they ended up, it would be impossible to leave.",,,
-vulpChat_researchComplete_terraformer6_knowsTransverse,VulpoidTerraformerBriefTransverseBlurb,$player.ability:fracture_jump,,"The rogue bodies in abyssal hyperspace don’t have jump-points. Wherever they ended up, it was inescapable without Transverse Jump.",,,
-vulpChat_researchComplete_terraformer7,DialogOptionSelected,$option == vulpChat_researchComplete_terraformer7,$player.vulp_gotTerraformerMission = true,"""None of the information I had access to described that ship. But it must have been something special, especially if the XIV tried to escort it instead of scrapping it for parts.""
+vulpChat_researchComplete_terraformer6_doesntKnowTransverse,VulpoidTerraformerBriefTransverseBlurb,!$player.ability:fracture_jump,,"The rogue bodies in abyssal hyperspace don't have jump-points. Wherever they ended up, it would be impossible to leave.",,,
+vulpChat_researchComplete_terraformer6_knowsTransverse,VulpoidTerraformerBriefTransverseBlurb,$player.ability:fracture_jump,,"The rogue bodies in abyssal hyperspace don't have jump-points. Wherever they ended up, it was inescapable without Transverse Jump.",,,
+vulpChat_researchComplete_terraformer7,DialogOptionSelected,$option == vulpChat_researchComplete_terraformer7,"$player.vulp_gotTerraformerMission = true
+VulpoidTerraformer giveIntel","""None of the information I had access to described that ship. But it must have been something special, especially if the XIV tried to escort it instead of scrapping it for parts.""
 
-You thank her for the information and send the final coordinates to your nav officer. A site so deep in abyssal hyperspace is almost certainly untouched, but will be difficult to reach and return from. A well-stocked expedition is called for.",vulpChat_researchCompleteFinish:Continue,# TODO: Terraformer intel,
+You thank her for the information and send the final coordinates to your nav officer. A site so deep in abyssal hyperspace is almost certainly untouched, but will be difficult to reach and return from.",vulpChat_researchCompleteFinish:Continue,# TODO: Terraformer intel,
 ,,,,,,,
 ,,,,,,,
 ,,,,,,,

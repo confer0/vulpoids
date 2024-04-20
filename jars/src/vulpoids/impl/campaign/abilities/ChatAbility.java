@@ -3,9 +3,11 @@ package vulpoids.impl.campaign.abilities;
 import com.fs.starfarer.api.Global;
 import com.fs.starfarer.api.campaign.CargoStackAPI;
 import com.fs.starfarer.api.campaign.InteractionDialogAPI;
+import com.fs.starfarer.api.campaign.rules.MemoryAPI;
 import com.fs.starfarer.api.impl.campaign.abilities.BaseDurationAbility;
 import com.fs.starfarer.api.ui.TooltipMakerAPI;
 import com.fs.starfarer.api.util.Misc;
+import java.awt.Color;
 import vulpoids.campaign.impl.items.VulpoidPlugin;
 import vulpoids.impl.campaign.interactions.VulpoidChatTopDialogPlugin;
 import vulpoids.impl.campaign.ids.Vulpoids;
@@ -30,6 +32,35 @@ public class ChatAbility extends BaseDurationAbility {
             if(stack.getPlugin() instanceof VulpoidPlugin) return true;
         }
         return false;
+    }
+    protected boolean vulpWantsToTalk() {
+        if (!Global.getSector().getMemoryWithoutUpdate().contains("$vulp_didInterrogation")) return true;
+        for (CargoStackAPI stack : Global.getSector().getPlayerFleet().getCargo().getStacksCopy()) {
+            if(stack.getPlugin() instanceof VulpoidPlugin) {
+                MemoryAPI memory = ((VulpoidPlugin)stack.getPlugin()).getPerson().getMemoryWithoutUpdate();
+                if(memory.contains(Vulpoids.KEY_RESEARCH_PROJECT) && memory.contains(Vulpoids.KEY_RESEARCH_COMPLETION_DAY)) {
+                    if(Global.getSector().getMemoryWithoutUpdate().getFloat("$daysSinceStart") >= memory.getFloat(Vulpoids.KEY_RESEARCH_COMPLETION_DAY)) return true;
+                }
+            }
+        }
+        return false;
+    }
+    @Override
+    public Color getCooldownColor() {
+        if (vulpWantsToTalk()) {
+            Color color = Misc.getNegativeHighlightColor();
+            return Misc.scaleAlpha(color, Global.getSector().getCampaignUI().getSharedFader().getBrightness() * 0.5f);
+        }
+        return super.getCooldownColor();
+    }
+    @Override
+    public float getCooldownFraction() {
+        if (vulpWantsToTalk()) return 0f;
+        return super.getCooldownFraction();
+    }
+    @Override
+    public boolean isCooldownRenderingAdditive() {
+        return vulpWantsToTalk();
     }
     
     @Override

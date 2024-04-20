@@ -3,6 +3,7 @@ package vulpoids.impl.campaign.interactions;
 import com.fs.starfarer.api.Global;
 import com.fs.starfarer.api.campaign.CargoStackAPI;
 import com.fs.starfarer.api.campaign.OptionPanelAPI;
+import com.fs.starfarer.api.campaign.rules.MemoryAPI;
 import com.fs.starfarer.api.characters.PersonAPI;
 import com.fs.starfarer.api.impl.campaign.RuleBasedInteractionDialogPluginImpl;
 import com.fs.starfarer.api.ui.TooltipMakerAPI;
@@ -80,6 +81,10 @@ public class VulpoidChatTopDialogPlugin extends ListBasedInteractionDialogPlugin
             CargoStackAPI stack = (CargoStackAPI) entry;
             if(stack.getPlugin() instanceof VulpoidPlugin) {
                 VulpoidPlugin plugin = ((VulpoidPlugin)stack.getPlugin());
+                MemoryAPI memory = plugin.getPerson().getMemoryWithoutUpdate();
+                if(memory.contains(Vulpoids.KEY_RESEARCH_PROJECT) && memory.contains(Vulpoids.KEY_RESEARCH_COMPLETION_DAY)) {
+                    if(Global.getSector().getMemoryWithoutUpdate().getFloat("$daysSinceStart") >= memory.getFloat(Vulpoids.KEY_RESEARCH_COMPLETION_DAY)) return Misc.getHighlightColor();
+                }
                 return plugin.getColor();
             } else {
                 return new Color(161,118,86);

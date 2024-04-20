@@ -1,17 +1,26 @@
 package vulpoids.impl.campaign.procgen.themes;
 
+import com.fs.starfarer.api.Global;
 import com.fs.starfarer.api.campaign.AICoreOfficerPlugin;
 import com.fs.starfarer.api.campaign.CampaignFleetAPI;
 import com.fs.starfarer.api.campaign.SectorEntityToken;
+import com.fs.starfarer.api.characters.FullName;
 import com.fs.starfarer.api.characters.PersonAPI;
+import com.fs.starfarer.api.combat.ShipHullSpecAPI;
 import com.fs.starfarer.api.combat.ShipVariantAPI;
 import com.fs.starfarer.api.fleet.FleetMemberAPI;
 import com.fs.starfarer.api.impl.campaign.BaseGenericPlugin;
 import com.fs.starfarer.api.impl.campaign.DModManager;
 import com.fs.starfarer.api.impl.campaign.fleets.DefaultFleetInflater;
 import com.fs.starfarer.api.impl.campaign.fleets.DefaultFleetInflaterParams;
+import com.fs.starfarer.api.impl.campaign.fleets.FleetFactoryV3;
+import com.fs.starfarer.api.impl.campaign.fleets.FleetParamsV3;
 import com.fs.starfarer.api.impl.campaign.ids.Commodities;
+import com.fs.starfarer.api.impl.campaign.ids.Factions;
+import com.fs.starfarer.api.impl.campaign.ids.FleetTypes;
 import com.fs.starfarer.api.impl.campaign.ids.HullMods;
+import com.fs.starfarer.api.impl.campaign.ids.Personalities;
+import com.fs.starfarer.api.impl.campaign.ids.Ranks;
 import com.fs.starfarer.api.impl.campaign.ids.Skills;
 import com.fs.starfarer.api.impl.campaign.ids.Tags;
 import com.fs.starfarer.api.impl.campaign.rulecmd.salvage.SalvageGenFromSeed;
@@ -42,50 +51,68 @@ public class UtopiaDefenderPlugin extends BaseGenericPlugin implements SalvageDe
         Misc.addDefeatTrigger(fleet, "UtopiaTerraformerDefeated");
 
         fleet.setNoFactionInName(true);
-        fleet.setName("Remnants of Task Force Safeguard");
-
-        AICoreOfficerPlugin plugin = Misc.getAICoreOfficerPlugin(Commodities.ALPHA_CORE);
-
+        fleet.setName("Fourteenth Battlegroup Task Force");
+        
         fleet.getFleetData().clear();
         fleet.getFleetData().setShipNameRandom(random);
-
-
-        FleetMemberAPI member = fleet.getFleetData().addFleetMember("legion_xiv_Automated");
-        //member.setShipName("HSS Sentinel");
-        member.setId("xivtf_" + random.nextLong());
-        PersonAPI person = plugin.createPerson(Commodities.ALPHA_CORE, fleet.getFaction().getId(), random);
+        
+        //Zig captain from TTBlackSite.
+        PersonAPI person = Global.getFactory().createPerson();
+        person.setName(new FullName("Motes", "", FullName.Gender.ANY));
+        person.setFaction(Factions.NEUTRAL);
+        //person.setPortraitSprite(Global.getSettings().getSpriteName("characters", "ziggurat_captain"));
+        //person.setPortraitSprite(Global.getSettings().getSpriteName("misc", "default_portrait"));
+        person.setPortraitSprite("graphics/portraits/portrait_hegemony06.png");
+        person.setPersonality(Personalities.RECKLESS);
+        person.setRankId(Ranks.SPACE_CAPTAIN);
+        person.setPostId(null);
         person.getStats().setSkipRefresh(true);
-        person.getStats().setSkillLevel(Skills.CARRIER_GROUP, 1);
-        person.getStats().setSkillLevel(Skills.FIGHTER_UPLINK, 1);
+        person.getStats().setLevel(10);
+        person.getStats().setSkillLevel(Skills.HELMSMANSHIP, 2);
+        person.getStats().setSkillLevel(Skills.TARGET_ANALYSIS, 2);
+        person.getStats().setSkillLevel(Skills.IMPACT_MITIGATION, 2);
+        person.getStats().setSkillLevel(Skills.GUNNERY_IMPLANTS, 2);
+        person.getStats().setSkillLevel(Skills.BALLISTIC_MASTERY, 2);  //Changed from energy weapon, obvs.
+        person.getStats().setSkillLevel(Skills.COMBAT_ENDURANCE, 2);
+        person.getStats().setSkillLevel(Skills.POLARIZED_ARMOR, 2);
+        person.getStats().setSkillLevel(Skills.MISSILE_SPECIALIZATION, 2);
+        person.getStats().setSkillLevel(Skills.FIELD_MODULATION, 2);
+        person.getStats().setSkillLevel(Skills.DAMAGE_CONTROL, 2);
+        person.getStats().setSkillLevel(Skills.NAVIGATION, 1);
         person.getStats().setSkipRefresh(false);
-
-        member.setCaptain(person);
-        ShipVariantAPI v = member.getVariant().clone();
-        v.setSource(VariantSource.REFIT);
-        v.addTag(Tags.TAG_NO_AUTOFIT);
-        v.addTag(Tags.TAG_AUTOMATED_NO_PENALTY);
-        member.setVariant(v, false, true);
+        
+        FleetMemberAPI terraformer = fleet.getFleetData().addFleetMember("vulp_terraformer_Standard");
+        terraformer.setCaptain(person);
+        terraformer.setShipName("EUS Muscascus");
+        ShipVariantAPI terraformerVariant = terraformer.getVariant().clone();
+        terraformerVariant.setSource(VariantSource.REFIT);
+        terraformerVariant.addTag(Tags.TAG_NO_AUTOFIT);
+        terraformerVariant.addTag(Tags.SHIP_LIMITED_TOOLTIP);
+        terraformerVariant.addTag(Tags.VARIANT_UNBOARDABLE);
+        terraformer.setVariant(terraformerVariant, false, true);
+        fleet.getFleetData().addFleetMember("legion_xiv_Elite").setCaptain(person);
+        fleet.getFleetData().addFleetMember("legion_xiv_Elite").setCaptain(person);
+        fleet.getFleetData().addFleetMember("onslaught_xiv_Elite").setCaptain(person);
+        fleet.getFleetData().addFleetMember("onslaught_xiv_Elite").setCaptain(person);
+        fleet.getFleetData().addFleetMember("dominator_XIV_Elite").setCaptain(person);
+        fleet.getFleetData().addFleetMember("dominator_XIV_Elite").setCaptain(person);
+        fleet.getFleetData().addFleetMember("dominator_XIV_Elite").setCaptain(person);
+        fleet.getFleetData().addFleetMember("falcon_xiv_Elite").setCaptain(person);
+        fleet.getFleetData().addFleetMember("falcon_xiv_Elite").setCaptain(person);
+        fleet.getFleetData().addFleetMember("enforcer_XIV_Elite");
+        fleet.getFleetData().addFleetMember("enforcer_XIV_Elite");
+        fleet.getFleetData().addFleetMember("enforcer_XIV_Elite");
+        fleet.getFleetData().addFleetMember("enforcer_XIV_Elite");
+        fleet.getFleetData().addFleetMember("enforcer_XIV_Elite");
+        
         fleet.setCommander(person);
-
-        /*addAutomated(fleet, "onslaught_xiv_Elite", null, Commodities.ALPHA_CORE, random);
-
-        addAutomated(fleet, "dominator_XIV_Elite", null, Commodities.BETA_CORE, random);
-        addAutomated(fleet, "eagle_xiv_Elite", null, Commodities.BETA_CORE, random);
-        addAutomated(fleet, "falcon_xiv_Elite", null, Commodities.BETA_CORE, random);
-        addAutomated(fleet, "falcon_xiv_Escort", null, Commodities.BETA_CORE, random);
-
-        addAutomated(fleet, "enforcer_XIV_Elite", null, Commodities.GAMMA_CORE, random);
-        addAutomated(fleet, "enforcer_XIV_Elite", null, Commodities.GAMMA_CORE, random);
-        addAutomated(fleet, "enforcer_XIV_Elite", null, Commodities.GAMMA_CORE, random);*/
-
-
+        
         for (FleetMemberAPI curr : fleet.getFleetData().getMembersListCopy()) {
-            //makeAICoreSkillsGoodForLowTech(curr, true);
             curr.getRepairTracker().setCR(curr.getRepairTracker().getMaxCR());
         }
 
         for (FleetMemberAPI curr : fleet.getFleetData().getMembersListCopy()) {
-            v = curr.getVariant().clone();
+            ShipVariantAPI v = curr.getVariant().clone();
             v.setSource(VariantSource.REFIT);
             curr.setVariant(v, false, false);
         }
@@ -94,25 +121,18 @@ public class UtopiaDefenderPlugin extends BaseGenericPlugin implements SalvageDe
             DefaultFleetInflater dfi = (DefaultFleetInflater) fleet.getInflater();
             DefaultFleetInflaterParams dfip = (DefaultFleetInflaterParams)dfi.getParams();
             dfip.allWeapons = true;
-            dfip.averageSMods = 3;
-            dfip.quality = 0.4f;
-
-            // what a HACK
-            DModManager.assumeAllShipsAreAutomated = true;
+            dfip.averageSMods = 5;
+            dfip.quality = 2;
             fleet.inflateIfNeeded();
             fleet.setInflater(null);
-            DModManager.assumeAllShipsAreAutomated = false;
         }
 
         for (FleetMemberAPI curr : fleet.getFleetData().getMembersListCopy()) {
-            curr.getVariant().addPermaMod(HullMods.AUTOMATED);
-            curr.getVariant().setVariantDisplayName("Automated");
-            curr.getVariant().addTag(Tags.TAG_AUTOMATED_NO_PENALTY);
-            curr.getVariant().addTag(Tags.VARIANT_UNRESTORABLE);
-            curr.getVariant().addTag(Tags.TAG_RETAIN_SMODS_ON_RECOVERY);
-            if (curr.isCapital()) {
-                curr.getVariant().addTag(Tags.VARIANT_ALWAYS_RECOVERABLE);
-            }
+            curr.getVariant().setVariantDisplayName("Ancient");
+            //curr.getVariant().addTag(Tags.TAG_RETAIN_SMODS_ON_RECOVERY);
+            //if (curr.isCapital()) {
+            //    curr.getVariant().addTag(Tags.VARIANT_ALWAYS_RECOVERABLE);
+            //}
         }
     }
     
