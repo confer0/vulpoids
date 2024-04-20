@@ -96,6 +96,7 @@ public abstract class ListBasedInteractionDialogPlugin implements InteractionDia
     
     protected abstract void selectEntry(Object entry);
     
+    protected String getLeaveOptionText() {return "Back";}
     protected void doOnLeave() {}
     
     @Override
@@ -134,7 +135,7 @@ public abstract class ListBasedInteractionDialogPlugin implements InteractionDia
                         if(page>=(entries.size()*1f/ITEMS_PER_PAGE)-1) options.setEnabled(OptionId.NEXT, false);
                         options.addOption("Prev", OptionId.PREV);
                         if(page<=0) options.setEnabled(OptionId.PREV, false);
-                        options.addOption("Leave", OptionId.LEAVE);
+                        options.addOption(getLeaveOptionText(), OptionId.LEAVE);
                         options.setShortcut(OptionId.LEAVE, Keyboard.KEY_ESCAPE, false, false, false, true);
                         break;
                     case NEXT:

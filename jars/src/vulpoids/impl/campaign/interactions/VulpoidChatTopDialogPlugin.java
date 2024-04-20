@@ -99,7 +99,10 @@ public class VulpoidChatTopDialogPlugin extends ListBasedInteractionDialogPlugin
         if (entry instanceof String) return "Speak with "+getEntryLabel(entry);
         return null;
     }
-    
+    @Override
+    protected String getLeaveOptionText() {
+        return "Leave";
+    }
     @Override
     protected void doOnLeave() {
         /*for (Object[] page1 : pages) {

@@ -7,18 +7,31 @@ import com.fs.starfarer.api.campaign.TextPanelAPI;
 import com.fs.starfarer.api.campaign.econ.Industry;
 import com.fs.starfarer.api.campaign.econ.MarketAPI;
 import com.fs.starfarer.api.impl.campaign.ids.Factions;
+import com.fs.starfarer.api.impl.campaign.ids.FleetTypes;
 import com.fs.starfarer.api.impl.campaign.ids.Tags;
 import com.fs.starfarer.api.impl.campaign.intel.events.BaseEventIntel;
 import com.fs.starfarer.api.impl.campaign.intel.events.BaseFactorTooltip;
 import com.fs.starfarer.api.impl.campaign.intel.events.EventFactor;
+import com.fs.starfarer.api.impl.campaign.intel.punitive.PunitiveExpeditionManager.PunExData;
+import com.fs.starfarer.api.impl.campaign.intel.punitive.PunitiveExpeditionManager.PunExGoal;
+import com.fs.starfarer.api.impl.campaign.intel.punitive.PunitiveExpeditionManager.PunExReason;
+import com.fs.starfarer.api.impl.campaign.intel.punitive.PunitiveExpeditionManager.PunExType;
+import com.fs.starfarer.api.impl.campaign.missions.DelayedFleetEncounter;
+import com.fs.starfarer.api.impl.campaign.missions.hub.HubMissionWithTriggers.FleetQuality;
+import com.fs.starfarer.api.impl.campaign.missions.hub.HubMissionWithTriggers.FleetSize;
+import com.fs.starfarer.api.impl.campaign.missions.hub.HubMissionWithTriggers.OfficerNum;
+import com.fs.starfarer.api.impl.campaign.missions.hub.HubMissionWithTriggers.OfficerQuality;
 import com.fs.starfarer.api.ui.LabelAPI;
 import com.fs.starfarer.api.ui.SectorMapAPI;
 import com.fs.starfarer.api.ui.TooltipMakerAPI;
 import com.fs.starfarer.api.ui.TooltipMakerAPI.TooltipCreator;
 import com.fs.starfarer.api.util.Misc;
 import java.awt.Color;
+import java.util.Random;
 import java.util.Set;
+import org.lwjgl.util.vector.Vector2f;
 import vulpoids.impl.campaign.ids.Vulpoids;
+import vulpoids.impl.campaign.intel.punitive.KnightBombardmentExpeditionIntel;
 
 public class VulpoidAcceptanceEventIntel extends BaseEventIntel {
     public static int PROGRESS_MAX = 1000;
@@ -29,8 +42,7 @@ public class VulpoidAcceptanceEventIntel extends BaseEventIntel {
 
     public static String KEY = "$vulpoidAcceptance_ref";
     
-    // TODO - pushback per stage
-    // Make sure there's a baseline level so it's always visible
+    boolean knightBombardmentResolved = false;
     
     public static enum Stage {
         START,
@@ -137,7 +149,7 @@ public class VulpoidAcceptanceEventIntel extends BaseEventIntel {
                     info.addPara("Anti-Vulpoid sanctions have been lifted due to public protest.", tc, initPad);
                     break;
                 case KNIGHT_ATTACK:
-                    info.addPara("The Knights of Ludd have launched an fleet to eliminate you.", tc, initPad);
+                    info.addPara("The Knights of Ludd have launched a fleet to eliminate you.", tc, initPad);
                     break;
                 case KNIGHT_BOMBARD:
                     info.addPara("The Knights of Ludd are launching a saturation bombardment against you.", tc, initPad);
@@ -400,18 +412,92 @@ public class VulpoidAcceptanceEventIntel extends BaseEventIntel {
             TriTachyonHostileActivityFactor.setPlayerCounterRaidedTriTach();
             endAfterDelay();
         }*/
+        if (stage.id == Stage.KNIGHT_ATTACK) {
+            sendKnightAttack();
+        }
+        if (stage.id == Stage.KNIGHT_BOMBARD) {
+            // Insta-resolves if something goes wrong.
+            if(!sendKnightBombardment()) resolveKnightBombardment();
+        }
     }
-
-    /*protected String getSoundForStageReachedUpdate(Object stageId) {
-//		if (stageId == Stage.SEND_MERC) {
-//			return "ui_learned_ability";
-//		}
-            return super.getSoundForStageReachedUpdate(stageId);
-    }*/
-
-    /*@Override
-    protected String getSoundForOneTimeFactorUpdate(EventFactor factor) {
-            return null;
-    }*/
     
+    
+    public void resolveKnightBombardment() {
+        // TODO - add intel and set flags to point to Gilead for final scenes.
+        knightBombardmentResolved = true;
+    }
+    
+    protected void sendKnightAttack() {
+        Random r = Misc.getRandom(random.nextLong(), 7);
+        DelayedFleetEncounter e = new DelayedFleetEncounter(r, "VulpoidAcceptanceKnightAttack");
+        //e.setDelayVeryShort();
+        e.setDelayNone();
+        e.setDoNotAbortWhenPlayerFleetTooStrong();
+        e.setLocationAnywhere(true, Factions.LUDDIC_CHURCH);
+        e.beginCreate();
+        e.triggerCreateFleet(FleetSize.HUGE, FleetQuality.HIGHER, Factions.LUDDIC_CHURCH, FleetTypes.PATROL_LARGE, new Vector2f());
+        e.triggerSetFleetOfficers(OfficerNum.MORE, OfficerQuality.HIGHER);
+        e.triggerMakeNoRepImpact();
+        e.triggerFleetMakeFaster(true, 2, true);
+        e.triggerSetFleetFaction(Factions.KOL);
+        e.triggerFleetMakeImportant(null, Stage.KNIGHT_ATTACK);
+        e.triggerSetStandardAggroInterceptFlags();
+        e.triggerSetFleetGenericHailPermanent("VulpKnightAttackHail");
+        //e.triggerSetFleetFlagPermanent("$ttcr_wolfpack");
+        e.endCreate();
+    }
+    
+    protected boolean sendKnightBombardment() {
+        /*PunExData data = new PunExData();
+        data.faction = Global.getSector().getFaction(Factions.KOL);
+        data.threshold = 0f;
+        PunitiveExpeditionManager.getInstance().createExpedition(data, 300);*/
+        
+        PunExData curr = new PunExData();
+        curr.faction = Global.getSector().getFaction(Factions.KOL);
+        curr.threshold = 0f;
+        
+        /*WeightedRandomPicker<MarketAPI> targetPicker = new WeightedRandomPicker<MarketAPI>(curr.random);
+        
+        for (MarketAPI market : Global.getSector().getEconomy().getMarketsCopy()) {
+            if (!market.isPlayerOwned()) continue;
+            if (market.isInHyperspace()) continue;
+
+            float weight = 0f;
+            if (reason.type == PunExType.ANTI_COMPETITION && reason.commodityId != null) {
+                if (market.getSize() < MIN_COLONY_SIZE_FOR_NON_TERRITORIAL) continue;
+
+                CommodityOnMarketAPI com = market.getCommodityData(reason.commodityId);
+                int share = com.getCommodityMarketData().getExportMarketSharePercent(market);
+                weight += share * share;
+            } else if (reason.type == PunExType.ANTI_FREE_PORT && market.getId().equals(reason.marketId)) {
+                if (market.getSize() < MIN_COLONY_SIZE_FOR_NON_TERRITORIAL) continue;
+
+                weight = 1f;
+            } else if (reason.type == PunExType.TERRITORIAL && market.getId().equals(reason.marketId)) {
+                weight = 1f;
+            }
+
+            targetPicker.add(market, weight);
+        }*/
+        
+        /*MarketAPI target = targetPicker.pick();
+        if (target == null) return;*/
+        MarketAPI target = Misc.getPlayerMarkets(false).get(0);
+        
+        MarketAPI from = Global.getSector().getEntityById("hesperus").getMarket();
+        if (from == null) return false;
+        
+        PunExGoal goal = PunExGoal.BOMBARD;
+        
+        
+        float fp = 400;
+        
+        curr.intel = new KnightBombardmentExpeditionIntel(curr.faction, from, target, fp, 0, goal, null, new PunExReason(PunExType.ANTI_COMPETITION));
+        if (curr.intel.isDone()) {
+            curr.intel = null;
+            return false;
+        }
+        return true;
+    }
 }
