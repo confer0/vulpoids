@@ -48,6 +48,7 @@ public class VulpoidAcceptanceEventIntel extends BaseEventIntel {
     public static String KEY = "$vulpoidAcceptance_ref";
     
     boolean knightBombardmentResolved = false;
+    boolean gileadEventDone = false;
     
     public static enum Stage {
         START,
@@ -114,7 +115,7 @@ public class VulpoidAcceptanceEventIntel extends BaseEventIntel {
     
     @Override
     public void setProgress(int progress) {
-        if (progress >= PROGRESS_KNIGHT_BOMBARD) progress = PROGRESS_KNIGHT_BOMBARD;
+        if (!gileadEventDone && progress >= PROGRESS_KNIGHT_BOMBARD) progress = PROGRESS_KNIGHT_BOMBARD;
         if (this.progress == progress) return;
         super.setProgress(progress);
     }
@@ -157,7 +158,8 @@ public class VulpoidAcceptanceEventIntel extends BaseEventIntel {
                     info.addPara("The Knights of Ludd have launched a fleet to eliminate you.", tc, initPad);
                     break;
                 case KNIGHT_BOMBARD:
-                    info.addPara("The Knights of Ludd are launching a saturation bombardment against you.", tc, initPad);
+                    if(!knightBombardmentResolved) info.addPara("The Knights of Ludd are launching a saturation bombardment against you.", tc, initPad);
+                    else info.addPara("Head to Gilead to obtain reparations from from the Church.", tc, initPad);
                     break;
                 case SUCCESS:
                     info.addPara("Vulpoids have been embraced by the civilian population of the Sector.", tc, initPad);
@@ -283,8 +285,14 @@ public class VulpoidAcceptanceEventIntel extends BaseEventIntel {
                 label.setHighlightColors(lc, lc, Misc.getNegativeHighlightColor(), Misc.getHighlightColor());
             }
         } else if (stageId == Stage.SUCCESS) {
-            info.addPara("It's almost impossible not to love a Vulpoid once you've actually met her. The hard "+
-                    "part is getting people to overcome their prejudices long enough to do that.", opad);
+            if(progress<PROGRESS_MAX) {
+                info.addPara("It's almost impossible not to love a Vulpoid once you've actually met her. The hard "+
+                        "part is getting people to overcome their prejudices long enough to do that.", opad);
+            } else {
+                info.addPara("It's almost impossible not to love a Vulpoid once you've actually met her, and now "+
+                        "most people have. Most of the Sector's civilian population, including many Luddics, "+
+                        "now favor the continued creation of Vulpoids.", opad);
+            }
         }
     }
 
@@ -443,6 +451,11 @@ public class VulpoidAcceptanceEventIntel extends BaseEventIntel {
         Global.getSector().getEntityById("gilead").getMarket().addPerson(curate);
         Global.getSector().getEntityById("gilead").getMarket().getCommDirectory().addPerson(curate);
         // TODO - add intel to point you specifically here
+        sendUpdateIfPlayerHasIntel(getDataFor(Stage.KNIGHT_BOMBARD), false);
+    }
+    public void resolveGileadEvent() {
+        gileadEventDone = true;
+        setProgress(PROGRESS_MAX);
     }
     
     protected void sendKnightAttack() {

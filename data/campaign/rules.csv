@@ -1192,9 +1192,15 @@ vulp_synodSubcurateReparation_shrines,DialogOptionSelected,$option == vulp_synod
 vulp_synodSubcurateReparation_shrinesGoodToSee:""I think it will be good for people to see them as they are.""
 vulp_synodSubcurateReparation_shrinesOwnPath:""That is not your place to say. Their path is their own to walk.""
 vulp_synodSubcurateReparation_shrinesInTheName:""You're the Church of Galactic *Redemption*. It's in the name.""",,
-vulp_synodSubcurateReparation_shrinesMaybe,DialogOptionSelected,$option == vulp_synodSubcurateReparation_shrinesMaybe,,,vulp_synodSubcurateReparation_rant:Continue,,
-vulp_synodSubcurateReparation_shrinesGoodToSee,DialogOptionSelected,$option == vulp_synodSubcurateReparation_shrinesGoodToSee,,,vulp_synodSubcurateReparation_rant:Continue,,
-vulp_synodSubcurateReparation_shrinesOwnPath,DialogOptionSelected,$option == vulp_synodSubcurateReparation_shrinesOwnPath,,,vulp_synodSubcurateReparation_rant:Continue,,
+vulp_synodSubcurateReparation_shrinesMaybe,DialogOptionSelected,$option == vulp_synodSubcurateReparation_shrinesMaybe,,"""Them, learn? Ludd's word is not some simple array of facts to be read off from a datapad. It is a spiritual thing, to be experienced in one's very soul!""
+
+""Without that, what is there for them to learn? Shall they speak prayer without tongues? Burn inscense with no nose? Give blessing without palms?""",vulp_synodSubcurateReparation_rant:Continue,,
+vulp_synodSubcurateReparation_shrinesGoodToSee,DialogOptionSelected,$option == vulp_synodSubcurateReparation_shrinesGoodToSee,,"$HeOrShe gives a hollow laugh.
+
+""As they are, indeed. Succubi, every one of them. The eye betrays but the spirit knows: to gaze upon them is to witness sin.""",vulp_synodSubcurateReparation_rant:Continue,,
+vulp_synodSubcurateReparation_shrinesOwnPath,DialogOptionSelected,$option == vulp_synodSubcurateReparation_shrinesOwnPath,,"""Not my place!? I am a Synod Subcurate of the Church of Galactic Redemption! It is only my place to say this!""
+
+""How prideful must you be, to sit there in the void above this most holy world and think that you - you! - may rule on matters of canon?""",vulp_synodSubcurateReparation_rant:Continue,,
 vulp_synodSubcurateReparation_shrinesInTheName,DialogOptionSelected,$option == vulp_synodSubcurateReparation_shrinesInTheName,,"""For humanity! Redemption for humanity, for the sins committed by the Domain and all others who would bend and break holy creation to their own ends!""
 
 ""And yea, even for people such as you, who would create these... these succubal monstrosities that tempt pious folk into the pit of Mammon!""",vulp_synodSubcurateReparation_rant:Continue,,
@@ -1210,15 +1216,95 @@ vulp_synodSubcurateReparation_rant1,DialogOptionSelected,$option == vulp_synodSu
 ""This is the festering of a wound that we have left untended for far too long. Did we learn nothing from the first war? The followers of Mammon can never be satisfied. And now they have enscorcelled the faithful with their madness.""
 
 ""But the bleeding must be stemmed before the infection can be cut away. This delusion must be ended before all else.""",vulp_synodSubcurateReparation_rant2:Continue,,
-vulp_synodSubcurateReparation_rant2,DialogOptionSelected,$option == vulp_synodSubcurateReparation_rant2,"unset $missionImportant_VulpoidAcceptance
+vulp_synodSubcurateReparation_rant2,DialogOptionSelected,$option == vulp_synodSubcurateReparation_rant2,,"$HisOrHer eyes meet yours, cold and determined.
+
+""Take a beast down to Gilead. Have it walk in the footsteps of Ludd. Let it gaze upon the beauty that brought the Prophet to his knees.""",vulp_synodSubcurateReparation_rant3:Continue,,
+vulp_synodSubcurateReparation_rant3,DialogOptionSelected,$option == vulp_synodSubcurateReparation_rant3,"unset $missionImportant_VulpoidAcceptance
 SetPersonHidden vulp_synod_subcurate true
-$market.vulp_bringVulpoidToShrine = true","$HisOrHer eyes meet yours, cold and determined.
-
-""Take a beast down to Gilead. Have it walk in the footsteps of Ludd. Let it gaze upon the beauty that brought the Prophet to his knees.""
-
-""And then,"" $heOrShe says with venom, ""Watch your lies crumble away as the people witness it for the soulless monster it is.""
+$market.vulp_bringVulpoidToShrine = true","""And then,"" $heOrShe says with venom, ""Watch your lies crumble away as the people witness it for the soulless monster it is.""
 
 $HeOrShe slams down hard on the disconnect button, leaving you staring at a CGR standby screen.",cutCommLink:Cut the comm link,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+vulp_GileadShrineAcceptanceVisitOption,PopulateOptions,"$market.id == gilead
+$market.tag:luddic_shrine
+$menuState == main
+$market.vulp_bringVulpoidToShrine","FireBest VulpDisableGileadAcceptanceOption
+SetOptionColor vulp_gileadShrineAcceptanceVisitStart buttonShortcut",,4:vulp_gileadShrineAcceptanceVisitStart:Bring a Vulpoid down to the Luddic shrine,,
+vulp_GileadShrineAcceptanceVisitDisable,VulpDisableGileadAcceptanceOption,!PlayerHasCargo vulpoids,"SetEnabled vulp_gileadShrineAcceptanceVisitStart false
+SetTooltip vulp_gileadShrineAcceptanceVisitStart ""Need an ordinary Vulpoid.""",,,,
+vulp_gileadShrineAcceptanceVisitStart,DialogOptionSelected,$option == vulp_gileadShrineAcceptanceVisitStart,,"Deorbiting to the surface of Gilead is strictly overseen by the Knights of Ludd, and the nature of this pilgrimage has earned no favor from them. Your shuttle must queue behind a flotilla of lumbering transports and haulers filled with approved industrial goods.
+
+This does provide time for the Vulpoid to stare out at the face of Gilead. The green continents were seeded by sporeships and its climate stabilized by Eridani Utopia. In that regard, she and Gilead could be said to share a parent. Of course, Ludd and the Faithful have long since adopted the world as their own, and tended its garden wilderness as a gem of the Persean Sector.
+
+Your shuttle receives a ping from traffic control: permission to descend.",vulp_gileadShrineAcceptanceVisitStart2:Continue,,
+vulp_gileadShrineAcceptanceVisitStart2,DialogOptionSelected,$option == vulp_gileadShrineAcceptanceVisitStart2,ShowImageVisual luddic_shrine,"The landing bay, one of a score or so allocated to outsiders, is packed with parties of Luddic pilgrims dressed in traditional handweave led by robed attendants.
+
+One such stony-faced attendant, flanked by Knights of Ludd in gleaming powered armor, meets your shuttle on the pad.
+
+""Welcome to Gilead, Captain $playerName and... 'Vulpoid',"" the attendant says. ""This way, please.""","vulp_gileadShrineAcceptanceVisit:Visit the shrine
+vulp_gileadShrineAcceptanceInfo:""Actually, she had some questions about the shrine.""",,
+vulp_gileadShrineAcceptanceInfo,DialogOptionSelected,$option == vulp_gileadShrineAcceptanceInfo,,"The attendant raises an eyebrow, but dutifully explains that the shrine commemorates the holy site where Ludd first stepped onto Gilead and was brought prostrate, to the shock of non-believers, to kiss the earth itself, so overcome was Ludd by the rapturous touch of Divinity.
+
+Your Vulpoid listens with rapt attention, clapping with delight as the attendant explains how flowers bloomed in the rubble of the terraforming machines. It must be uncommon for their audience to listen with such eagerness, because the attendant's own expression breaks into joy as they recount the weeping of the unbelievers as Ludd revealed their sins and told them forgiveness was within reach on this garden-world.
+
+It is an appealing morality tale delivered earnestly, and received in kind.",vulp_gileadShrineAcceptanceVisit:Visit the shrine,,
+vulp_GileadShrineAcceptanceVisit,DialogOptionSelected,$option == vulp_gileadShrineAcceptanceVisit,,"The attendant nods, explaining that you must leave your guards behind because this is a place of peace, and all are equal on the Pilgrim's Path. Their eyes flick over to the Vulpoid as they say this, but they make no comment.
+
+The request is an implied request for keeping up appearances, standard procedure in spite of your odd accompaniment. A couple of your guards, unarmed and trained for situations requiring this degree of subtlety, attend to your safety as per matter of course.
+
+Nonetheless, the crowds filing out of the transport complex, on a wide highway of beaten earth and cobble, are enormous. Those that cannot walk are carried; no powered transport is provided.",vulp_gileadShrineAcceptanceVisit1:Walk the path,,
+vulp_gileadShrineAcceptanceVisit1,DialogOptionSelected,$option == vulp_gileadShrineAcceptanceVisit1,ShowImageVisual gilead,"The path of the pilgrims leads up a slope covered in trees more enormous than any you've seen before. Though small in scale compared to the celestial phenomena that is your daily bread, their living architecture forms a natural cathedral.
+
+You catch many odd glances from the other pilgrims, but your Vulpoid is preoccupied by the incredible sight. Her eyes are wide as she cranes her head upward, trying to see as much as she can over the taller crowds.","vulp_gileadShrineAcceptanceVisit2:Continue down the path
+vulp_gileadShrineAcceptanceShoulders:Lift her up on your shoulders",,
+vulp_gileadShrineAcceptanceShoulders,DialogOptionSelected,$option == vulp_gileadShrineAcceptanceShoulders,$vulpOnShoulders = true 0,"You pull her up and set her on your shoulders, and she wraps herself tight around your head. Her fluffy tail rests against your back, swaying excitedly as she takes in the sights.",vulp_gileadShrineAcceptanceVisit2:Continue down the path,,
+vulp_gileadShrineAcceptanceVisit2,DialogOptionSelected,$option == vulp_gileadShrineAcceptanceVisit2,,"Dispassionate Knights of Ludd watch as attendants shuttle you through a cordoned path in an arc through a final grove of mighty sequoia-analogs atop the promontory at the terminus of the ridge - it is a temple, struts and spars intertwined with the trees. Golden sunlight filters through heavy branches, and as the breeze lifts a whispering chorus of foliage.
+
+Your Vulpoid's nose twitches, and you catch it as well: an earthy scent over the mass of humanity surrounding you. ",vulp_gileadShrineAcceptanceVisit3:Approach the shrine,,
+vulp_gileadShrineAcceptanceVisit3,DialogOptionSelected,$option == vulp_gileadShrineAcceptanceVisit3,,"You have only a brief moment before the high altar of living wood. Small tokens and offerings are piled high amongst low, cheap candles.",vulp_gileadShrineAcceptanceVisit4:Continue,,
+vulp_gileadShrineAcceptanceVisit4,DialogOptionSelected,$option == vulp_gileadShrineAcceptanceVisit4,FireBest VulpGileadShrineShouldersCheck,"And in a moment, it passes.
+
+It is hot, and you are in a large and sweaty crowd full of pilgrims.",,,
+vulp_gileadShrineAcceptanceVisit4_bySide,VulpGileadShrineShouldersCheck,!$vulpOnShoulders,,"On another day, they might have been lost in their own worship. But today, their eyes are fixed upon the creature by your side.",vulp_gileadShrineAcceptanceVisit5:Introduce her to the crowd,,
+vulp_gileadShrineAcceptanceVisit4_onShoulders,VulpGileadShrineShouldersCheck,$vulpOnShoulders,,"On another day, they might have been lost in their own worship. But today, their eyes are fixed upon the creature on your shoulders.",vulp_gileadShrineAcceptanceVisit5:Introduce her to the crowd,,
+vulp_gileadShrineAcceptanceVisit5_bySide,DialogOptionSelected,"$option == vulp_gileadShrineAcceptanceVisit5
+!$vulpOnShoulders","$option = vulp_gileadShrineAcceptanceVisit5_2
+FireBest DialogOptionSelected","You nudge her forwards and prompt her to introduce herself to the person closest. She's timid for a moment, but her natural bubbly charisma quickly takes hold.",,,
+vulp_gileadShrineAcceptanceVisit5_onShoulders,DialogOptionSelected,"$option == vulp_gileadShrineAcceptanceVisit5
+$vulpOnShoulders","$option = vulp_gileadShrineAcceptanceVisit5_2
+FireBest DialogOptionSelected","You set her down and prompt her to introduce herself to the person closest. She's timid for a moment, but her natural bubbly charisma quickly takes hold.",,,
+vulp_gileadShrineAcceptanceVisit5_2,DialogOptionSelected,$option == vulp_gileadShrineAcceptanceVisit5_2,,"Her knowledge of the Luddic faith is sparse, but her credulity gives her the air of a zealous believer. Everything she knows is said with unblinking faith, and every new story told by the growing crowd is accepted without question or cynicism. She professes earnestly on how incredible a person Ludd must have been, and how wonderful his Faithful are.",vulp_gileadShrineAcceptanceVisit6:Continue,,
+vulp_gileadShrineAcceptanceVisit6,DialogOptionSelected,$option == vulp_gileadShrineAcceptanceVisit6,,"As the crowd grows more amenable with her, you note a growing discomfort in one of the younger Knights. Eventually he can take it no longer, and breaks formation to step towards you.
+
+""How can you stomach this abomination?"" he accuses. ""How can any good be expected to come from this spawn of Moloch?""","vulp_gileadShrineAcceptanceRetort1:""Because she's a kind person!""
+vulp_gileadShrineAcceptanceRetort2:""Even if you cannot see it, there is goodness in her heart.""
+vulp_gileadShrineAcceptanceRetort3:""She can learn and grow, perhaps better than you can.""
+vulp_gileadShrineAcceptanceRetort4:""Are you just upset the bombing didn't work like you hoped?""",,
+vulp_gileadShrineAcceptanceRetort1,DialogOptionSelected,$option == vulp_gileadShrineAcceptanceRetort1,"$option = vulp_gileadShrineAcceptanceRetort4
+FireBest DialogOptionSelected",,,,
+vulp_gileadShrineAcceptanceRetort2,DialogOptionSelected,$option == vulp_gileadShrineAcceptanceRetort2,"$option = vulp_gileadShrineAcceptanceRetort4
+FireBest DialogOptionSelected",,,,
+vulp_gileadShrineAcceptanceRetort3,DialogOptionSelected,$option == vulp_gileadShrineAcceptanceRetort3,"$option = vulp_gileadShrineAcceptanceRetort4
+FireBest DialogOptionSelected",,,,
+vulp_gileadShrineAcceptanceRetort4,DialogOptionSelected,$option == vulp_gileadShrineAcceptanceRetort4,,"You open your mouth to retort, but are interrupted by the Vulpoid's voice from behind you.
+
+""Because Ludd said so!""
+
+Her tone is not accusatory, but one of joy.",vulp_gileadShrineAcceptanceRetort5:Continue,,
+vulp_gileadShrineAcceptanceRetort5,DialogOptionSelected,$option == vulp_gileadShrineAcceptanceRetort5,,"""Ludd said, uh, 'any who seek redemption shall find it through me'! So that's what I'm gonna do! I'm gonna make Ludd happy!""
+
+The knight, somewhat shocked, stares down at the tiny fox in front of him. Faith against faith, his lifetime of training against her utter trust.",vulp_gileadShrineAcceptanceRetort6:Continue,,
+vulp_gileadShrineAcceptanceRetort6,DialogOptionSelected,$option == vulp_gileadShrineAcceptanceRetort6,,"He blinks first, glancing up at the muttering crowd. You catch stray words from the whispers: ""such humility,"" ""true faith,"" ""aspire towards.""
+
+The knight's resolve wavers, and he stands up straight, returning to parade rest.",vulp_gileadShrineAcceptanceLeave:Return to your $shipOrFleet,,
+vulp_gileadShrineAcceptanceLeave,DialogOptionSelected,$option == vulp_gileadShrineAcceptanceLeave,"ShowImageVisual luddic_shrine
+unset $market.vulp_bringVulpoidToShrine
+VulpoidAcceptance resolveGilead
+$global.vulpoidsAccepted = true","As you start your way back to the shaded halls of the transport complex, you notice several pilgrims discreetly putting away recording devices.
+
+This incident is likely to cause quite a splash once it reaches the wider population.",shrineDoLeave:Leave,,
 ,,,,,,,
 ,,,,,,,
 ,,,,,,,
