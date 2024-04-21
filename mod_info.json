@@ -1,10 +1,10 @@
 {
     "id": "vulpoids",
-    "name": "Vulpoids",
+    "name": "Vulpoids - Lost Project",
     "author": "confer0",
     "utility": "false",
     "version": "1.0",
-    "description": "Adds the Vulpoid Biofactory, a biofactory variant that produces Vulpoids. They're experimental lifeforms that, while technically being AI, are in high demand with faction higher-ups.",
+    "description": "Rediscover the long-lost technology of the Exodyne Biotech megacorporation, and use it to change the face of the Persean Sector into something a little fluffier.",
     "gameVersion": "0.97a-RC6",
 	"jars": ["jars/dist/Vulpoids.jar"],
 	"modPlugin": "vulpoids.plugins.VulpoidModPlugin",
