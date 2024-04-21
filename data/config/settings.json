@@ -29,6 +29,9 @@
 			"vulp_pop_09":"graphics/icons/markets/vulp_pop_09.png",
 			"vulp_pop_10":"graphics/icons/markets/vulp_pop_10.png",
 			"workforce_confusion":"graphics/icons/markets/workforce_confused.png",
+			"terraformer_idyllic":"graphics/icons/markets/terraformer_idyllic.png",
+			"terraformer_improvement":"graphics/icons/markets/terraformer_improvement.png",
+			"terraformer_supression":"graphics/icons/markets/terraformer_supression.png",
 		},
 		"illustrations":{
 			"vulp_bar_quest":"graphics/illustrations/bar_quest.png",

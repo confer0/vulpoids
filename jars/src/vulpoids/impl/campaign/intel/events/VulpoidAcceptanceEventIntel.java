@@ -6,9 +6,14 @@ import com.fs.starfarer.api.campaign.InteractionDialogAPI;
 import com.fs.starfarer.api.campaign.TextPanelAPI;
 import com.fs.starfarer.api.campaign.econ.Industry;
 import com.fs.starfarer.api.campaign.econ.MarketAPI;
+import com.fs.starfarer.api.characters.FullName;
+import com.fs.starfarer.api.characters.FullName.Gender;
+import com.fs.starfarer.api.characters.PersonAPI;
 import com.fs.starfarer.api.impl.campaign.ids.Factions;
 import com.fs.starfarer.api.impl.campaign.ids.FleetTypes;
+import com.fs.starfarer.api.impl.campaign.ids.Ranks;
 import com.fs.starfarer.api.impl.campaign.ids.Tags;
+import com.fs.starfarer.api.impl.campaign.ids.Voices;
 import com.fs.starfarer.api.impl.campaign.intel.events.BaseEventIntel;
 import com.fs.starfarer.api.impl.campaign.intel.events.BaseFactorTooltip;
 import com.fs.starfarer.api.impl.campaign.intel.events.EventFactor;
@@ -402,29 +407,42 @@ public class VulpoidAcceptanceEventIntel extends BaseEventIntel {
 
     @Override
     protected void notifyStageReached(EventStageData stage) {
-        //applyFleetEffects();
-
-        /*if (stage.id == Stage.SEND_MERC) {
-            sendBountyHunters();
-        }
-
-        if (stage.id == Stage.SUCCESS) {
-            TriTachyonHostileActivityFactor.setPlayerCounterRaidedTriTach();
-            endAfterDelay();
-        }*/
         if (stage.id == Stage.KNIGHT_ATTACK) {
             sendKnightAttack();
         }
         if (stage.id == Stage.KNIGHT_BOMBARD) {
             // Insta-resolves if something goes wrong.
-            if(!sendKnightBombardment()) resolveKnightBombardment();
+            if(!sendKnightBombardment()) resolveKnightBombardment(false);
         }
     }
     
     
-    public void resolveKnightBombardment() {
-        // TODO - add intel and set flags to point to Gilead for final scenes.
+    public void resolveKnightBombardment(boolean bombardmentOccurred) {
         knightBombardmentResolved = true;
+        
+        PersonAPI curate = Global.getSector().getFaction(Factions.LUDDIC_CHURCH).createRandomPerson();
+        curate.setId("vulp_synod_subcurate");
+        switch (curate.getGender()) {
+            case MALE:
+                curate.setRankId(Ranks.FATHER);
+                curate.setPortraitSprite(Global.getSettings().getSpriteName("characters", "curate_male"));
+                break;
+            case FEMALE:
+                curate.setRankId(Ranks.MOTHER);
+                curate.setPortraitSprite(Global.getSettings().getSpriteName("characters", "curate_female"));
+                break;
+            default:
+                curate.setRankId(Ranks.ELDER);
+                break;
+        }
+        curate.setPostId(Ranks.POST_SYNOD_SUBCURATE);
+        curate.setVoice(Voices.FAITHFUL);
+        Misc.makeImportant(curate, "VulpoidAcceptance");
+        curate.getMemoryWithoutUpdate().set("$bombardmentOccurred", bombardmentOccurred);
+        Global.getSector().getImportantPeople().addPerson(curate);
+        Global.getSector().getEntityById("gilead").getMarket().addPerson(curate);
+        Global.getSector().getEntityById("gilead").getMarket().getCommDirectory().addPerson(curate);
+        // TODO - add intel to point you specifically here
     }
     
     protected void sendKnightAttack() {
@@ -457,33 +475,22 @@ public class VulpoidAcceptanceEventIntel extends BaseEventIntel {
         curr.faction = Global.getSector().getFaction(Factions.KOL);
         curr.threshold = 0f;
         
-        /*WeightedRandomPicker<MarketAPI> targetPicker = new WeightedRandomPicker<MarketAPI>(curr.random);
-        
-        for (MarketAPI market : Global.getSector().getEconomy().getMarketsCopy()) {
-            if (!market.isPlayerOwned()) continue;
+        MarketAPI target = null;
+        for (MarketAPI market : Misc.getPlayerMarkets(false)) {
             if (market.isInHyperspace()) continue;
-
-            float weight = 0f;
-            if (reason.type == PunExType.ANTI_COMPETITION && reason.commodityId != null) {
-                if (market.getSize() < MIN_COLONY_SIZE_FOR_NON_TERRITORIAL) continue;
-
-                CommodityOnMarketAPI com = market.getCommodityData(reason.commodityId);
-                int share = com.getCommodityMarketData().getExportMarketSharePercent(market);
-                weight += share * share;
-            } else if (reason.type == PunExType.ANTI_FREE_PORT && market.getId().equals(reason.marketId)) {
-                if (market.getSize() < MIN_COLONY_SIZE_FOR_NON_TERRITORIAL) continue;
-
-                weight = 1f;
-            } else if (reason.type == PunExType.TERRITORIAL && market.getId().equals(reason.marketId)) {
-                weight = 1f;
+            
+            Industry industry = market.getIndustry(Vulpoids.INDUSTRY_ORGANFARM);
+            if(industry==null) industry = market.getIndustry(Vulpoids.INDUSTRY_BIOFACILITY);
+            if(industry!=null) {
+                if(industry.getSpecialItem()!=null && industry.getSpecialItem().getId().equals(Vulpoids.BIOFORGE_ITEM)) {
+                    target = market;
+                    break;
+                }
             }
-
-            targetPicker.add(market, weight);
-        }*/
+            if(target==null || target.getGrossIncome() < market.getGrossIncome()) target = market;
+        }
         
-        /*MarketAPI target = targetPicker.pick();
-        if (target == null) return;*/
-        MarketAPI target = Misc.getPlayerMarkets(false).get(0);
+        if (target == null) return false;
         
         MarketAPI from = Global.getSector().getEntityById("hesperus").getMarket();
         if (from == null) return false;

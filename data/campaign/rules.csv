@@ -1086,7 +1086,6 @@ vulp_terraformerOpenDialog,CheckSalvageSpecial,$vulp_terraformer score:1000,,"Un
 Nonetheless, discretion remains the better part of valor, and your ops chief coordinates a by-the-book boarding action with practiced ease.",vulp_exploreTerraformer:Continue,,
 vulp_exploreTerraformer,DialogOptionSelected,$option == vulp_exploreTerraformer,"$explored = true
 CallEvent $global.vulp_terraformingIntel exploredTerraformer
-unset $missionImportant
 unset $missionImportant_vulp_terraformer","Standard reports pour in as your salvors move through the vessel, but you catch a deeper-than-usual frown on the face of your ops chief.","vulp_exploreTerraformer1:""Something wrong, ops?""",,
 vulp_exploreTerraformer1,DialogOptionSelected,$option == vulp_exploreTerraformer1,,"""The bodies, $playerSirOrMadam. Don't seem right.""","vulp_exploreTerraformer2:""They didn't launch escape pods.""",,
 vulp_exploreTerraformer2,DialogOptionSelected,$option == vulp_exploreTerraformer2,,"""Aye, that'd be strange even for Pathers. But it's where the bodies fell that's not right.""
@@ -1134,7 +1133,6 @@ vulp_bivouacExplore3,DialogOptionSelected,$option == vulp_bivouacExplore3,,"Scie
 Manufactured on the ground, the fields then funneled them into the sky and formed them into a vast utility fog, able to manipulate the atmosphere at a grand scale.",vulp_bivouacExplore4:Continue,,
 vulp_bivouacExplore4,DialogOptionSelected,$option == vulp_bivouacExplore4,"AddRemoveAnyItem SPECIAL air_filter_core 1
 $gotAirFilter = true
-unset $missionImportant
 unset $missionImportant_vulp_terraformerplanet
 CallEvent $global.vulp_terraformingIntel exploredBivouac","To your great fortune, these grand machines use the same self-assembly techniques as most Domain colonial technology. Your salvage teams are able to shut down and disassemble the equipment until it's been reduced to a single core, ready to be built out again on a world of your choosing.",vulp_bivouacExplore5:Continue,,
 vulp_bivouacExplore5,DialogOptionSelected,$option == vulp_bivouacExplore5,,"Throughout all of this, there's not a single sign of human habitation.
@@ -1156,9 +1154,71 @@ vulp_knightAttackHail,VulpKnightAttackHail,,$entity.ignorePlayerCommRequests = t
 ""$playername, deliverer of Moloch's children,"" $heOrShe says, ""With hammer and sword, in Ludd's name I will strike you down and end this insidious corruption of our souls!""",cutCommLink:Cut the comm link,,
 ,,,,,,,
 ,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
+vulp_synodSubcurateGreeting,PickGreeting,$id == vulp_synod_subcurate score:1000,ShowPersonVisual,"""Blessings be upon you, $playerName. May Ludd's holy word guide you to the path of light,"" $heOrShe says with a hint of a frown.
+
+""What brings you to this most holy volume?""","vulp_synodSubcurate1:""I would like to discuss the Knights' attack on my colony.""",,
+vulp_synodSubcurate1,DialogOptionSelected,$option == vulp_synodSubcurate1,,"""Oh? I can assure you that their choice of action was not in line with the rulings of the Holy Ecumene Council.""
+
+""The rogue Knights shall be tried for their heresy, and will no doubt be made to carry out many acts of penance for it.""
+
+$HeOrShe leans back slightly, as though this should conclude the matter.","vulp_synodSubcurate2:""And what of the Church itself?""",,
+vulp_synodSubcurate2_bombed,DialogOptionSelected,"$option == vulp_synodSubcurate2
+$bombardmentOccurred",,"""It is indeed a tragedy what happened to your world, and many nights have been spent in prayer and vigil for your people.""
+
+""However, I implore you to realize that what occurred was not the will of the Church of Galactic Redemption. We claim no liability for this act.""","vulp_synodSubcurate3:""Claim or no, your doctrines were responsible.""",,
+vulp_synodSubcurate2_avoided,DialogOptionSelected,"$option == vulp_synodSubcurate2
+!$bombardmentOccurred ",,"""While their actions were certainly severe, we can give thanks to God that no great catastrophe came as a result.""
+
+""But I would again remind you that the Church did not decree this. We hold no claim for their attemps.""","vulp_synodSubcurate3:""Claim or no, your doctrines were responsible.""",,
+vulp_synodSubcurate3,DialogOptionSelected,$option == vulp_synodSubcurate3,FireAll VulpSynodReparationOptions,"$personName glares sternly at you, clearly not appreciating your line of thought.
+
+""Well tell me then, $playerName. What would you demand of the Church to make this right for yourself?""",,,
+vulp_synodSubcurateReparation_creditsOption,VulpSynodReparationOptions,!$proposedCredits,,,"vulp_synodSubcurateReparation_credits:""Financial reparations would be a start.""",,
+vulp_synodSubcurateReparation_credits,DialogOptionSelected,$option == vulp_synodSubcurateReparation_credits,"$proposedCredits = true 0
+FireAll VulpSynodReparationOptions","""Ah yes. Let all wounds be healed by Mammon's silver."" $heOrShe laughs dryly.
+
+""It cannot be done. Lavishing wealth upon those who would forge abominations... It would be to undermine the very foundations of the Faith.""",,,
+vulp_synodSubcurateReparation_tradeOption,VulpSynodReparationOptions,!$proposedTrade,,,"vulp_synodSubcurateReparation_trade:""You could legalize the trade of Vulpoids in your volumes.""",,
+vulp_synodSubcurateReparation_trade,DialogOptionSelected,$option == vulp_synodSubcurateReparation_trade,"$proposedTrade = true 0
+FireAll VulpSynodReparationOptions","$HeOrShe looks at you with no small measure of disgust.
+
+""What am I to presume you ask of me? Do you wish for us to allow abominations upon our worlds? Or have you convinced yourself of their ensoulment, and therefore ask us to permit the trade of slaves?""
+
+""I shall give this no further consideration.""",,,
+vulp_synodSubcurateReparation_shrinesOption,VulpSynodReparationOptions,,,,"vulp_synodSubcurateReparation_shrines:""What if Vulpoids could make pilgrimage to the shrines?""",,
+vulp_synodSubcurateReparation_shrines,DialogOptionSelected,$option == vulp_synodSubcurateReparation_shrines,,"""I- What? Why would you want that?"" they ask in genuine confusion.
+
+""Those beasts were made without heart, without soul. There is nothing for them there, if they cannot hear the word of Ludd.""","vulp_synodSubcurateReparation_shrinesMaybe:""They might still learn something from the experience.""
+vulp_synodSubcurateReparation_shrinesGoodToSee:""I think it will be good for people to see them as they are.""
+vulp_synodSubcurateReparation_shrinesOwnPath:""That is not your place to say. Their path is their own to walk.""
+vulp_synodSubcurateReparation_shrinesInTheName:""You're the Church of Galactic *Redemption*. It's in the name.""",,
+vulp_synodSubcurateReparation_shrinesMaybe,DialogOptionSelected,$option == vulp_synodSubcurateReparation_shrinesMaybe,,,vulp_synodSubcurateReparation_rant:Continue,,
+vulp_synodSubcurateReparation_shrinesGoodToSee,DialogOptionSelected,$option == vulp_synodSubcurateReparation_shrinesGoodToSee,,,vulp_synodSubcurateReparation_rant:Continue,,
+vulp_synodSubcurateReparation_shrinesOwnPath,DialogOptionSelected,$option == vulp_synodSubcurateReparation_shrinesOwnPath,,,vulp_synodSubcurateReparation_rant:Continue,,
+vulp_synodSubcurateReparation_shrinesInTheName,DialogOptionSelected,$option == vulp_synodSubcurateReparation_shrinesInTheName,,"""For humanity! Redemption for humanity, for the sins committed by the Domain and all others who would bend and break holy creation to their own ends!""
+
+""And yea, even for people such as you, who would create these... these succubal monstrosities that tempt pious folk into the pit of Mammon!""",vulp_synodSubcurateReparation_rant:Continue,,
+vulp_synodSubcurateReparation_rant,DialogOptionSelected,$option == vulp_synodSubcurateReparation_rant,,"$HisOrHer gaze hardens. ""Do not think that my faith has blinded me. I know of the meddling you and Tri-Tachyon have performed.""
+
+""How you have silvered the hands of preachers to speak in favor of the abominations. Puppeteered the Hegemony through allegations of weakness. Swayed the powerful with bribes and favors. Yea, we know this!""
+
+$HeOrShe slams down a fist in anger.
+
+""But what will damn us is that the people do not listen! Is this all it takes to go deaf to Ludd's word!? A promise of empty comforts, bereft of any humanity?""",vulp_synodSubcurateReparation_rant1:Continue,,
+vulp_synodSubcurateReparation_rant1,DialogOptionSelected,$option == vulp_synodSubcurateReparation_rant1,,"$HeOrShe continues on, speaking almost to $hisOrHerself.
+
+""This is the festering of a wound that we have left untended for far too long. Did we learn nothing from the first war? The followers of Mammon can never be satisfied. And now they have enscorcelled the faithful with their madness.""
+
+""But the bleeding must be stemmed before the infection can be cut away. This delusion must be ended before all else.""",vulp_synodSubcurateReparation_rant2:Continue,,
+vulp_synodSubcurateReparation_rant2,DialogOptionSelected,$option == vulp_synodSubcurateReparation_rant2,"unset $missionImportant_VulpoidAcceptance
+SetPersonHidden vulp_synod_subcurate true
+$market.vulp_bringVulpoidToShrine = true","$HisOrHer eyes meet yours, cold and determined.
+
+""Take a beast down to Gilead. Have it walk in the footsteps of Ludd. Let it gaze upon the beauty that brought the Prophet to his knees.""
+
+""And then,"" $heOrShe says with venom, ""Watch your lies crumble away as the people witness it for the soulless monster it is.""
+
+$HeOrShe slams down hard on the disconnect button, leaving you staring at a CGR standby screen.",cutCommLink:Cut the comm link,,
 ,,,,,,,
 ,,,,,,,
 ,,,,,,,

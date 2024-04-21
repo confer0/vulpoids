@@ -11,12 +11,14 @@ import com.fs.starfarer.api.impl.campaign.ids.Factions;
 import com.fs.starfarer.api.impl.campaign.intel.punitive.PunitiveExpeditionIntel;
 import static com.fs.starfarer.api.impl.campaign.intel.punitive.PunitiveExpeditionIntel.BUTTON_AVERT;
 import com.fs.starfarer.api.impl.campaign.intel.punitive.PunitiveExpeditionManager;
+import com.fs.starfarer.api.impl.campaign.intel.raid.ActionStage;
 import com.fs.starfarer.api.ui.Alignment;
 import com.fs.starfarer.api.ui.ButtonAPI;
 import com.fs.starfarer.api.ui.LabelAPI;
 import com.fs.starfarer.api.ui.TooltipMakerAPI;
 import com.fs.starfarer.api.util.Misc;
 import org.lwjgl.input.Keyboard;
+import vulpoids.impl.campaign.intel.events.VulpoidAcceptanceEventIntel;
 
 public class KnightBombardmentExpeditionIntel extends PunitiveExpeditionIntel {
 
@@ -28,8 +30,14 @@ public class KnightBombardmentExpeditionIntel extends PunitiveExpeditionIntel {
     @Override
     protected void notifyEnding() {
         super.notifyEnding();
-        
-        Global.getSector().getCampaignUI().addMessage("TEST TEXT");
+        boolean bombardmentOccurred = false;
+        for (RaidStage stage : stages) {
+            if (stage instanceof ActionStage && stage.getStatus() == RaidStageStatus.SUCCESS) {
+                bombardmentOccurred = true;
+                break;
+            }
+        }
+        VulpoidAcceptanceEventIntel.get().resolveKnightBombardment(bombardmentOccurred);
     }
     
     @Override
