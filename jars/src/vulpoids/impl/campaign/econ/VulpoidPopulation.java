@@ -60,6 +60,7 @@ public class VulpoidPopulation extends BaseMarketConditionPlugin implements Mark
             }
             double population_growth = days / 30f;  // Takes ~1 month to increase to -1.
             if(population >= popCap - 1) population_growth /= 10; // Takes ~1 year to increase to +0 from -1.
+            if(population >= popCap) population_growth = 0;  // I can't believe I forgot this lol.
             if ((int)population < (int)(population+population_growth)) Global.getSector().getIntelManager().addIntel(new VulpPopGrownIntel(market, (int)population+1));
             population += population_growth;
             population = Math.min(population, MAX_POPULATION);
