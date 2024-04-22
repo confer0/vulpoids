@@ -1,24 +1,16 @@
 package vulpoids.impl.campaign.procgen.themes;
 
 import com.fs.starfarer.api.Global;
-import com.fs.starfarer.api.campaign.AICoreOfficerPlugin;
 import com.fs.starfarer.api.campaign.CampaignFleetAPI;
 import com.fs.starfarer.api.campaign.SectorEntityToken;
 import com.fs.starfarer.api.characters.FullName;
 import com.fs.starfarer.api.characters.PersonAPI;
-import com.fs.starfarer.api.combat.ShipHullSpecAPI;
 import com.fs.starfarer.api.combat.ShipVariantAPI;
 import com.fs.starfarer.api.fleet.FleetMemberAPI;
 import com.fs.starfarer.api.impl.campaign.BaseGenericPlugin;
-import com.fs.starfarer.api.impl.campaign.DModManager;
 import com.fs.starfarer.api.impl.campaign.fleets.DefaultFleetInflater;
 import com.fs.starfarer.api.impl.campaign.fleets.DefaultFleetInflaterParams;
-import com.fs.starfarer.api.impl.campaign.fleets.FleetFactoryV3;
-import com.fs.starfarer.api.impl.campaign.fleets.FleetParamsV3;
-import com.fs.starfarer.api.impl.campaign.ids.Commodities;
 import com.fs.starfarer.api.impl.campaign.ids.Factions;
-import com.fs.starfarer.api.impl.campaign.ids.FleetTypes;
-import com.fs.starfarer.api.impl.campaign.ids.HullMods;
 import com.fs.starfarer.api.impl.campaign.ids.Personalities;
 import com.fs.starfarer.api.impl.campaign.ids.Ranks;
 import com.fs.starfarer.api.impl.campaign.ids.Skills;
@@ -99,11 +91,11 @@ public class UtopiaDefenderPlugin extends BaseGenericPlugin implements SalvageDe
         fleet.getFleetData().addFleetMember("dominator_XIV_Elite").setCaptain(person);
         fleet.getFleetData().addFleetMember("falcon_xiv_Elite").setCaptain(person);
         fleet.getFleetData().addFleetMember("falcon_xiv_Elite").setCaptain(person);
-        fleet.getFleetData().addFleetMember("enforcer_XIV_Elite");
-        fleet.getFleetData().addFleetMember("enforcer_XIV_Elite");
-        fleet.getFleetData().addFleetMember("enforcer_XIV_Elite");
-        fleet.getFleetData().addFleetMember("enforcer_XIV_Elite");
-        fleet.getFleetData().addFleetMember("enforcer_XIV_Elite");
+        fleet.getFleetData().addFleetMember("enforcer_XIV_Elite").setCaptain(person);
+        fleet.getFleetData().addFleetMember("enforcer_XIV_Elite").setCaptain(person);
+        fleet.getFleetData().addFleetMember("enforcer_XIV_Elite").setCaptain(person);
+        fleet.getFleetData().addFleetMember("enforcer_XIV_Elite").setCaptain(person);
+        fleet.getFleetData().addFleetMember("enforcer_XIV_Elite").setCaptain(person);
         
         fleet.setCommander(person);
         

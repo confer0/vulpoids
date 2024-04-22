@@ -1090,6 +1090,7 @@ $repaired
 !$repairing","AddRemoveCommodity crew $crewReq
 AddRemoveCommodity heavy_machinery $machineryReq
 AddRemoveAnyItem SPECIAL pristine_nanoforge 1
+CallEvent $global.vulp_terraformingIntel returnedToTerraformer
 $gotCrewBack = true
 FireBest OpenInteractionDialog","Your crews report complete success on the removal of the nanoforge infrastructure. The core is shuttled back over to your $shipOrFleet, along with the crew and their machinery.",,,
 vulp_terraformerOpenDialog_repairedReturn,OpenInteractionDialog,"$vulp_terraformer score:1000
@@ -1156,6 +1157,7 @@ vulp_terraformerRepairLeaveOption,VulpTerraformerRepairOptions,,,,100:defaultLea
 vulp_terraformerRepair,DialogOptionSelected,$option == vulp_terraformerRepair,"AddRemoveCommodity crew -$crewReq
 AddRemoveCommodity heavy_machinery -$machineryReq
 AddRemoveCommodity supplies -$suppliesReq
+CallEvent $global.vulp_terraformingIntel startedTerraformerRepair
 $repaired = true
 $repairing = true 120","You offload the required crew and equipment, with assurances that your $shipOrFleet will be back once the work is done.
 

@@ -38,6 +38,10 @@ public class UtopiaTerraformerIntel extends BaseIntelPlugin {
     
     boolean beatFleet = false;
     boolean exploredTerraformer = false;
+    boolean repairedTerraformer = false;
+    long terraformerRepairTimestamp;
+    static int DAYS_TO_REPAIR = 120;
+    boolean returnedToTerraformer = false;
     boolean exploredBivouac = false;
 
     public UtopiaTerraformerIntel(TextPanelAPI text) {
@@ -92,12 +96,23 @@ public class UtopiaTerraformerIntel extends BaseIntelPlugin {
             info.addPara("Warning: The location is deep in abyssal hyperspace.", Misc.getNegativeHighlightColor(), 10f);
         } else {
             if(!exploredTerraformer) info.addPara("The massive vessel has been disabled in battle, and awaits boarding.", 10f);
+            else if(!repairedTerraformer) info.addPara("The vessel is secure, but will require extensive repair before it can be flown.", 10f);
+            else {
+                if(!terraformerIsRepaired()) info.addPara("The terraforming vessel is currently being repaired by the crew you "+
+                        "stationed aboard. It's expected to take another "+(int)(DAYS_TO_REPAIR-Global.getSector().getClock().getElapsedDaysSince(terraformerRepairTimestamp))+
+                        " days.", 10f);
+                else if (!returnedToTerraformer) info.addPara("The repairs to the ship should be completed. You should return and recover the crew.", 10f);
+            }
             if(!exploredBivouac) info.addPara("The terraformed moon's defenders have been disabled, opening it for exploration.", 10f);
         }
     }
     @Override
     public SectorEntityToken getMapLocation(SectorMapAPI map) {
         return system.getHyperspaceAnchor();
+    }
+    
+    private boolean terraformerIsRepaired() {
+        return repairedTerraformer && Global.getSector().getClock().getElapsedDaysSince(terraformerRepairTimestamp)>=DAYS_TO_REPAIR;
     }
     
     @Override
@@ -110,11 +125,18 @@ public class UtopiaTerraformerIntel extends BaseIntelPlugin {
             case "exploredTerraformer":
                 exploredTerraformer = true;
                 break;
+            case "startedTerraformerRepair":
+                repairedTerraformer = true;
+                terraformerRepairTimestamp = Global.getSector().getClock().getTimestamp();
+                break;
+            case "returnedToTerraformer":
+                returnedToTerraformer = true;
+                break;
             case "exploredBivouac":
                 exploredBivouac = true;
                 break;
         }
-        if(exploredTerraformer && exploredBivouac) endAfterDelay();
+        if(returnedToTerraformer && exploredBivouac) endAfterDelay();
         return true;
     }
     
