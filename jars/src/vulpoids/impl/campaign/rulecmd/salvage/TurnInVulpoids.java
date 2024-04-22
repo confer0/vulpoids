@@ -14,13 +14,11 @@ import com.fs.starfarer.api.campaign.OptionPanelAPI;
 import com.fs.starfarer.api.campaign.SectorEntityToken;
 import com.fs.starfarer.api.campaign.SpecialItemSpecAPI;
 import com.fs.starfarer.api.campaign.TextPanelAPI;
-import com.fs.starfarer.api.campaign.econ.CommoditySpecAPI;
 import com.fs.starfarer.api.campaign.rules.MemoryAPI;
 import com.fs.starfarer.api.characters.PersonAPI;
 import com.fs.starfarer.api.impl.campaign.CoreReputationPlugin.CustomRepImpact;
 import com.fs.starfarer.api.impl.campaign.CoreReputationPlugin.RepActionEnvelope;
 import com.fs.starfarer.api.impl.campaign.CoreReputationPlugin.RepActions;
-import com.fs.starfarer.api.impl.campaign.ids.Commodities;
 import com.fs.starfarer.api.impl.campaign.ids.Ranks;
 import com.fs.starfarer.api.impl.campaign.ids.Strings;
 import com.fs.starfarer.api.impl.campaign.rulecmd.AddRemoveCommodity;
@@ -32,6 +30,8 @@ import com.fs.starfarer.api.util.Misc;
 import com.fs.starfarer.api.util.Misc.Token;
 import vulpoids.campaign.impl.items.VulpoidPlugin;
 import vulpoids.impl.campaign.ids.Vulpoids;
+import vulpoids.impl.campaign.intel.events.VulpoidAcceptanceEventIntel;
+import vulpoids.impl.campaign.intel.events.VulpoidAcceptanceProfectoFactor;
 
 /**
  * NotifyEvent $eventHandle <params> 
@@ -55,6 +55,7 @@ public class TurnInVulpoids extends BaseCommandPlugin {
     protected boolean buysAICores;
     protected float valueMult;
     protected float repMult;
+    protected float acceptanceMult;
 
     public boolean execute(String ruleId, InteractionDialogAPI dialog, List<Token> params, Map<String, MemoryAPI> memoryMap) {
 
@@ -91,6 +92,12 @@ public class TurnInVulpoids extends BaseCommandPlugin {
                 repMult = faction.getCustomFloat("vulpoidRepMult");
             } else {
                 repMult = faction.getCustomFloat("AICoreRepMult");
+            }
+            
+            if(faction.getCustom().has("vulpoidAccMult")) {
+                acceptanceMult = faction.getCustomFloat("vulpoidAccMult");
+            } else {
+                acceptanceMult = 1f;
             }
             
 
@@ -171,7 +178,14 @@ public class TurnInVulpoids extends BaseCommandPlugin {
                                 new RepActionEnvelope(RepActions.CUSTOM, impact, null, text, true), person);
                     }
                 }
-
+                
+                // Vulpoid Acceptance
+                int acceptance = (int)computeAcceptanceValue(cargo);
+                Global.getSector().getCampaignUI().addMessage("TEST: "+computeAcceptanceValue(cargo)+", "+acceptanceMult);
+                if(acceptance>0) {
+                    VulpoidAcceptanceEventIntel.addFactorCreateIfNecessary(new VulpoidAcceptanceProfectoFactor("Profecto sale to "+person.getNameString(), acceptance), dialog);
+                }
+                
                 FireBest.fire(null, dialog, memoryMap, "VulpoidsTurnedIn");
             }
             public void cancelledCargoSelection() {
@@ -237,6 +251,17 @@ public class TurnInVulpoids extends BaseCommandPlugin {
         }
         rep *= repMult;
         return rep;
+    }
+    
+    protected float computeAcceptanceValue(CargoAPI cargo) {
+        int acc = 0;
+        for (CargoStackAPI stack : cargo.getStacksCopy()) {
+            if (stack.getPlugin() instanceof VulpoidPlugin) {
+                acc += ((VulpoidPlugin)stack.getPlugin()).getTurnInRep();
+            }
+        }
+        acc *= acceptanceMult;
+        return acc;
     }
     
     protected boolean playerHasVulpoids() {

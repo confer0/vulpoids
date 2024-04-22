@@ -89,6 +89,7 @@ public class VulpoidPopulation extends BaseMarketConditionPlugin implements Mark
     
     
     public int getPopulation() {return (int)population;}
+    public void setPopulation(int population) {this.population=population;}
     public int getWorkforceCap() {return workforce_cap;}
     public int getAvailability() {
         int availability = getPopulation()-market.getSize();

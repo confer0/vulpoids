@@ -214,10 +214,10 @@ public class VulpoidAcceptanceEventIntel extends BaseEventIntel {
                         "and the Hegemony has been pushed to not launch full-scale technological inspections.", opad);
                 label.setHighlight("northern factions", "Hegemony");
                 label.setHighlightColors(pl, heg);
-                label = info.addPara("The Luddic Church's orthodoxy and the Ministry of Technology "+
+                label = info.addPara("The Inquisitorial Council and the Ministry of Technology "+
                         "Standards still hold considerable sway in their respective factions, and your Vulpoid manufacturing facilities "+
                         "will be subject to major sanctions for the forseeable future.", opad);
-                label.setHighlight("Luddic Church's", "Ministry of Technology Standards", "major sanctions");
+                label.setHighlight("Inquisitorial Council", "Ministry of Technology Standards", "major sanctions");
                 label.setHighlightColors(lc, heg, Misc.getNegativeHighlightColor());
                 // TODO - 60% access penalty is what the League blockade uses.
             }
