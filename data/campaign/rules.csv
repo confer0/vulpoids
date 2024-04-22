@@ -1072,16 +1072,32 @@ CallEvent $global.vulp_terraformingIntel beatFleet","Your sensors officer report
 At the heart of the debris field, the Eridani-Utopia vessel has remained in one piece, ready to be boarded.",,,
 ,,,,,,,
 # TODO INTERACT WITH DERELICT SHIP - HAS TAG $vulp_terraformer,,,,,,,
-vulp_terraformerOpenDialogAfterExplore,CheckSalvageSpecial,"$vulp_terraformer score:1000
-$explored",SalvageSpecialInteraction,"There's little else to be gleaned here. The ship is available for recovery, should you so desire. Rumors among the crew state that the ship is undoubtedly haunted, but you know they'll fly it nonetheless.
-
-The fuel consumption of such a massive capital ship may be of concern while trying to leave the abyss. Should your reserves be borderline, it may be wiser to leave the vessel here and return with additional fuel.",,,
-vulp_terraformerOpenDialogAfterExplore_knowsWormhole,CheckSalvageSpecial,"$vulp_terraformer score:1000
+vulp_terraformerOpenDialog_return,OpenInteractionDialog,"$vulp_terraformer score:1000
 $explored
-$player.gotWormholeCalibrationData",SalvageSpecialInteraction,"There's little else to be gleaned here. The ship is available for recovery, should you so desire. Rumors among the crew state that the ship is undoubtedly haunted, but you know they'll fly it nonetheless.
+!$repaired",ShowImageVisual space_wreckage,"Your $shipOrFleet approaches $aOrAn $nameInText.
 
-The fuel consumption of such a massive capital ship may be of concern while trying to leave the abyss. It may be wiser to leave the vessel here and return with additional fuel, or to deploy a wormhole anchor and bypass the abyss entirely.",,,
-vulp_terraformerOpenDialog,CheckSalvageSpecial,$vulp_terraformer score:1000,,"Unlike what was observed with the Citadel, scans show no indications of life aboard the vessel.
+The ship has remained untouched in the abyss, unable to power up until its nanoforge has been extricated.","vulp_terraformerRepairHub:Have your chief engineer review the repair plan
+100:defaultLeave:Leave",,
+vulp_terraformerOpenDialog_repairing,OpenInteractionDialog,"$vulp_terraformer score:1000
+$explored
+$repaired
+$repairing",ShowImageVisual space_wreckage,"Your comms officer contacts the onboard crew, and confirms that the repairs are going smoothly. The biosphere is apparently quite comfortable to live in, and much of the crew is eager to serve on the vessel once it's operational.
+
+They also insist it's haunted, but that's par for the course.",100:defaultLeave:Leave,,
+vulp_terraformerOpenDialog_repairedInitial,OpenInteractionDialog,"$vulp_terraformer score:1000
+$explored
+$repaired
+!$repairing","AddRemoveCommodity crew $crewReq
+AddRemoveCommodity heavy_machinery $machineryReq
+AddRemoveAnyItem SPECIAL pristine_nanoforge 1
+$gotCrewBack = true
+FireBest OpenInteractionDialog","Your crews report complete success on the removal of the nanoforge infrastructure. The core is shuttled back over to your $shipOrFleet, along with the crew and their machinery.",,,
+vulp_terraformerOpenDialog_repairedReturn,OpenInteractionDialog,"$vulp_terraformer score:1000
+$explored
+$repaired
+!$repairing
+$gotCrewBack",SalvageSpecialInteraction,"The ship is in excellent condition, having been carefully repaired by your crew. It's now ready to be powered up and recovered.",,,
+vulp_terraformerOpenDialog_initial,CheckSalvageSpecial,$vulp_terraformer score:1000,,"Unlike what was observed with the Citadel, scans show no indications of life aboard the vessel.
 
 Nonetheless, discretion remains the better part of valor, and your ops chief coordinates a by-the-book boarding action with practiced ease.",vulp_exploreTerraformer:Continue,,
 vulp_exploreTerraformer,DialogOptionSelected,$option == vulp_exploreTerraformer,"$explored = true
@@ -1091,7 +1107,9 @@ vulp_exploreTerraformer1,DialogOptionSelected,$option == vulp_exploreTerraformer
 vulp_exploreTerraformer2,DialogOptionSelected,$option == vulp_exploreTerraformer2,,"""Aye, that'd be strange even for Pathers. But it's where the bodies fell that's not right.""
 
 ""If it were battle damage that got them, that's all well and good. But we're finding corpses lying on deckplates without a scuff on them. Like they dropped dead on their feet.""","vulp_exploreTerraformer3:""Science, get me some autopsies.""",,
-vulp_exploreTerraformer3,DialogOptionSelected,$option == vulp_exploreTerraformer3,,"The boarding continues quietly, and before long you have reports from science and ops in front of you. Neither are happy.",vulp_exploreTerraformer4:Read science's report,,
+vulp_exploreTerraformer3,DialogOptionSelected,$option == vulp_exploreTerraformer3,,"The boarding continues without further fanfare. As your salvors cross a bioluminescent river, you note that it's almost more like surveying an uninhabited moon.
+
+It doesn't take much longer before you have reports from science and ops in front of you. Neither are happy.",vulp_exploreTerraformer4:Read science's report,,
 vulp_exploreTerraformer4,DialogOptionSelected,$option == vulp_exploreTerraformer4,,"The autopsy reports are infuriatingly inconclusive. The best answer they have for the uninjured bodies is total organ failure, perhaps from suffocation. But the ship's life support appears undamaged, and many of their suits have full oxygen tanks.
 
 Even more unnervingly, the medics had great difficulty ascertaining time of death for all the bodies, injured or not. They're confident that the injuries line up with the timing of the engagement, but only reluctantly assign them as the cause of death.
@@ -1102,16 +1120,48 @@ vulp_exploreTerraformer5,DialogOptionSelected,$option == vulp_exploreTerraformer
 The next-best explanation would be that the cores were wiped prior to the engagement, except that would be nonsensical. Even an Invictus requires computer systems just to fly, and this is a high-tech, highly automated capital ship that fully engaged your $shipOrFleet in battle. The computers had to have been working.
 
 And yet, they aren't.",vulp_exploreTerraformer6:Continue,,
-vulp_exploreTerraformer6,DialogOptionSelected,$option == vulp_exploreTerraformer6,,"Cargo reports are less disturbing, and more simply disappointing. The ship's vast cargo bays are all but empty. Nearly every scrap of material and equipment has been used, leaving nothing left for your teams to scoop up.
+vulp_exploreTerraformer6,DialogOptionSelected,$option == vulp_exploreTerraformer6,,"Cargo reports are less disturbing, and more simply disappointing. The ship's vast cargo bays are all but empty. Nearly every scrap of material and equipment has been used, leaving nothing left for your teams to scoop up. The biodome's facilities seem to have been almost entirely residential, leaving behind no equipment there either.
 
 As you're reviewing the lackluster manifest, your chief engineer opens comms, in a much better mood than your other senior officers.","vulp_exploreTerraformer7:""Give me good news, chief.""",,
-vulp_exploreTerraformer7,DialogOptionSelected,$option == vulp_exploreTerraformer7,,"""With pleasure, $playerSirOrMadam! As best I can tell, this ship was intended to act as a next-generation terraforming platform. It's got bays and equipment mounts for every type and class of terraforming equipment imaginable. This thing could have turned any barren rock into a garden world.""
+vulp_exploreTerraformer7,DialogOptionSelected,$option == vulp_exploreTerraformer7,,"""Captain, this ship puts the Citadel to shame. The biosphere alone... it's clearly the pinnacle of Eridani's work.""
 
-A quick glance at the viewscreen, showing the brilliant green planet below, would seem to confirm this.","vulp_exploreTerraformer8:""Past-tense. What can it do now?""",,
-vulp_exploreTerraformer8,DialogOptionSelected,$option == vulp_exploreTerraformer8,,"Your engineer looks slightly abashed. ""Well, unfortunately that equipment appears to be gone. Used up, or jettisoned somewhere. If we got our hands on some new kit we'd be able to outfit it again, but for now that option's not available.""
+""As best I can tell, this ship was intended to act as a next-generation terraforming platform. It's got bays and equipment mounts for every type and class of terraforming equipment imaginable, all empty unfortunately. This thing could have turned any barren rock into a garden world.""
 
-""But the ship itself is in good condition!"" they brighten, ""We should be able to repair it without much difficulty. The software won't be a problem, we've got fresh copies of standard libraries just for this sort of occasion.""","vulp_exploreTerraformer9:""Thank you chief.""",,
-vulp_exploreTerraformer9,DialogOptionSelected,$option == vulp_exploreTerraformer9,FireBest CheckSalvageSpecial,,,,
+A quick glance at the viewscreen, showing the brilliant green planet below, would seem to confirm this.","vulp_exploreTerraformer8:""Can we recover it?""",,
+vulp_exploreTerraformer8,DialogOptionSelected,$option == vulp_exploreTerraformer8,,"Your engineer looks slightly abashed. ""Well, unfortunately there's a hitch there. The ship has a nanoforge-based manufactoring facility woven through it. It takes a lot of software and safeguards to make something of that scale work safely, and with the computers wiped we don't have those any more.""
+
+""If we try to power up the ship, the nanoforge is liable to paperclip the whole thing. We've got to gut it first before we can bring systems online. On the plus side, we'd get a pretty fancy nanoforge out of it.""","vulp_terraformerRepairHub:""Alright, give me some numbers.""",,
+vulp_terraformerRepairHub,DialogOptionSelected,$option == vulp_terraformerRepairHub,"$crewReq = 1000
+$machineryReq = 500
+$suppliesReq = 1000
+ShowResCost crew $crewReq heavy_machinery $machineryReq supplies $suppliesReq true
+SetTextHighlights ""120 days""
+FireBest VulpTerraformerFuelBlurb
+FireAll VulpTerraformerRepairOptions","Your chief engineer taps at their TriPad, and a materials schedule appears in your executive interface.
+
+It will take roughly 120 days to exctricate the the nanoforge systems from the rest of the vessel. The crew can live within the biodome during the work, so you don't need to stay for the duration.",,,
+vulp_terraformerRepairHubFuelBlurb,VulpTerraformerFuelBlurb,,,"Of course, once it's been repaired you'll need to come back with enough fuel to fly it back to the Sector.",,,
+vulp_terraformerRepairHubWormholeBlurb,VulpTerraformerFuelBlurb,$player.gotWormholeCalibrationData,,"Of course, once it's been repaired you'll need to come back with fuel, or use a wormhole anchor to bypass the Abyss entirely.",,,
+vulp_terraformerRepairOption,VulpTerraformerRepairOptions,,,,vulp_terraformerRepair:Begin the repair operation,,
+vulp_terraformerDisableRepairCrew,VulpTerraformerRepairOptions,"!PlayerHasCargo crew $crewReq
+!$global.isDevMode","SetEnabled vulp_terraformerRepair false
+SetTooltip vulp_terraformerRepair ""Insufficient resources""",,,,
+vulp_terraformerDisableRepairSupplies,VulpTerraformerRepairOptions,"!PlayerHasCargo supplies $suppliesReq
+!$global.isDevMode","SetEnabled vulp_terraformerRepair false
+SetTooltip vulp_terraformerRepair ""Insufficient resources""",,,,
+vulp_terraformerDisableRepairMachinery,VulpTerraformerRepairOptions,"!PlayerHasCargo heavy_machinery $machineryReq
+!$global.isDevMode","SetEnabled vulp_terraformerRepair false
+SetTooltip vulp_terraformerRepair ""Insufficient resources""",,,,
+vulp_terraformerRepairLeaveOption,VulpTerraformerRepairOptions,,,,100:defaultLeave:Leave,,
+vulp_terraformerRepair,DialogOptionSelected,$option == vulp_terraformerRepair,"AddRemoveCommodity crew -$crewReq
+AddRemoveCommodity heavy_machinery -$machineryReq
+AddRemoveCommodity supplies -$suppliesReq
+$repaired = true
+$repairing = true 120","You offload the required crew and equipment, with assurances that your $shipOrFleet will be back once the work is done.
+
+At worst, they'll have the idylic world below.",100:defaultLeave:Leave,,
+,,,,,,,
+,,,,,,,
 ,,,,,,,
 ,,,,,,,
 ,,,,,,,

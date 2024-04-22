@@ -101,6 +101,8 @@
     ],
     "builtInMods": [
 		"advancedcore",
+		"biodome",
+		"improved_automatics",
 		"missile_reload",
 		"surveying_equipment",
 	],

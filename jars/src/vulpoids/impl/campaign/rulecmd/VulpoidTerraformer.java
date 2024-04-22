@@ -8,10 +8,12 @@ import com.fs.starfarer.api.campaign.rules.MemoryAPI;
 import com.fs.starfarer.api.impl.campaign.DerelictShipEntityPlugin;
 import com.fs.starfarer.api.impl.campaign.ids.Entities;
 import com.fs.starfarer.api.impl.campaign.ids.Factions;
+import com.fs.starfarer.api.impl.campaign.ids.HullMods;
 import com.fs.starfarer.api.impl.campaign.ids.Tags;
 import com.fs.starfarer.api.impl.campaign.procgen.themes.BaseThemeGenerator;
 import com.fs.starfarer.api.impl.campaign.rulecmd.BaseCommandPlugin;
 import com.fs.starfarer.api.impl.campaign.rulecmd.salvage.special.ShipRecoverySpecial;
+import com.fs.starfarer.api.impl.campaign.rulecmd.salvage.special.ShipRecoverySpecial.ShipCondition;
 import com.fs.starfarer.api.util.Misc;
 import java.util.List;
 import java.util.Map;
@@ -52,10 +54,14 @@ public class VulpoidTerraformer extends BaseCommandPlugin {
                 copy.variantId = null;
                 copy.variant.addTag(Tags.SHIP_CAN_NOT_SCUTTLE);
                 copy.variant.addTag(Tags.SHIP_UNIQUE_SIGNATURE);
+                copy.condition = ShipCondition.PRISTINE;
+                copy.variant.addPermaMod(HullMods.COMP_HULL);
+                copy.variant.addPermaMod(HullMods.GLITCHED_SENSORS);
+                copy.variant.addPermaMod(HullMods.MALFUNCTIONING_COMMS);
                 data.addShip(copy);
 
                 Misc.setSalvageSpecial(entity, data);
-
+                
                 return true;
         }
         return false;
