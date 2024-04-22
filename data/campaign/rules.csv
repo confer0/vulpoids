@@ -1135,14 +1135,13 @@ vulp_exploreTerraformer8,DialogOptionSelected,$option == vulp_exploreTerraformer
 vulp_terraformerRepairHub,DialogOptionSelected,$option == vulp_terraformerRepairHub,"$crewReq = 1000
 $machineryReq = 500
 $suppliesReq = 1000
-ShowResCost crew $crewReq heavy_machinery $machineryReq supplies $suppliesReq true
 SetTextHighlights ""120 days""
 FireBest VulpTerraformerFuelBlurb
 FireAll VulpTerraformerRepairOptions","Your chief engineer taps at their TriPad, and a materials schedule appears in your executive interface.
 
 It will take roughly 120 days to exctricate the the nanoforge systems from the rest of the vessel. The crew can live within the biodome during the work, so you don't need to stay for the duration.",,,
-vulp_terraformerRepairHubFuelBlurb,VulpTerraformerFuelBlurb,,,"Of course, once it's been repaired you'll need to come back with enough fuel to fly it back to the Sector.",,,
-vulp_terraformerRepairHubWormholeBlurb,VulpTerraformerFuelBlurb,$player.gotWormholeCalibrationData,,"Of course, once it's been repaired you'll need to come back with fuel, or use a wormhole anchor to bypass the Abyss entirely.",,,
+vulp_terraformerRepairHubFuelBlurb,VulpTerraformerFuelBlurb,,ShowResCost crew $crewReq heavy_machinery $machineryReq supplies $suppliesReq true,"Of course, once it's been repaired you'll need to come back with enough fuel to fly it back to the Sector.",,,
+vulp_terraformerRepairHubWormholeBlurb,VulpTerraformerFuelBlurb,$player.gotWormholeCalibrationData,ShowResCost crew $crewReq heavy_machinery $machineryReq supplies $suppliesReq true,"Of course, once it's been repaired you'll need to come back with fuel, or use a wormhole anchor to bypass the Abyss entirely.",,,
 vulp_terraformerRepairOption,VulpTerraformerRepairOptions,,,,vulp_terraformerRepair:Begin the repair operation,,
 vulp_terraformerDisableRepairCrew,VulpTerraformerRepairOptions,"!PlayerHasCargo crew $crewReq
 !$global.isDevMode","SetEnabled vulp_terraformerRepair false
