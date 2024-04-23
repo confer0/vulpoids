@@ -16,6 +16,7 @@ import com.fs.starfarer.api.campaign.econ.MarketAPI;
 import com.fs.starfarer.api.characters.FullName;
 import com.fs.starfarer.api.characters.ImportantPeopleAPI;
 import com.fs.starfarer.api.characters.PersonAPI;
+import com.fs.starfarer.api.impl.campaign.econ.impl.BoostIndustryInstallableItemEffect;
 import com.fs.starfarer.api.impl.campaign.ids.Commodities;
 import com.fs.starfarer.api.impl.campaign.ids.Conditions;
 import com.fs.starfarer.api.impl.campaign.ids.MemFlags;
@@ -261,6 +262,32 @@ public class VulpoidModPlugin extends BaseModPlugin {
             }
         });
         
-        
+        ItemEffectsRepo.ITEM_EFFECTS.put(Vulpoids.MANGONUT_TREE_ITEM, new BoostIndustryInstallableItemEffect(Vulpoids.MANGONUT_TREE_ITEM, 1, 0) {
+            @Override
+            protected void addItemDescriptionImpl(Industry industry, TooltipMakerAPI text, SpecialItemData data, 
+                    InstallableItemDescriptionMode mode, String pre, float pad) {
+                text.addPara(pre + "Increases farming production by %s unit. Enables mangonut production.",
+                        pad, Misc.getHighlightColor(), ""+1);
+            }
+            @Override
+            public void apply(Industry industry) {
+                super.apply(industry);
+                //industry.getSupply(Vulpoids.MANGONUT_ITEM).getQuantity().modifyFlat(spec.getId(), 1, Misc.ucFirst(spec.getName().toLowerCase()));
+                if(industry instanceof BaseIndustry) {
+                    BaseIndustry b = (BaseIndustry) industry;
+                    b.supply(Vulpoids.MANGONUT_ITEM, 1);
+                }
+            }
+            @Override
+            public void unapply(Industry industry) {
+                super.unapply(industry);
+                //industry.getSupply(Vulpoids.MANGONUT_ITEM).getQuantity().unmodify();
+                industry.getSupply(Vulpoids.MANGONUT_ITEM).getQuantity().unmodify();
+            }
+            @Override
+            public String[] getSimpleReqs(Industry industry) {
+                return new String [] {/*NO_TRANSPLUTONIC_ORE_DEPOSITS, NO_VOLATILES_DEPOSITS*/};
+            }
+        });
     }
 }

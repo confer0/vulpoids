@@ -2,11 +2,13 @@ package vulpoids.impl.campaign.ids;
 
 public class Vulpoids {
     public static final String CARGO_ITEM = "vulpoids";
+    public static final String MANGONUT_ITEM = "mangonuts";
     
     public static final String BIOFORGE_ITEM = "vulpoid_biofactory";
     public static final String CORRUPT_BIOFORGE_ITEM = "vulpoid_biofactory_broken";
     public static final String AIR_FILTER_ITEM = "air_filter_core";
     public static final String MIDAS_NANOFORGE_ITEM = "midas_nanoforge";
+    public static final String MANGONUT_TREE_ITEM = "mangonut_tree";
     
     public static final String INDUSTRY_ORGANFARM = "organfarms";
     public static final String INDUSTRY_BIOFACILITY = "biofacility";

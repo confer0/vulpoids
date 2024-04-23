@@ -474,17 +474,17 @@ In the meantime, the office teams have reported a breakthrough. The computers ar
 vulp_exploreBiodomeUtopia2,DialogOptionSelected,$option == vulp_exploreBiodomeUtopia2,,"Internal communications show tension between the Eridani and Exodyne staff. Apparently the Eridani crew was responsible for maintaining the biodome's conditions as close as possible to a habitable planetary environment.
 
 The Exodyne crew, on the other hand, kept insisting that the conditions were not sufficient for their growth vats to work flawlessly. They kept requesting minor tweaks that ran the Eridani crew ragged as they tried to keep up.",vulp_exploreBiodomeUtopia3:Continue,,
-vulp_exploreBiodomeUtopia3,DialogOptionSelected,$option == vulp_exploreBiodomeUtopia3,"SetStoryOption vulp_exploreBiodomeUtopiaStory general ""Discovered the location of some soil nanites""","The very environmental controls Eridani used should be controllable from this office, but all attempts so far have been rebuffed by a security program that doesn't respond to any known codes.
+vulp_exploreBiodomeUtopia3,DialogOptionSelected,$option == vulp_exploreBiodomeUtopia3,"SetStoryOption vulp_exploreBiodomeUtopiaStory general ""Discovered the location of a mangonut tree""","The very environmental controls Eridani used should be controllable from this office, but all attempts so far have been rebuffed by a security program that doesn't respond to any known codes.
 
 Error messages indicate that it should be possible for the vessel's bridge crew to override the system. Something to be done once a team arrives at the CIC.","vulp_exploreBiodomeHubReturn:Conclude the search
 vulp_exploreBiodomeUtopiaStory:Check for additional information",,
-vulp_exploreBiodomeUtopiaStory,DialogOptionSelected,$option == vulp_exploreBiodomeUtopiaStory,Call $global.vulpFactory_ref generateEridaniBonus,"The infosec on Eridani's part has been lackluster. You authorize your analysis teams to make use of additional supercomputer time to see if any of the encryption can be broken.
+vulp_exploreBiodomeUtopiaStory,DialogOptionSelected,$option == vulp_exploreBiodomeUtopiaStory,,"The infosec on Eridani's part has been lackluster. You authorize your analysis teams to make use of additional supercomputer time to see if any of the encryption can be broken.
 
-The majority of packets can't be, and the majority of the the broken ones are duds. But all it takes is one.
+The majority of packets can't be, and the majority of the the broken ones are duds. But all it takes is one.",vulp_exploreBiodomeUtopiaStory1:Continue,,
+vulp_exploreBiodomeUtopiaStory1,DialogOptionSelected,$option == vulp_exploreBiodomeUtopiaStory1,"Call $global.vulpFactory_ref generateEridaniBonus
+$player.gotMangonutTreeHint = true","A weak password on an account is cracked, and used to gain access to a comms log. The log's buffer is pulled to recover a message chain regarding tech requisitions, and an off-hand remark mentions a location.
 
-A weak password on an account is cracked, and used to gain access to a comms log. The log's buffer is pulled to recover a message chain regarding tech requisitions, and an off-hand remark mentions a location.
-
-",vulp_exploreBiodomeHubReturn:Conclude the search,,
+An unusual item referred to as a 'mangonut tree' was apparently being held in a cache just before the Collapse, and you now have the coordinates.",vulp_exploreBiodomeHubReturn:Conclude the search,,
 ,,,,,,,
 # Suburbs,,,,,,,
 vulp_exploreBiodomeSuburb,DialogOptionSelected,$option == vulp_exploreBiodomeSuburb,"HideVisual

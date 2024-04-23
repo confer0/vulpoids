@@ -473,7 +473,7 @@ public class VulpoidBiofactoryMission extends HubMissionWithSearch implements Fl
         }
         else if("generateEridaniBonus".equals(action)) {
             SectorEntityToken entity = SpecialItemOfferCreator.createEntity(new Random());
-            SpecialItemOffer offer = new SpecialItemOffer(entity, 2, Items.SOIL_NANITES);
+            SpecialItemOffer offer = new SpecialItemOffer(entity, 2, Vulpoids.MANGONUT_TREE_ITEM);
             offer.init(dialog);
         }
         else if("generateExodyneBonus".equals(action)) {
