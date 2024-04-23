@@ -93,7 +93,7 @@ public class VulpoidModPlugin extends BaseModPlugin {
                     BaseIndustry b = (BaseIndustry) industry;
                     int size = b.getMarket().getSize();
                     if(Vulpoids.INDUSTRY_ORGANFARM.equals(b.getId())) {
-                        b.supply(spec.getId(), Commodities.ORGANS, -100, Misc.ucFirst(spec.getName().toLowerCase()));
+                        b.getSupply(Commodities.ORGANS).getQuantity().unmodify();
                     } else if (Vulpoids.INDUSTRY_BIOFACILITY.equals(b.getId())) {
                         b.supply(spec.getId(), Commodities.ORGANS, 1, "Vulpoid reprocessing");
                         //b.supply(spec.getId(), Commodities.DRUGS, 1, "Vulpoid reprocessing");
@@ -128,7 +128,7 @@ public class VulpoidModPlugin extends BaseModPlugin {
                     BaseIndustry b = (BaseIndustry) industry;
                     b.supply(spec.getId(), Commodities.ORGANS, 0, Misc.ucFirst(spec.getName().toLowerCase()));
                     //b.supply(spec.getId(), Commodities.DRUGS, 0, Misc.ucFirst(spec.getName().toLowerCase()));
-                    b.supply(spec.getId(), Vulpoids.CARGO_ITEM, -100, null);
+                    b.getSupply(Vulpoids.CARGO_ITEM).getQuantity().unmodify();
                     b.demand(spec.getId(), Commodities.RARE_METALS, 0, null);
                     
                     for(MarketAPI market : Global.getSector().getEconomy().getMarketsCopy()) {
