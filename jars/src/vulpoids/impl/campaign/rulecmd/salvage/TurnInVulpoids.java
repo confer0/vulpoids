@@ -181,7 +181,6 @@ public class TurnInVulpoids extends BaseCommandPlugin {
                 
                 // Vulpoid Acceptance
                 int acceptance = (int)computeAcceptanceValue(cargo);
-                Global.getSector().getCampaignUI().addMessage("TEST: "+computeAcceptanceValue(cargo)+", "+acceptanceMult);
                 if(acceptance>0) {
                     VulpoidAcceptanceEventIntel.addFactorCreateIfNecessary(new VulpoidAcceptanceProfectoFactor("Profecto sale to "+person.getNameString(), acceptance), dialog);
                 }
@@ -260,6 +259,7 @@ public class TurnInVulpoids extends BaseCommandPlugin {
                 acc += ((VulpoidPlugin)stack.getPlugin()).getTurnInRep();
             }
         }
+        acc *= 10;  // Note: gets 90 off of Laisa - good! Forces you to actually produce Vulpoids before people regulate.
         acc *= acceptanceMult;
         return acc;
     }
