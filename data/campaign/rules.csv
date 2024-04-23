@@ -1203,7 +1203,7 @@ What could have been.",,,
 ,,,,,,,
 # VULPOID ACCEPTANCE,,,,,,,
 ,,,,,,,
-# Fikenhild,,,,,,,
+# Fikenhild - Nameless,,,,,,,
 vulpAcceptance_fikenhildOfferOption,PopulateOptions,"$market.id == fikenhild
 $menuState == main
 VulpoidAcceptance officialStance
@@ -1237,7 +1237,7 @@ vulpAcceptance_fikenhildBar,BarPrintDesc,"$faction.id == persean
 $market.id == fikenhild
 $market.mc:vulpoid_celebrities",ShowImageVisual space_bar,"As you enter the bar, you sense a lively tension between the crews from across the League worlds. Dour Kazeronians in fine uniforms drink spirits while proud but poor Mayasurans down pints of rice-beer. A crew of Tylians trade rounds and boasts with a couple Zaganian bridge officers who are making a poor example of Luddic temperance. Glowing displays show media feeds from all the worlds of the League, intermixed with local broadcasts that prominently feature Vulpoid actors.",,,
 ,,,,,,,
-,,,,,,,
+# Cruor - Tell,,,,,,,
 vulpAcceptance_cruorOfferOption,PopulateOptions,"$id == tell
 VulpoidAcceptance officialStance
 !$market.mc:vulpoid_miners","SetTooltip vulpAcceptance_cruorOffer ""Cruor's mining operations can always benefit from more labor. The Diktat would certainly apply interfactional pressure to retain their new workforce.""",,vulpAcceptance_cruorOffer:Offer to provide Vulpoid labor for the mines,,
@@ -1263,6 +1263,55 @@ VulpoidAcceptance donate vulpoid_miners 100 ""Cruor miners"" ""You've agreed to 
 vulpAcceptance_cruorBar,BarPrintDesc,"$faction.id == sindrian_diktat
 $market.id == cruor
 $market.mc:vulpoid_miners",ShowImageVisual space_bar,"You enter the bar, leaving the noisome propaganda broadcasts of the throughway behind. Off-duty laborers drink away their ration credits dutifully at benches set beneath Diktat insignia. In one corner a cadre of finely dressed officer-bureaucrats calls for another round. A propoganda-holo on the wall proudly features a Vulpoid miner, urging all citizens to do their part. Even here, a larger-than-life holo of the Lion of Sindria looks down on you as you decide what to do.",,,
+,,,,,,,
+# Eochu Bres - Arroyo,,,,,,,
+vulpAcceptance_arroyoOfferOption,PopulateOptions,"$isPerson
+$id == arroyo
+VulpoidAcceptance officialStance
+!$askedAboutVulpoids",,,vulpAcceptance_arroyoOffer:Offer to sell some Vulpoids,,
+vulpAcceptance_arroyoOffer,DialogOptionSelected,$option == vulpAcceptance_arroyoOffer,$askedAboutVulpoids = true,"You begin a sales pitch, but Arroyo cuts you off with a gold-ringed finger.
+
+""Rest assured, I'm well aware of them already. Got a servant for myself actually, it need some training but I've been quite satisfied.""","vulpAcceptance_arroyoOffer1:""Have you considered a bulk purchase?""",,
+vulpAcceptance_arroyoOffer1,DialogOptionSelected,$option == vulpAcceptance_arroyoOffer1,,"""You mean as employees? Sorry, corporate non-compete on that front. The only AIs I'm allowed to employ commercially are Tri-Tachyon branded ones.""
+
+He barks out a laugh. ""I'm sure you can imagine why that might be an issue!""",vulpAcceptance_arroyoOffer2:Continue,,
+vulpAcceptance_arroyoOffer2,DialogOptionSelected,$option == vulpAcceptance_arroyoOffer2,,"He looks you up and down for a moment before continuing.
+
+""Look, you're not going to get much success selling those to the Company. But just between you and me... keep doing what you're doing. We've got your back on this one.""","vulpAcceptance_arroyoOffer3_why:""...Why?""
+vulpAcceptance_arroyoOffer3_heardIt:""So I've heard.""
+vulpAcceptance_arroyoOffer3_doubt:""Do you, though?""",,
+vulpAcceptance_arroyoOffer3_why,DialogOptionSelected,$option == vulpAcceptance_arroyoOffer3_why,"$option = vulpAcceptance_arroyoOffer4
+FireBest DialogOptionSelected","Arroyo rolls his eyes. ""Because, it benefits Tri-Tachyon.""",,,
+vulpAcceptance_arroyoOffer3_heardIt,DialogOptionSelected,$option == vulpAcceptance_arroyoOffer3_heardIt,"$option = vulpAcceptance_arroyoOffer4
+FireBest DialogOptionSelected","Arroyo grins. ""Good to know you're keeping track.""",,,
+vulpAcceptance_arroyoOffer3_doubt,DialogOptionSelected,$option == vulpAcceptance_arroyoOffer3_doubt,,"Arroyo sighs. ""What, you read a tabloid article where some junior-exec bashed them? You know most people see us as the bad guys, right?""
+
+""Fire your PR team and get a better one. Actually, let me know if you really do, I'll set you up. But that's a dead-easy angle for them to spin: 'Tri-Tachyon hates them so they must be good'.""
+
+He looks annoyed. ""Now, where was I?""",vulpAcceptance_arroyoOffer4:Continue,,
+vulpAcceptance_arroyoOffer4,DialogOptionSelected,$option == vulpAcceptance_arroyoOffer4,,"""Look. Two wars, and where have they gotten us? AI is more illegal than ever before, and at least half the Sector is convinced that they're psychotic killing machines.""
+
+""And then you blunder in.""","vulpAcceptance_arroyoOffer5_object:Object
+vulpAcceptance_arroyoOffer5:Just listen",,
+vulpAcceptance_arroyoOffer5_object,DialogOptionSelected,$option == vulpAcceptance_arroyoOffer5_object,,"""Shut up,"" he says.
+
+""Do you even realize how many hoops you manage to blindly stumble through on a regular basis?""",vulpAcceptance_arroyoOffer5:Continue,,
+vulpAcceptance_arroyoOffer5,DialogOptionSelected,$option == vulpAcceptance_arroyoOffer5,,"""You end up on Nomios at exactly the right time to run into the one guy in the entire Sector who knew that ship was out there. You beat down an Ordo to get to it. You convinced a beta-level intelligence to hand over the keys to the kingdom. And then you decided to use the Treaty of Crom Cruach as an air filter by making an AI factory! And you're getting away with it!""
+
+He raises an eyebrow at you. ""I did tell you I was well aware of them, didn't I?""","vulpAcceptance_arroyoOffer6:""I believe you were coming to a point?""",,
+vulpAcceptance_arroyoOffer6,DialogOptionSelected,$option == vulpAcceptance_arroyoOffer6,,"""Right, right,"" Arroyo shakes his head.
+
+""Point is, you somehow stumbled onto an AI that's practically impossible to dislike. Marketing figures it's a golden opportunity to shift the public image of AI into something more positive. The more people like your Vulpoids, the more they'll press the Hegemony to make allowances.""
+
+He leans back, wearing a smug grin. ""Allowances we then get to leverage for our own AIs.""","vulpAcceptance_arroyoOffer7:""I see.""",,
+vulpAcceptance_arroyoOffer7,DialogOptionSelected,$option == vulpAcceptance_arroyoOffer7,,"""No, not really. You know what I've told you, but I'm barely even in the loop for this one. Not my department.""
+
+He holds his palms up. ""Like I said earlier, just keep doing what you're doing. Yeah you're getting some heat, but Legal's keeping the big dogs on a leash for you.""
+
+""And if you pull this off, well..."" He looks away for a moment, no doubt at a splendid view. ""I figure we'll both be ending up on top.""",vulpAcceptance_arroyoOffer8:Continue,,
+vulpAcceptance_arroyoOffer8,DialogOptionSelected,$option == vulpAcceptance_arroyoOffer8,FireAll PopulateOptions,"""Now, was there anything else you wanted, or were you just trying to sell me something?""",,,
+,,,,,,,
+,,,,,,,
 ,,,,,,,
 ,,,,,,,
 ,,,,,,,
