@@ -21,6 +21,8 @@ import com.fs.starfarer.api.impl.campaign.ids.Conditions;
 import com.fs.starfarer.api.impl.campaign.ids.MemFlags;
 import com.fs.starfarer.api.impl.campaign.ids.Ranks;
 import com.fs.starfarer.api.impl.campaign.ids.Skills;
+import com.fs.starfarer.api.impl.campaign.ids.Stats;
+import com.fs.starfarer.api.util.Pair;
 import vulpoids.impl.campaign.VulpoidCreator;
 import vulpoids.impl.campaign.econ.FilteredAir;
 import vulpoids.impl.campaign.ids.Vulpoids;
@@ -119,6 +121,7 @@ public class VulpoidModPlugin extends BaseModPlugin {
                     }
                 }
             }
+            @Override
             public void unapply(Industry industry) {
                 if (industry.getMarket().isPlanetConditionMarketOnly()) industry.getMarket().getMemoryWithoutUpdate().set("$hasDecivBiofactory", true);
                 if (industry instanceof BaseIndustry) {
@@ -133,6 +136,7 @@ public class VulpoidModPlugin extends BaseModPlugin {
                     }
                 }
             }
+            @Override
             protected void addItemDescriptionImpl(Industry industry, TooltipMakerAPI text, SpecialItemData data,
                     InstallableItemDescriptionMode mode, String pre, float pad) {
                 text.addPara(pre + "Enables Vulpoid production when supplied %s unit of transplutonics.",
@@ -148,16 +152,19 @@ public class VulpoidModPlugin extends BaseModPlugin {
         
         
         ItemEffectsRepo.ITEM_EFFECTS.put(Vulpoids.CORRUPT_BIOFORGE_ITEM, new BaseInstallableItemEffect(Vulpoids.CORRUPT_BIOFORGE_ITEM) {
+            @Override
             protected void addItemDescriptionImpl(Industry industry, TooltipMakerAPI text, SpecialItemData data,
                     InstallableItemDescriptionMode mode, String pre, float pad) {
                 text.addPara(pre + "Increases organ farm production by %s units.",
                         pad, Misc.getHighlightColor(),
                         "" + (int) VULPOID_BROKEN_ORGANS);
             }
+            @Override
             public void apply(Industry industry) {
                 industry.getSupply(Commodities.ORGANS).getQuantity().modifyFlat(spec.getId(), VULPOID_BROKEN_ORGANS, Misc.ucFirst(spec.getName().toLowerCase()));
                 //industry.getDemand(Commodities.FOOD).getQuantity().modifyFlat(spec.getId(), VULPOID_BROKEN_ORGANS, Misc.ucFirst(spec.getName().toLowerCase()));
             }
+            @Override
             public void unapply(Industry industry) {
                 industry.getSupply(Commodities.ORGANS).getQuantity().unmodifyFlat(spec.getId());
                 //industry.getDemand(Commodities.FOOD).getQuantity().unmodifyFlat(spec.getId());
@@ -170,16 +177,19 @@ public class VulpoidModPlugin extends BaseModPlugin {
         
         ItemEffectsRepo.ITEM_EFFECTS.put(Vulpoids.AIR_FILTER_ITEM, new BaseInstallableItemEffect(Vulpoids.AIR_FILTER_ITEM) {
             float carryOverPollutionRemovalTimer=-1;
+            @Override
             protected void addItemDescriptionImpl(Industry industry, TooltipMakerAPI text, SpecialItemData data,
                     InstallableItemDescriptionMode mode, String pre, float pad) {
                 text.addPara(pre + "Improves local atmospheric conditions.", pad);
             }
+            @Override
             public void apply(Industry industry) {
                 if(!industry.getMarket().hasCondition(Vulpoids.CONDITION_FILTERED_AIR)) industry.getMarket().addCondition(Vulpoids.CONDITION_FILTERED_AIR);
                 FilteredAir plugin = (FilteredAir)industry.getMarket().getCondition(Vulpoids.CONDITION_FILTERED_AIR).getPlugin();
                 if(carryOverPollutionRemovalTimer!=-1) plugin.setPollutionRemovalTimer(carryOverPollutionRemovalTimer);
                 if(plugin.shouldRemovePollution()) industry.getMarket().removeCondition(Conditions.POLLUTION);
             }
+            @Override
             public void unapply(Industry industry) {
                 if(industry.getMarket().hasCondition(Vulpoids.CONDITION_FILTERED_AIR)) {
                     carryOverPollutionRemovalTimer = ((FilteredAir)industry.getMarket().getCondition(Vulpoids.CONDITION_FILTERED_AIR).getPlugin()).getPollutionRemovalTimer();
@@ -191,6 +201,63 @@ public class VulpoidModPlugin extends BaseModPlugin {
             @Override
             public String[] getSimpleReqs(Industry industry) {
                 return new String [] {ItemEffectsRepo.HABITABLE};
+            }
+        });
+        
+        final int MIDAS_NANOFORGE_PROD = 3;
+        final float MIDAS_NANOFORGE_QUALITY_BONUS = 0.5f;
+        ItemEffectsRepo.ITEM_EFFECTS.put(Vulpoids.MIDAS_NANOFORGE_ITEM, new BaseInstallableItemEffect(Vulpoids.MIDAS_NANOFORGE_ITEM) {
+            @Override
+            public void apply(Industry industry) {
+                industry.getSupplyBonus().modifyFlat(spec.getId(), MIDAS_NANOFORGE_PROD, Misc.ucFirst(spec.getName().toLowerCase()));
+                industry.getMarket().getStats().getDynamic().getMod(Stats.PRODUCTION_QUALITY_MOD)
+                        .modifyFlat("nanoforge", MIDAS_NANOFORGE_QUALITY_BONUS, Misc.ucFirst(spec.getName().toLowerCase()));
+                if(industry instanceof BaseIndustry) {
+                    BaseIndustry b = (BaseIndustry) industry;
+                    int size = b.getMarket().getSize();
+                    //b.demand(Commodities.METALS, 0);
+                    //b.demand(Commodities.RARE_METALS, 0);
+                    b.getDemand(Commodities.METALS).getQuantity().modifyMult(spec.getId(), 0);
+                    b.getDemand(Commodities.RARE_METALS).getQuantity().modifyMult(spec.getId(), 0);
+                    
+                    b.demand(9, Commodities.ORE, size+3, Misc.ucFirst(spec.getName().toLowerCase()));
+                    b.demand(9, Commodities.RARE_ORE, size+1, Misc.ucFirst(spec.getName().toLowerCase()));
+                    Pair<String, Integer> deficit = b.getMaxDeficit(Commodities.ORE, Commodities.RARE_ORE);
+                    int maxDeficit = size - 3;
+                    if (deficit.two > maxDeficit) deficit.two = maxDeficit;
+                    // Re-implementing applyDeficitToProduction since it's protected. :/
+                    for (String commodity : new String[]{Commodities.HEAVY_MACHINERY, Commodities.SUPPLIES, Commodities.HAND_WEAPONS, Commodities.SHIPS}) {
+			if (b.getSupply(commodity).getQuantity().isUnmodified()) continue;
+			b.supply(9, commodity, -deficit.two, BaseIndustry.getDeficitText(deficit.one));
+                    }
+                }
+            }
+            @Override
+            public void unapply(Industry industry) {
+                industry.getSupplyBonus().modifyFlat(spec.getId(), 0, Misc.ucFirst(spec.getName().toLowerCase()));
+                industry.getMarket().getStats().getDynamic().getMod(Stats.PRODUCTION_QUALITY_MOD).unmodifyFlat("nanoforge");
+                if(industry instanceof BaseIndustry) {
+                    BaseIndustry b = (BaseIndustry) industry;
+                    b.getDemand(Commodities.METALS).getQuantity().unmodifyMult(spec.getId());
+                    b.getDemand(Commodities.RARE_METALS).getQuantity().unmodifyMult(spec.getId());
+                    b.demand(9, Commodities.ORE, 0, null);
+                    b.demand(9, Commodities.RARE_ORE, 0, null);
+                }
+            }
+            @Override
+            protected void addItemDescriptionImpl(Industry industry, TooltipMakerAPI text, SpecialItemData data,
+                    InstallableItemDescriptionMode mode, String pre, float pad) {
+                String heavyIndustry = "heavy industry ";
+                if (mode == InstallableItemDescriptionMode.MANAGE_ITEM_DIALOG_LIST) {
+                    heavyIndustry = "";
+                }
+                text.addPara(pre + "Increases ship and weapon production quality by %s. " +
+                        "Increases " + heavyIndustry + "production by %s units." +
+                        " On habitable worlds, causes pollution which becomes permanent. "+
+                        "Demands ore instead of metal.",
+                        pad, Misc.getHighlightColor(), 
+                        "" + (int) Math.round(MIDAS_NANOFORGE_QUALITY_BONUS * 100f) + "%",
+                        "" + (int) MIDAS_NANOFORGE_PROD);
             }
         });
         

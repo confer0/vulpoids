@@ -1089,10 +1089,12 @@ $explored
 $repaired
 !$repairing","AddRemoveCommodity crew $crewReq
 AddRemoveCommodity heavy_machinery $machineryReq
-AddRemoveAnyItem SPECIAL pristine_nanoforge 1
+AddRemoveAnyItem SPECIAL midas_nanoforge 1
 CallEvent $global.vulp_terraformingIntel returnedToTerraformer
 $gotCrewBack = true
-FireBest OpenInteractionDialog","Your crews report complete success on the removal of the nanoforge infrastructure. The core is shuttled back over to your $shipOrFleet, along with the crew and their machinery.",,,
+FireBest OpenInteractionDialog","Your crews report complete success on the removal of the nanoforge infrastructure. It's been reassembled into a device that can be installed in a heavy industry facility like a traditional nanoforge, but will consume raw ore in place of refined metal.
+
+The core is shuttled back over to your $shipOrFleet, along with the crew and their machinery.",,,
 vulp_terraformerOpenDialog_repairedReturn,OpenInteractionDialog,"$vulp_terraformer score:1000
 $explored
 $repaired

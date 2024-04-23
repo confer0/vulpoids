@@ -66,7 +66,7 @@ public class VulpoidPopulation extends BaseMarketConditionPlugin implements Mark
             population = Math.min(population, MAX_POPULATION);
             population = Math.max(population, MIN_POPULATION);
         } else {
-            population = getPopCap() - 2;
+            population = Math.min(population, market.getSize() - 2);
         }
         workforce_cap = (int)population - MIN_POPULATION_FOR_WORKFORCE + 1;
         workforce_cap = (int)(workforce_cap * POPULATION_WORKFORCE_MULT);
@@ -77,13 +77,10 @@ public class VulpoidPopulation extends BaseMarketConditionPlugin implements Mark
         market.getMemoryWithoutUpdate().set(Vulpoids.KEY_VULPS_FOR_NEXT_POP, Misc.getWithDGS((int)Math.pow(10, (int)(population+1))));
     }
     private int getPopCap() {
-        try {
-            Industry industry = market.getIndustry("organfarms");
-            if (industry ==  null) industry = market.getIndustry("biofacility");
-            return industry.getSupply("vulpoids").getQuantity().getModifiedInt();
-        } catch(NullPointerException e) {
-            return 0;
-        }
+        Industry industry = market.getIndustry("organfarms");
+        if (industry ==  null) industry = market.getIndustry("biofacility");
+        if(industry != null) return industry.getSupply("vulpoids").getQuantity().getModifiedInt();
+        else return 0;
     }
     
     
