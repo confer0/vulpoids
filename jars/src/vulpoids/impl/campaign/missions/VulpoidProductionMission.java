@@ -121,7 +121,7 @@ public class VulpoidProductionMission extends HubMissionWithBarEvent implements 
         }
         
         int MIN_NEEDED = 3;
-        int MAX_NEEDED = 6;  // TODO - consider capping at market size.
+        int MAX_NEEDED = Math.min(6, market.getSize());
         if (neededOverride == 0) {
             if(!market.hasCondition(Vulpoids.CONDITION_VULPOID_POPULATION)) needed = MIN_NEEDED;
             else {

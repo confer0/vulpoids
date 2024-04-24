@@ -82,6 +82,9 @@ public class VulpoidPopulation extends BaseMarketConditionPlugin implements Mark
         if (industry ==  null) industry = market.getIndustry("biofacility");
         if(industry != null) popCap = Math.max(popCap, industry.getSupply("vulpoids").getQuantity().getModifiedInt());
         popCap = Math.max(popCap, market.getMemoryWithoutUpdate().getInt("$vulpProductionQuantity"));  // For NPC production missions
+        // Can only support so many with modern infrastructure.
+        // For every rich executive with 10 Vulpoids, there'll be at least 10 people with no more than 1.
+        popCap = Math.min(popCap, market.getSize());
         return popCap;
     }
     
@@ -231,7 +234,9 @@ public class VulpoidPopulation extends BaseMarketConditionPlugin implements Mark
         if (getAvailabilityStability()>0) tooltip.addPara("%s stability", opad, Misc.getHighlightColor(), "+"+(int)getAvailabilityStability());
         if (getAvailabilityGrowth()>0) tooltip.addPara("%s population growth (based on market size)", opad, Misc.getHighlightColor(), "+"+(int)getAvailabilityGrowth());
         
-        if (getPopCap() <= getPopulation()) {
+        if(getPopulation() >= market.getSize()) {
+            tooltip.addPara("\nThe Vulpoid population has matched the human population, and cannot be sustainably increased.", opad);
+        } else if (getPopCap() <= getPopulation()) {
             tooltip.addPara("\nThe population has reached its maximum size for current production.", opad);
         } else {
             int progress_percent = (int)((population*100)%100);
