@@ -124,7 +124,12 @@ public abstract class ListBasedInteractionDialogPlugin implements InteractionDia
                             //Object entry = pages.get(page)[i];
                             if(i<entries.size()) {
                                 Object entry = entries.get(i);
-                                options.addOption(getEntryLabel(entry), i, getEntryColor(entry), getEntryTooltipString(entry));
+                                Color c = getEntryColor(entry);
+                                if(c!=null) {
+                                    options.addOption(getEntryLabel(entry), i, getEntryColor(entry), getEntryTooltipString(entry));
+                                } else {
+                                    options.addOption(getEntryLabel(entry), i, getEntryTooltipString(entry));
+                                }
                             } else {
                                 options.addOption("", i);
                                 options.setEnabled(i, false);

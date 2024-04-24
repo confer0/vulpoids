@@ -6,14 +6,11 @@ import com.fs.starfarer.api.campaign.CampaignTerrainAPI;
 import com.fs.starfarer.api.campaign.LocationAPI;
 import com.fs.starfarer.api.campaign.PlanetAPI;
 import com.fs.starfarer.api.campaign.SectorEntityToken;
-import com.fs.starfarer.api.campaign.rules.MemKeys;
 import com.fs.starfarer.api.campaign.rules.MemoryAPI;
 import com.fs.starfarer.api.campaign.rules.Option;
 import com.fs.starfarer.api.campaign.rules.RuleAPI;
 import com.fs.starfarer.api.campaign.rules.RulesAPI;
-import com.fs.starfarer.api.impl.campaign.RuleBasedInteractionDialogPluginImpl;
 import com.fs.starfarer.api.impl.campaign.ids.Factions;
-import com.fs.starfarer.api.impl.campaign.rulecmd.FireBest;
 import com.fs.starfarer.api.util.Misc;
 import com.fs.starfarer.api.util.Pair;
 import java.awt.Color;
@@ -24,25 +21,24 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class VulpoidChatLocalEntitiesDialogPlugin extends ListBasedInteractionDialogPlugin {
+public class VulpoidChatLocalEntitiesDialogPlugin extends RulePopulatedListDialogPlugin {
     
     float MAX_RANGE = 250f;
-    Map<Option, Map<String, MemoryAPI>> optionMemoryMaps;
     Map<Option, SectorEntityToken> optionFirstEntity;
     
     @Override
     protected void loadOptions() {
+        super.loadOptions();
+        optionFirstEntity = new HashMap();
+        
         final CampaignFleetAPI playerFleet = Global.getSector().getPlayerFleet();
         LocationAPI location;
         RulesAPI rules = Global.getSector().getRules();
-        optionMemoryMaps = new HashMap();
-        optionFirstEntity = new HashMap();
         
         if(Global.getSector().getPlayerFleet().isInHyperspace()) location = Global.getSector().getHyperspace();
         else location = Global.getSector().getPlayerFleet().getStarSystem();
         
-        if (location != null) {  // Just to be safe
-            // TODO - any way to sort by distance?
+        if (location != null) {
             
             List<Pair<SectorEntityToken, Float>> entitiesInRange = new ArrayList();
             
@@ -94,6 +90,7 @@ public class VulpoidChatLocalEntitiesDialogPlugin extends ListBasedInteractionDi
                             }
                         }
                         if(optionIsUnique) {
+                            rule.runScript(dialog, memoryMap);
                             entries.add(option);
                             optionMemoryMaps.put(option, memoryMap);
                             optionFirstEntity.put(option, entity);
@@ -106,31 +103,19 @@ public class VulpoidChatLocalEntitiesDialogPlugin extends ListBasedInteractionDi
     
     @Override
     protected Color getEntryColor(Object entry) {
-        if(!(entry instanceof Option) || optionFirstEntity.get((Option)entry)==null) {
-            return Misc.getButtonTextColor();
-        } else {
-            SectorEntityToken entity = optionFirstEntity.get((Option)entry);
-            if(!entity.getFaction().getId().equals(Factions.NEUTRAL)) return entity.getFaction().getBaseUIColor();
-            if(entity instanceof PlanetAPI) return ((PlanetAPI)entity).getSpec().getIconColor();
-            if(entity instanceof CampaignTerrainAPI) return ((CampaignTerrainAPI)entity).getPlugin().getNameColor();
-            //return entity.getLightColor();
-            return entity.getIndicatorColor();
-        }
+        Color c = super.getEntryColor(entry);
+        if(c!=null) return c;
+        SectorEntityToken entity = optionFirstEntity.get((Option)entry);
+        if(!entity.getFaction().getId().equals(Factions.NEUTRAL)) return entity.getFaction().getBaseUIColor();
+        if(entity instanceof PlanetAPI) return ((PlanetAPI)entity).getSpec().getIconColor();
+        if(entity instanceof CampaignTerrainAPI) return ((CampaignTerrainAPI)entity).getPlugin().getNameColor();
+        //return entity.getLightColor();
+        //return entity.getIndicatorColor();
+        return null;
     }
     
     protected Map<String, MemoryAPI> getMemoryForEntity(SectorEntityToken entity) {
-        /*Map<String, MemoryAPI> memoryMap = new HashMap();
-        memoryMap.put(MemKeys.LOCAL, entity.getMemory());
-        if (entity.getFaction() != null) memoryMap.put(MemKeys.FACTION, entity.getFaction().getMemory());
-        else memoryMap.put(MemKeys.FACTION, Global.getFactory().createMemory());
-        memoryMap.put(MemKeys.GLOBAL, Global.getSector().getMemory());
-        memoryMap.put(MemKeys.PLAYER, Global.getSector().getCharacterData().getMemory());
-        if (entity.getMarket() != null) memoryMap.put(MemKeys.MARKET, entity.getMarket().getMemory());
-        return memoryMap;*/
-        Map<String, MemoryAPI> memoryMap = new HashMap();//conversationDelegate.getMemoryMap();
-        for(String key : conversationDelegate.getMemoryMap().keySet()) {
-            memoryMap.put(key, conversationDelegate.getMemoryMap().get(key));
-        }
+        Map<String, MemoryAPI> memoryMap = getMemoryMapCopy();
         memoryMap.put("topic", entity.getMemory());
         if (entity.getFaction() != null) memoryMap.put("topicFaction", entity.getFaction().getMemory());
         else memoryMap.put("topicFaction", Global.getFactory().createMemory());
@@ -140,31 +125,4 @@ public class VulpoidChatLocalEntitiesDialogPlugin extends ListBasedInteractionDi
         
         return memoryMap;
     }
-    
-    @Override
-    protected String getEntryLabel(Object entry) {
-        //if(entry instanceof RuleAPI) return ((RuleAPI)entry).getOptions().get(0).text;
-        if(entry instanceof Option) return ((Option)entry).text;
-        return null;
-    }
-    
-    @Override
-    protected void selectEntry(Object entry) {
-        if (entry instanceof Option) {
-            delegated = true;
-            options.clearOptions();
-            conversationDelegate = new RuleBasedInteractionDialogPluginImpl();
-            conversationDelegate.setEmbeddedMode(true);
-            conversationDelegate.init(dialog);
-            Option option = (Option) entry;
-            Map<String, MemoryAPI> optionMemoryMap = optionMemoryMaps.get(option);
-            Map<String, MemoryAPI> memoryMap = conversationDelegate.getMemoryMap();//optionMemoryMap.get((Option)entry);
-            memoryMap.put("topic", optionMemoryMap.get("topic"));
-            if(optionMemoryMap.containsKey("topicFaction")) memoryMap.put("topicFaction", optionMemoryMap.get("topicFaction"));
-            if(optionMemoryMap.containsKey("topicMarket")) memoryMap.put("topicMarket", optionMemoryMap.get("topicMarket"));
-            memoryMap.get(MemKeys.LOCAL).set("$option", option.id);
-            FireBest.fire(null, dialog, memoryMap, "DialogOptionSelected");
-        }
-    }
-    
 }

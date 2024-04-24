@@ -2632,8 +2632,26 @@ ExitRulesToPlugin",TODO: navBuoyMakeshift,,,
 vulpChatSurroundings_navBuoyMakeshiftDummy,DialogOptionSelected,"$option == vulpChatSurroundings_navBuoyMakeshift
 $vulp_profectoAssignment == vulpoids","SetVulpoidExpression default
 ExitRulesToPlugin",TODO: navBuoyMakeshift Dummy,,,
+vulpChatSurroundings_wormholeOption,VulpoidChatSurroundingsOptions,$topic.wormhole score:1000,,,vulpChatSurroundings_wormhole:$topic.name,,wormhole
+vulpChatSurroundings_wormhole,DialogOptionSelected,$option == vulpChatSurroundings_wormhole,"SetVulpoidExpression bruh
+ExitRulesToPlugin","""This isn't a jump-point, the readings aren't consistent with a standard Durand-Patel conjunction.""
+
+""It could be a stable wormhole, but I can't be confident. Our sensor suites just aren't suitable for this.""",,,
+vulpChatSurroundings_wormholeDummy,DialogOptionSelected,"$option == vulpChatSurroundings_wormhole
+$vulp_profectoAssignment == vulpoids","SetVulpoidExpression default
+ExitRulesToPlugin",TODO: wormhole Dummy,,,
+vulpChatSurroundings_wormholeCalibratedOption,VulpoidChatSurroundingsOptions,"$topic.wormhole score:1000
+$player.gotWormholeCalibrationData","$optionColor:vulpChatSurroundings_wormholeCalibrated = ""255,0,255""
+AddCommodity organs 100",,vulpChatSurroundings_wormholeCalibrated:$topic.name,,wormholeCalibrated
+vulpChatSurroundings_wormholeCalibrated,DialogOptionSelected,$option == vulpChatSurroundings_wormholeCalibrated,"SetVulpoidExpression default
+ExitRulesToPlugin","""A stable wormhole. Fascinating technology, and impressively efficient! I wonder why the Domain favored the Gates.""
+
+""Probably control - the Gates could be locked as they saw fit, no way to do that to a wormhole network.""",,,
+vulpChatSurroundings_wormholeCalibratedDummy,DialogOptionSelected,"$option == vulpChatSurroundings_wormholeCalibrated
+$vulp_profectoAssignment == vulpoids","SetVulpoidExpression default
+ExitRulesToPlugin",TODO: wormholeCalibrated Dummy,,,
 ,,,,,,,
-,# TODO WORMHOLE,,,,,,
+,,,,,,,
 ,,,,,,,
 ,,,,,,,
 # Gates,,,,,,,
