@@ -54,7 +54,7 @@ public class BaseWorkforce extends BaseMarketConditionPlugin {
     }
     @Override
     public String getIconName() {
-        if(shouldApply()) return condition.getSpec().getIcon();
+        if(shouldApply() || !market.isPlayerOwned()) return condition.getSpec().getIcon();
         return "graphics/icons/markets/workforce_confused.png";
     }
     @Override

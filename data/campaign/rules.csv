@@ -1,5 +1,15 @@
 id,trigger,conditions,script,text,options,notes,
 ,,,,,,,
+devIncreaseVulpoidPopulation,PopulateOptions,"$global.isDevMode
+$menuState == main
+$market.mc:vulpoid_population",SetOptionColor devIncreaseVulpoidPopulationSel gray,,200:devIncreaseVulpoidPopulationSel:>> (dev) Increase Vulpoid population,,
+devIncreaseVulpoidPopulationSel,DialogOptionSelected,$option == devIncreaseVulpoidPopulationSel,VulpoidPopulation increase,,,,
+devDecreaseVulpoidPopulation,PopulateOptions,"$global.isDevMode
+$menuState == main
+$market.mc:vulpoid_population",SetOptionColor devDecreaseVulpoidPopulationSel gray,,200:devDecreaseVulpoidPopulationSel:>> (dev) Decrease Vulpoid population,,
+devDecreaseVulpoidPopulationSel,DialogOptionSelected,$option == devDecreaseVulpoidPopulationSel,VulpoidPopulation decrease,,,,
+,,,,,,,
+,,,,,,,
 #vulp_exampleBarEventOption,AddBarEvents,"$market.id == nomios
 !$global.vulp_gotFactoryMission
 HasFoughtRemnant","AddBarEvent vulp_findFactory_barEvent  ""Talk to the man in the lab coat"" ""A man wearing the branded lab coat of a long-dead megacorp is making a poor attempt at subtly grabbing your attention."" highlight",,,,
@@ -1212,56 +1222,74 @@ vulpAcceptance_fikenhildOffer,DialogOptionSelected,$option == vulpAcceptance_fik
 
 ""Thank you for calling, how may I help you today?""","vulpAcceptance_fikenhildOffer1:Offer to sell some Vulpoids
 marketArrivalEventContinue:Disconnect the call",,
-vulpAcceptance_fikenhildOffer1,DialogOptionSelected,$option == vulpAcceptance_fikenhildOffer1,"SetTextHighlights ""1,000 units"" ""200,000 credits""
+vulpAcceptance_fikenhildOffer1,DialogOptionSelected,$option == vulpAcceptance_fikenhildOffer1,"SetTextHighlights ""1,000"" ""200,000""
 FireBest VulpAcceptanceFikenhildDisable
-SetStoryOption vulpAcceptance_fikenhildStoryAccept 1 vulpAcceptance_fikenhildStoryAccept general ""Secured a better Vulpoid deal with a Fikenhild holo-entertainment studio""","You explain that you're the primary manufacturer of Vulpoids in the Persean Sector, and start explaining their potential usages in the holo-entertainment industry. The representative nods along as you report on their trainability, skill at public speaking, and customizable fur palettes.
+SetStoryColor vulpAcceptance_fikenhildStoryOffer","You explain that you're the primary manufacturer of Vulpoids in the Persean Sector, and start explaining their potential usages in the holo-entertainment industry. The representative nods along as you report on their trainability, skill at public speaking, and customizable fur palettes.
 
 ""You make an excellent offer. We'd be happy to secure an exclusive contract for their use in local media productions. If you can provide 1,000 units up-front, we'd be willing to offer 200,000 credits.""","vulpAcceptance_fikenhildAccept:Agree to the deal
-vulpAcceptance_fikenhildStoryAccept:Negotiate to not provide Vulpoids up-front
+vulpAcceptance_fikenhildStoryOffer:Negotiate a production contract
 marketArrivalEventContinue:Disconnect the call",,
 vulpAcceptance_fikenhildOfferDisable,VulpAcceptanceFikenhildDisable,!PlayerHasCargo vulpoids 1000,"SetEnabled vulpAcceptance_fikenhildAccept false
 SetTooltip vulpAcceptance_fikenhildAccept ""Not enough Vulpoids.""",,,,
 vulpAcceptance_fikenhildAccept,DialogOptionSelected,$option == vulpAcceptance_fikenhildAccept,"RemoveCommodity vulpoids 1000
+AddCredits 200000
+VulpoidPopulation setAtLeast 3
 $option = vulpAcceptance_fikenhildEnd
 FireBest DialogOptionSelected",,,,
-vulpAcceptance_fikenhildStoryAccept,DialogOptionSelected,$option == vulpAcceptance_fikenhildStoryAccept,,"You declare that a once-off transfer of cargo and credits would not be reflective of the kind of partnership you're trying to achieve. Why, if you'd wanted something impersonal you could have easily gone to one of the other studios. The representative nods along, and eventually speaks up.
+vulpAcceptance_fikenhildStoryOffer,DialogOptionSelected,$option == vulpAcceptance_fikenhildStoryOffer,"SetTextHighlights ""4"" ""3"" ""9,000"" ""108,000""
+FireBest VulpAcceptanceFikenhildDisable
+SetStoryOption vulpAcceptance_fikenhildStoryAccept 1 vulpAcceptance_fikenhildStoryAccept general ""Secured a better Vulpoid deal with a Fikenhild holo-entertainment studio""","You declare that a once-off transfer of cargo and credits would not be reflective of the kind of partnership you're trying to achieve. Why, if you'd wanted something impersonal you could have easily gone to one of the other studios. The representative nods along, and eventually speaks up.
 
-""Of course, my apologies for the impersonal offer. We'd be delighted to make those credits a signing bonus, and obtain our exclusive supply directly from your manufacturing facilities.""
-
-",vulpAcceptance_fikenhildEnd:Continue,,
-vulpAcceptance_fikenhildEnd,DialogOptionSelected,$option == vulpAcceptance_fikenhildEnd,"AddCredits 200000
-VulpoidAcceptance donate vulpoid_celebrities 100 ""Fikenhild holo-celebrities"" ""You've secured an exclusive deal with one of Fikenhild's famed holo-entertainment studios. Their newest productions featuring Vulpoids have already proven enormously popular.""","You seal the deal with a signed contract and the transfer of credits.
-
-""A pleasure doing business with you captain. Be sure to tune in!""",marketArrivalEventContinue:Thank them and cut the comm link,,
+""Of course, my apologies for the impersonal offer. We'd be delighted to sign on a one-cycle production contract, starting within 4 months. 3 units of Vulpoids, with a premium fee of 9,000 credits per month, totalling 108,000 credits?""","vulpAcceptance_fikenhildStoryAccept:Agree to the new deal
+vulpAcceptance_fikenhildAccept:Agree to the original deal
+marketArrivalEventContinue:Disconnect the call",,
+vulpAcceptance_fikenhildStoryAccept,DialogOptionSelected,$option == vulpAcceptance_fikenhildStoryAccept,"VulpoidAcceptance productionContract 3 9000
+$option = vulpAcceptance_fikenhildEnd
+FireBest DialogOptionSelected",,,,
+vulpAcceptance_fikenhildEnd,DialogOptionSelected,$option == vulpAcceptance_fikenhildEnd,"VulpoidAcceptance donate vulpoid_celebrities 100 ""Fikenhild holo-celebrities"" ""You've secured an exclusive deal with one of Fikenhild's famed holo-entertainment studios. Their newest productions featuring Vulpoids have already proven enormously popular.""
+$option = vulpAcceptance_fikenhildEnd1
+FireBest DialogOptionSelected",,,,
+vulpAcceptance_fikenhildEnd1,DialogOptionSelected,$option == vulpAcceptance_fikenhildEnd1,,"""A pleasure doing business with you captain. Be sure to tune in!""",marketArrivalEventContinue:Thank them and cut the comm link,,
 vulpAcceptance_fikenhildBar,BarPrintDesc,"$faction.id == persean
 $market.id == fikenhild
+$market.vulpoidPopulation>=3
 $market.mc:vulpoid_celebrities",ShowImageVisual space_bar,"As you enter the bar, you sense a lively tension between the crews from across the League worlds. Dour Kazeronians in fine uniforms drink spirits while proud but poor Mayasurans down pints of rice-beer. A crew of Tylians trade rounds and boasts with a couple Zaganian bridge officers who are making a poor example of Luddic temperance. Glowing displays show media feeds from all the worlds of the League, intermixed with local broadcasts that prominently feature Vulpoid actors.",,,
 ,,,,,,,
 # Cruor - Tell,,,,,,,
 vulpAcceptance_cruorOfferOption,PopulateOptions,"$id == tell
 VulpoidAcceptance officialStance
 !$market.mc:vulpoid_miners","SetTooltip vulpAcceptance_cruorOffer ""Cruor's mining operations can always benefit from more labor. The Diktat would certainly apply interfactional pressure to retain their new workforce.""",,vulpAcceptance_cruorOffer:Offer to provide Vulpoid labor for the mines,,
-vulpAcceptance_cruorOffer,DialogOptionSelected,$option == vulpAcceptance_cruorOffer,"SetTextHighlights ""1,000 units"" ""150,000 credits""
+vulpAcceptance_cruorOffer,DialogOptionSelected,$option == vulpAcceptance_cruorOffer,"SetTextHighlights ""1,000"" ""150,000""
 FireBest VulpAcceptanceCruorDisable
-SetStoryOption vulpAcceptance_cruorStoryAccept 1 vulpAcceptance_cruorStoryAccept general ""Secured a better Vulpoid deal with Laverna Tell on Cruor""","You explain that you're the primary manufacturer of Vulpoids in the Persean Sector, and that it would be unbecoming for them to not serve the Supreme Executor in some respect. While Vulpoids are somewhat weak, you explain, it will make their commitment to their labor all the more clear. They'll be a demonstration to anyone who thinks they have nothing to offer the Cause.
+SetStoryColor vulpAcceptance_cruorStoryOffer","You explain that you're the primary manufacturer of Vulpoids in the Persean Sector, and that it would be unbecoming for them to not serve the Supreme Executor in some respect. While Vulpoids are somewhat weak, you explain, it will make their commitment to their labor all the more clear. They'll be a demonstration to anyone who thinks they have nothing to offer the Cause.
 
 ""Well-reasoned captain! Your patriotism is commendable. For supplying a workforce of 1,000 units, I am prepared to issue a reward of 150,000 credits.""","vulpAcceptance_cruorAccept:Agree to the deal
-vulpAcceptance_cruorStoryAccept:Negotiate to not provide Vulpoids up-front
-cutCommLink:Cut the comm link",,
+vulpAcceptance_cruorStoryOffer:Negotiate a production contract
+marketArrivalEventContinue:Disconnect the call",,
 vulpAcceptance_cruorOfferDisable,VulpAcceptanceCruorDisable,!PlayerHasCargo vulpoids 1000,"SetEnabled vulpAcceptance_cruorAccept false
 SetTooltip vulpAcceptance_cruorAccept ""Not enough Vulpoids.""",,,,
 vulpAcceptance_cruorAccept,DialogOptionSelected,$option == vulpAcceptance_cruorAccept,"RemoveCommodity vulpoids 1000
+AddCredits 150000
+VulpoidPopulation setAtLeast 3
 $option = vulpAcceptance_cruorEnd
 FireBest DialogOptionSelected",,,,
-vulpAcceptance_cruorStoryAccept,DialogOptionSelected,$option == vulpAcceptance_cruorStoryAccept,,"You note that conditions on Cruor are inherently dangerous. Vulpoids are such loyal workers that they'll take the risks without question, but should a tragic accident occur then the Diktat would be without its laborers. Instead, it would be better for the Vulpoids to be supplied from your factories, allowing them to be slowly integrated into normal operations.
+vulpAcceptance_cruorStoryOffer,DialogOptionSelected,$option == vulpAcceptance_cruorStoryOffer,"SetTextHighlights ""4"" ""3"" ""6,500"" ""78,000""
+FireBest VulpAcceptanceCruorDisable
+SetStoryOption vulpAcceptance_cruorStoryAccept 1 vulpAcceptance_cruorStoryAccept general ""Secured a better Vulpoid deal with Laverna Tell on Cruor""","You note that conditions on Cruor are inherently dangerous. Vulpoids are such loyal workers that they'll take the risks without question, but should a tragic accident occur then the Diktat would be without its laborers. Instead, it would be better for the Vulpoids to be supplied from your factories, allowing them to be slowly integrated into normal operations.
 
-""Very well then. You will retain the stated reward, and we will obtain our supply from your factories.""",vulpAcceptance_cruorEnd:Continue,,
-vulpAcceptance_cruorEnd,DialogOptionSelected,$option == vulpAcceptance_cruorEnd,"AddCredits 150000
-VulpoidAcceptance donate vulpoid_miners 100 ""Cruor miners"" ""You've agreed to supply Vulpoid laborers to the mining camps of Cruor. The Sindrian Diktat is running propaganda pieces to inspire citizens to be as dedicated as a Vulpoid.""","Your TriPad pings with a credits transfer.
-
-""Glory to the Sindrian Diktat, captain.""",cutCommLink:Cut the comm link,,
+""Very well then. We will arrange a one-cycle production contract, to be initiated within 4 months. Your facilities will provide 3 units of Vulpoids, for a payment of 6,500 credits per month, totalling 78,000 credits.""","vulpAcceptance_cruorStoryAccept:Agree to the new deal
+vulpAcceptance_cruorAccept:Agree to the original deal
+marketArrivalEventContinue:Disconnect the call",,
+vulpAcceptance_cruorStoryAccept,DialogOptionSelected,$option == vulpAcceptance_cruorStoryAccept,"VulpoidAcceptance productionContract 3 6500
+$option = vulpAcceptance_cruorEnd
+FireBest DialogOptionSelected ",,vulpAcceptance_cruorEnd:Continue,,
+vulpAcceptance_cruorEnd,DialogOptionSelected,$option == vulpAcceptance_cruorEnd,"VulpoidAcceptance donate vulpoid_miners 100 ""Cruor miners"" ""You've agreed to supply Vulpoid laborers to the mining camps of Cruor. The Sindrian Diktat is running propaganda pieces to inspire citizens to be as dedicated as a Vulpoid.""
+$option = vulpAcceptance_cruorEnd1
+FireBest DialogOptionSelected",,,,
+vulpAcceptance_cruorEnd1,DialogOptionSelected,$option == vulpAcceptance_cruorEnd1,,"""Glory to the Sindrian Diktat, captain.""",cutCommLink:Cut the comm link,,
 vulpAcceptance_cruorBar,BarPrintDesc,"$faction.id == sindrian_diktat
 $market.id == cruor
+$market.vulpoidPopulation>=3
 $market.mc:vulpoid_miners",ShowImageVisual space_bar,"You enter the bar, leaving the noisome propaganda broadcasts of the throughway behind. Off-duty laborers drink away their ration credits dutifully at benches set beneath Diktat insignia. In one corner a cadre of finely dressed officer-bureaucrats calls for another round. A propoganda-holo on the wall proudly features a Vulpoid miner, urging all citizens to do their part. Even here, a larger-than-life holo of the Lion of Sindria looks down on you as you decide what to do.",,,
 ,,,,,,,
 # Eochu Bres - Arroyo,,,,,,,
@@ -1475,6 +1503,32 @@ This incident is likely to cause quite a splash once it reaches the wider popula
 vulpAcceptance_gileadBar,BarPrintDesc,"$faction.id == luddic_church
 $market.id == gilead
 $market.mc:vulpoid_cults",ShowImageVisual teahouse,"You duck past notices encouraging temperance and restraint as you enter the bar. Someone is playing a stringed instrument in an alcove. A row of handworked samovars suggests that tea is served as often as the weak grain-brew favored by the crew of rough-looking laborers at the bar. Many of the patrons at tables or booths seem to be off-worlders or local unbelievers huddling in the closest analog to a den of sin that can be found. A Vulpoid is present, wearing a hand-weave dress and handing out prayer and blessing to anyone willing.",,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+# Vulpoid Production Mission,,,,,,,
+,,,,,,,
+vulpProductionBlurbBar,vulpProduction_blurbBar,,,A $vulpProduction_manOrWoman in a private booth is petting a Vulpoid on their lap with a thoughtful expression.,,# TODO: Multiple factions,
+vulpProductionOfferOptionBar,vulpProduction_optionBar,,,,vulpProduction_startBar:Approach the Vulpoid owner in the private booth,# TODO: Multiple factions,
+vulpProductionOfferTextBar,DialogOptionSelected,$option == vulpProduction_startBar,$missionId = vulpProduction,"You approach the private booth, and the $vulpProduction_manOrWoman recognizes you instantly. $HeOrShe gestures for you to join $himOrHer.
+
+""Captain $playerName, a pleasure! Please, sit!"" $HeOrShe nudges the Vulpoid awake. ""$vulpProduction_vulpoidName, sweetie, grab a drink for the captain would you?""
+
+As $hisOrHer Vulpoid obediently hurries off, $heOrShe turns $hisOrHer attention back to you. ""I have a proposal for you.""","vulpProduction_startBar2:""What kind of proposal?""
+contact_declineBarNoContinue:Decline",# TODO: Multiple factions,
+vulpProductionOfferTextBar2,DialogOptionSelected,$option == vulpProduction_startBar2,SetTextHighlights $vulpProduction_needed $vulpProduction_missionMonths $vulpProduction_monthlyPayment $vulpProduction_totalPayment,"""As you can no doubt tell, I'm quite fond of these Vulpoids. But unfortunately, there's only so many to go around on $entity.name.""
+
+""If you could ensure a steady supply of $vulpProduction_needed units of Vulpoids to us, I'd be much obliged. I'd expect first delivery within $vulpProduction_missionMonths months, at a premium rate of course. Monthly payments of $vulpProduction_monthlyPayment credits over the ensuring cycle, for a total of $vulpProduction_totalPayment credits.""
+
+$HeOrShe smiles as $vulpProduction_vulpoidName returns to the booth and sets an expensive drink in front of each of you. ""I believe we'll both benefit from this arrangement.""","contact_acceptBar:Accept
+contact_declineBarNoContinue:Decline",# TODO: Multiple factions,
+,,,,,,,
+,,,,,,,
+VulpProductionPatherHail,VulpProductionPatherHail,,$entity.ignorePlayerCommRequests = true,"""$playerName."" The Pather seethes through the comm display. ""Deliverer of Moloch's spawn. Your path has met mine, and righteous fury will triumph over temptation and sin!""",cutCommLink:Cut the comm link,,
+,,,,,,,
+VulpProductionComplimentHail,VulpProductionComplimentHail,,$entity.ignorePlayerCommRequests = true,"$PersonRank $name appears on your display, with several Vulpoids cooing over $himOrHer.
+
+""Captain $playerName, I thought I recognized you! I wanted to personally thank you for your efforts in supplying Vulpoids to my home, it's proven quite delightful for me.""",cutCommLink:Cut the comm link,# TODO: Multiple factions,
 ,,,,,,,
 ,,,,,,,
 ,,,,,,,

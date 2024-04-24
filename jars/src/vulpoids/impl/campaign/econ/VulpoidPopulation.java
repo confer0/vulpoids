@@ -66,7 +66,7 @@ public class VulpoidPopulation extends BaseMarketConditionPlugin implements Mark
             population = Math.min(population, MAX_POPULATION);
             population = Math.max(population, MIN_POPULATION);
         } else {
-            population = Math.min(population, market.getSize() - 2);
+            population = Math.min(population, getPopCap());
         }
         workforce_cap = (int)population - MIN_POPULATION_FOR_WORKFORCE + 1;
         workforce_cap = (int)(workforce_cap * POPULATION_WORKFORCE_MULT);
@@ -77,10 +77,12 @@ public class VulpoidPopulation extends BaseMarketConditionPlugin implements Mark
         market.getMemoryWithoutUpdate().set(Vulpoids.KEY_VULPS_FOR_NEXT_POP, Misc.getWithDGS((int)Math.pow(10, (int)(population+1))));
     }
     private int getPopCap() {
+        int popCap = (int)MIN_POPULATION;
         Industry industry = market.getIndustry("organfarms");
         if (industry ==  null) industry = market.getIndustry("biofacility");
-        if(industry != null) return industry.getSupply("vulpoids").getQuantity().getModifiedInt();
-        else return 0;
+        if(industry != null) popCap = Math.max(popCap, industry.getSupply("vulpoids").getQuantity().getModifiedInt());
+        popCap = Math.max(popCap, market.getMemoryWithoutUpdate().getInt("$vulpProductionQuantity"));  // For NPC production missions
+        return popCap;
     }
     
     
@@ -174,6 +176,14 @@ public class VulpoidPopulation extends BaseMarketConditionPlugin implements Mark
         String name = market.getName();
         float opad = 10f;
         
+        if(market.getMemoryWithoutUpdate().contains(MemFlags.RECENTLY_BOMBARDED)) {
+            tooltip.addImage(Global.getSettings().getSpriteName("illustrations", "bombard_tactical_result"), opad);
+            tooltip.addPara("\nA recent orbital bombardment has devastated the Vulpoid population. "+
+                    "It will be take up to a month before the population can start to recover, assuming producion is still available.", opad);
+            return;
+        }
+        
+        
         if(population<=3) tooltip.addImage(Global.getSettings().getSpriteName("illustrations", "vulp_pop_low"), opad);
         else if(population>=6) tooltip.addImage(Global.getSettings().getSpriteName("illustrations", "vulp_pop_high"), opad);
         else tooltip.addImage(Global.getSettings().getSpriteName("illustrations", "vulp_pop_med"), opad);
@@ -221,18 +231,11 @@ public class VulpoidPopulation extends BaseMarketConditionPlugin implements Mark
         if (getAvailabilityStability()>0) tooltip.addPara("%s stability", opad, Misc.getHighlightColor(), "+"+(int)getAvailabilityStability());
         if (getAvailabilityGrowth()>0) tooltip.addPara("%s population growth (based on market size)", opad, Misc.getHighlightColor(), "+"+(int)getAvailabilityGrowth());
         
-        
-        if(market.getMemoryWithoutUpdate().contains(MemFlags.RECENTLY_BOMBARDED)) {
-            tooltip.addPara("\nA recent orbital bombardment has devastated the Vulpoid population. "+
-                    "It will be take up to a month before the population can start to recover, assuming producion is still available.", opad);
-        }
-        else if (getPopCap() > 0) {
-            if (getPopCap() <= getPopulation()) {
-                tooltip.addPara("\nThe population has reached its maximum size for current production.", opad);
-            } else {
-                int progress_percent = (int)((population*100)%100);
-                tooltip.addPara("\nProgress to next level: %s", opad, Misc.getHighlightColor(), progress_percent+"%");
-            }
+        if (getPopCap() <= getPopulation()) {
+            tooltip.addPara("\nThe population has reached its maximum size for current production.", opad);
+        } else {
+            int progress_percent = (int)((population*100)%100);
+            tooltip.addPara("\nProgress to next level: %s", opad, Misc.getHighlightColor(), progress_percent+"%");
         }
     }
     
