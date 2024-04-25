@@ -53,7 +53,7 @@ public abstract class ListBasedInteractionDialogPlugin implements InteractionDia
     
     @Override
     public void reinit(boolean withContinueOnRuleFound) {
-        //visual.fadeVisualOut();  // TODO FIGURE OUT WHERE TO PUT THIS
+        loadOptions();
         if(!this.equals(dialog.getPlugin())) {
             dialog.setPlugin(this);
             //delegated = false;
