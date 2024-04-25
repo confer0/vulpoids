@@ -1881,13 +1881,13 @@ vulpChatAssignmentOption,VulpoidChatTopLevelOptions,,,,vulpChatAssignment:Discus
 vulpChatAssignment,DialogOptionSelected,$option == vulpChatAssignment,FireAll VulpoidChatAssignmentOptions,,,,
 ,,,,,,,
 vulpChatSurroundingsOption,VulpoidChatTopLevelOptions,,,,vulpChatSurroundings:Socialize about surroundings,,
-vulpChatSurroundings,DialogOptionSelected,$option == vulpChatSurroundings,OpenVulpoidLocalEntitiesDialog VulpoidChatTopLevelOptions,,,,
+vulpChatSurroundings,DialogOptionSelected,$option == vulpChatSurroundings,OpenListBasedDialog localEntities VulpoidChatTopLevelOptions,,,,
 ,,,,,,,
 vulpChatCurrentAffairsOption,VulpoidChatTopLevelOptions,,,,vulpChatCurrentAffairs:Socialize about current affairs,,
-vulpChatCurrentAffairs,DialogOptionSelected,$option == vulpChatCurrentAffairs,OpenVulpoidCurrentAffairsDialog VulpoidChatTopLevelOptions,,,,
+vulpChatCurrentAffairs,DialogOptionSelected,$option == vulpChatCurrentAffairs,OpenListBasedDialog currentAffairs VulpoidChatTopLevelOptions,,,,
 ,,,,,,,
 vulpChatPetOption,VulpoidChatTopLevelOptions,,,,vulpChatPet:Pet,,
-vulpChatPet,DialogOptionSelected,$option == vulpChatPet,,TODO,,,
+vulpChatPet,DialogOptionSelected,$option == vulpChatPet,OpenListBasedDialog VulpoidPettingOptions VulpoidChatTopLevelOptions,,,,
 ,,,,,,,
 vulpChat_exitOption,VulpoidChatTopLevelOptions,,"SetShortcut vulpChat_exit ""ESCAPE""",,100:vulpChat_exit:Dismiss,,
 vulpChat_exit,DialogOptionSelected,$option == vulpChat_exit,"HideFirstPerson
@@ -1974,6 +1974,175 @@ vulpChat_researchComplete_terraformer7,DialogOptionSelected,$option == vulpChat_
 VulpoidTerraformer giveIntel","""None of the information I had access to described that ship. But it must have been something special, especially if the XIV tried to escort it instead of scrapping it for parts.""
 
 You thank her for the information and send the final coordinates to your nav officer. A site so deep in abyssal hyperspace is almost certainly untouched, but will be difficult to reach and return from.",vulpChat_researchCompleteFinish:Continue,# TODO: Terraformer intel,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+vulpChatPet_headpatsOption,VulpoidPettingOptions,,,,vulpChatPet_headpats:Give headpats,,
+,,,,,,,
+vulpChatPet_giftOption,VulpoidPettingOptions,,,,vulpChatPet_gift:Offer gifts,,
+vulpChatPet_gift,DialogOptionSelected,$option == vulpChatPet_gift,OpenListBasedDialog VulpoidPettingGiftOptions,TEST TEXT,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+vulpChatGift_foodOption,VulpoidPettingGiftOptions,PlayerHasCargo food 1,"$optionTooltip:vulpChatGift_food = ""Requires 1 unit of food.""
+$optionColor:vulpChatGift_food = ""128,255,0""",,vulpChatGift_food:Have a meal together,,
+vulpChatGift_food,DialogOptionSelected,$option == vulpChatGift_food,"RemoveCommodity food 1
+ExitRulesToPlugin",TODO: you have a lovely meal.,,,
+,,,,,,,
+,,,,,,,
+vulpChatGift_mangonutOption,VulpoidPettingGiftOptions,PlayerHasCargo mangonuts 1,"$optionTooltip:vulpChatGift_mangonut = ""Requires 1 unit of mangonuts.""
+$optionColor:vulpChatGift_mangonut = ""192,96,0""",,vulpChatGift_mangonut:Offer a mangonut,,
+,,,,,,,
+vulpChatGift_mangonutDisableEatAnother,VulpDisableEatAnother,!PlayerHasCargo mangonuts 1,"SetEnabled vulpChatGift_mangonutEatAnother false
+SetTooltip vulpChatGift_mangonutEatAnother ""No more mangonuts available.""",,,,
+vulpChatGift_mangonutEatAnotherSubtract,DialogOptionSelected,"$option == vulpChatGift_mangonutEatAnother
+!$ateAnother score:1000","RemoveCommodity mangonuts 1
+$ateAnother = true
+FireBest DialogOptionSelected
+unset $ateAnother",,,,
+# Dummy - Same every time,,,,,,,
+vulpChatGift_mangonutDummySel,DialogOptionSelected,"$option == vulpChatGift_mangonut
+$vulp_profectoAssignment == vulpoids","SetVulpoidExpression default
+RemoveCommodity mangonuts 1
+$option = vulpChatGift_mangonutDummy
+FireBest DialogOptionSelected",,,,
+vulpChatGift_mangonutDummy,DialogOptionSelected,$option == vulpChatGift_mangonutDummy,,"""Ooh, a treat! Thank you $playerSirOrMadam!""
+
+She happily scarfs down the fruit down to the nut, and pauses for a moment.",vulpChatGift_mangonutDummy1:Wait,,
+vulpChatGift_mangonutDummy1,DialogOptionSelected,$option == vulpChatGift_mangonutDummy1,,"You see fruit taking effect as her tail starts wagging. Slow at first, then faster, as her eyes lose some of their focus.
+
+""Ooh, I feel funny! This is nice! Thank you, $playerSirOrMadam!""
+
+She stares at you, doe-eyed and slightly delirious. Her tail is flopping back and forth, happy but sluggish.","vulpChatGift_mangonutDummyChores:Give her some chores to busy herself
+vulpChatGift_mangonutDummySnuggle:Snuggle with her
+vulpChatGift_mangonutDummyEatCore:Remind her the nut is edible too",,
+vulpChatGift_mangonutDummyChores,DialogOptionSelected,$option == vulpChatGift_mangonutDummyChores,,"You task her with a few items of simple busywork, and she gets to them as best as she's able. She's more than happy to be doing work for a human and hums a cheery tune, albeit slightly off-beat from the intoxication.
+
+As she works though, you see her expression waver for a moment.","vulpChatGift_mangonutDummyChoresFinish:Just let her finish
+vulpChatGift_mangonutDummyChores1:""Everything alright?""",,
+vulpChatGift_mangonutDummyChores1,DialogOptionSelected,$option == vulpChatGift_mangonutDummyChores1,SetVulpoidExpression cry,"""It's just..."" She wavers before suddenly bursting into tears.
+
+""I love you so much! You're so nice, you're giving me treats, and letting me work for you, and it's just... I don't deserve to be happier than you! I wish I could do more!""
+
+She runs up and hugs you as hard as she's able. Her tail wraps around you, leaving you completely enveloped in fluffy fur and pure, unrestrained love.",vulpChatGift_mangonutDummyChoresComfort:Comfort her,,
+vulpChatGift_mangonutDummyChoresComfort,DialogOptionSelected,$option == vulpChatGift_mangonutDummyChoresComfort,SetVulpoidExpression default,"You assure her that she's doing an excellent job, and point out how well she did on the very important tasks you assigned to her.
+
+Reassured by your words, and reminded of the chores that she's leaving unfinished, she perks up again.
+
+""Thank you $playerSirOrMadam! You always know what to say! I'll get everything done now, thank you!""
+
+She gives you a quick peck on the cheek, and hurries off to complete her busywork.",vulpChatGift_mangonutDummyChoresFinish:Continue,,
+vulpChatGift_mangonutDummyChoresFinish,DialogOptionSelected,$option == vulpChatGift_mangonutDummyChoresFinish,"SetVulpoidExpression default
+ExitRulesToPlugin","It doesn't take too much longer for her to complete the last of the chores, and the effects of the mangonut fruit have largely worn off.",,,
+vulpChatGift_mangonutDummySnuggle,DialogOptionSelected,$option == vulpChatGift_mangonutDummySnuggle,SetVulpoidExpression blush,"You sit down on a couch, and she eagerly flops down alongside you. Her tail wraps around your back as she snuggles up tighter, leaving you half-smothered in fluffy fur.
+
+She coos happily as you pet her, silky-smooth fur flowing between your fingers with each stroke.
+
+Between the fruit and the cuddling, it takes only a minute you to hear quiet snoring. And, swaddled in the warm, fuzzy blanket that is a Vulpoid's body and tail, you feel sleep at the edge of your consciousness as well.","vulpChatGift_mangonutDummySnuggleSleep:Have a short nap
+vulpChatGift_mangonutDummySnuggleGetUp:Get up",,
+vulpChatGift_mangonutDummySnuggleSleep,DialogOptionSelected,$option == vulpChatGift_mangonutDummySnuggleSleep,SetVulpoidExpression default,"As you stir awake, you find that you're been tucked into your own bed. Your nose catches the scent of a hot drink on the nightstand, still fresh.
+
+A weight at your feet shifts, and the fluffy body curled up atop your covers stretches out, and crawls up to meet you face-to-face.",vulpChatGift_mangonutDummySnuggleSleep1:Continue,,
+vulpChatGift_mangonutDummySnuggleSleep1,DialogOptionSelected,$option == vulpChatGift_mangonutDummySnuggleSleep1,,"""Good morning sleepyhead! I hope you slept cozy! There's a wake-up drink next to you, and your slippers are nice and warm!""
+
+She sets your slippers - which you note she must have been sleeping on - on the floor next to the bed, and scarpers off to prepare some other minor comfort for you.",vulpChatGift_mangonutDummySnuggleSleep2:Get up,,
+vulpChatGift_mangonutDummySnuggleSleep2,DialogOptionSelected,$option == vulpChatGift_mangonutDummySnuggleSleep2,ExitRulesToPlugin,,,,
+vulpChatGift_mangonutDummySnuggleGetUp,DialogOptionSelected,$option == vulpChatGift_mangonutDummySnuggleGetUp,SetVulpoidExpression default,"You carefully extricate yourself from the sleeping Vulpoid, and busy yourself with some of the managerial tasks that come with operating a $shipOrFleet.
+
+After a short while, you catch the sound of her stirring behind you. She stretches out, giving a large yawn before realizing you're not next to her.",vulpChatGift_mangonutDummySnuggleGetUp1:Continue,,
+vulpChatGift_mangonutDummySnuggleGetUp1,DialogOptionSelected,$option == vulpChatGift_mangonutDummySnuggleGetUp1,"SetVulpoidExpression blush
+ExitRulesToPlugin","A flash of guilt crosses her face as she realizes that she overslept, but your expression reassures her that no harm was done.",,,
+vulpChatGift_mangonutDummyEatCore,DialogOptionSelected,$option == vulpChatGift_mangonutDummyEatCore,,"""Oh!"" She turns her attention to the pit, and after a few false starts she manages to bite down on the smooth nut.
+
+The effect is almost instantaneous, the much higher theobromine content of the pit flushing through her the moment she swallows.",vulpChatGift_mangonutDummyEatCore1:Continue,,
+vulpChatGift_mangonutDummyEatCore1,DialogOptionSelected,$option == vulpChatGift_mangonutDummyEatCore1,"$numNuts = 1 0
+FireBest VulpDisableEatAnother","""Woah, hee hee hee!"" she giggles. ""That feels gooood!""
+
+Her body sways awkwardly, suspended in something between a dance and a drunken stumble.
+
+""Sooo... waddya you wanna do now...?""","vulpChatGift_mangonutDummySnuggle:Snuggle with her
+vulpChatGift_mangonutEatAnother:Offer a second mangonut",,
+vulpChatGift_mangonutDummyEatSecond,DialogOptionSelected,"$option == vulpChatGift_mangonutEatAnother
+$vulp_profectoAssignment == vulpoids
+$numNuts == 1","$numNuts = 2 0
+FireBest VulpDisableEatAnother","""Oh, yay!"" She eagerly reaches out and devours the second mangonut, fruit and pit.
+
+""Ehehehe, I can feel my fur! I'm so fluffy, it's like - woah! That's really fluffy! Have you ever felt, you... you should! We should snuggle!""
+
+Something that could could be generously called an idea crosses her mind. ""Oh, wait! D'you have any more fruit? Pretty please?""","vulpChatGift_mangonutDummySnuggle:Just snuggle on the couch
+vulpChatGift_mangonutEatAnother:Give her a third mangonut",,
+vulpChatGift_mangonutDummyEatThird,DialogOptionSelected,"$option == vulpChatGift_mangonutEatAnother
+$vulp_profectoAssignment == vulpoids
+$numNuts == 2","SetVulpoidExpression blush
+$numNuts = 3 0
+FireBest VulpDisableEatAnother","The third fruit disappears in short order, though not quite as quickly as the second.
+
+""Haha... That's (hic!) real nice..."" She hiccups with delerious pleasure.
+
+""I thi- (hic!) think I... What was I (hic!) doing...?""","vulpChatGift_mangonutDummyPutToBed:""You were going to bed.""
+vulpChatGift_mangonutDummySnuggle:""You were asking to snuggle.""
+vulpChatGift_mangonutEatAnother:""You were eating these."" (offer another)",,
+vulpChatGift_mangonutDummyPutToBed,DialogOptionSelected,$option == vulpChatGift_mangonutDummyPutToBed,,"""Okay, I (hic!) I guess I am (hic!) sleepy...""
+
+You help support her as she staggers towards the bed. The moment she reaches it she collapses like she's just finished a multi-day dock shift, pinning your arms underneath her.
+
+Quiet, muffled snoring immediately emerges from the pillow her face is buried in.",vulpChatGift_mangonutDummySnuggleGetUp:Continue,,
+vulpChatGift_mangonutDummyEatFourth,DialogOptionSelected,"$option == vulpChatGift_mangonutEatAnother
+$vulp_profectoAssignment == vulpoids
+$numNuts == 3",,"""Yay, mo- (hic!) more!""
+
+She nearly falls over herself just reaching for the fruit, and devours it clumsily but ravenously. As she finishes, her face is a picture of total, happy delirium.
+
+""I'mmm ha... hav- (hic!) haaaving... having a... (hic!) It's niiice...""","vulpChatGift_mangonutDummyPutToBed:That's enough, take her to bed",,
+# Profecto - First time,,,,,,,
+vulpChatGift_mangonutProfecto,DialogOptionSelected,$option == vulpChatGift_mangonut,SetVulpoidExpression bruh,"""Oh, um, hm.""","vulpChatGift_mangonutProfecto1:""Something wrong?""",,
+vulpChatGift_mangonutProfecto1,DialogOptionSelected,$option == vulpChatGift_mangonutProfecto1,,"""It's just... those are pretty high in theobromine. That's the same chemical that makes chocolate addictive to us.""
+
+""If I eat that, I'll end up a giggly mess until I've slept it off.""","vulpChatGift_mangonutProfectoCancel:""Never mind, then.""
+vulpChatGift_mangonutProfecto2:""If you'd enjoy it, then why not?""",,
+vulpChatGift_mangonutProfectoCancel,DialogOptionSelected,$option == vulpChatGift_mangonutProfectoCancel,ExitRulesToPlugin,"""Yeah, that's probably for the best. Thank you though.""",,,
+vulpChatGift_mangonutProfecto2,DialogOptionSelected,$option == vulpChatGift_mangonutProfecto2,SetVulpoidExpression blush,"""Well, it's not that I wouldn't enjoy it. I've seen the effect it has on ordinary Vulpoids, they enjoy it quite a bit.""
+
+""But I'd be a bit out of sorts. I'd need to trust you to take care of me...""
+
+Her tail starts wagging involuntarily at the idea.","vulpChatGift_mangonutProfectoCancel:""Perhaps not, for your sake.""
+vulpChatGift_mangonutProfecto3:""Why don't we try it then?""",,
+vulpChatGift_mangonutProfecto3,DialogOptionSelected,$option == vulpChatGift_mangonutProfecto3,"RemoveCommodity mangonuts 1
+$ateMangofruit = true
+$option = vulpChatGift_mangonutProfecto4
+FireBest DialogOptionSelected","""You know what, yeah! Why don't we!""",,,
+vulpChatGift_mangonutProfecto4,DialogOptionSelected,$option == vulpChatGift_mangonutProfecto4,SetVulpoidExpression default,"She takes the mangofruit and begins eating the flesh, leaving the nut intact for the moment. Her pupils dilate, and her tail wags sluggishly from side to side.","vulpChatGift_mangonutProfecto5:""Thoughts?""",,
+vulpChatGift_mangonutProfecto5,DialogOptionSelected,$option == vulpChatGift_mangonutProfecto5,,"""Tasty, very tasty. And the feeling is strange. I can tell my thinking's impaired, I'm trying to mentally calculate Navier-Stokes equations and can't keep track.""
+
+""But I'm also not as upset about that as I expected. It's so... calming. And I haven't even eaten the nut yet.""",vulpChatGift_mangonutProfecto6:Continue,,
+vulpChatGift_mangonutProfecto6,DialogOptionSelected,$option == vulpChatGift_mangonutProfecto6,,"Without any more hesitation, she pops the nut into her mouth and chews. The effect is dramatic, the regular posture of a Profecto promptly slumping into a wobbling stance that struggles to stay upright.
+
+""Woah, hahaha! This is crazy... I've got to think about where my limbs are. They don't just stay where I want them, hahaha!"" She laughs, mostly to herself, as she waves her floppy limbs around.
+
+""And my fur, I can feel aaall of it! I'm so fluffy, I never really realized how fluffy I am.""",vulpChatGift_mangonutProfecto7:Continue,,
+vulpChatGift_mangonutProfecto7,DialogOptionSelected,$option == vulpChatGift_mangonutProfecto7,SetVulpoidExpression blush,"She suddenly remembers you're in the room, and looks over - then does a double-take.
+
+""Woah. You're... gorgeous,"" she gasps out, a strong blush and heavily-wagging tail providing additional affirmation.
+
+""So, uh, did you want to do something? Please?""",vulpChatGift_mangonutProfectoCancel:INCOMPLETE - EARLY EXIT,,
+,,,,,,,
+,,,,,"Options: Let her sit around, snuggle together, or give another.",,
+,,,,,,,
+,,,,,,,
+,,,,[begs for more],,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+vulpChatGift_mangonutLaisa,DialogOptionSelected,"$option == vulpChatGift_mangonut
+$id == laisa","SetVulpoidExpression fear
+RemoveCommodity mangonuts 1
+ExitRulesToPlugin","""Oh, no, not those!"" (INCOMPLETE!)",,,
+vulpChatGift_mangonutHasHadBefore,DialogOptionSelected,"$option == vulpChatGift_mangonut
+$hasEatenMangonuts score:100","SetVulpoidExpression blush
+RemoveCommodity mangonuts 1
+ExitRulesToPlugin","""Oh, I really shouldn't..."" (INCOMPLETE!)",,,
 ,,,,,,,
 ,,,,,,,
 ,,,,,,,
@@ -2641,8 +2810,7 @@ vulpChatSurroundings_wormholeDummy,DialogOptionSelected,"$option == vulpChatSurr
 $vulp_profectoAssignment == vulpoids","SetVulpoidExpression default
 ExitRulesToPlugin",TODO: wormhole Dummy,,,
 vulpChatSurroundings_wormholeCalibratedOption,VulpoidChatSurroundingsOptions,"$topic.wormhole score:1000
-$player.gotWormholeCalibrationData","$optionColor:vulpChatSurroundings_wormholeCalibrated = ""255,0,255""
-AddCommodity organs 100",,vulpChatSurroundings_wormholeCalibrated:$topic.name,,wormholeCalibrated
+$player.gotWormholeCalibrationData","$optionColor:vulpChatSurroundings_wormholeCalibrated = ""255,0,255""",,vulpChatSurroundings_wormholeCalibrated:$topic.name,,wormholeCalibrated
 vulpChatSurroundings_wormholeCalibrated,DialogOptionSelected,$option == vulpChatSurroundings_wormholeCalibrated,"SetVulpoidExpression default
 ExitRulesToPlugin","""A stable wormhole. Fascinating technology, and impressively efficient! I wonder why the Domain favored the Gates.""
 

@@ -7,6 +7,7 @@ import com.fs.starfarer.api.impl.campaign.RuleBasedInteractionDialogPluginImpl;
 import com.fs.starfarer.api.impl.campaign.rulecmd.FireBest;
 import com.fs.starfarer.api.util.Misc;
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,6 +17,7 @@ public class RulePopulatedListDialogPlugin extends ListBasedInteractionDialogPlu
     
     @Override
     protected void loadOptions() {
+        entries = new ArrayList();
         optionMemoryMaps = new HashMap();
     }
     
@@ -31,8 +33,18 @@ public class RulePopulatedListDialogPlugin extends ListBasedInteractionDialogPlu
         return null;
     }
     
+    @Override
+    protected String getEntryTooltipString(Object entry) {
+        if(!(entry instanceof Option)) return null;
+        Option option = (Option) entry;
+        if(optionMemoryMaps.get(option).get(MemKeys.LOCAL).contains("$optionTooltip:"+(option).id)) {
+            return  optionMemoryMaps.get(option).get(MemKeys.LOCAL).getString("$optionTooltip:"+(option).id);
+        }
+        return null;
+    }
+    
     protected Map<String, MemoryAPI> getMemoryMapCopy() {
-        Map<String, MemoryAPI> memoryMap = new HashMap();//conversationDelegate.getMemoryMap();
+        Map<String, MemoryAPI> memoryMap = new HashMap();
         for(String key : conversationDelegate.getMemoryMap().keySet()) {
             memoryMap.put(key, conversationDelegate.getMemoryMap().get(key));
         }

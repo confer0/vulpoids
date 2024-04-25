@@ -33,6 +33,7 @@ public abstract class ListBasedInteractionDialogPlugin implements InteractionDia
     protected VisualPanelAPI visual;
     
     protected InteractionDialogPlugin backtrack;
+    protected boolean fireBestOnExit;
     protected String triggerOnExit;
     
     boolean delegated = false;
@@ -63,9 +64,10 @@ public abstract class ListBasedInteractionDialogPlugin implements InteractionDia
         }
     }
     
-    public void initWithBacktrack(InteractionDialogAPI dialog, String triggerOnExit) {
-        backtrack = dialog.getPlugin();
+    public void initWithBacktrack(InteractionDialogAPI dialog, String triggerOnExit, boolean fireBestOnExit) {
+        this.backtrack = dialog.getPlugin();
         this.triggerOnExit = triggerOnExit;
+        this.fireBestOnExit = fireBestOnExit;
         init(dialog);
     }
     
@@ -109,7 +111,7 @@ public abstract class ListBasedInteractionDialogPlugin implements InteractionDia
         }
         
         if (!delegated) {
-            if(text!=null) dialog.addOptionSelectedText(optionData);
+            if(text!=null && !(optionData instanceof OptionId)) dialog.addOptionSelectedText(optionData);
             lastNonRuleOption = optionData;
             
             if(optionData instanceof OptionId) {
@@ -159,7 +161,8 @@ public abstract class ListBasedInteractionDialogPlugin implements InteractionDia
                             if(backtrack instanceof ListBasedInteractionDialogPlugin) {
                                 //((RuleBasedDialog)backtrack).reinit(false);
                                 dialog.setPlugin(backtrack);
-                                ((ListBasedInteractionDialogPlugin)backtrack).doBacktrackToHere(triggerOnExit, false);
+                                if(triggerOnExit!=null) ((ListBasedInteractionDialogPlugin)backtrack).doBacktrackToHere(triggerOnExit, fireBestOnExit);
+                                else ((ListBasedInteractionDialogPlugin)backtrack).reinit(false);
                             }
                             else dialog.setPlugin(backtrack); backtrack.init(dialog);
                         }
