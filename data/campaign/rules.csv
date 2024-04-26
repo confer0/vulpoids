@@ -2205,11 +2205,23 @@ vulpChatGift_mangonutProfectoRest,DialogOptionSelected,$option == vulpChatGift_m
 Setting her under the covers, she begins squeakily snoring the moment her head hits the pillow.
 
 While she naps, you take the opportunity to catch up on some of the bureaucratic duties of operating a $shipOrFleet.",vulpChatGift_mangonutProfectoRest1:Continue,,
-vulpChatGift_mangonutProfectoRest1,DialogOptionSelected,$option == vulpChatGift_mangonutProfectoRest1,,TODO - WAKE UP,,,# TODO - chance to get music if the fruit eaten count is high enough.
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
+vulpChatGift_mangonutProfectoRest1,DialogOptionSelected,$option == vulpChatGift_mangonutProfectoRest1,,"Some time later, you hear the sound of stirring behind you. $name stretches out, yawns, and takes stock of her surroundings.
+
+She seems to recall that you had to carry her to bed, and turns embarrassedly to you.
+
+""I guess I overdid it a little, huh?""","vulpChatGift_mangonutProfectoPostRestOverdid:""Maybe a bit.""
+vulpChatGift_mangonutProfectoPostRestEnjoy:""Well, did you enjoy it?""
+vulpChatGift_mangonutProfectoPostRestFine:""It's fine, no trouble.""",,# TODO - chance to get music if the fruit eaten count is high enough.
+vulpChatGift_mangonutProfectoPostRestOverdid,DialogOptionSelected,$option == vulpChatGift_mangonutProfectoPostRestOverdid,,"""Yeah, that was probably a bit too much.""
+
+She gets a slightly distant look in her eyes.
+
+""Maybe just two, next time...""",vulpChatGift_mangonutProfectoPostRestEnd:Continue,,
+vulpChatGift_mangonutProfectoPostRestEnjoy,DialogOptionSelected,$option == vulpChatGift_mangonutProfectoPostRestEnjoy,,"""Oh yeah I did. That's part of the problem,"" she chuckles. ""It's so good that it's hard to resist.""
+
+She looks slightly hungry. ""Next time, I'll be more prepared for that last one.""",vulpChatGift_mangonutProfectoPostRestEnd:Continue,,
+vulpChatGift_mangonutProfectoPostRestFine,DialogOptionSelected,$option == vulpChatGift_mangonutProfectoPostRestFine,,,vulpChatGift_mangonutProfectoPostRestEnd:Continue,,
+vulpChatGift_mangonutProfectoPostRestEnd,DialogOptionSelected,$option == vulpChatGift_mangonutProfectoPostRestEnd,ExitRulesToPlugin,,,,
 ,,,,,,,
 ,,,,,,,
 ,,,,,,,
