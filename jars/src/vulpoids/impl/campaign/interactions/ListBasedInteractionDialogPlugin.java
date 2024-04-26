@@ -41,7 +41,7 @@ public abstract class ListBasedInteractionDialogPlugin implements InteractionDia
     Object lastNonRuleOption;
     
     //ArrayList<Object[]> pages;
-    ArrayList<Object> entries = new ArrayList();
+    ArrayList<Object> entries;
     int ITEMS_PER_PAGE = 6;
     int page = 0;
     //int MAX_ITEMS_PER_PAGE = 6;
@@ -89,7 +89,7 @@ public abstract class ListBasedInteractionDialogPlugin implements InteractionDia
         }
     }
     
-    protected abstract void loadOptions();
+    protected void loadOptions() {entries = new ArrayList();}
     
     protected void addDescriptionText() {}
     protected abstract String getEntryLabel(Object entry);

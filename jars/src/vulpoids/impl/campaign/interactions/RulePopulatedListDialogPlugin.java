@@ -17,7 +17,7 @@ public class RulePopulatedListDialogPlugin extends ListBasedInteractionDialogPlu
     
     @Override
     protected void loadOptions() {
-        entries = new ArrayList();
+        super.loadOptions();
         optionMemoryMaps = new HashMap();
     }
     

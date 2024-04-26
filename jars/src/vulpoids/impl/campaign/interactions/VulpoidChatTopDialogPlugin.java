@@ -17,6 +17,7 @@ public class VulpoidChatTopDialogPlugin extends ListBasedInteractionDialogPlugin
     
     @Override
     protected void loadOptions() {
+        super.loadOptions();
         if (Global.getSector().getMemoryWithoutUpdate().getBoolean("$vulp_didInterrogation")) {
             for(CargoStackAPI stack : Global.getSector().getPlayerFleet().getCargo().getStacksCopy()) {
                 if(Vulpoids.CARGO_ITEM.equals(stack.getCommodityId())) {
@@ -146,7 +147,7 @@ public class VulpoidChatTopDialogPlugin extends ListBasedInteractionDialogPlugin
             conversationDelegate = new RuleBasedInteractionDialogPluginImpl();
             conversationDelegate.setEmbeddedMode(true);
             conversationDelegate.init(dialog);
-            textPanel.clear();
+            //textPanel.clear();
             dialog.getInteractionTarget().setActivePerson(person);
             conversationDelegate.notifyActivePersonChanged();
             if(!conversationDelegate.fireBest("OpenVulpoidChatDialog")) {
