@@ -181,7 +181,7 @@ public class VulpoidModPlugin extends BaseModPlugin {
             @Override
             protected void addItemDescriptionImpl(Industry industry, TooltipMakerAPI text, SpecialItemData data,
                     InstallableItemDescriptionMode mode, String pre, float pad) {
-                text.addPara(pre + "Improves local atmospheric conditions.", pad);
+                text.addPara(pre + "Improves local atmospheric conditions. Adds demand for %s units of volatiles and transplutonics.", pad, Misc.getHighlightColor(), "4");
             }
             @Override
             public void apply(Industry industry) {
@@ -189,9 +189,24 @@ public class VulpoidModPlugin extends BaseModPlugin {
                 FilteredAir plugin = (FilteredAir)industry.getMarket().getCondition(Vulpoids.CONDITION_FILTERED_AIR).getPlugin();
                 if(carryOverPollutionRemovalTimer!=-1) plugin.setPollutionRemovalTimer(carryOverPollutionRemovalTimer);
                 if(plugin.shouldRemovePollution()) industry.getMarket().removeCondition(Conditions.POLLUTION);
+                if(industry instanceof BaseIndustry) {
+                    BaseIndustry b = (BaseIndustry) industry;
+                    b.demand(9, Commodities.RARE_METALS, 4, Misc.ucFirst(spec.getName().toLowerCase()));
+                    b.demand(9, Commodities.VOLATILES, 4, Misc.ucFirst(spec.getName().toLowerCase()));
+                    float rare_hazard = 1f - industry.getMarket().getCommodityData(Commodities.RARE_METALS).getAvailable() / (float)industry.getDemand(Commodities.RARE_METALS).getQuantity().getModifiedInt();
+                    rare_hazard = Math.round(rare_hazard * 0.5f * 100f) / 100f;
+                    float vol_hazard = 1f - industry.getMarket().getCommodityData(Commodities.VOLATILES).getAvailable() / (float)industry.getDemand(Commodities.VOLATILES).getQuantity().getModifiedInt();
+                    vol_hazard = Math.round(vol_hazard * 0.5f * 100f) / 100f;
+                    if(rare_hazard >= vol_hazard && rare_hazard > 0) {
+                        industry.getMarket().getHazard().modifyFlat(spec.getId(), rare_hazard, Misc.ucFirst(spec.getName().toLowerCase()) + " transplutonic shortage");
+                    } else if(vol_hazard > 0) {
+                        industry.getMarket().getHazard().modifyFlat(spec.getId(), vol_hazard, Misc.ucFirst(spec.getName().toLowerCase()) + " volatiles shortage");
+                    }
+                }
             }
             @Override
             public void unapply(Industry industry) {
+                industry.getMarket().getHazard().unmodifyFlat(spec.getId());
                 if(industry.getMarket().hasCondition(Vulpoids.CONDITION_FILTERED_AIR)) {
                     carryOverPollutionRemovalTimer = ((FilteredAir)industry.getMarket().getCondition(Vulpoids.CONDITION_FILTERED_AIR).getPlugin()).getPollutionRemovalTimer();
                 } else {
@@ -281,12 +296,11 @@ public class VulpoidModPlugin extends BaseModPlugin {
             @Override
             public void unapply(Industry industry) {
                 super.unapply(industry);
-                //industry.getSupply(Vulpoids.MANGONUT_ITEM).getQuantity().unmodify();
                 industry.getSupply(Vulpoids.MANGONUT_ITEM).getQuantity().unmodify();
             }
             @Override
             public String[] getSimpleReqs(Industry industry) {
-                return new String [] {/*NO_TRANSPLUTONIC_ORE_DEPOSITS, NO_VOLATILES_DEPOSITS*/};
+                return new String [] {ItemEffectsRepo.HABITABLE};
             }
         });
     }

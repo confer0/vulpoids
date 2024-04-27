@@ -182,7 +182,7 @@ public class VulpoidPopulation extends BaseMarketConditionPlugin implements Mark
         if(market.getMemoryWithoutUpdate().contains(MemFlags.RECENTLY_BOMBARDED)) {
             tooltip.addImage(Global.getSettings().getSpriteName("illustrations", "bombard_tactical_result"), opad);
             tooltip.addPara("\nA recent orbital bombardment has devastated the Vulpoid population. "+
-                    "It will be take up to a month before the population can start to recover, assuming producion is still available.", opad);
+                    "It will be take up to a month before the population can start to recover, assuming supply is still available.", opad);
             return;
         }
         
