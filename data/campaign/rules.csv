@@ -710,7 +710,7 @@ SetVulpoidExpression blush","She completely fails to hold a neutral expression, 
 
 ""Well... naturally! It's only polite to remember someone's name.""",vulp_interrogationNameLaisa:Continue,,
 vulp_interrogationNameFluffy,DialogOptionSelected,$option == vulp_interrogationNameFluffy,"$player.ethosSarcastic++
-SetImportantName laisa ""'Fluffy'""
+SetImportantName laisa ""Fluffy""
 SetVulpoidExpression bruh
 AdjustRepPerson laisa COOPERATIVE 1
 $saidFluffy = true 0","""Ah, yes. Because why would you use a name that conveys meaningful information, when you could use a name - for pets! - that conveys something that you can see. With your eyes. Which you have.""
@@ -731,7 +731,7 @@ vulp_interrogationNameFluffy2,DialogOptionSelected,$option == vulp_interrogation
 SetVulpoidExpression angry
 $player.ethosSarcastic++
 $saidFluffy2 = true 0
-SetImportantName laisa ""'Fluffy'""","She only scowls now, and her tail remains motionless. Apparently it's not as funny the second time.",vulp_interrogationHub:Continue,,
+SetImportantName laisa ""Fluffy""","She only scowls now, and her tail remains motionless. Apparently it's not as funny the second time.",vulp_interrogationHub:Continue,,
 vulp_interrogationNameInsistCode,DialogOptionSelected,$option == vulp_interrogationNameInsistCode,"SetImportantName laisa ""V/P-RLR-001""
 SetVulpoidExpression fear","Your offer appears to catch her off guard.
 
@@ -2004,6 +2004,22 @@ $mangonutsEaten++
 $ateAnother = true
 FireBest DialogOptionSelected
 unset $ateAnother",,,,
+vulpChatGift_mangonutDisableEatFour,VulpDisableEatFour,!PlayerHasCargo mangonuts 4,"SetEnabled vulpChatGift_mangonutEatFour false
+SetTooltip vulpChatGift_mangonutEatFour ""Not enough mangonuts available.""",,,,
+vulpChatGift_mangonutEatFourSubtract,DialogOptionSelected,"$option == vulpChatGift_mangonutEatFour
+!$ateAnother score:1000","RemoveCommodity mangonuts 4
+$numNuts++
+$numNuts++
+$numNuts++
+$numNuts++
+$mangonutsEaten++
+$mangonutsEaten++
+$mangonutsEaten++
+$mangonutsEaten++
+$ateAnother = true
+FireBest DialogOptionSelected
+unset $ateAnother",,,,
+,,,,,,,
 # Dummy - Same every time,,,,,,,
 vulpChatGift_mangonutDummySel,DialogOptionSelected,"$option == vulpChatGift_mangonut
 $vulp_profectoAssignment == vulpoids score:1000","SetVulpoidExpression default
@@ -2044,10 +2060,11 @@ She coos happily as you pet her, silky-smooth fur flowing between your fingers w
 
 Between the fruit and the cuddling, it takes only a minute you to hear squeaky snoring. And, swaddled in the warm, fuzzy blanket that is a Vulpoid's body and tail, you feel sleep at the edge of your consciousness as well.","vulpChatGift_mangonutDummySnuggleSleep:Have a short nap
 vulpChatGift_mangonutDummySnuggleGetUp:Get up",,
-vulpChatGift_mangonutDummySnuggleSleep,DialogOptionSelected,$option == vulpChatGift_mangonutDummySnuggleSleep,SetVulpoidExpression default,"As you stir awake, you find that you're been tucked into your own bed. Your nose catches the scent of a hot drink on the nightstand, still fresh.
+vulpChatGift_mangonutDummySnuggleSleep,DialogOptionSelected,$option == vulpChatGift_mangonutDummySnuggleSleep,HideFirstPerson,"As you stir awake, you find that you're been tucked into your own bed. Your nose catches the scent of a hot drink on the nightstand, still fresh.
 
 A weight at your feet shifts, and the fluffy body curled up atop your covers stretches out, and crawls up to meet you face-to-face.",vulpChatGift_mangonutDummySnuggleSleep1:Continue,,
-vulpChatGift_mangonutDummySnuggleSleep1,DialogOptionSelected,$option == vulpChatGift_mangonutDummySnuggleSleep1,,"""Good morning sleepyhead! I hope you slept cozy! There's a wake-up drink next to you, and your slippers are nice and warm!""
+vulpChatGift_mangonutDummySnuggleSleep1,DialogOptionSelected,$option == vulpChatGift_mangonutDummySnuggleSleep1,"ShowPersonVisual
+SetVulpoidExpression default","""Good morning sleepyhead! I hope you slept cozy! There's a wake-up drink next to you, and your slippers are nice and warm!""
 
 She sets your slippers - which you note she must have been sleeping on - on the floor next to the bed, and scarpers off to prepare some other minor comfort for you.",vulpChatGift_mangonutDummySnuggleSleep2:Get up,,
 vulpChatGift_mangonutDummySnuggleSleep2,DialogOptionSelected,$option == vulpChatGift_mangonutDummySnuggleSleep2,ExitRulesToPlugin,,,,
@@ -2161,8 +2178,14 @@ vulpChatGift_mangonutProfectoSnuggle1,DialogOptionSelected,$option == vulpChatGi
 ""It's so nice to cuddle with you,"" she says wistfully. ""It just feels so good to be up close to a human.""
 
 ""It's just, haha, it's so silly! I act all aloof, but- mfh!"" she interrupts herself briefly as she pulls herself even closer. ""But I just love you so, so, so, so..."" she trails off with a yawn.","vulpChatGift_mangonutProfectoSnuggle2:""$name?""",,
-vulpChatGift_mangonutProfectoSnuggle2,DialogOptionSelected,$option == vulpChatGift_mangonutProfectoSnuggle2,,"Instead of an answer, you hear squeaky snoring. TODO",vulpChatGift_mangonutProfectoCancel:INCOMPLETE - EARLY EXIT,,# TODO
-,,,,,,,
+vulpChatGift_mangonutProfectoSnuggle2,DialogOptionSelected,$option == vulpChatGift_mangonutProfectoSnuggle2,,"Instead of an answer, you hear squeaky snoring. She's fallen asleep mid-embrace, still gently clinging to you like a stuffed animal.
+
+Blanketed under layers of warm fluff and fur, you swiftly join her in a momentary sleep.",vulpChatGift_mangonutProfectoSnuggle3:Continue,,
+vulpChatGift_mangonutProfectoSnuggle3,DialogOptionSelected,$option == vulpChatGift_mangonutProfectoSnuggle3,,"An unknown time later, you find yourself stirred to wakefulness by movement. $name, now sober, is cuddling up closer to you.
+
+She flushes with embarrassment when she realizes you're awake as well, and quickly loosens her grip in a feeble attempt to save face.
+
+""Oh, um, good morning! Thank you for keeping me company.""","vulpChatGift_mangonutProfectoSoberEnding:""So, how was it?""",,
 vulpChatGift_mangonutProfectoEatSecond,DialogOptionSelected,"$option == vulpChatGift_mangonutEatAnother
 $eatingMangonutsFirstTime
 $numNuts == 2",SetVulpoidExpression default,"Whatever initial reluctance $name had, it's gone now - whether due to her enjoyment of the experience, a loss of inhibition, the fruit's addictive qualities. Most likely all three.
@@ -2172,8 +2195,8 @@ vulpChatGift_mangonutProfectoEatSecond1,DialogOptionSelected,$option == vulpChat
 
 ""Oh, it's really good, hahaha!"" she drunkenly laughs. ""It's like, so, um, tasty! And then it's like it makes my brain tasty!""
 
-As she recounts the experience, a look of hunger enters her eyes. ""Do you... have more?""","vulpChatGift_mangonutProfectoActivityPostSecond:TODO CHORES
-vulpChatGift_mangonutProfectoActivityPostSecond1:TODO CUDDLES
+As she recounts the experience, a look of hunger enters her eyes. ""Do you... have more?""","vulpChatGift_mangonutProfectoActivityPostSecond:Assign her some chores instead
+vulpChatGift_mangonutProfectoActivityPostSecond1:Offer to cuddle instead
 vulpChatGift_mangonutEatAnother:Give her another mangonut",,
 vulpChatGift_mangonutProfectoActivityPostSecond,DialogOptionSelected,$option == vulpChatGift_mangonutProfectoActivityPostSecond,"$option = vulpChatGift_mangonutProfectoActivityPostSecond1
 FireBest DialogOptionSelected",,,,
@@ -2198,14 +2221,15 @@ As this latest hit takes hold she wobbles on her feet, staggering forward and pr
 ""That's really (hic!) good... More, (hic!) please..."" she manages to hiccup out.","vulpChatGift_mangonutProfectoStopAtThird:""Maybe this is enough.""
 vulpChatGift_mangonutEatAnother:Give her another",,
 vulpChatGift_mangonutProfectoStopAtThird,DialogOptionSelected,$option == vulpChatGift_mangonutProfectoStopAtThird,"SetVulpoidExpression cry
-FireBest VulpDisableEatAnother","""Wuh? But I (hic!) said please! Pre- (hic!) pretty please?"" she whines, drooping unhappily in your arms.","vulpChatGift_mangonutProfectoRest:""No, this is enough. You rest now.""
+FireBest VulpDisableEatAnother","""Wuh? But I (hic!) said please! Pre- (hic!) pretty please?"" she whines, drooping unhappily in your arms.","vulpChatGift_mangonutProfectoRest:""No, this is enough. You need rest now.""
 vulpChatGift_mangonutEatAnother:""Alright, one more.""",,
-vulpChatGift_mangonutProfectoRest,DialogOptionSelected,$option == vulpChatGift_mangonutProfectoRest,SetVulpoidExpression blush,"You mute any further protest with a quick stroke of the back of her neck, leaving her quiet and docile as you carry her over to the bed.
+vulpChatGift_mangonutProfectoRest,DialogOptionSelected,$option == vulpChatGift_mangonutProfectoRest,HideFirstPerson,"She whines unhappily, but you mute her protest with a quick scratch of the back of her neck, leaving her quiet and docile as you carry her over to the bed.
 
-Setting her under the covers, she begins squeakily snoring the moment her head hits the pillow.
+The moment her head hits the pillow her half-lidded eyes completely close, and squeaky snoring fills the cabin.
 
-While she naps, you take the opportunity to catch up on some of the bureaucratic duties of operating a $shipOrFleet.",vulpChatGift_mangonutProfectoRest1:Continue,,
-vulpChatGift_mangonutProfectoRest1,DialogOptionSelected,$option == vulpChatGift_mangonutProfectoRest1,,"Some time later, you hear the sound of stirring behind you. $name stretches out, yawns, and takes stock of her surroundings.
+You settle her under the covers, and then take the opportunity to catch up on some of the bureaucratic duties of operating a $shipOrFleet.",vulpChatGift_mangonutProfectoRest1:Continue,,
+vulpChatGift_mangonutProfectoRest1,DialogOptionSelected,$option == vulpChatGift_mangonutProfectoRest1,"ShowPersonVisual
+SetVulpoidExpression blush","Some time later, you hear the sound of stirring behind you. $name stretches out, yawns, and takes stock of her surroundings.
 
 She seems to recall that you had to carry her to bed, and turns embarrassedly to you.
 
@@ -2214,27 +2238,137 @@ vulpChatGift_mangonutProfectoPostRestEnjoy:""Well, did you enjoy it?""
 vulpChatGift_mangonutProfectoPostRestFine:""It's fine, no trouble.""",,# TODO - chance to get music if the fruit eaten count is high enough.
 vulpChatGift_mangonutProfectoPostRestOverdid,DialogOptionSelected,$option == vulpChatGift_mangonutProfectoPostRestOverdid,,"""Yeah, that was probably a bit too much.""
 
-She gets a slightly distant look in her eyes.
-
-""Maybe just two, next time...""",vulpChatGift_mangonutProfectoPostRestEnd:Continue,,
+She gets a slightly distant look in her eyes. ""Maybe just two, next time...""",vulpChatGift_mangonutProfectoPostRestEnd:Continue,,
 vulpChatGift_mangonutProfectoPostRestEnjoy,DialogOptionSelected,$option == vulpChatGift_mangonutProfectoPostRestEnjoy,,"""Oh yeah I did. That's part of the problem,"" she chuckles. ""It's so good that it's hard to resist.""
 
-She looks slightly hungry. ""Next time, I'll be more prepared for that last one.""",vulpChatGift_mangonutProfectoPostRestEnd:Continue,,
-vulpChatGift_mangonutProfectoPostRestFine,DialogOptionSelected,$option == vulpChatGift_mangonutProfectoPostRestFine,,,vulpChatGift_mangonutProfectoPostRestEnd:Continue,,
+A look of hunger crosses her face. ""Next time, I'll be ready for that last one.""",vulpChatGift_mangonutProfectoPostRestEnd:Continue,,
+vulpChatGift_mangonutProfectoPostRestFine,DialogOptionSelected,$option == vulpChatGift_mangonutProfectoPostRestFine,,"""Well that's polite of you to say, but you did have to take care of me. So, thank you.""
+
+A hungry look enters her eyes. ""...But if it really wasn't any trouble, then maybe we could do more next time...""",vulpChatGift_mangonutProfectoPostRestEnd:Continue,,
 vulpChatGift_mangonutProfectoPostRestEnd,DialogOptionSelected,$option == vulpChatGift_mangonutProfectoPostRestEnd,ExitRulesToPlugin,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
+vulpChatGift_mangonutProfectoEatFourth,DialogOptionSelected,"$option == vulpChatGift_mangonutEatAnother
+$eatingMangonutsFirstTime
+$numNuts == 4",,"Though her attitude remains one of a starving animal, she has neither the soberity or the stomach to eat the next mangonut as quickly as the previous ones.
+
+As she finishes, she sags in your arms like an empty space suit. Supporting her meager weight isn't difficult, but her limp body offers no assistance.
+
+""I loooo- (hic!) -oove youuu... (hic!) sooo... (hic!) mu- (hic!) -uch..."" she awkwardly hiccups out, barely coherent.",vulpChatGift_mangonutProfectoRest:Cut her off and put her to bed,,
 ,,,,,,,
 vulpChatGift_mangonutLaisa,DialogOptionSelected,"$option == vulpChatGift_mangonut
-$id == laisa","SetVulpoidExpression fear
-RemoveCommodity mangonuts 1
-ExitRulesToPlugin","""Oh, no, not those!"" (INCOMPLETE!)",,,
-vulpChatGift_mangonutHasHadBefore,DialogOptionSelected,"$option == vulpChatGift_mangonut
-$hasEatenMangonuts score:100","SetVulpoidExpression blush
-RemoveCommodity mangonuts 1
-ExitRulesToPlugin","""Oh, I really shouldn't..."" (INCOMPLETE!)",,,
+$id == laisa score:1000
+$mangonutsEaten < 1","SetVulpoidExpression fear
+$eatingMangonutsFirstTime = true 0","""Oh no, please don't even mention those to me. I still can't believe they're still around, I thought I was free of them centuries ago.""","vulpChatGift_mangonutLaisa1:""Why, what's wrong?""",,
+vulpChatGift_mangonutLaisa1,DialogOptionSelected,$option == vulpChatGift_mangonutLaisa1,SetVulpoidExpression bruh,"$name looks questioningly at you. ""Seriously? Have you seen the theobromine content in those things? It's like an entire box of chocolate in a single fruit.""","vulpChatGift_mangonutLaisaExplainChocolate:""What's wrong with that?""
+vulpChatGift_mangonutLaisa2:""I think I see the issue.""",,
+vulpChatGift_mangonutLaisaExplainChocolate,DialogOptionSelected,$option == vulpChatGift_mangonutLaisaExplainChocolate,,"""Theobromine is a powerful, addictive narcotic for Vulpoids. Including Profectos like myself. In fact, I think I actually take it harder than the dummies do. They're used to not using their brains.""","vulpChatGift_mangonutLaisa2:""I think I see the issue.""",,
+vulpChatGift_mangonutLaisa2,DialogOptionSelected,$option == vulpChatGift_mangonutLaisa2,SetVulpoidExpression blush,"""Yeah. Just one of those things will turn me into a drunken mess.""
+
+""It's not that they're not tasty, or that it doesn't feel really, really good,"" she sighs wistfully, ""But... no. Best not.""","vulpChatGift_mangonutLaisaCancel:""Alright, let's not.""
+vulpChatGift_mangonutLaisa3:""I do have the whole tree. No risk of shortage.""",,
+vulpChatGift_mangonutLaisaCancel,DialogOptionSelected,$option == vulpChatGift_mangonutLaisaCancel,ExitRulesToPlugin,"""Yeah, best not,"" she says unconvincingly.",,,
+vulpChatGift_mangonutLaisa3,DialogOptionSelected,$option == vulpChatGift_mangonutLaisa3,SetVulpoidExpression bruh,"""That's true... You do have loads of them, no change I'd be going hungry. Just...""
+
+She deliberates for a moment, expression torn between reluctance and hunger.",vulpChatGift_mangonutLaisa4:Continue,,
+vulpChatGift_mangonutLaisa4,DialogOptionSelected,$option == vulpChatGift_mangonutLaisa4,"SetVulpoidExpression angry
+$hadMangonutConversation = true
+$numNuts = 0 0
+FireBest VulpDisableEatFour","""Alright, here's how we'll do it,"" she says decisively. ""Four mangonuts, all at once. No sense in doing it halfway, I'll be stupidly begging for more the moment I finish the first one anyway.""
+
+""And I want you to keep an eye on me, okay? I'm going to loopy, uncoordinated, and very gushy. I don't want anyone else seeing me like that.""","vulpChatGift_mangonutEatFour:""Alright, let's do it."" (give her four mangonuts)
+vulpChatGift_mangonutLaisaWhatDoIGet:""Hold on, what am I getting out of this?""
+vulpChatGift_mangonutLaisaCancel:""Maybe it's best we didn't.""",,
+vulpChatGift_mangonutLaisaWhatDoIGet,DialogOptionSelected,$option == vulpChatGift_mangonutLaisaWhatDoIGet,SetVulpoidExpression bruh,"""Well first of all, you're the one who brought this up in the first place. So you get to follow through on that.""",vulpChatGift_mangonutLaisaWhatDoIGet1:Continue,,
+vulpChatGift_mangonutLaisaWhatDoIGet1,DialogOptionSelected,$option == vulpChatGift_mangonutLaisaWhatDoIGet1,"SetVulpoidExpression blush
+FireBest VulpDisableEatFour","""But, well, the mangonuts will make me pretty sappy. So I'd probably say, uh, lots of nice things about you. And maybe try to cuddle, and stuff like that. That I wouldn't do normally.""
+
+In other words, the lack of inhibition will make her more transparent about her natural feelings.","vulpChatGift_mangonutEatFour:""Alright, let's do it."" (give her four mangonuts)
+vulpChatGift_mangonutLaisaCancel:""Maybe it's best we didn't.""",,
+vulpChatGift_mangonutLaisaEat,DialogOptionSelected,"$option == vulpChatGift_mangonutEatFour
+$id == laisa score:1000
+$eatingMangonutsFirstTime",SetVulpoidExpression default,"She stares at the mangonuts for a moment, hesitating before she collects herself.
+
+In the next moment, the fruits disappear. The sheer speed at which she devours them reflects a significant past experience, undiluted by their centuries of absence.
+
+The mangonuts are gone, and so quickly that she is still briefly sober.","vulpChatGift_mangonutLaisaEat1:""Are you okay?""",,
+vulpChatGift_mangonutLaisaEat1,DialogOptionSelected,$option == vulpChatGift_mangonutLaisaEat1,SetVulpoidExpression blush,"""Ugh. Yes, I'm fine. I shouldn't have eaten them so fast, but they're just..."" She sighs happily, ""So good.""
+
+""This is going to hit fast now, so I hope you're rea- (hic!) -dy.""
+
+As the words leave her mouth, her eyes grow impossibly wide, pupils overpowering the iris like a black hole devouring its accretion disc. She wobbles, staggers, and then lurches towards you, half leaping and half falling into your arms.",vulpChatGift_mangonutLaisaEat2:Continue,,
+vulpChatGift_mangonutLaisaEat2,DialogOptionSelected,$option == vulpChatGift_mangonutLaisaEat2,,"""Woahhh, (hic!) thisss isss (hic!) better tha- (hic!) -an I re- (hic!) reme- (hic!) thought.""
+
+Her body is flopping like an empty space suit, but she musters the strength to lift her arm and clumsily caress your face.
+
+""Y- (hic!) you look sooo... (hic!) good... Your (hic!) face is pre- (hic!) -tty... I loooo- (hic!) -ove you...""",vulpChatGift_mangonutLaisaEat3:Carry her somewhere to rest,,
+vulpChatGift_mangonutLaisaEat3,DialogOptionSelected,$option == vulpChatGift_mangonutLaisaEat3,,"You heave her up and carry her towards the bed. You find yourself forced to move at an angle to avoid stepping on her tail, which is dragging limply along the floor.
+
+She makes an attempt to purse her lips as you walk, but lacks the coordination. Unable to properly kiss you, she instead taps her nose against your cheek, cooing happily as she does.","vulpChatGift_mangonutLaisaLeaveOnBed:Try to set her down
+vulpChatGift_mangonutLaisaJoinOnBed:Lie down with her",,
+vulpChatGift_mangonutLaisaLeaveOnBed,DialogOptionSelected,$option == vulpChatGift_mangonutLaisaLeaveOnBed,SetVulpoidExpression cry,"You lower her onto the bed as she giggles happily. As you attempt to let go of her though, she cries. ""Nooo! (hic!) Staaay ple- (hic!) please!""","vulpChatGift_mangonutLaisaLeaveOnBed1:Pry yourself loose
+vulpChatGift_mangonutLaisaJoinOnBed:Lie down with her",,
+vulpChatGift_mangonutLaisaLeaveOnBed1,DialogOptionSelected,$option == vulpChatGift_mangonutLaisaLeaveOnBed1,SetVulpoidExpression default,"Vulpoids are weaker than humans at the best of times, so a thoroughly drunk one has no hope of holding you. It doesn't take too much effort to break $name's grip on you and pull away, leaving her unhappily flopping her arms on the bed.
+
+Though she's upset in the moment, she seems to forget about you as soon as you exit her line of sight. Her dilated eyes drift upwards, and attempt to focus on her nose. She giggles dopily at her inability to do so, and appears content to remain in the bed until she comes down from the high.",vulpChatGift_mangonutLaisaLeaveOnBed2:Continue,,
+vulpChatGift_mangonutLaisaLeaveOnBed2,DialogOptionSelected,$option == vulpChatGift_mangonutLaisaLeaveOnBed2,HideFirstPerson,"You occupy yourself by doing some of the administrative work that comes with operating a $shipOrFleet, occasionally glancing over at $name to make sure she's alright. After a short period of delirious giggles and hiccups she had drifted off to sleep, filling the cabin with the quiet sound of her snoring.
+
+Time passes, and the snores are interrupted by a squeaky yawn as $name begins to stir. You set down your datapad and walk over as she stretches out and rubs the sleep from her eyes.","vulpChatGift_mangonutLaisaLeaveOnBed3:""How do you feel?""",,
+vulpChatGift_mangonutLaisaLeaveOnBed3,DialogOptionSelected,$option == vulpChatGift_mangonutLaisaLeaveOnBed3,"ShowPersonVisual
+SetVulpoidExpression blush","""Embarrassed. Sorry I tried to hold on to you like that, I was even clingier than expected.""","vulpChatGift_mangonutLaisaLeaveOnBedHugNextTime:""Would you like me to stay with you next time?""
+vulpChatGift_mangonutLaisaLeaveOnBedLeaveNextTime:""It's alright, you weren't any trouble after.""
+vulpChatGift_mangonutLaisaLeaveOnBedNoNextTime:""I suppose you won't be doing this again, then.""",,
+vulpChatGift_mangonutLaisaLeaveOnBedHugNextTime,DialogOptionSelected,$option == vulpChatGift_mangonutLaisaLeaveOnBedHugNextTime,,"$name's tail leaps to life, waving wildly behind her.
+
+""That would be really nice, yeah. Just because I'll be snuggly, of course, it would be, um, good.""","vulpChatGift_mangonutLaisaLeaveOnBedHugNextTimeEnd:""Let's make that the plan then.""",,
+vulpChatGift_mangonutLaisaLeaveOnBedHugNextTimeEnd,DialogOptionSelected,$option == vulpChatGift_mangonutLaisaLeaveOnBedHugNextTimeEnd,ExitRulesToPlugin,"""Thank you, I'd like that.""",,,
+vulpChatGift_mangonutLaisaLeaveOnBedLeaveNextTime,DialogOptionSelected,$option == vulpChatGift_mangonutLaisaLeaveOnBedLeaveNextTime,SetVulpoidExpression bruh,"""Good, good. Wouldn't want to take up your attention at all. Glad that you were able to get some work done. While I was in your bed.""","vulpChatGift_mangonutLaisaLeaveOnBedHugNextTime:""Did you want me to stay with you next time?""
+vulpChatGift_mangonutLaisaLeaveOnBedLeaveNextTimeEnd:""Excellent, then we can stick with this.""",,
+vulpChatGift_mangonutLaisaLeaveOnBedLeaveNextTimeEnd,DialogOptionSelected,$option == vulpChatGift_mangonutLaisaLeaveOnBedLeaveNextTimeEnd,"SetVulpoidExpression blush
+ExitRulesToPlugin","""Yeah, I guess so.""",,,
+vulpChatGift_mangonutLaisaLeaveOnBedNoNextTime,DialogOptionSelected,$option == vulpChatGift_mangonutLaisaLeaveOnBedNoNextTime,SetVulpoidExpression angry,"""Oh no, I didn't say that! You just dumped my favorite addictive food in my mouth after two centuries of abstanance, and now I have to make up for lost time!""",vulpChatGift_mangonutLaisaLeaveOnBedNoNextTime1:Continue,,
+vulpChatGift_mangonutLaisaLeaveOnBedNoNextTime1,DialogOptionSelected,$option == vulpChatGift_mangonutLaisaLeaveOnBedNoNextTime1,SetVulpoidExpression blush,"""I just, uh, hope I won't be as pushy next time. Or that maybe I won't get the chance to be...""","vulpChatGift_mangonutLaisaLeaveOnBedHugNextTime:""Next time, I'll stay with you.""
+vulpChatGift_mangonutLaisaLeaveOnBedLeaveNextTimeEnd:""I suppose we'll see.""",,
+vulpChatGift_mangonutLaisaJoinOnBed,DialogOptionSelected,$option == vulpChatGift_mangonutLaisaJoinOnBed,SetVulpoidExpression blush,"With how much she's managed to wrap herself around you it's not possible to simply lie next to her. Instead you simply find an orientation where you won't squish her, and lie down.
+
+$name continues to happily nuzzle up against you, cooing with delight and hiccuping out drunken compliments. As far as you can glean from her fuller sentences, you're the most amazing person in the universe and she's the happiest she's ever been in her life.",vulpChatGift_mangonutLaisaJoinOnBed1:Continue,,
+vulpChatGift_mangonutLaisaJoinOnBed1,DialogOptionSelected,$option == vulpChatGift_mangonutLaisaJoinOnBed1,HideFirstPerson,"Her speech grows slower and drowsier as she slowly tires herself out. The babbling becomes murmuring, becomes sighing, becomes snoring. She's completely asleep, still tightly snuggled up against you.
+
+You contemplate your own surroundings as sleep brushes the edge of your own consciousness. You're swaddled with warm, furry limbs, blanketed by a large, incredibly fluffy tail, and locked in an embrace of undiluted affection.
+
+You could extricate yourself without much physical difficulty, but you know without trying that no person in the Sector would have the willpower. Instead you hug $name a little tighter, earning a smile on her sleeping face before you close your eyes as well.",vulpChatGift_mangonutLaisaJoinOnBed2:Continue,,
+vulpChatGift_mangonutLaisaJoinOnBed2,DialogOptionSelected,$option == vulpChatGift_mangonutLaisaJoinOnBed2,,"You awake to find yourself in much the same position, luxuriantly warm and comfortable in $name's arms as she quietly sleeps.
+
+Much as you'd like the moment to last forever, your stirring must have prompted her to wake as well. She adjusts, shimmying up so she can meet your gaze without having to release her grip just yet.","vulpChatGift_mangonutLaisaJoinOnBed3:""Good morning.""",,
+vulpChatGift_mangonutLaisaJoinOnBed3,DialogOptionSelected,$option == vulpChatGift_mangonutLaisaJoinOnBed3,ShowPersonVisual,"""Good morning.""
+
+No further words are exchanged. $name is content to just stare into your eyes, a tender smile on her face.",vulpChatGift_mangonutLaisaJoinOnBed4:Continue,,
+vulpChatGift_mangonutLaisaJoinOnBed4,DialogOptionSelected,$option == vulpChatGift_mangonutLaisaJoinOnBed4,SetVulpoidExpression default,"In a flash, she realizes she's forgotten her 'superior superintelligence' persona. You see her face adjust as she swallows the smile, replacing it with the slightly smug grin you're more accustomed to. She unwraps unwrap her arms from you and leans on them as she attempts to deflect the moment.
+
+""Ahem. Thank you for accompanying me, that was quite nice of you. It made for a quite positive experience.""","vulpChatGift_mangonutLaisaJoinOnBedPositive:""Positive experience?""
+vulpChatGift_mangonutLaisaJoinOnBedILY:""Love you too, $name.""",,
+vulpChatGift_mangonutLaisaJoinOnBedILY,DialogOptionSelected,$option == vulpChatGift_mangonutLaisaJoinOnBedILY,SetVulpoidExpression blush,"Her tail wags hard, thumping against the bed like the pounding of an autocannon against shields.
+
+""Come on, you can't just say that while we're cuddled up together!"" she whines. ""It's not fair, I've got no chance at keeping a straight face!""","vulpChatGift_mangonutLaisaJoinOnBedPositive:""So, positive experience?""",,
+vulpChatGift_mangonutLaisaJoinOnBedPositive,DialogOptionSelected,$option == vulpChatGift_mangonutLaisaJoinOnBedPositive,SetVulpoidExpression blush,"""Yeah, positive. The gushing was a little embarrassing, looking back, but I did expect as much. If anything, it's was less embarrassing than I remembered from before the Collapse, so thank you for your part in that.""
+
+""I'd love to do this again, some time.""","vulpChatGift_mangonutLaisaJoinOnBedEnd:Agree, and get up",,
+vulpChatGift_mangonutLaisaJoinOnBedEnd,DialogOptionSelected,$option == vulpChatGift_mangonutLaisaJoinOnBedEnd,ExitRulesToPlugin,,,,
 ,,,,,,,
+,,,,,,,
+vulpChatGift_mangonutHasHadProfecto,DialogOptionSelected,"$option == vulpChatGift_mangonut
+$mangonutsEaten > 0 score:100","#unset $eatingMangonutsFirstTime
+$cachedMangonuts = $mangonutsEaten
+$mangonutsEaten = 0
+FireBest DialogOptionSelected
+$mangonutsEaten = $cachedMangonuts
+unset $cachedMangonuts",,,# TODO - IMPLEMENT THIS FULLY,
+vulpChatGift_mangonutHasHadLaisa,DialogOptionSelected,"$option == vulpChatGift_mangonut
+$mangonutsEaten > 0 score:100
+$id == laisa score:1000","#unset $eatingMangonutsFirstTime
+$cachedMangonuts = $mangonutsEaten
+$mangonutsEaten = 0
+FireBest DialogOptionSelected
+$mangonutsEaten = $cachedMangonuts
+unset $cachedMangonuts",,,# TODO - IMPLEMENT THIS FULLY,
 ,,,,,,,
 ,,,,,,,
 ,,,,,,,
