@@ -1883,8 +1883,8 @@ vulpChatAssignment,DialogOptionSelected,$option == vulpChatAssignment,FireAll Vu
 vulpChatSurroundingsOption,VulpoidChatTopLevelOptions,,,,vulpChatSurroundings:Socialize about surroundings,,
 vulpChatSurroundings,DialogOptionSelected,$option == vulpChatSurroundings,OpenListBasedDialog localEntities VulpoidChatTopLevelOptions,,,,
 ,,,,,,,
-vulpChatCurrentAffairsOption,VulpoidChatTopLevelOptions,,,,vulpChatCurrentAffairs:Socialize about current affairs,,
-vulpChatCurrentAffairs,DialogOptionSelected,$option == vulpChatCurrentAffairs,OpenListBasedDialog currentAffairs VulpoidChatTopLevelOptions,,,,
+#vulpChatCurrentAffairsOption,VulpoidChatTopLevelOptions,,,,vulpChatCurrentAffairs:Socialize about current affairs,,
+#vulpChatCurrentAffairs,DialogOptionSelected,$option == vulpChatCurrentAffairs,OpenListBasedDialog currentAffairs VulpoidChatTopLevelOptions,,,,
 ,,,,,,,
 vulpChatPetOption,VulpoidChatTopLevelOptions,,,,vulpChatPet:Pet,,
 vulpChatPet,DialogOptionSelected,$option == vulpChatPet,OpenListBasedDialog VulpoidPettingOptions VulpoidChatTopLevelOptions,,,,
@@ -2030,7 +2030,7 @@ unset $ateAnother",,,,
 ,,,,,,,
 # Dummy - Same every time,,,,,,,
 vulpChatGift_mangonutDummySel,DialogOptionSelected,"$option == vulpChatGift_mangonut
-$vulp_profectoAssignment == vulpoids score:100 score:1000","SetVulpoidExpression default
+$vulp_profectoAssignment == vulpoids score:1000","SetVulpoidExpression default
 RemoveCommodity mangonuts 1
 $option = vulpChatGift_mangonutDummy
 FireBest DialogOptionSelected",,,,
@@ -2092,7 +2092,7 @@ Her body sways awkwardly, suspended in something between a dance and a drunken s
 ""Sooo... waddya you wanna do now...?""","vulpChatGift_mangonutDummySnuggle:Snuggle with her
 vulpChatGift_mangonutEatAnother:Offer a second mangonut",,
 vulpChatGift_mangonutDummyEatSecond,DialogOptionSelected,"$option == vulpChatGift_mangonutEatAnother
-$vulp_profectoAssignment == vulpoids score:100 score:1000
+$vulp_profectoAssignment == vulpoids score:1000
 $numNuts == 2",FireBest VulpDisableEatAnother,"""Oh, yay!"" She eagerly reaches out and devours the second mangonut, fruit and pit.
 
 ""Ehehehe, I can feel my fur! I'm so fluffy, it's like - woah! That's really fluffy! Have you ever felt, you... you should! We should snuggle!""
@@ -2100,7 +2100,7 @@ $numNuts == 2",FireBest VulpDisableEatAnother,"""Oh, yay!"" She eagerly reaches 
 Something that could could be generously called an idea crosses her mind. ""Oh, wait! D'you have any more fruit? Pretty please?""","vulpChatGift_mangonutDummySnuggle:Just snuggle on the couch
 vulpChatGift_mangonutEatAnother:Give her a third mangonut",,
 vulpChatGift_mangonutDummyEatThird,DialogOptionSelected,"$option == vulpChatGift_mangonutEatAnother
-$vulp_profectoAssignment == vulpoids score:100 score:1000
+$vulp_profectoAssignment == vulpoids score:1000
 $numNuts == 3","SetVulpoidExpression blush
 FireBest VulpDisableEatAnother","The third fruit disappears in short order, though not quite as quickly as the second.
 
@@ -2115,7 +2115,7 @@ You help support her as she staggers towards the bed. The moment she reaches it 
 
 Quiet, muffled snoring immediately emerges from the pillow her face is buried in.",vulpChatGift_mangonutDummySnuggleGetUp:Continue,,
 vulpChatGift_mangonutDummyEatFourth,DialogOptionSelected,"$option == vulpChatGift_mangonutEatAnother
-$vulp_profectoAssignment == vulpoids score:100 score:1000
+$vulp_profectoAssignment == vulpoids score:1000
 $numNuts == 4",,"""Yay, mo- (hic!) more!""
 
 She nearly falls over herself just reaching for the fruit, and devours it clumsily but ravenously. As she finishes, her face is a picture of total, happy delirium.
@@ -2388,7 +2388,7 @@ ExitRulesToPlugin",TODO: you have a lovely meal.,,,
 ,,,,,,,
 # Gift - Volturnian Lobster,,,,,,,
 vulpChatGift_lobsterOption,VulpoidPettingGiftOptions,"PlayerHasCargo lobster 1
-!$lobsterName","$optionTooltip:vulpChatGift_lobster = ""Requires 1 Volturnian lobster."" 0
+$lobsterName == false","$optionTooltip:vulpChatGift_lobster = ""Requires 1 Volturnian lobster."" 0
 $optionColor:vulpChatGift_lobster = ""160,200,255"" 0",,vulpChatGift_lobster:Give her a pet lobster,,
 vulpChatGift_lobster,DialogOptionSelected,$option == vulpChatGift_lobster,"RemoveCommodity lobster 1
 $option = vulpChatGift_lobster1
@@ -2405,10 +2405,23 @@ vulpChatGift_lobsterNameOldBluey,PickLobsterName,,"$lobsterName = ""Old Bluey"""
 vulpChatGift_lobsterNameCrusty,PickLobsterName,,"$lobsterName = ""Crusty""",,,,
 # Dummy,,,,,,,
 vulpChatGift_lobsterDummy,DialogOptionSelected,"$option == vulpChatGift_lobster1
-$vulp_profectoAssignment == vulpoids score:100 score:1000",SetVulpoidExpression default,"""Friend!"" she gasps with delight.
+$vulp_profectoAssignment == vulpoids score:1000",SetVulpoidExpression default,"""Friend!"" she gasps with delight.
 
 ""I'm going to call you $lobsterName! I'll take good care of them $playerSirOrMadam, don't worry!""","vulpChatGift_lobsterEnd:""I'm sure you will.""",,
 vulpChatGift_lobsterEnd,DialogOptionSelected,$option == vulpChatGift_lobsterEnd,ExitRulesToPlugin,"$lobsterName, for their part, clicks their claws placidly.",,,
+#vulpChatGift_lobsterDummyPinch,DialogOptionSelected,"$option == vulpChatGift_lobster1
+$vulp_profectoAssignment == vulpoids score:1000
+RollProbability 0.05","SetVulpoidExpression cry
+$lobsterName = ""Pinchy""","""Friend!"" she gasps with delight.
+
+But as she tries to pick up the lobster, it reaches out and pinches her nose.
+
+""Ow! That hurt!""",vulpChatGift_lobsterDummyPinch1:Continue,,
+#vulpChatGift_lobsterDummyPinch1,DialogOptionSelected,$option == vulpChatGift_lobsterDummyPinch1,SetVulpoidExpression angry,"She rubs her nose, and keeps a little more distance from the lobster as she studies it for a second time.
+
+""That was rude!"" she wags her finger. ""I'm going to need to teach you good manners, $lobsterName!""",vulpChatGift_lobsterDummyPinch2:Continue,,
+#vulpChatGift_lobsterDummyPinch2,DialogOptionSelected,$option == vulpChatGift_lobsterDummyPinch2,"SetVulpoidExpression default
+ExitRulesToPlugin","""Thank you, $playerSirOrMadam! I'll be a good teacher for them!""",,,
 # Profecto,,,,,,,
 vulpChatGift_lobsterProfecto,DialogOptionSelected,$option == vulpChatGift_lobster1,"SetVulpoidExpression default
 AdjustRepActivePerson COOPERATIVE 5","""A Volturnian lobster! Thank you, $playerSirOrMadam!""
@@ -3145,7 +3158,7 @@ ExitRulesToPlugin","""You know, there's a few vulnerabilities we could probably 
 vulpChatSurroundings_navBuoyMakeshiftDummy,DialogOptionSelected,"$option == vulpChatSurroundings_navBuoyMakeshift
 $vulp_profectoAssignment == vulpoids score:100","SetVulpoidExpression default
 ExitRulesToPlugin","""Yay, make us go faster!""",,,
-vulpChatSurroundings_wormholeOption,VulpoidChatSurroundingsOptions,$topic.wormhole score:1000,"$optionColor:vulpChatSurroundings_wormholeCalibrated = ""255,0,255"" 0",,vulpChatSurroundings_wormhole:$topic.name,,wormhole
+vulpChatSurroundings_wormholeOption,VulpoidChatSurroundingsOptions,$topic.wormhole score:1000,"$optionColor:vulpChatSurroundings_wormhole = ""255,0,255"" 0",,vulpChatSurroundings_wormhole:$topic.name,,wormhole
 vulpChatSurroundings_wormhole,DialogOptionSelected,$option == vulpChatSurroundings_wormhole,"SetVulpoidExpression bruh
 ExitRulesToPlugin","""This isn't a jump-point, the readings aren't consistent with a standard Durand-Patel conjunction.""
 
@@ -3158,6 +3171,31 @@ ExitRulesToPlugin","""A stable wormhole. Fascinating technology, and impressivel
 vulpChatSurroundings_wormholeDummy,DialogOptionSelected,"$option == vulpChatSurroundings_wormhole
 $vulp_profectoAssignment == vulpoids score:100","SetVulpoidExpression default
 ExitRulesToPlugin","""You want to know something funny? If you look at the display right, they look like purple donuts, haha!""",,,
+vulpChatSurroundings_fusionLampOption,VulpoidChatSurroundingsOptions,$topic.customType == fusion_lamp score:1000,,,vulpChatSurroundings_fusionLamp:$topic.name,,fusionLamp
+vulpChatSurroundings_fusionLamp,DialogOptionSelected,$option == vulpChatSurroundings_fusionLamp,"SetVulpoidExpression default
+ExitRulesToPlugin","""A fusion lamp! What an incredible sight, a man-made star that can illuminate an entire world.""",,,
+vulpChatSurroundings_fusionLampLaisa,DialogOptionSelected,"$option == vulpChatSurroundings_fusionLamp
+$id == laisa","SetVulpoidExpression default
+ExitRulesToPlugin","""Ah, the Fabrique Orbitale Orbital Fusion Lamp. I remember these, Eridani-Utopia loved them.""
+
+""You know, Fabrique used be Tri-Tachyon's major rival. Hard to imagine today. I wonder if there's another Sector out there where Fabrique is the universal brand, and TT is the one relegated to the past.""",,,
+vulpChatSurroundings_fusionLampKanta,DialogOptionSelected,"$option == vulpChatSurroundings_fusionLamp
+$vulp_profectoAssignment != vulpoids score:100
+$topicFaction.id == pirates
+$topic.locationId == magec","SetVulpoidExpression bruh
+ExitRulesToPlugin","""This is ridiculous! What kind of maniac installs a fusion lamp around a space station!? They can't even fuel the thing properly!""",,,
+vulpChatSurroundings_fusionLampKanta,DialogOptionSelected,"$option == vulpChatSurroundings_fusionLamp
+$vulp_profectoAssignment != vulpoids score:100
+$vulp_bivouacLamp score:1000","SetVulpoidExpression bruh
+ExitRulesToPlugin","""That's a strange. That's not one of the standard library colors for a fusion lamp. Did they hack it to get a specific spectrum? Or maybe it's just age...""",,,
+vulpChatSurroundings_fusionLampDummy,DialogOptionSelected,"$option == vulpChatSurroundings_fusionLamp
+$vulp_profectoAssignment == vulpoids score:100","SetVulpoidExpression default
+ExitRulesToPlugin","""Wow, it's a tiny star! Can I hold it?""",,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
 ,,,,,,,
 ,,,,,,,
 ,,,,,,,
