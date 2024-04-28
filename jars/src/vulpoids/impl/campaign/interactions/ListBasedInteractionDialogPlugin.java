@@ -157,14 +157,13 @@ public abstract class ListBasedInteractionDialogPlugin implements InteractionDia
                         doOnLeave();
                         if(backtrack == null || backtrack == this) dialog.dismiss();
                         else {
-                            //backtrack.init(dialog);
                             if(backtrack instanceof ListBasedInteractionDialogPlugin) {
                                 //((RuleBasedDialog)backtrack).reinit(false);
                                 dialog.setPlugin(backtrack);
                                 if(triggerOnExit!=null) ((ListBasedInteractionDialogPlugin)backtrack).doBacktrackToHere(triggerOnExit, fireBestOnExit);
                                 else ((ListBasedInteractionDialogPlugin)backtrack).reinit(false);
                             }
-                            else dialog.setPlugin(backtrack); backtrack.init(dialog);
+                            //else dialog.setPlugin(backtrack); backtrack.init(dialog);
                         }
                         break;
 
