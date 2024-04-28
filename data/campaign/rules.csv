@@ -2455,6 +2455,15 @@ AdjustRepActivePerson COOPERATIVE 10
 $hasAlphaCore = true","""I won't tell a soul about this $playerSirOrMadam. Not for anything. Thank you, for your trust and the opportunity.""",vulpChatGift_alphaEnd:Nod affirmatively,,
 vulpChatGift_alphaEnd,DialogOptionSelected,$option == vulpChatGift_alphaEnd,ExitRulesToPlugin,"$name has the case transferred to another location. Exactly where, you do not know. All the better, should you ever need to deny knowledge of it.",,,
 ,,,,,,,
+# Gift - Ship,,,,,,,
+#vulpChatGift_shipOption,VulpoidPettingGiftOptions,$vulp_profectoAssignment != vulpoids,"$optionTooltip:vulpChatGift_ship = ""Requires a spaceship."" 0
+$optionColor:vulpChatGift_ship = ""72,159,255"" 0",,vulpChatGift_ship:Give the command codes for a ship,,
+#vulpChatGift_ship,DialogOptionSelected,$option == vulpChatGift_ship,DonateShips selectShip VulpoidPickGiftShip,,,,
+#vulpChatGift_ship1,VulpoidPickGiftShip,,,TEST TEXT,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
 ,,,,,,,
 ,,,,,,,
 ,,,,,,,
@@ -3184,7 +3193,7 @@ $vulp_profectoAssignment != vulpoids score:100
 $topicFaction.id == pirates
 $topic.locationId == magec","SetVulpoidExpression bruh
 ExitRulesToPlugin","""This is ridiculous! What kind of maniac installs a fusion lamp around a space station!? They can't even fuel the thing properly!""",,,
-vulpChatSurroundings_fusionLampKanta,DialogOptionSelected,"$option == vulpChatSurroundings_fusionLamp
+vulpChatSurroundings_fusionLampBivouac,DialogOptionSelected,"$option == vulpChatSurroundings_fusionLamp
 $vulp_profectoAssignment != vulpoids score:100
 $vulp_bivouacLamp score:1000","SetVulpoidExpression bruh
 ExitRulesToPlugin","""That's a strange. That's not one of the standard library colors for a fusion lamp. Did they hack it to get a specific spectrum? Or maybe it's just age...""",,,
