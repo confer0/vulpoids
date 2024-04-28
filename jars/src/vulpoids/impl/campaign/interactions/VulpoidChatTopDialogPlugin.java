@@ -2,6 +2,7 @@ package vulpoids.impl.campaign.interactions;
 
 import com.fs.starfarer.api.Global;
 import com.fs.starfarer.api.campaign.CargoStackAPI;
+import com.fs.starfarer.api.campaign.InteractionDialogAPI;
 import com.fs.starfarer.api.campaign.OptionPanelAPI;
 import com.fs.starfarer.api.campaign.rules.MemoryAPI;
 import com.fs.starfarer.api.characters.PersonAPI;
@@ -16,29 +17,31 @@ import vulpoids.impl.campaign.ids.Vulpoids;
 public class VulpoidChatTopDialogPlugin extends ListBasedInteractionDialogPlugin {
     
     @Override
+    public void init(InteractionDialogAPI dialog) {
+        super.init(dialog);
+        visual.fadeVisualOut();  // Gets rid of the player fleet.
+    }
+    
+    @Override
     protected void loadOptions() {
         super.loadOptions();
         if (Global.getSector().getMemoryWithoutUpdate().getBoolean("$vulp_didInterrogation")) {
             for(CargoStackAPI stack : Global.getSector().getPlayerFleet().getCargo().getStacksCopy()) {
                 if(Vulpoids.CARGO_ITEM.equals(stack.getCommodityId())) {
-                    //pages.get(0)[0] = stack;
                     entries.add(stack);
                     break;
                 }
             }
             for(CargoStackAPI stack : Global.getSector().getPlayerFleet().getCargo().getStacksCopy()) {
                 if (stack.getPlugin() instanceof VulpoidPlugin) {
-                    //if (pages.size() < 1+p) pages.add(new CargoStackAPI[MAX_ITEMS_PER_PAGE]);
                     ((VulpoidPlugin)stack.getPlugin()).refreshPerson();  // This is actually here for when we return. It saves the updated person to the data.
                     ((VulpoidPlugin)stack.getPlugin()).setToDefaultExpression();  // This, on the other hand, is for seeing their faces.
                     //pages.get(p)[vulps%MAX_ITEMS_PER_PAGE] = stack;
                     entries.add(stack);
-                    //if(vulps%MAX_ITEMS_PER_PAGE == 0) p++;
                 }
             }
         } else {
             // Story option! Only Laisa
-            //pages.get(0)[0] = Vulpoids.PERSON_LAISA;
             entries.add(Vulpoids.PERSON_LAISA);
         }
         if(dialog.getInteractionTarget().getMemoryWithoutUpdate().contains("$vulpoidContactPanelPage")) {
@@ -47,10 +50,7 @@ public class VulpoidChatTopDialogPlugin extends ListBasedInteractionDialogPlugin
             dialog.getInteractionTarget().getMemoryWithoutUpdate().set("$vulpoidContactPanelPage", 0);
         }
         
-        
-        visual.fadeVisualOut();
-        visual.finishFadeFast();  // Otherwise you can see the expressions change.
-        dialog.getInteractionTarget().setActivePerson(null);
+        visual.hideFirstPerson();
     }
     
     @Override
@@ -106,15 +106,6 @@ public class VulpoidChatTopDialogPlugin extends ListBasedInteractionDialogPlugin
     }
     @Override
     protected void doOnLeave() {
-        /*for (Object[] page1 : pages) {
-            for (Object entry : page1) {
-                // Resetting back to the defaults, so we don't carry over expression changes from the conversation.
-                if(entry instanceof CargoStackAPI) {
-                    CargoStackAPI stack = (CargoStackAPI) entry;
-                    if(stack.getPlugin() instanceof VulpoidPlugin) ((VulpoidPlugin)stack.getPlugin()).resetClothingAndExpressions();
-                }
-            }
-        }*/
         for (Object entry : entries) {
             // Resetting back to the defaults, so we don't carry over expression changes from the conversation.
             if(entry instanceof CargoStackAPI) {
@@ -155,14 +146,6 @@ public class VulpoidChatTopDialogPlugin extends ListBasedInteractionDialogPlugin
                 conversationDelegate.notifyActivePersonChanged();
                 delegated = false;
             }
-            //InteractionDialogPlugin chatDialog = new RuleBasedInteractionDialogPluginImpl("OpenVulpoidChatDialog");
-            //dialog.setPlugin(chatDialog);
-            //chatDialog.init(dialog);
-            
-            
-            // Have to 'jiggle' it like this because otherwise the image doesn't load if you go to the same person twice.
-            visual.hideFirstPerson();
-            //visual.showPersonInfo(person, true);
             visual.showPersonInfo(person, false);
         } else {
             textPanel.addPara("An issue has occured. Please document what happened and contact the mod developer.");
