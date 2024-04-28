@@ -1931,9 +1931,13 @@ $vulp_profectoAssignment == special_vulpoid_admin",SetVulpoidExpression default,
 vulpChatAssignment_pickResearchOption_exit,VulpoidPickResearchOptions,,,,100:vulpChatAssignment_pickResearch_exit:Back,,
 vulpChatAssignment_pickResearch_exit,DialogOptionSelected,$option == vulpChatAssignment_pickResearch_exit,FireAll VulpoidChatAssignmentOptions,,,,
 vulpChatAssignment_pickResearchOption_terraformer,VulpoidPickResearchOptions,"$id == laisa
-$hasAlphaCore
 !$player.vulp_gotTerraformerMission",,,vulpChatAssignment_pickResearch_terraformer:Insights into the Citadel,,
-vulpChatAssignment_pickResearch_terraformer,DialogOptionSelected,$option == vulpChatAssignment_pickResearch_terraformer,"SetStoryOption vulpChatAssignment_pickResearch_terraformerConfirm 4 vulpChatAssignment_pickResearch_terraformerConfirm general ""Had Laisa perform research into old Citadel transmission logs""
+vulpChatAssignment_pickResearch_terraformerUnable,DialogOptionSelected,"$option == vulpChatAssignment_pickResearch_terraformer
+!$hasAlphaCore",SetVulpoidExpression bruh,"""Most of what's left is just encrypted computer records. We've already cracked everything we can, everything else is just metadata.""
+
+""There's a couple things that are technically leads, but practically they might as well be dead ends. With the state the Sector's in, there's no way I could get the computational resources I'd need to make progress.""",vulpChatAssignment_pickResearch:Cancel,,
+vulpChatAssignment_pickResearch_terraformer,DialogOptionSelected,"$option == vulpChatAssignment_pickResearch_terraformer
+$hasAlphaCore","SetStoryOption vulpChatAssignment_pickResearch_terraformerConfirm 4 vulpChatAssignment_pickResearch_terraformerConfirm general ""Had Laisa perform research into old Citadel transmission logs""
 SetVulpoidExpression bruh","""Most of what's left is just encrypted computer records. We've already cracked everything we can, everything else is just metadata.""
 
 ""...Actually, there is one thing I can think of. Some old post-Collapse transmission logs that showed some odd activity. It was a dead end before, but with my, ahem, 'computational assets' I may be able to make progress again.""
@@ -2269,7 +2273,8 @@ vulpChatGift_mangonutLaisa2,DialogOptionSelected,$option == vulpChatGift_mangonu
 
 ""It's not that they're not tasty, or that it doesn't feel really, really good,"" she sighs wistfully, ""But... no. Best not.""","vulpChatGift_mangonutLaisaCancel:""Alright, let's not.""
 vulpChatGift_mangonutLaisa3:""I do have the whole tree. No risk of shortage.""",,
-vulpChatGift_mangonutLaisaCancel,DialogOptionSelected,$option == vulpChatGift_mangonutLaisaCancel,ExitRulesToPlugin,"""Yeah, best not,"" she says unconvincingly.",,,
+vulpChatGift_mangonutLaisaCancel,DialogOptionSelected,$option == vulpChatGift_mangonutLaisaCancel,"SetVulpoidExpression blush
+ExitRulesToPlugin","""Yeah, best not,"" she says unconvincingly.",,,
 vulpChatGift_mangonutLaisa3,DialogOptionSelected,$option == vulpChatGift_mangonutLaisa3,SetVulpoidExpression bruh,"""That's true... You do have loads of them, no change I'd be going hungry. Just...""
 
 She deliberates for a moment, expression torn between reluctance and hunger.",vulpChatGift_mangonutLaisa4:Continue,,
@@ -3256,10 +3261,6 @@ ExitRulesToPlugin","""A coronal hypershunt. Can you even conceive how much energ
 vulpChatSurroundings_hypershuntDummy,DialogOptionSelected,"$option == vulpChatSurroundings_hypershunt
 $vulp_profectoAssignment == vulpoids score:100","SetVulpoidExpression fear
 ExitRulesToPlugin","""That thing looks like a giant needle... I don't like it. What if it pops the star?""",,,
-vulpChatSurroundings_hypershuntBeatOmega,DialogOptionSelected,"$option == vulpChatSurroundings_hypershunt
-!$topic.hasDefenders
-!$vulp_profectoAssignment == vulpoids","SetVulpoidExpression fear
-ExitRulesToPlugin","""What were those things? The technology they used... it doesn't make physical sense. This is uncharted territory...""",,,
 vulpChatSurroundings_hypershuntActive,DialogOptionSelected,"$option == vulpChatSurroundings_hypershunt
 $topic.usable","SetVulpoidExpression default
 ExitRulesToPlugin","""You never cease to amaze, $playerSirOrMadam.""",,,
@@ -3345,10 +3346,10 @@ $vulp_profectoAssignment == vulpoids score:100","SetVulpoidExpression default
 ExitRulesToPlugin","""Wow, it's crazy outside! So pretty!""",,,
 vulpChatSurroundings_debrisFieldOption,VulpoidChatSurroundingsOptions,$topic.terrainId == debris_field,,,vulpChatSurroundings_debrisField:$topic.terrainName,,debrisField
 vulpChatSurroundings_debrisField,DialogOptionSelected,$option == vulpChatSurroundings_debrisField,"SetVulpoidExpression default
-ExitRulesToPlugin",TODO: debrisField,,,
+ExitRulesToPlugin","""Let me know if you find any interesting trinkets! You never know what you might find with a bit of study.""",,,
 vulpChatSurroundings_debrisFieldDummy,DialogOptionSelected,"$option == vulpChatSurroundings_debrisField
-$vulp_profectoAssignment == vulpoids score:100","SetVulpoidExpression default
-ExitRulesToPlugin",TODO: debrisField Dummy,,,
+$vulp_profectoAssignment == vulpoids score:100","SetVulpoidExpression cry
+ExitRulesToPlugin","""Oh no, something broke!""",,,
 vulpChatSurroundings_eventHorizonOption,VulpoidChatSurroundingsOptions,$topic.terrainId == event_horizon,"$optionColor:vulpChatSurroundings_eventHorizon = ""255,192,255"" 0",,vulpChatSurroundings_eventHorizon:$topic.terrainName,,eventHorizon
 vulpChatSurroundings_eventHorizon,DialogOptionSelected,$option == vulpChatSurroundings_eventHorizon,"SetVulpoidExpression fear
 ExitRulesToPlugin","""Yes, this is very concerning! Why are we chatting while the $shipOrFleet is over an event horizon!? E-burn us out of here!""
@@ -3358,11 +3359,11 @@ vulpChatSurroundings_eventHorizonDummy,DialogOptionSelected,"$option == vulpChat
 $vulp_profectoAssignment == vulpoids score:100","SetVulpoidExpression fear
 ExitRulesToPlugin","""This is really scary! I don't want us to get sucked up! Get us out please!""",,,
 vulpChatSurroundings_magneticFieldOption,VulpoidChatSurroundingsOptions,$topic.terrainId == magnetic_field,,,vulpChatSurroundings_magneticField:$topic.terrainName,,magneticField
-vulpChatSurroundings_magneticField,DialogOptionSelected,$option == vulpChatSurroundings_magneticField,"SetVulpoidExpression default
-ExitRulesToPlugin",TODO: magneticField,,,
+vulpChatSurroundings_magneticField,DialogOptionSelected,$option == vulpChatSurroundings_magneticField,"SetVulpoidExpression bruh
+ExitRulesToPlugin","""Ugh, don't remind me. My tail keeps poofing up, I need to brush it down every few minutes.""",,,
 vulpChatSurroundings_magneticFieldDummy,DialogOptionSelected,"$option == vulpChatSurroundings_magneticField
 $vulp_profectoAssignment == vulpoids score:100","SetVulpoidExpression default
-ExitRulesToPlugin",TODO: magneticField Dummy,,,
+ExitRulesToPlugin","""Yeah, look! My tail is all poofy! I look giant, haha!""",,,
 vulpChatSurroundings_magneticStormOption,VulpoidChatSurroundingsOptions,"$topic.terrainId == magnetic_field
 $topic.terrainName == ""Magnetic Storm""",,,vulpChatSurroundings_magneticStorm:$topic.terrainName,,magneticStorm
 vulpChatSurroundings_magneticStorm,DialogOptionSelected,$option == vulpChatSurroundings_magneticStorm,"SetVulpoidExpression angry
