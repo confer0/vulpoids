@@ -1921,7 +1921,7 @@ vulpChatAssignment_inquireEmbarked,DialogOptionSelected,"$option == vulpChatAssi
 $vulp_profectoAssignment == special_vulpoid_embarked",SetVulpoidExpression default,"""I'm having fun! Your crew's pretty nice, they draw lots to decide who gets to pamper me each day.""",,"# Embarked, not doing anything",
 vulpChatAssignment_inquireEmbarkedResearch_Working,DialogOptionSelected,"$option == vulpChatAssignment_inquire
 $vulp_profectoAssignment == special_vulpoid_embarked
-$vulp_researchProject != null",SetVulpoidExpression default,"""Research is going well! Any chance of getting more assistants? I could use another one to brush my tail while I'm getting headpats.""",,"# Embarked, actively researching",
+$vulp_researchProject != null",SetVulpoidExpression default,"""The project is going well! Any chance of getting more assistants? I could use another one to brush my tail while I'm getting headpats.""",,"# Embarked, actively researching",
 vulpChatAssignment_inquireOfficer,DialogOptionSelected,"$option == vulpChatAssignment_inquire
 $vulp_profectoAssignment == special_vulpoid_officer",SetVulpoidExpression default,"""Command is going smoothly. The crew love me, of course, but it's hard having to send them into danger.""",,"# TODO - use a command to reference the commanded ship, if any. Have callouts for unassigned, assigned civ, assigned combat, zig, etc.",
 vulpChatAssignment_inquireAdmin,DialogOptionSelected,"$option == vulpChatAssignment_inquire
@@ -1930,6 +1930,14 @@ $vulp_profectoAssignment == special_vulpoid_admin",SetVulpoidExpression default,
 # Research picker options,,,,,,,
 vulpChatAssignment_pickResearchOption_exit,VulpoidPickResearchOptions,,,,100:vulpChatAssignment_pickResearch_exit:Back,,
 vulpChatAssignment_pickResearch_exit,DialogOptionSelected,$option == vulpChatAssignment_pickResearch_exit,FireAll VulpoidChatAssignmentOptions,,,,
+,,,,,,,
+# Greeting overrides for completed research,,,,,,,
+vulpChat_greetingResearchComplete,VulpoidChatGreeting,VulpoidResearch isComplete score:1000,"FireBest VulpoidResearchComplete
+unset $vulp_researchProject",,,,
+vulpChat_researchCompleteFinish,DialogOptionSelected,$option == vulpChat_researchCompleteFinish,"FireAll VulpoidChatTopLevelOptions
+SetVulpoidExpression default","""Was there anything else you wanted to discuss, $playerSirOrMadam?""",,,
+,,,,,,,
+# Terraformer Research,,,,,,,
 vulpChatAssignment_pickResearchOption_terraformer,VulpoidPickResearchOptions,"$id == laisa
 !$player.vulp_gotTerraformerMission",,,vulpChatAssignment_pickResearch_terraformer:Insights into the Citadel,,
 vulpChatAssignment_pickResearch_terraformerUnable,DialogOptionSelected,"$option == vulpChatAssignment_pickResearch_terraformer
@@ -1947,12 +1955,7 @@ vulpChatAssignment_pickResearch:Cancel",,
 vulpChatAssignment_pickResearch_terraformerConfirm,DialogOptionSelected,$option == vulpChatAssignment_pickResearch_terraformerConfirm,"SetVulpoidExpression default
 VulpoidResearch setProject terraformer 360
 FireAll VulpoidChatAssignmentOptions","""Alright, I'll look into it!""",,,
-,,,,,,,
-# Greeting overrides for completed research,,,,,,,
-vulpChat_greetingResearchComplete,VulpoidChatGreeting,VulpoidResearch isComplete score:1000,"FireBest VulpoidResearchComplete
-unset $vulp_researchProject",,,,
-vulpChat_researchCompleteFinish,DialogOptionSelected,$option == vulpChat_researchCompleteFinish,"FireAll VulpoidChatTopLevelOptions
-SetVulpoidExpression default","""Was there anything else you wanted to discuss, $playerSirOrMadam?""",,,
+# Terraformer Completed,,,,,,,
 vulpChat_researchComplete_terraformer,VulpoidResearchComplete,$vulp_researchProject == terraformer,,"She enters carrying a small library of datapads, which she eagerly lays out in presentation.
 
 ""Great news $playerSirOrMadam. I've had a breakthrough in my analysis.""",vulpChat_researchComplete_terraformer1:Continue,,
@@ -1983,7 +1986,34 @@ vulpChat_researchComplete_terraformer6_knowsTransverse,VulpoidTerraformerBriefTr
 vulpChat_researchComplete_terraformer7,DialogOptionSelected,$option == vulpChat_researchComplete_terraformer7,"$player.vulp_gotTerraformerMission = true
 VulpoidTerraformer giveIntel","""None of the information I had access to described that ship. But it must have been something special, especially if the XIV tried to escort it instead of scrapping it for parts.""
 
-You thank her for the information and send the final coordinates to your nav officer. A site so deep in abyssal hyperspace is almost certainly untouched, but will be difficult to reach and return from.",vulpChat_researchCompleteFinish:Continue,# TODO: Terraformer intel,
+You thank her for the information and send the final coordinates to your nav officer. A site so deep in abyssal hyperspace is almost certainly untouched, but will be difficult to reach and return from.",vulpChat_researchCompleteFinish:Continue,,
+,,,,,,,
+# Fox Videos Research,,,,,,,
+vulpChatAssignment_pickResearchOption_foxVideos,VulpoidPickResearchOptions,,,,vulpChatAssignment_pickResearch_foxVideos:Compile some data on Vulpoids,,
+vulpChatAssignment_pickResearch_foxVideos,DialogOptionSelected,$option == vulpChatAssignment_pickResearch_foxVideos,"SetVulpoidExpression default
+FireBest DisableFoxVideosResearchOption
+SetTextHighlights ""10"" ""5,000"" ""month""","""Yeah, I can put something together. Give me 10 Vulpoids, 5,000 credits for expenses, and about a month. I'll get some medical scans, a few holovids of them being adorable idiots, and everything else in between.""","vulpChatAssignment_pickResearch_foxVideosConfirm:Confirm
+vulpChatAssignment_pickResearch:Cancel",,
+vulpChatAssignment_pickResearch_foxVideosDisable,DisableFoxVideosResearchOption,!PlayerHasCargo vulpoids 10,"SetTooltip vulpChatAssignment_pickResearch_foxVideosConfirm ""Requires 10 Vulpoids""
+SetEnabled vulpChatAssignment_pickResearch_foxVideosConfirm false",,,,
+vulpChatAssignment_pickResearch_foxVideosConfirm,DialogOptionSelected,$option == vulpChatAssignment_pickResearch_foxVideosConfirm,"VulpoidResearch setProject foxVideos 30
+RemoveCommodity vulpoids 10
+RemoveCommodity credits 5000
+FireAll VulpoidChatAssignmentOptions","""Send them to my suite, I'll get started shortly!""",,,
+# Fox Videos Completed,,,,,,,
+vulpChat_researchComplete_foxVideos,VulpoidResearchComplete,$vulp_researchProject == foxVideos,"FireBest FoxVideosResearchCompleteBlurb
+AddCommodity vulpoids 10
+AddRemoveAnyItem SPECIAL vulpoid_data 1","She passes you a datapad as she enters. ""One pad of multimedia data, as requested! And the dummies are your responsibility again.""",vulpChat_researchCompleteFinish:Continue,,
+vulpChat_researchComplete_foxVideosBlurb_chasingTail,FoxVideosResearchCompleteBlurb,,,"""One got a sticker stuck to her tail at one point, she spent ages spinning in circles! I got the whole thing on holovid, hilarious!""",,,
+vulpChat_researchComplete_foxVideosBlurb_cosplay,FoxVideosResearchCompleteBlurb,,,"""We tried out a whole selection of clothes and costumes. I actually ended up keeping some for my own wardrobe!""",,,
+vulpChat_researchComplete_foxVideosBlurb_popSong,FoxVideosResearchCompleteBlurb,,,"""I had them perform some dances to a new pop song, I'm sure it'll be a hit on the holonet!""",,,
+vulpChat_researchComplete_foxVideosBlurb_newProtein,FoxVideosResearchCompleteBlurb,,,"""I've identified a novel protein structural variation that presents under niche circumstances. The academic community will love this!""",,,
+vulpChat_researchComplete_foxVideosBlurb_mangonut,FoxVideosResearchCompleteBlurb,$global.mangonutsExported score:0,,"""We decided to try sharing a mangonut. My memory's a bit blurry after that, but the footage is hilarious!""",,,
+vulpChat_researchComplete_foxVideosBlurb_hotTub,FoxVideosResearchCompleteBlurb,,SetVulpoidExpression bruh,"""I had them play some holo-sims while in a hot tub. They weren't very good at the game, but that's never actually been the point.""",,,
+vulpChat_researchComplete_foxVideosBlurb_eatingContest,FoxVideosResearchCompleteBlurb,,SetVulpoidExpression bruh,"""I'll admit, the eating contest was a mixed bag. It did at least have a clear winner... the last one to experience gastroparesis.""",,,
+vulpChat_researchComplete_foxVideosBlurb_nyquilChicken,FoxVideosResearchCompleteBlurb,,,"""Did you know we're largely unaffected by acetaminophen? We ran a few tests that should be entertaining for both academics, and the holonet.""",,,
+,,,,,,,
+,,,,,,,
 ,,,,,,,
 ,,,,,,,
 ,,,,,,,
