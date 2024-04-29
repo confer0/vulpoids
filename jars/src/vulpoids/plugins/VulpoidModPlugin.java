@@ -295,6 +295,7 @@ public class VulpoidModPlugin extends BaseModPlugin {
                 if(industry instanceof BaseIndustry) {
                     BaseIndustry b = (BaseIndustry) industry;
                     b.supply(Vulpoids.MANGONUT_ITEM, 1);
+                    Global.getSector().getMemoryWithoutUpdate().set(Vulpoids.KEY_EXPORTED_MANGONUTS, true);
                 }
             }
             @Override

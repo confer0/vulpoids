@@ -49,6 +49,7 @@ public class Vulpoids {
     
     public static final String KEY_GOT_FACTORY = "$vulp_gotFactory";
     public static final String KEY_EXPORTED_VULPOIDS = "$exportedVulpoids";
+    public static final String KEY_EXPORTED_MANGONUTS = "$exportedMangonuts";
     
     public static final String KEY_SELECTED_VULPOID = "$selectedVulpoid";
     public static final String KEY_SELECTED_VULPOID_NAME = "$selectedVulpoidName";

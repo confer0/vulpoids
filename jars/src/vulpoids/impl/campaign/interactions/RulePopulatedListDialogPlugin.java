@@ -34,6 +34,15 @@ public class RulePopulatedListDialogPlugin extends ListBasedInteractionDialogPlu
     }
     
     @Override
+    protected boolean getEntryEnabled(Object entry) {
+        if(entry instanceof Option) {
+            Option option = (Option) entry;
+            return !optionMemoryMaps.get(option).get(MemKeys.LOCAL).getBoolean("$optionDisabled:"+(option).id);
+        }
+        return super.getEntryEnabled(entry);
+    }
+    
+    @Override
     protected String getEntryTooltipString(Object entry) {
         if(!(entry instanceof Option)) return null;
         Option option = (Option) entry;

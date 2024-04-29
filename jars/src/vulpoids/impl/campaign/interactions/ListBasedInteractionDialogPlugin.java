@@ -95,6 +95,7 @@ public abstract class ListBasedInteractionDialogPlugin implements InteractionDia
     protected abstract String getEntryLabel(Object entry);
     protected Color getEntryColor(Object entry) {return Misc.getButtonTextColor();}
     protected String getEntryTooltipString(Object entry) {return null;}
+    protected boolean getEntryEnabled(Object entry) {return true;}
     
     protected abstract void selectEntry(Object entry);
     
@@ -132,6 +133,7 @@ public abstract class ListBasedInteractionDialogPlugin implements InteractionDia
                                 } else {
                                     options.addOption(getEntryLabel(entry), i, getEntryTooltipString(entry));
                                 }
+                                options.setEnabled(i, getEntryEnabled(entry));
                             } else {
                                 options.addOption("", i);
                                 options.setEnabled(i, false);

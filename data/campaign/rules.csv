@@ -1996,6 +1996,46 @@ vulpChatPet_gift,DialogOptionSelected,$option == vulpChatPet_gift,OpenListBasedD
 ,,,,,,,
 ,,,,,,,
 ,,,,,,,
+"# Gift - Food, for a nice meal",,,,,,,
+vulpChatGift_mealOption,VulpoidPettingGiftOptions,"PlayerHasCargo food 10
+$vulp_profectoAssignment != vulpoids",$optionDisabled:vulpChatGift_meal = false 0,,vulpChatGift_meal:Arrange for a nice meal together,# Note: Only Profectos allowed. Regular Vulpoids can go to Tri-Donalds. ...TODO: Tri-Donalds.,
+vulpChatGift_mealDisable,VulpoidPettingGiftOptions,$player.heldFeast,"$optionTooltip:vulpChatGift_meal = ""You've already hosted a notable meal recently, and to hold another so soon would reflect poorly.""
+$optionDisabled:vulpChatGift_meal = true 0",,,,
+vulpChatGift_meal,DialogOptionSelected,$option == vulpChatGift_meal,OpenListBasedDialog VulpoidMealOptions,You can arrange for your chefs to make a meal for the two of you to enjoy together. It will take a large volume of food to meet the high standard of quality.,,,
+,,,,,,,
+vulpMeal_classyOption,VulpoidMealOptions,,"$optionTooltip:vulpMeal_classy = ""A classy meal featuring some of the best dishes possible with open-market ingredients. Both tasteful and tasty in equal measure.\n\nIngredients:\n10 units of food"" 0
+$optionColor:vulpMeal_classy = ""173,188,19"" 0",,vulpMeal_classy:Fancy dinner,"# Just a classical 'fancy meal'. Tone is 'steak and wine', but multiple courses.",
+vulpMeal_luddicOption,VulpoidMealOptions,$global.lpp_completed,"$optionTooltip:vulpMeal_luddic = ""A spin on a traditional Luddic supper, baked from scratch using raw ingredients. Of course, it features a spread of tea.\n\nIngredients:\n10 units of food"" 0
+$optionColor:vulpMeal_luddic = ""75,200,0"" 0",,vulpMeal_luddic:Luddic supper,"# Still fancy, but 'homely'. Bread, cheese, meat, etc. Maybe go swiss? Twist bread, fondue, raclette... Of course, don't forget the tea. Only the finest blends.",
+vulpMeal_lobsterOption,VulpoidMealOptions,,"$optionTooltip:vulpMeal_lobster = ""A well-regarded meal for both the flavor and rarity of its key ingredient, Volturnian lobster. Nearly every dish highlights it in some capacity, even if only decoratively.\n\nIngredients:\n10 units of food\n10 units of lobster"" 0
+$optionColor:vulpMeal_lobster = ""160,200,255"" 0
+$optionDisabled:vulpMeal_lobster = true 0",,vulpMeal_lobster:Executor's banquet,"# Bisque, surf and turf, etc. Dishes held up by lobster claws. Gold leaf, unabashedly lavish and tacky.",
+vulpMeal_lobsterEnable,VulpoidMealOptions,PlayerHasCargo lobster 10,$optionDisabled:vulpMeal_lobster = false 0,,,,
+vulpMeal_mangonutOption,VulpoidMealOptions,$global.exportedMangonuts,"$optionTooltip:vulpMeal_mangonut = ""A meal designed to heavily use and compliment the versatile mangonut. Prominently features fruit spreads, chocolate, and mulled wine.\n\nIngredients:\n10 units of food\n10 units of mangonut"" 0
+$optionColor:vulpMeal_mangonut = ""192,96,0"" 0
+$optionDisabled:vulpMeal_mangonut = true 0",,vulpMeal_mangonut:Mangonut arrangement,"# Fruit with chocolate fountain. Mangonut mulled wine. In general: fruit, chocolate, and spice. Almost christmassy.",
+vulpMeal_mangonutEnable,VulpoidMealOptions,PlayerHasCargo mangonuts 10,$optionDisabled:vulpMeal_mangonut = false 0,,,,
+vulpMeal_lavishOption,VulpoidMealOptions,$global.exportedMangonuts,"$optionTooltip:vulpMeal_lavish = ""A stunning meal featuring dishes made with the greatest ingredients in the Sector. A feast of this grandeur requires nothing less than the finest furniture and china to eat it from.\n\nIngredients:\n10 units of food\n10 units of lobster\n10 units of mangonuts\n10 units of luxury goods"" 0
+$optionColor:vulpMeal_lavish = ""189,155,115"" 0
+$optionDisabled:vulpMeal_lavish = true 0",,vulpMeal_lavish:Lavish feast,# Just go to town. Your staff spends hours picking your outfit. The chandelier uses laser-grade crystals. The table is genuine Luddic hand-carving. The Vulpoid wears something stunning too.,
+vulpMeal_lavishEnable,VulpoidMealOptions,"PlayerHasCargo lobster 10
+PlayerHasCargo mangonuts 10",$optionDisabled:vulpMeal_lavish = false 0,,,,
+,,,,,,,
+vulpMeal_cannibalOption,VulpoidMealOptions,PlayerHasCargo vulpoids 10,"$noText = """" 0
+$optionDisabled:null = true 0
+$optionTooltip:vulpMeal_cannibal = ""A meal featuring extremely exotic meats. Disconcertingly tasty.\n\nIngredients:\n10 units of food\n10 units of vulpoids"" 0
+$optionColor:vulpMeal_cannibal = ""139,81,77"" 0",,"null:$noText
+null:$noText
+null:$noText
+null:$noText
+null:$noText
+vulpMeal_cannibal:Long Fox",,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,The forbidden dish - vulpoids,,,,
 ,,,,,,,
 ,,,,,,,
 ,,,,,,,
@@ -2379,11 +2419,9 @@ $mangonutsEaten = $cachedMangonuts
 unset $cachedMangonuts",,,# TODO - IMPLEMENT THIS FULLY,
 ,,,,,,,
 ,,,,,,,
-"# Gift - Food, for a nice meal",,,,,,,
-vulpChatGift_foodOption,VulpoidPettingGiftOptions,PlayerHasCargo food 1,"$optionTooltip:vulpChatGift_food = ""Requires 1 unit of food."" 0
-$optionColor:vulpChatGift_food = ""128,255,0"" 0",,vulpChatGift_food:Have a meal together,"# TODO - Should always be visible, just disabled when unavailable?",
-vulpChatGift_food,DialogOptionSelected,$option == vulpChatGift_food,"RemoveCommodity food 1
-ExitRulesToPlugin",TODO: you have a lovely meal.,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
 ,,,,,,,
 ,,,,,,,
 # Gift - Volturnian Lobster,,,,,,,
