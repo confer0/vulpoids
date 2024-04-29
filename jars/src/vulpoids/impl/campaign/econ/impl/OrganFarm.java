@@ -22,17 +22,28 @@ public class OrganFarm extends BaseIndustry {
     protected float shiny_vulpoid_production_buffer = 0;
     protected final float PATHER_INTEREST = 2f;
     
+    public static float LOBSTERS_PER_DAY = 50/30f;
+    protected float lobster_production_buffer = 0;
+    
     @Override
     public void advance(float amount) {
         super.advance(amount);
 
-        if (special != null && Vulpoids.BIOFORGE_ITEM.equals(special.getId())) {
+        if (special != null && market.isPlayerOwned()) {
             float days = Misc.getDays(amount);
-            shiny_vulpoid_production_buffer += days * SHINY_VULPOIDS_PER_DAY * Math.max(0, getSupply(Vulpoids.CARGO_ITEM).getQuantity().getModifiedInt());
-            while(shiny_vulpoid_production_buffer >= 1) {
-                shiny_vulpoid_production_buffer -= 1;
-                market.getSubmarket(Submarkets.SUBMARKET_STORAGE).getCargo().addSpecial(new SpecialItemData(Vulpoids.SPECIAL_ITEM_DEFAULT, null), 1);
-                Global.getSector().getIntelManager().addIntel(new ShinyProducedIntel(market));
+            if(Vulpoids.BIOFORGE_ITEM.equals(special.getId())) {
+                shiny_vulpoid_production_buffer += days * SHINY_VULPOIDS_PER_DAY * Math.max(0, getSupply(Vulpoids.CARGO_ITEM).getQuantity().getModifiedInt());
+                while(shiny_vulpoid_production_buffer >= 1) {
+                    shiny_vulpoid_production_buffer -= 1;
+                    market.getSubmarket(Submarkets.SUBMARKET_STORAGE).getCargo().addSpecial(new SpecialItemData(Vulpoids.SPECIAL_ITEM_DEFAULT, null), 1);
+                    Global.getSector().getIntelManager().addIntel(new ShinyProducedIntel(market));
+                }
+            } else if (Vulpoids.LOBSTER_BIOFORGE_ITEM.equals(special.getId())) {
+                lobster_production_buffer += days * LOBSTERS_PER_DAY * (market.getSize() - 2);
+                if(lobster_production_buffer >= 1) {
+                    market.getSubmarket(Submarkets.SUBMARKET_STORAGE).getCargo().addCommodity(Commodities.LOBSTER, (int)lobster_production_buffer);
+                    lobster_production_buffer -= (int)lobster_production_buffer;
+                }
             }
         }
     }
@@ -85,8 +96,14 @@ public class OrganFarm extends BaseIndustry {
     public boolean hasBiofactory() {
         return getSpecialItem() != null && Vulpoids.BIOFORGE_ITEM.equals(getSpecialItem().getId());
     }
+    public boolean hasLobsterBioforge() {
+        return getSpecialItem() != null && Vulpoids.LOBSTER_BIOFORGE_ITEM.equals(getSpecialItem().getId());
+    }
     public boolean isOrganFarmVulpBiofactory() {
         return Vulpoids.INDUSTRY_ORGANFARM.equals(getId()) && hasBiofactory();
+    }
+    public boolean isOrganFarmLobsterBioforge() {
+        return Vulpoids.INDUSTRY_ORGANFARM.equals(getId()) && hasLobsterBioforge();
     }
     public boolean isBiofacilityAndNotUnlocked() {
         return Vulpoids.INDUSTRY_BIOFACILITY.equals(getId()) && !Global.getSector().getMemoryWithoutUpdate().getBoolean(Vulpoids.KEY_GOT_FACTORY);
@@ -107,6 +124,9 @@ public class OrganFarm extends BaseIndustry {
     public boolean isBiofacilityVulpBiofactory() {
         return Vulpoids.INDUSTRY_BIOFACILITY.equals(getId()) && hasBiofactory();
     }
+    public boolean isBiofacilityLobsterBioforge() {
+        return Vulpoids.INDUSTRY_BIOFACILITY.equals(getId()) && hasLobsterBioforge();
+    }
     
     
     @Override
@@ -114,15 +134,20 @@ public class OrganFarm extends BaseIndustry {
         if (isOrganFarmVulpBiofactory()) {
             return Global.getSettings().getSpriteName("industry", "organfarmvulp");
         }
+        if (isOrganFarmLobsterBioforge()) {
+            return Global.getSettings().getSpriteName("industry", "organfarmlobster");
+        }
         // Note - Using size 4 as the small instead of 3, because they can only be built on 4+.
         if (Vulpoids.INDUSTRY_BIOFACILITY.equals(getId())) {
+            String item = "";
             if (hasBiofactory()) {
-                if(market.getSize() <= 4) return Global.getSettings().getSpriteName("industry", "biotechlowvulp");
-                if(market.getSize() >= 6) return Global.getSettings().getSpriteName("industry", "biotechhighvulp");
-                return Global.getSettings().getSpriteName("industry", "biotechmedvulp");
+                item = "vulp";
+            } else if (hasLobsterBioforge()) {
+                item = "lobster";
             }
-            if(market.getSize() <= 4) return Global.getSettings().getSpriteName("industry", "biotechlow");
-            if(market.getSize() >= 6) return Global.getSettings().getSpriteName("industry", "biotechhigh");
+            if(market.getSize() <= 4) return Global.getSettings().getSpriteName("industry", "biotechlow"+item);
+            if(market.getSize() >= 6) return Global.getSettings().getSpriteName("industry", "biotechhigh"+item);
+            return Global.getSettings().getSpriteName("industry", "biotechmed"+item);
         }
         return super.getCurrentImage();
     }
@@ -134,6 +159,12 @@ public class OrganFarm extends BaseIndustry {
         }
         if (isBiofacilityVulpBiofactory()) {
             return "Vulpoid Biofacility";
+        }
+        if (isOrganFarmLobsterBioforge()) {
+            return "Lobster Aquariums";
+        }
+        if (isBiofacilityLobsterBioforge()) {
+            return "Lobster Biofacility";
         }
         if (isBiofacilityAndNotUnlocked()) {
             return "Speculative Improvements";
@@ -152,6 +183,16 @@ public class OrganFarm extends BaseIndustry {
             return "The pinnacle of Exodyne Biotech's technological achievement. With a bioforge at its heart, "+
                     "this sleek and advanced megacomplex is capable of producing an endless flow of fluffy friends, "+
                     "while cast-offs are reprocessed to supplement the pre-existing organ production.";
+        }
+        if (isOrganFarmLobsterBioforge()) {
+            return "A specialized bioforge enables the production of Volturnian lobsters outside of their homeworld. "+
+                    "Even wetter and smellier than a traditional organ farming operation, these operations are best "+
+                    "kept extremely far from inhabited areas.";
+        }
+        if (isBiofacilityLobsterBioforge()) {
+            return "The sleekly-designed biofacility has been converted for use with an alternative bioforge. "+
+                    "Growth vats have become makeshift aquariums to support the Volturnian lobsters churned "+
+                    "out by the bioforge until they can fully develop.";
         }
         if (isBiofacilityAndNotUnlocked()) {
             return "Without Domain-era technology, this is advanced as is possible in the Sector.";

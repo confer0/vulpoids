@@ -8,12 +8,16 @@
 		"industry":{
 			"organfarm":"graphics/icons/industry/organfarm.png",
 			"organfarmvulp":"graphics/icons/industry/organfarmvulp.png",
+			"organfarmlobster":"graphics/icons/industry/organfarmlobster.png",
 			"biotechlow":"graphics/icons/industry/biotech_low.png",
 			"biotechmed":"graphics/icons/industry/biotech_medium.png",
 			"biotechhigh":"graphics/icons/industry/biotech_high.png",
 			"biotechlowvulp":"graphics/icons/industry/biotech_low_fox.png",
 			"biotechmedvulp":"graphics/icons/industry/biotech_medium_fox.png",
 			"biotechhighvulp":"graphics/icons/industry/biotech_high_fox.png",
+			"biotechlowlobster":"graphics/icons/industry/biotech_low_lobster.png",
+			"biotechmedlobster":"graphics/icons/industry/biotech_medium_lobster.png",
+			"biotechhighlobster":"graphics/icons/industry/biotech_high_lobster.png",
 		},
 		"intel":{
 			"shiny_produced":"graphics/icons/intel/fox_produced.png",

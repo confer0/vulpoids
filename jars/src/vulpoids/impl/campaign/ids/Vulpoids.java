@@ -9,6 +9,7 @@ public class Vulpoids {
     public static final String AIR_FILTER_ITEM = "air_filter_core";
     public static final String MIDAS_NANOFORGE_ITEM = "midas_nanoforge";
     public static final String MANGONUT_TREE_ITEM = "mangonut_tree";
+    public static final String LOBSTER_BIOFORGE_ITEM = "lobster_bioforge";
     
     public static final String INDUSTRY_ORGANFARM = "organfarms";
     public static final String INDUSTRY_BIOFACILITY = "biofacility";
@@ -56,6 +57,7 @@ public class Vulpoids {
     public static final String CONDITION_VULPOID_POPULATION = "vulpoid_population";
     public static final String CONDITION_VULPOID_BLOCKADE = "vulpoid_blockade";
     public static final String CONDITION_FILTERED_AIR = "filtered_air";
+    public static final String CONDITION_LOBSTERS_GROWING = "lobsters_growing";
     
     public static final String SKILL_OFFICER = "vulpoid_officer";
     public static final String SKILL_ADMIN = "vulpoid_brain";

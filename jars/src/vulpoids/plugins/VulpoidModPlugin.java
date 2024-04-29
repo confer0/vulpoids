@@ -2,6 +2,7 @@ package vulpoids.plugins;
 
 import com.fs.starfarer.api.BaseModPlugin;
 import com.fs.starfarer.api.Global;
+import com.fs.starfarer.api.campaign.PlanetAPI;
 
 import com.fs.starfarer.api.impl.campaign.econ.impl.ItemEffectsRepo;
 import com.fs.starfarer.api.impl.campaign.econ.impl.BaseInstallableItemEffect;
@@ -20,12 +21,14 @@ import com.fs.starfarer.api.impl.campaign.econ.impl.BoostIndustryInstallableItem
 import com.fs.starfarer.api.impl.campaign.ids.Commodities;
 import com.fs.starfarer.api.impl.campaign.ids.Conditions;
 import com.fs.starfarer.api.impl.campaign.ids.MemFlags;
+import com.fs.starfarer.api.impl.campaign.ids.Planets;
 import com.fs.starfarer.api.impl.campaign.ids.Ranks;
 import com.fs.starfarer.api.impl.campaign.ids.Skills;
 import com.fs.starfarer.api.impl.campaign.ids.Stats;
 import com.fs.starfarer.api.util.Pair;
 import vulpoids.impl.campaign.VulpoidCreator;
 import vulpoids.impl.campaign.econ.FilteredAir;
+import vulpoids.impl.campaign.econ.LobstersGrowing;
 import vulpoids.impl.campaign.ids.Vulpoids;
 
 public class VulpoidModPlugin extends BaseModPlugin {
@@ -94,7 +97,8 @@ public class VulpoidModPlugin extends BaseModPlugin {
                     BaseIndustry b = (BaseIndustry) industry;
                     int size = b.getMarket().getSize();
                     if(Vulpoids.INDUSTRY_ORGANFARM.equals(b.getId())) {
-                        b.getSupply(Commodities.ORGANS).getQuantity().unmodify();
+                        //b.getSupply(Commodities.ORGANS).getQuantity().unmodify();
+                        b.supply(spec.getId(), Commodities.ORGANS, -100, Misc.ucFirst(spec.getName().toLowerCase()));
                     } else if (Vulpoids.INDUSTRY_BIOFACILITY.equals(b.getId())) {
                         b.supply(spec.getId(), Commodities.ORGANS, 1, "Vulpoid reprocessing");
                         //b.supply(spec.getId(), Commodities.DRUGS, 1, "Vulpoid reprocessing");
@@ -297,6 +301,42 @@ public class VulpoidModPlugin extends BaseModPlugin {
             public void unapply(Industry industry) {
                 super.unapply(industry);
                 industry.getSupply(Vulpoids.MANGONUT_ITEM).getQuantity().unmodify();
+            }
+            @Override
+            public String[] getSimpleReqs(Industry industry) {
+                return new String [] {ItemEffectsRepo.HABITABLE};
+            }
+        });
+        
+        ItemEffectsRepo.ITEM_EFFECTS.put(Vulpoids.LOBSTER_BIOFORGE_ITEM, new BaseInstallableItemEffect(Vulpoids.LOBSTER_BIOFORGE_ITEM) {
+            @Override
+            protected void addItemDescriptionImpl(Industry industry, TooltipMakerAPI text, SpecialItemData data,
+                    InstallableItemDescriptionMode mode, String pre, float pad) {
+                text.addPara(pre + "Enables Volturnian lobster production.", pad);
+            }
+            @Override
+            public void apply(Industry industry) {
+                industry.supply(spec.getId(), Commodities.ORGANS, -100, Misc.ucFirst(spec.getName().toLowerCase()));
+                
+                if(!industry.getMarket().hasCondition(Conditions.VOLTURNIAN_LOBSTER_PENS)) {
+                    PlanetAPI planet = industry.getMarket().getPlanetEntity();
+                    if(planet!=null && (Planets.PLANET_TERRAN.equals(planet.getTypeId()) || Planets.PLANET_WATER.equals(planet.getTypeId()))) {
+                        if(industry.getMarket().hasCondition(Vulpoids.CONDITION_LOBSTERS_GROWING)) {
+                            LobstersGrowing plugin = (LobstersGrowing) industry.getMarket().getCondition(Vulpoids.CONDITION_LOBSTERS_GROWING).getPlugin();
+                            if(plugin.isFinished()) {
+                                industry.getMarket().addCondition(Conditions.VOLTURNIAN_LOBSTER_PENS);
+                                industry.getMarket().removeCondition(Vulpoids.CONDITION_LOBSTERS_GROWING);
+                            }
+                        } else {
+                            industry.getMarket().addCondition(Vulpoids.CONDITION_LOBSTERS_GROWING);
+                        }
+                    }
+                }
+            }
+            @Override
+            public void unapply(Industry industry) {
+                industry.supply(spec.getId(), Commodities.ORGANS, 0, Misc.ucFirst(spec.getName().toLowerCase()));
+                //industry.getMarket().removeCondition(Vulpoids.CONDITION_LOBSTERS_GROWING);
             }
             @Override
             public String[] getSimpleReqs(Industry industry) {
