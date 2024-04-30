@@ -1,6 +1,8 @@
 package vulpoids.impl.campaign.ids;
 
 public class Vulpoids {
+    public static final String MOD_ID = "vulpoids";
+    
     public static final String CARGO_ITEM = "vulpoids";
     public static final String MANGONUT_ITEM = "mangonuts";
     

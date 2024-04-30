@@ -1921,14 +1921,14 @@ vulpChatAssignment_inquireEmbarked,DialogOptionSelected,"$option == vulpChatAssi
 $vulp_profectoAssignment == special_vulpoid_embarked",SetVulpoidExpression default,"""I'm having fun! Your crew's pretty nice, they draw lots to decide who gets to pamper me each day.""",,"# Embarked, not doing anything",
 vulpChatAssignment_inquireEmbarkedResearch_Working,DialogOptionSelected,"$option == vulpChatAssignment_inquire
 $vulp_profectoAssignment == special_vulpoid_embarked
-$vulp_researchProject != null",SetVulpoidExpression default,"""The project is going well! Any chance of getting more assistants? I could use another one to brush my tail while I'm getting headpats.""",,"# Embarked, actively researching",
+$vulp_researchProject != null",SetVulpoidExpression default,"""The project is going well! Any chance of getting more assistants? I could use another one to brush my tail while I'm getting headpats.""",,"# Embarked, actively researching (generic)",
 vulpChatAssignment_inquireOfficer,DialogOptionSelected,"$option == vulpChatAssignment_inquire
 $vulp_profectoAssignment == special_vulpoid_officer",SetVulpoidExpression default,"""Command is going smoothly. The crew love me, of course, but it's hard having to send them into danger.""",,"# TODO - use a command to reference the commanded ship, if any. Have callouts for unassigned, assigned civ, assigned combat, zig, etc.",
 vulpChatAssignment_inquireAdmin,DialogOptionSelected,"$option == vulpChatAssignment_inquire
 $vulp_profectoAssignment == special_vulpoid_admin",SetVulpoidExpression default,"""Colony administration is going nicely! I might make an in-person visit some time, see if the rec facilities are up to standard.""",,"# TODO - use a command to reference the administrated colony, if any",
 ,,,,,,,
 # Research picker options,,,,,,,
-vulpChatAssignment_pickResearchOption_exit,VulpoidPickResearchOptions,,,,100:vulpChatAssignment_pickResearch_exit:Back,,
+vulpChatAssignment_pickResearchOption_exit,VulpoidPickResearchOptions,,SetShortcut vulpChatAssignment_pickResearch_exit ESCAPE,,100:vulpChatAssignment_pickResearch_exit:Back,,
 vulpChatAssignment_pickResearch_exit,DialogOptionSelected,$option == vulpChatAssignment_pickResearch_exit,FireAll VulpoidChatAssignmentOptions,,,,
 ,,,,,,,
 # Greeting overrides for completed research,,,,,,,
@@ -1955,6 +1955,10 @@ vulpChatAssignment_pickResearch:Cancel",,
 vulpChatAssignment_pickResearch_terraformerConfirm,DialogOptionSelected,$option == vulpChatAssignment_pickResearch_terraformerConfirm,"SetVulpoidExpression default
 VulpoidResearch setProject terraformer 360
 FireAll VulpoidChatAssignmentOptions","""Alright, I'll look into it!""",,,
+# Terraformer In Progress,,,,,,,
+vulpChatAssignment_inquireEmbarkedResearch_terraformer,DialogOptionSelected,"$option == vulpChatAssignment_inquire
+$vulp_profectoAssignment == special_vulpoid_embarked
+$vulp_researchProject == terraformer score:100",SetVulpoidExpression bruh,"""Research is going well. I won't lie though, it's a lot of work. I may need to increase my coolant budget again.""",,,
 # Terraformer Completed,,,,,,,
 vulpChat_researchComplete_terraformer,VulpoidResearchComplete,$vulp_researchProject == terraformer,,"She enters carrying a small library of datapads, which she eagerly lays out in presentation.
 
@@ -1991,27 +1995,116 @@ You thank her for the information and send the final coordinates to your nav off
 # Fox Videos Research,,,,,,,
 vulpChatAssignment_pickResearchOption_foxVideos,VulpoidPickResearchOptions,,,,vulpChatAssignment_pickResearch_foxVideos:Compile some data on Vulpoids,,
 vulpChatAssignment_pickResearch_foxVideos,DialogOptionSelected,$option == vulpChatAssignment_pickResearch_foxVideos,"SetVulpoidExpression default
-FireBest DisableFoxVideosResearchOption
-SetTextHighlights ""10"" ""5,000"" ""month""","""Yeah, I can put something together. Give me 10 Vulpoids, 5,000 credits for expenses, and about a month. I'll get some medical scans, a few holovids of them being adorable idiots, and everything else in between.""","vulpChatAssignment_pickResearch_foxVideosConfirm:Confirm
+SetShortcut vulpChatAssignment_pickResearch ESCAPE
+SetTooltip vulpChatAssignment_pickResearch_foxVideosConfirm1 ""Takes 1 cycle\nRequires 10 Vulpoids\nCosts 5,000 credits""
+SetTooltip vulpChatAssignment_pickResearch_foxVideosConfirm2 ""Takes 2 cycles\nRequires 30 Vulpoids\nCosts 15,000 credits""
+SetTooltip vulpChatAssignment_pickResearch_foxVideosConfirm3 ""Takes 3 cycles\nRequires 50 Vulpoids\nCosts 25,000 credits""
+SetTooltip vulpChatAssignment_pickResearch_foxVideosConfirm4 ""Takes 4 cycles\nRequires 100 Vulpoids\nCosts 50,000 credits""
+SetTooltip vulpChatAssignment_pickResearch_foxVideosConfirm5 ""Takes 5 cycles\nRequires 300 Vulpoids\nCosts 150,000 credits""
+SetEnabled vulpChatAssignment_pickResearch_foxVideosConfirm1 false
+SetEnabled vulpChatAssignment_pickResearch_foxVideosConfirm2 false
+SetEnabled vulpChatAssignment_pickResearch_foxVideosConfirm3 false
+SetEnabled vulpChatAssignment_pickResearch_foxVideosConfirm4 false
+SetEnabled vulpChatAssignment_pickResearch_foxVideosConfirm5 false
+FireAll EnableFoxVideosResearchOption","""Yeah, I can pull something together. Holo-media of them being adorable idiots is easy, be it images or vids. Medical studies too, practically everyone wants to get their hands on those scans. The real question is, how work do you want me to put into it?""","vulpChatAssignment_pickResearch_foxVideosConfirm1:""Get me something quick but respectable.""
+vulpChatAssignment_pickResearch_foxVideosConfirm2:""Go for a proper roadmap, but keep it streamlined.""
+vulpChatAssignment_pickResearch_foxVideosConfirm3:""Let's make this a professional operation.""
+vulpChatAssignment_pickResearch_foxVideosConfirm4:""I'm willing to commit to a significant investment.""
+vulpChatAssignment_pickResearch_foxVideosConfirm5:""Spare no expense, and take as long as you need.""
 vulpChatAssignment_pickResearch:Cancel",,
-vulpChatAssignment_pickResearch_foxVideosDisable,DisableFoxVideosResearchOption,!PlayerHasCargo vulpoids 10,"SetTooltip vulpChatAssignment_pickResearch_foxVideosConfirm ""Requires 10 Vulpoids""
-SetEnabled vulpChatAssignment_pickResearch_foxVideosConfirm false",,,,
-vulpChatAssignment_pickResearch_foxVideosConfirm,DialogOptionSelected,$option == vulpChatAssignment_pickResearch_foxVideosConfirm,"VulpoidResearch setProject foxVideos 30
+vulpChatAssignment_pickResearch_foxVideosDisable1,EnableFoxVideosResearchOption,"PlayerHasCargo vulpoids 10
+$player.credits >= 5000",SetEnabled vulpChatAssignment_pickResearch_foxVideosConfirm1 true,,,,
+vulpChatAssignment_pickResearch_foxVideosDisable2,EnableFoxVideosResearchOption,"PlayerHasCargo vulpoids 30
+$player.credits >= 15000",SetEnabled vulpChatAssignment_pickResearch_foxVideosConfirm2 true,,,,
+vulpChatAssignment_pickResearch_foxVideosDisable3,EnableFoxVideosResearchOption,"PlayerHasCargo vulpoids 50
+$player.credits >= 25000",SetEnabled vulpChatAssignment_pickResearch_foxVideosConfirm3 true,,,,
+vulpChatAssignment_pickResearch_foxVideosDisable4,EnableFoxVideosResearchOption,"PlayerHasCargo vulpoids 100
+$player.credits >= 50000",SetEnabled vulpChatAssignment_pickResearch_foxVideosConfirm4 true,,,,
+vulpChatAssignment_pickResearch_foxVideosDisable5,EnableFoxVideosResearchOption,"PlayerHasCargo vulpoids 300
+$player.credits >= 150000",SetEnabled vulpChatAssignment_pickResearch_foxVideosConfirm5 true,,,,
+vulpChatAssignment_pickResearch_foxVideosConfirm1,DialogOptionSelected,$option == vulpChatAssignment_pickResearch_foxVideosConfirm1,"VulpoidResearch setProject foxVideos 365
+$foxVideosLevel = 1
 RemoveCommodity vulpoids 10
 RemoveCommodity credits 5000
-FireAll VulpoidChatAssignmentOptions","""Send them to my suite, I'll get started shortly!""",,,
+FireAll VulpoidChatAssignmentOptions","""Alright, send the dummies over to my suite and I'll get started!""",,,
+vulpChatAssignment_pickResearch_foxVideosConfirm2,DialogOptionSelected,$option == vulpChatAssignment_pickResearch_foxVideosConfirm2,"VulpoidResearch setProject foxVideos 730
+$foxVideosLevel = 2
+RemoveCommodity vulpoids 30
+RemoveCommodity credits 15000
+FireAll VulpoidChatAssignmentOptions","""Okay, I'll start drawing things up! Send the dummies over to my suite in the meantime.""",,,
+vulpChatAssignment_pickResearch_foxVideosConfirm3,DialogOptionSelected,$option == vulpChatAssignment_pickResearch_foxVideosConfirm3,"VulpoidResearch setProject foxVideos 1095
+$foxVideosLevel = 3
+RemoveCommodity vulpoids 50
+RemoveCommodity credits 25000
+FireAll VulpoidChatAssignmentOptions","""Sounds good! I'll reach out to the quartermaster to book out some conference rooms.""",,,
+vulpChatAssignment_pickResearch_foxVideosConfirm4,DialogOptionSelected,$option == vulpChatAssignment_pickResearch_foxVideosConfirm4,"VulpoidResearch setProject foxVideos 1460
+$foxVideosLevel = 4
+RemoveCommodity vulpoids 100
+RemoveCommodity credits 50000
+FireAll VulpoidChatAssignmentOptions","""Exciting! In that case, I'll see if I can persuade the quartermaster into giving me a bay to work with!""",,,
+vulpChatAssignment_pickResearch_foxVideosConfirm5,DialogOptionSelected,$option == vulpChatAssignment_pickResearch_foxVideosConfirm5,"VulpoidResearch setProject foxVideos 1825
+$foxVideosLevel = 5
+RemoveCommodity vulpoids 300
+RemoveCommodity credits 150000
+FireAll VulpoidChatAssignmentOptions","""Yes, thank you $playerSirOrMadam! Oh don't worry, I've got some fantastic plans!""",,,
+# Fox Videos In Progress,,,,,,,
+vulpChatAssignment_inquireEmbarkedResearch_foxVideos_chasingTail,DialogOptionSelected,"$option == vulpChatAssignment_inquire
+$vulp_profectoAssignment == special_vulpoid_embarked
+$vulp_researchProject == foxVideos score:100",SetVulpoidExpression default,"""One of the dummies got a sticker stuck to her tail! She spent ages chasing it in circles, it was great!""",,,
+vulpChatAssignment_inquireEmbarkedResearch_foxVideos_cosplay,DialogOptionSelected,"$option == vulpChatAssignment_inquire
+$vulp_profectoAssignment == special_vulpoid_embarked
+$vulp_researchProject == foxVideos score:100",SetVulpoidExpression default,"""We tried out a whole selection of clothes and costumes. I think I'll hang on to a few for my own wardrobe!""",,,
+vulpChatAssignment_inquireEmbarkedResearch_foxVideos_popSong,DialogOptionSelected,"$option == vulpChatAssignment_inquire
+$vulp_profectoAssignment == special_vulpoid_embarked
+$vulp_researchProject == foxVideos score:100",SetVulpoidExpression default,"""I had them perform some dances to a new pop song, I'm sure it'll be a hit on the holonet!""",,,
+vulpChatAssignment_inquireEmbarkedResearch_foxVideos_newProtein,DialogOptionSelected,"$option == vulpChatAssignment_inquire
+$vulp_profectoAssignment == special_vulpoid_embarked
+$vulp_researchProject == foxVideos score:100",SetVulpoidExpression default,"""I've identified a novel protein structural variation that presents under niche circumstances. The academic community will love this!""",,,
+vulpChatAssignment_inquireEmbarkedResearch_foxVideos_mangonut,DialogOptionSelected,"$option == vulpChatAssignment_inquire
+$vulp_profectoAssignment == special_vulpoid_embarked
+$vulp_researchProject == foxVideos score:100
+$global.mangonutsExported score:0",SetVulpoidExpression default,"""We decided to try sharing a mangonut. My memory's a bit blurry after that, but the footage is hilarious!""",,,
+vulpChatAssignment_inquireEmbarkedResearch_foxVideos_hotTub,DialogOptionSelected,"$option == vulpChatAssignment_inquire
+$vulp_profectoAssignment == special_vulpoid_embarked
+$vulp_researchProject == foxVideos score:100",SetVulpoidExpression bruh,"""I had them play some holo-sims while in a hot tub. They weren't very good at the game, but that's never actually been the point.""",,,
+vulpChatAssignment_inquireEmbarkedResearch_foxVideos_eatingContest,DialogOptionSelected,"$option == vulpChatAssignment_inquire
+$vulp_profectoAssignment == special_vulpoid_embarked
+$vulp_researchProject == foxVideos score:100",SetVulpoidExpression bruh,"""I'll admit, the eating contest was a mixed bag. It did at least have a clear winner... the last one to get gastroparesis.""",,,
+vulpChatAssignment_inquireEmbarkedResearch_foxVideos_nyquilChicken,DialogOptionSelected,"$option == vulpChatAssignment_inquire
+$vulp_profectoAssignment == special_vulpoid_embarked
+$vulp_researchProject == foxVideos score:100",SetVulpoidExpression default,"""Did you know we're largely unaffected by acetaminophen? We ran a few tests that should be entertaining for both academics, and the holonet.""",,,
 # Fox Videos Completed,,,,,,,
-vulpChat_researchComplete_foxVideos,VulpoidResearchComplete,$vulp_researchProject == foxVideos,"FireBest FoxVideosResearchCompleteBlurb
-AddCommodity vulpoids 10
-AddRemoveAnyItem SPECIAL vulpoid_data 1","She passes you a datapad as she enters. ""One pad of multimedia data, as requested! And the dummies are your responsibility again.""",vulpChat_researchCompleteFinish:Continue,,
-vulpChat_researchComplete_foxVideosBlurb_chasingTail,FoxVideosResearchCompleteBlurb,,,"""One got a sticker stuck to her tail at one point, she spent ages spinning in circles! I got the whole thing on holovid, hilarious!""",,,
-vulpChat_researchComplete_foxVideosBlurb_cosplay,FoxVideosResearchCompleteBlurb,,,"""We tried out a whole selection of clothes and costumes. I actually ended up keeping some for my own wardrobe!""",,,
-vulpChat_researchComplete_foxVideosBlurb_popSong,FoxVideosResearchCompleteBlurb,,,"""I had them perform some dances to a new pop song, I'm sure it'll be a hit on the holonet!""",,,
-vulpChat_researchComplete_foxVideosBlurb_newProtein,FoxVideosResearchCompleteBlurb,,,"""I've identified a novel protein structural variation that presents under niche circumstances. The academic community will love this!""",,,
-vulpChat_researchComplete_foxVideosBlurb_mangonut,FoxVideosResearchCompleteBlurb,$global.mangonutsExported score:0,,"""We decided to try sharing a mangonut. My memory's a bit blurry after that, but the footage is hilarious!""",,,
-vulpChat_researchComplete_foxVideosBlurb_hotTub,FoxVideosResearchCompleteBlurb,,SetVulpoidExpression bruh,"""I had them play some holo-sims while in a hot tub. They weren't very good at the game, but that's never actually been the point.""",,,
-vulpChat_researchComplete_foxVideosBlurb_eatingContest,FoxVideosResearchCompleteBlurb,,SetVulpoidExpression bruh,"""I'll admit, the eating contest was a mixed bag. It did at least have a clear winner... the last one to experience gastroparesis.""",,,
-vulpChat_researchComplete_foxVideosBlurb_nyquilChicken,FoxVideosResearchCompleteBlurb,,,"""Did you know we're largely unaffected by acetaminophen? We ran a few tests that should be entertaining for both academics, and the holonet.""",,,
+vulpChat_researchComplete_foxVideos1,VulpoidResearchComplete,"$vulp_researchProject == foxVideos
+$foxVideosLevel == 1","AddCommodity vulpoids 10
+AddRemoveAnyItem SPECIAL vulpoid_data1 $name 1","She passes you a datapad as she enters. ""Here you are $playerSirOrMadam, one pad of multimedia data as requested! And the dummies are your responsibility again.""
+
+""This was a fun project to work on! I'd love to do a larger one some time, if there's the opportunity.""",vulpChat_researchCompleteFinish:Continue,,
+vulpChat_researchComplete_foxVideos2,VulpoidResearchComplete,"$vulp_researchProject == foxVideos
+$foxVideosLevel == 2","AddCommodity vulpoids 30
+AddRemoveAnyItem SPECIAL vulpoid_data2 $name 1","She passes you a datapad as she enters. ""Here you are $playerSirOrMadam, one pad of multimedia data as requested! And the dummies are your responsibility again.""
+
+""I really enjoyed this project! It was a fun diversion, I'd love to do it again.""",vulpChat_researchCompleteFinish:Continue,,
+vulpChat_researchComplete_foxVideos3,VulpoidResearchComplete,"$vulp_researchProject == foxVideos
+$foxVideosLevel == 3","AddCommodity vulpoids 50
+AddRemoveAnyItem SPECIAL vulpoid_data3 $name 1","She passes you a datapad as she enters. ""Here you are $playerSirOrMadam, one pad of multimedia data as requested! And the dummies are your responsibility again.""
+
+""This project has been quite engaging! I'm very satisfied with the result, and would love to do it again some time!""",vulpChat_researchCompleteFinish:Continue,,
+vulpChat_researchComplete_foxVideos4,VulpoidResearchComplete,"$vulp_researchProject == foxVideos
+$foxVideosLevel == 4","AddCommodity vulpoids 100
+AddRemoveAnyItem SPECIAL vulpoid_data4 $name 1","She passes you a datapad as she enters. ""Here you are $playerSirOrMadam, one pad of multimedia data as requested! And the dummies are your responsibility again.""
+
+""It's been quite the experience working on this project! I think the result is quite something, I'm very happy with it!""",vulpChat_researchCompleteFinish:Continue,,
+vulpChat_researchComplete_foxVideos5,VulpoidResearchComplete,"$vulp_researchProject == foxVideos
+$foxVideosLevel == 5","AddCommodity vulpoids 300
+AddRemoveAnyItem SPECIAL vulpoid_data5 $name 1","She passes you a datapad as she enters. ""Here you are $playerSirOrMadam, one pad of multimedia data as requested! And the dummies are your responsibility again.""
+
+""This has been an incredible experience for me. Thank you very much for the chance to make this happen, I'm overjoyed with the result!""",vulpChat_researchCompleteFinish:Continue,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
 ,,,,,,,
 ,,,,,,,
 ,,,,,,,

@@ -1,0 +1,67 @@
+{	
+	"global":{
+		"title":[
+			{"string":"Vulpoid Data", "priority":-100},
+		],
+		
+		"description":[
+			{"string":"This TriPad contains an assortment of multimedia data concerning Vulpoids. The content is interesting by virtue of the subject matter, but hardly groundbreaking.", "priority":-100, "minQuality":1, "maxQuality":1},
+			{"string":"This TriPad contains an assortment of multimedia data concerning Vulpoids. Two.", "priority":-100, "minQuality":2, "maxQuality":2},
+			{"string":"This TriPad contains an assortment of multimedia data concerning Vulpoids. Three.", "priority":-100, "minQuality":3, "maxQuality":3},
+			{"string":"This TriPad contains an assortment of multimedia data concerning Vulpoids. Four.", "priority":-100, "minQuality":4, "maxQuality":4},
+			{"string":"This TriPad contains an assortment of multimedia data concerning Vulpoids. It's truly exceptional, with innovative ideas that will doubtless define future works.", "priority":-100, "minQuality":5, "maxQuality":5},
+			{"string":"This TriPad contains an assortment of multimedia data concerning Vulpoids.", "priority":-101},
+		],
+	},
+	"subjects":[
+		{
+			"defname":"medical",
+			"title": [
+				{"string":"Test medical Title"},
+			],
+			"description":[
+				
+			],
+		},
+		
+		{
+			"defname":"psychology",
+			"title": [
+				{"string":"Test psychology Title"},
+			],
+			"description":[
+				
+			],
+		},
+		
+		{
+			"defname":"humaninteraction",
+			"title": [
+				{"string":"Test humaninteraction Title"},
+			],
+			"description":[
+				
+			],
+		},
+		
+		{
+			"defname":"funnyvideo",
+			"title": [
+				{"string":"Test funnyvideo Title"},
+			],
+			"description":[
+				
+			],
+		},
+		
+		{
+			"defname":"theatre",
+			"title": [
+				{"string":"Test theatre Title"},
+			],
+			"description":[
+				
+			],
+		},
+	]
+}
