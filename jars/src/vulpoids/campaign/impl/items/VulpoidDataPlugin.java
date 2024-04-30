@@ -13,6 +13,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -103,14 +105,33 @@ public class VulpoidDataPlugin extends BaseSpecialItemPlugin {
                 writerMap.put(key, rules.get(key).get(random.nextInt(rules.get(key).size())));
             }
             
-            // TODO - fill in wildcards!
+            writerMap.put("author", author);
             
-            title = writerMap.get("title");
+            title = replaceTokens(writerMap.get("title"), writerMap);
             description = writerMap.get("description");
         } catch (IOException | JSONException ex) {
             title = "ERR";
             description = ""+ex;
         }
+    }
+    
+    // https://stackoverflow.com/questions/959731/how-to-replace-a-set-of-tokens-in-a-java-string
+    private String replaceTokens(String text, Map<String, String> map) {
+        Pattern pattern = Pattern.compile("\\[(.+?)\\]");
+        Matcher matcher = pattern.matcher(text);
+        StringBuilder builder = new StringBuilder();
+        int i = 0;
+        while (matcher.find()) {
+            String replacement = map.get(matcher.group(1));
+            builder.append(text.substring(i, matcher.start()));
+            if (replacement == null)
+                builder.append(matcher.group(0));
+            else
+                builder.append(replacement);
+            i = matcher.end();
+        }
+        builder.append(text.substring(i, text.length()));
+        return builder.toString();
     }
     
     @Override

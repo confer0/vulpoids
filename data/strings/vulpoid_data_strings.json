@@ -20,17 +20,48 @@
 				{"string":"Test medical Title"},
 			],
 			"description":[
-				
+				{"string":"TODO: Medical Description."},
 			],
 		},
 		
 		{
 			"defname":"psychology",
 			"title": [
-				{"string":"Test psychology Title"},
+				{"string":"[theories] on [psychTopic]"},
+				{"string":"[theories] on [emphasisAdjective] [psychTopic]"},
+				{"string":"[author]'s [theories] on [psychTopic]"},
+				{"string":"[author]'s [theories] on [emphasisAdjective] [psychTopic]"},
+			],
+			"theories":[
+				{"string":"Theories"},
+				{"string":"Musings"},
+				{"string":"Ponderances"},
+				{"string":"Reflection"},
+				{"string":"Contemplation"},
+				{"string":"Considerations"},
+			],
+			"emphasisAdjective":[
+				{"string":"Fundamental"},
+				{"string":"Essential"},
+				{"string":"Core"},
+				{"string":"Foundational"},
+				{"string":"Underlying"},
+				{"string":"Basal"},
+				{"string":"Elementary"},
+				{"string":"Ingrained"},
+				{"string":"Intrinsic"},
+			],
+			"psychTopic":[
+				{"string":"Psychology"},
+				{"string":"Altruism"},
+				{"string":"Obedience"},
+				{"string":"Affection"},
+				{"string":"Adoration"},
+				{"string":"Egalitarianism"},
+				{"string":"Submissiveness"},
 			],
 			"description":[
-				
+				{"string":"TODO: Psych Description."},
 			],
 		},
 		
@@ -40,7 +71,7 @@
 				{"string":"Test humaninteraction Title"},
 			],
 			"description":[
-				
+				{"string":"TODO: HI Description."},
 			],
 		},
 		
@@ -50,7 +81,7 @@
 				{"string":"Test funnyvideo Title"},
 			],
 			"description":[
-				
+				{"string":"TODO: Funny Video Description."},
 			],
 		},
 		
@@ -60,7 +91,7 @@
 				{"string":"Test theatre Title"},
 			],
 			"description":[
-				
+				{"string":"TODO: Theatre Description."},
 			],
 		},
 	]
