@@ -12,21 +12,55 @@
 			{"string":"This TriPad contains an assortment of multimedia data concerning Vulpoids. It's truly exceptional, with innovative ideas that will doubtless define future works.", "priority":-100, "minQuality":5, "maxQuality":5},
 			{"string":"This TriPad contains an assortment of multimedia data concerning Vulpoids.", "priority":-101},
 		],
+		
+		"injuryBlurb":[
+			{"string":"laments that multiple plans had to be aborted due to high injury rates.", "maxQuality":2},
+			{"string":"notes that high injury rates prevented some plans from being fully realized.", "minQuality":3, "maxQuality":4},
+			{"string":"applauds the fact that promising plans could be continued in spite of high injury rates.", "minQuality":5},
+		],
 	},
 	"subjects":[
 		{
 			"defname":"medical",
-			"title": [
-				{"string":"Test medical Title"},
+			"tags":{
+				"medsubject":[
+					{"string":"neurology"},
+					{"string":"thermodynamics"},
+					{"string":"aerodynamics"},
+					{"string":"gastro"},
+					{"string":"muscles"},
+					{"string":"skeleton"},
+					{"string":"furfluffy"},
+					{"string":"furcolor"},
+					{"string":"bodyshape"},
+					{"string":"healing"},
+				],
+			},
+			"title":[
+				{"string":"An [study] of Vulpoid [subjectName]"},
+			],
+			"study":[
+				{"string":"Study"},
+				{"string":"Examination"},
+			],
+			"subjectName":[
+				{"string":"Neural Structures", "hasTags":["medsubject":"neurology"]},
+				{"string":"Neurons", "hasTags":["medsubject":"neurology"]},
+				{"string":"Senses", "hasTags":["medsubject":"neurology"]},
+				{"string":"Brain Architecture", "hasTags":["medsubject":"neurology"]},
+				
+				{"string":"Thermoregulation", "hasTags":["medsubject":"thermodynamics"]},
+				{"string":"Heat Tolerance", "hasTags":["medsubject":"thermodynamics"]},
+				{"string":"Cold Tolerance", "hasTags":["medsubject":"thermodynamics"]},
 			],
 			"description":[
-				{"string":"TODO: Medical Description."},
+				{"string":"TODO: Medical Description. The author [injuryBlurb]"},
 			],
 		},
 		
 		{
 			"defname":"psychology",
-			"title": [
+			"title":[
 				{"string":"[theories] on [psychTopic]"},
 				{"string":"[theories] on [emphasisAdjective] [psychTopic]"},
 				{"string":"[author]'s [theories] on [psychTopic]"},
@@ -67,7 +101,7 @@
 		
 		{
 			"defname":"humaninteraction",
-			"title": [
+			"title":[
 				{"string":"Test humaninteraction Title"},
 			],
 			"description":[
@@ -77,17 +111,72 @@
 		
 		{
 			"defname":"funnyvideo",
-			"title": [
-				{"string":"Test funnyvideo Title"},
+			"tags":{
+				"topic":[
+					{"string":"100hours"},
+					{"string":"challenge"},
+					{"string":"foxvideos"},
+				],
+			},
+			"title":[
+				{"string":"Spending [bigNumber] hours [inALocation]!", "hasTags":["topic:100hours"]},
+				{"string":"We [did] the [challenge] challenge!", "hasTags":["topic:challenge"]},
+				{"string":"[bigNumber] [funny] Vulpoid Holovids!", "hasTags":["topic:foxvideos"]},
+			],
+			"bigNumber":[
+				{"string":"490"},
+				{"string":"500"},
+				{"string":"512"},
+				{"string":"555"},
+				{"string":"999"},
+				{"string":"1000"},
+			],
+			"inALocation":[
+				{"string":"in a Hive District"},
+				{"string":"Outdoors on Chalcedon"},
+				{"string":"on Jangala's Surface"},
+				{"string":"on Cruor"},
+				{"string":"on Mairaath"},
+				{"string":"in Deep Space"},
+				{"string":"in Hyperspace"},
+				{"string":"in Deep Hyperspace"},
+				{"string":"on an Asteroid"},
+				{"string":"With a Pather"},
+				{"string":"With a Hegemony Inspector"},
+				{"string":"With a Luddic Knight"},
+			],
+			"did":[
+				{"string":"Did"},
+				{"string":"Tried"},
+				{"string":"Attempted"},
+				{"string":"Achieved"},
+				{"string":"Pulled Off"},
+				{"string":"Completed"},
+			],
+			"challenge":[
+				{"string":"Tariff Dodge"},
+				{"string":"Kessel Run"},
+				{"string":"Corona Dive"},
+			],
+			"funny":[
+				{"string":"Funny"},
+				{"string":"Hilarious"},
+				{"string":"Goofy"},
+				{"string":"Adorable"},
+				{"string":"Awesome"},
+				{"string":"Epic"},
 			],
 			"description":[
-				{"string":"TODO: Funny Video Description."},
+				#{"string":"TODO: Funny Video Description."},
+				{"string":"Spending [bigNumber] hours [inALocation]!", "hasTags":["topic:100hours"]},
+				{"string":"We [did] the [challenge] challenge!", "hasTags":["topic:challenge"]},
+				{"string":"[bigNumber] [funny] Vulpoid holovids!", "hasTags":["topic:foxvideos"]},
 			],
 		},
 		
 		{
 			"defname":"theatre",
-			"title": [
+			"title":[
 				{"string":"Test theatre Title"},
 			],
 			"description":[

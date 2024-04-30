@@ -13,6 +13,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.json.JSONArray;
@@ -71,6 +73,17 @@ public class VulpoidDataPlugin extends BaseSpecialItemPlugin {
                 for(int i=0;i<global.getJSONArray(key).length();i++) subject.accumulate(key, global.getJSONArray(key).get(i));
             }
             
+            List<String> tags = new ArrayList();
+            if(subject.has("tags")) {
+                JSONObject tagsJson = subject.getJSONObject("tags");
+                keys = tagsJson.keys();
+                while(keys.hasNext()) {
+                    String key = keys.next();
+                    List<String> validTags = compileValidStrings(tagsJson.getJSONArray(key), quality, null);
+                    tags.add(key+":"+validTags.get(random.nextInt(validTags.size())));
+                }
+            }
+            
             // At this point, we've loaded every rule for the subject. We now need to eliminate any rule that isn't valid.
             // Rules are invalid for the following reasons:
             // -The rule's minquality is higher than the item quality.
@@ -81,22 +94,7 @@ public class VulpoidDataPlugin extends BaseSpecialItemPlugin {
             while(keys.hasNext()) {
                 String key = keys.next();
                 if(subject.get(key) instanceof JSONArray) {
-                    List<String> keyRules = new ArrayList();
-                    int highestPriority = Integer.MIN_VALUE;
-                    for(int i=0;i<subject.getJSONArray(key).length();i++) {
-                        JSONObject obj = subject.getJSONArray(key).getJSONObject(i);
-                        if(obj.has("minQuality") && obj.getInt("minQuality")>quality) continue;  //Quality too low
-                        if(obj.has("maxQuality") && obj.getInt("maxQuality")<quality) continue;  //Quality too high
-                        int objPriority = 0;
-                        if(obj.has("priority")) objPriority = obj.getInt("priority");
-                        if(objPriority<highestPriority) continue;  //Priority too low
-                        if(objPriority>highestPriority) keyRules.clear();  //New highest priority - purge old options
-                        highestPriority = objPriority;
-                        int copiesToAdd = 1;
-                        if(obj.has("weight")) copiesToAdd = obj.getInt("weight");
-                        for(int j=0;j<copiesToAdd;j++) keyRules.add(obj.getString("string"));
-                    }
-                    rules.put(key, keyRules);
+                    rules.put(key, compileValidStrings(subject.getJSONArray(key), quality, tags));
                 }
             }
             
@@ -108,11 +106,57 @@ public class VulpoidDataPlugin extends BaseSpecialItemPlugin {
             writerMap.put("author", author);
             
             title = replaceTokens(writerMap.get("title"), writerMap);
-            description = writerMap.get("description");
+            description = replaceTokens(writerMap.get("description"), writerMap);
         } catch (IOException | JSONException ex) {
             title = "ERR";
             description = ""+ex;
         }
+    }
+    
+    private List<String> compileValidStrings(JSONArray array, int quality, List<String> tags) {
+        List<String> validStrings = new ArrayList();
+        
+        int highestPriority = Integer.MIN_VALUE;
+        try {
+            for(int i=0;i<array.length();i++) {
+                JSONObject obj = array.getJSONObject(i);
+                if(obj.has("minQuality") && obj.getInt("minQuality")>quality) continue;  //Quality too low
+                if(obj.has("maxQuality") && obj.getInt("maxQuality")<quality) continue;  //Quality too high
+                
+                int objPriority = 0;
+                if(obj.has("priority")) objPriority = obj.getInt("priority");
+                if(objPriority<highestPriority) continue;  //Priority too low
+                if(objPriority>highestPriority) validStrings.clear();  //New highest priority - purge old options
+                highestPriority = objPriority;
+                
+                if(tags!=null) {
+                    if(obj.has("hasTags")) {
+                        boolean missingTag = false;
+                        JSONArray hastags = obj.getJSONArray("hasTags");
+                        for(int j=0;j<hastags.length();j++) {
+                            String tag = hastags.getString(j);
+                            if(!tags.contains(tag)) missingTag = true;
+                        }
+                        if(missingTag) continue;
+                    }
+                    if(obj.has("noTags")) {
+                        boolean invalidTag = false;
+                        JSONArray notags = obj.getJSONArray("noTags");
+                        for(int j=0;j<notags.length();j++) {
+                            String tag = notags.getString(j);
+                            if(tags.contains(tag)) invalidTag = true;
+                        }
+                        if(invalidTag) continue;
+                    }
+                }
+                
+                int copiesToAdd = 1;
+                if(obj.has("weight")) copiesToAdd = obj.getInt("weight");
+                for(int j=0;j<copiesToAdd;j++) validStrings.add(obj.getString("string"));
+            }
+        } catch (JSONException ex) {}
+        
+        return validStrings;
     }
     
     // https://stackoverflow.com/questions/959731/how-to-replace-a-set-of-tokens-in-a-java-string
