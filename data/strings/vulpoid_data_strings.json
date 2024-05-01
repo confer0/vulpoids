@@ -41,6 +41,23 @@
 					{"string":"bodyshape", "weight":5},
 					{"string":"healing", "weight":5},
 				],
+				"neurosubject":[
+					{"string":"generic"},
+					{"string":"smell"},
+					{"string":"hear"},
+					{"string":"taste"},
+					{"string":"see"},
+					{"string":"touch"},
+					{"string":"pressure"},
+				],
+				"furlocation":[
+					{"string":"back"},
+					{"string":"belly"},
+					{"string":"chest"},
+					{"string":"head"},
+					{"string":"tail"},
+					{"string":"hair"},
+				],
 			},
 			"title":[
 				{"string":"[aAnStudy] of Vulpoid [subjectName]"},
@@ -58,13 +75,12 @@
 			],
 			"subjectName":[
 				{"string":"Neural Structures", "hasTags":["medsubject:neurology"]},
-				{"string":"Sensory Capability", "hasTags":["medsubject:neurology"]},
+				{"string":"Brain Architecture", "hasTags":["medsubject:neurology"]},
 				{"string":"Olfactory Senses", "hasTags":["medsubject:neurology"]},
 				{"string":"Auditory Senses", "hasTags":["medsubject:neurology"]},
 				{"string":"Gustatory Senses", "hasTags":["medsubject:neurology"]},
 				{"string":"Visual Senses", "hasTags":["medsubject:neurology"]},
 				{"string":"Tactile Senses", "hasTags":["medsubject:neurology"]},
-				{"string":"Brain Architecture", "hasTags":["medsubject:neurology"]},
 				{"string":"Pressure Points", "hasTags":["medsubject:neurology"]},
 				
 				{"string":"Thermoregulation", "hasTags":["medsubject:thermodynamics"]},
@@ -88,9 +104,19 @@
 				{"string":"Joint Dynamics", "hasTags":["medsubject:skeleton"]},
 				{"string":"Bone Density", "hasTags":["medsubject:skeleton"]},
 				
-				{"string":"[coatLocation] Coat Texture", "hasTags":["medsubject:furfluffy"]},
+				{"string":"Dorsal [maybeCoat] Texture", "hasTags":["medsubject:furfluffy", "furlocation:back"]},
+				{"string":"Ventral [maybeCoat] Texture", "hasTags":["medsubject:furfluffy", "furlocation:belly"]},
+				{"string":"Thoracic [maybeCoat] Texture", "hasTags":["medsubject:furfluffy", "furlocation:chest"]},
+				{"string":"Cranial [maybeCoat] Texture", "hasTags":["medsubject:furfluffy", "furlocation:head"]},
+				{"string":"Caudal [maybeCoat] Texture", "hasTags":["medsubject:furfluffy", "furlocation:tail"]},
+				{"string":"Trichoid [maybeCoat] Texture", "hasTags":["medsubject:furfluffy", "furlocation:hair"]},
 				
-				{"string":"[coatLocation] Coat Coloration", "hasTags":["medsubject:furcolor"]},
+				{"string":"Dorsal [maybeCoat] Coloration", "hasTags":["medsubject:furcolor", "furlocation:back"]},
+				{"string":"Ventral [maybeCoat] Coloration", "hasTags":["medsubject:furcolor", "furlocation:belly"]},
+				{"string":"Thoracic [maybeCoat] Coloration", "hasTags":["medsubject:furcolor", "furlocation:chest"]},
+				{"string":"Cranial [maybeCoat] Coloration", "hasTags":["medsubject:furcolor", "furlocation:head"]},
+				{"string":"Caudal [maybeCoat] Coloration", "hasTags":["medsubject:furcolor", "furlocation:tail"]},
+				{"string":"Trichoid [maybeCoat] Coloration", "hasTags":["medsubject:furcolor", "furlocation:hair"]},
 				
 				{"string":"Lipid Reallocation", "hasTags":["medsubject:bodyshape"]},
 				{"string":"Aesthetic Shaping", "hasTags":["medsubject:bodyshape"]},
@@ -103,13 +129,9 @@
 				{"string":"Limb Regeneration", "hasTags":["medsubject:healing"]},
 				{"string":"Physiologic Redundancy", "hasTags":["medsubject:healing"]},
 			],
-			"coatLocation":[
-				{"string":"Dorsal"}, #Back
-				{"string":"Ventral"}, #Belly
-				{"string":"Thoracic"}, #Chest
-				{"string":"Cranial"}, #Head
-				{"string":"Caudal"}, #Tail
-				{"string":"Trichoid"}, #Hair
+			"maybeCoat":[
+				{"string":""},
+				{"string":"Coat"},
 			],
 			"description":[
 				{"string":"[detail] [blurb]"},
@@ -119,24 +141,32 @@
 				{"string":"The [study] goes into impressive depth on its subject, serving as a valuable reference for any interested party.", "minQuality":3, "maxQuality":4, "priority":-1},
 				{"string":"The [study] is incredibly detailed, and is likely to be the final word on the subject for the forseeable future.", "minQuality":5, "priority":-1},
 				
-				{"string":"This [study] [explores] Vulpoid neurology by [neuroDetail]", "anyTags":["medsubject:neurology"]},
-				{"string":"This [study] [explores] Vulpoid thermodynamics by [thermoDetail]", "anyTags":["medsubject:thermodynamics"]},
-				{"string":"This [study] [explores] Vulpoid aerodynamics by [aeroDetail]", "anyTags":["medsubject:aerodynamics"]},
-				{"string":"This [study] [explores] Vulpoid gastronomy by [gastroDetail]", "anyTags":["medsubject:gastro"]},
-				{"string":"This [study] [explores] Vulpoid musculature by [muscDetail]", "anyTags":["medsubject:muscles"]},
-				{"string":"This [study] [explores] Vulpoid skeletal structure by [skelDetail]", "anyTags":["medsubject:skeleton"]},
-				{"string":"This [study] [explores] Vulpoid fur texture by [furTexDetail]", "anyTags":["medsubject:furfluffy"]},
-				{"string":"This [study] [explores] Vulpoid fur coloration by [furColDetail]", "anyTags":["medsubject:furcolor"]},
-				{"string":"This [study] [explores] Vulpoid appearance by [bodyDetail]", "anyTags":["medsubject:bodyshape"]},
-				{"string":"This [study] [explores] Vulpoid healing by [healDetail]", "anyTags":["medsubject:healing"]},
+				{"string":"This [study] [qualExplores] Vulpoid neurology by [neuroDetail]", "anyTags":["medsubject:neurology"]},
+				{"string":"This [study] [qualExplores] Vulpoid thermodynamics by [thermoDetail]", "anyTags":["medsubject:thermodynamics"]},
+				{"string":"This [study] [qualExplores] Vulpoid aerodynamics by [aeroDetail]", "anyTags":["medsubject:aerodynamics"]},
+				{"string":"This [study] [qualExplores] Vulpoid gastronomy by [gastroDetail]", "anyTags":["medsubject:gastro"]},
+				{"string":"This [study] [qualExplores] Vulpoid musculature by [muscDetail]", "anyTags":["medsubject:muscles"]},
+				{"string":"This [study] [qualExplores] Vulpoid skeletal structure by [skelDetail]", "anyTags":["medsubject:skeleton"]},
+				
+				{"string":"This [study] [qualExplores] the [texture] [ofTheirFur] by [furTexDetail]", "hasTags":["medsubject:furfluffy"], "noTags":["furlocation:hair"]},
+				{"string":"This [study] [qualExplores] the [texture] of their hair by [furTexDetail]", "hasTags":["medsubject:furfluffy", "furlocation:hair"]},
+				{"string":"This [study] [qualExplores] the [coloration] [ofTheirFur] by [furColDetail]", "hasTags":["medsubject:furcolor"], "noTags":["furlocation:hair"]},
+				{"string":"This [study] [qualExplores] the [coloration] of their hair by [furColDetail]", "hasTags":["medsubject:furcolor", "furlocation:hair"]},
+				
+				{"string":"This [study] [qualExplores] Vulpoid appearance by [bodyDetail]", "anyTags":["medsubject:bodyshape"]},
+				{"string":"This [study] [qualExplores] Vulpoid healing by [healDetail]", "anyTags":["medsubject:healing"]},
+			],
+			"qualExplores":[
+				{"string":"[explores]"},
+				{"string":"[qualityAdv] [explores]", "weight":2},
 			],
 			"explores":[
-				{"string":"[qualityAdv] explores"},
-				{"string":"[qualityAdv] reviews"},
-				{"string":"[qualityAdv] discusses"},
-				{"string":"[qualityAdv] investigates"},
-				{"string":"[qualityAdv] documents"},
-				{"string":"[qualityAdv] records"},
+				{"string":"explores"},
+				{"string":"reviews"},
+				{"string":"discusses"},
+				{"string":"investigates"},
+				{"string":"documents"},
+				{"string":"records"},
 			],
 			"qualityAdv":[
 				{"string":"briefly", "minQuality":1, "maxQuality":1},
@@ -145,7 +175,39 @@
 				{"string":"thoroughly", "minQuality":4, "maxQuality":4},
 				{"string":"totally", "minQuality":5, "maxQuality":5},
 			],
-			
+			"texture":[
+				{"string":"texture"},
+				{"string":"fluffiness"},
+				{"string":"silkiness"},
+				{"string":"fuzziness"},
+				{"string":"softness"},
+			],
+			"coloration":[
+				{"string":"coloration"},
+				{"string":"patterns"},
+				{"string":""},
+				{"string":""},
+				{"string":""},
+			],
+			"ofTheirFur":[
+				{"string":"of their [furLocation] fur"},
+				{"string":"of the fur on their [furLocation]"},
+				{"string":"of Vulpoid [furLocation] fur"},
+				{"string":"of the fur on Vulpoids' [furLocation]"},
+			],
+			"furLocation":[
+				{"string":"back", "hasTags":["furlocation:back"]},
+				{"string":"shoulders", "hasTags":["furlocation:back"]},
+				{"string":"belly", "hasTags":["furlocation:belly"]},
+				{"string":"tummy", "hasTags":["furlocation:belly"]},
+				{"string":"chest", "hasTags":["furlocation:chest"]},
+				{"string":"sides", "hasTags":["furlocation:chest"]},
+				{"string":"head", "hasTags":["furlocation:head"]},
+				{"string":"face", "hasTags":["furlocation:head"]},
+				{"string":"ears", "hasTags":["furlocation:head"]},
+				{"string":"tail", "hasTags":["furlocation:tail"]},
+				{"string":"", "hasTags":["furlocation:hair"]},  # Should not appear
+			],
 			
 			"blurb":[
 				{"string":"It maintains a formal and academic tone, disseminating its findings efficiently and without fanfare.", "priority":-1},
@@ -182,7 +244,7 @@
 				{"string":"It comes packaged with a wide variety of full-body holos, with annotated cross-references for visual differences.", "anyTags":["medsubject:furfluffy", "medsubject:furcolor", "medsubject:bodyshape"], "minQuality":3, "maxQuality":4, "weight":3},
 				{"string":"The full-body holos can be configured to provide visual reference for any conceivable pose and variation.", "anyTags":["medsubject:furfluffy", "medsubject:furcolor", "medsubject:bodyshape"], "minQuality":5, "weight":3},
 				
-				{"string":"An attached inventory sheet lists the total number of spare organs, which slowly increases over the course of testing.", "anyTags":["medsubject:healing"], "weight":5},
+				{"string":"An attached inventory sheet lists the total number of spare organs, which has increased by the study's end.", "anyTags":["medsubject:healing"], "weight":5},
 				{"string":"A section reviews a fault in normal immune suppression procedures that arises in niche circumstances.", "anyTags":["medsubject:healing"], "weight":5},
 				{"string":"It places most of the focus of its study on the healing and regeneration of the [organ].", "anyTags":["medsubject:healing"], "weight":5},
 				
@@ -468,7 +530,15 @@
 				{"string":"[bigNumber] [funny] Vulpoid holovids!", "hasTags":["topic:foxvideos"]},
 				# a self-professed 'must-watch'
 			],
+			"detail":[
+				{"string":"TODO: HI Description."},
+			],
+			"blurb":[
+				{"string":"Your upgraded infosec package is identifying it as containing a well-disguised viral algorithm."},
+			],
 		},
+		
+		
 		
 		{
 			"defname":"theatre",
