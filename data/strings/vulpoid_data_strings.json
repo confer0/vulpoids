@@ -13,58 +13,258 @@
 			{"string":"This TriPad contains an assortment of multimedia data concerning Vulpoids.", "priority":-101},
 		],
 		
-		"injuryBlurb":[
-			{"string":"laments that multiple plans had to be aborted due to high injury rates.", "maxQuality":2},
-			{"string":"notes that high injury rates prevented some plans from being fully realized.", "minQuality":3, "maxQuality":4},
-			{"string":"applauds the fact that promising plans could be continued in spite of high injury rates.", "minQuality":5},
+		"study":[
+			{"string":"study"},
+			{"string":"work"},
+			{"string":"document"},
+			{"string":"report"},
+			{"string":"treatise"},
 		],
 	},
+	
+	
+	
 	"subjects":[
+		
 		{
 			"defname":"medical",
 			"tags":{
 				"medsubject":[
-					{"string":"neurology"},
-					{"string":"thermodynamics"},
-					{"string":"aerodynamics"},
-					{"string":"gastro"},
-					{"string":"muscles"},
-					{"string":"skeleton"},
-					{"string":"furfluffy"},
-					{"string":"furcolor"},
-					{"string":"bodyshape"},
-					{"string":"healing"},
+					{"string":"neurology", "weight":10},
+					{"string":"thermodynamics", "weight":5},
+					{"string":"aerodynamics", "weight":2},
+					{"string":"gastro", "weight":5},
+					{"string":"muscles", "weight":5},
+					{"string":"skeleton", "weight":5},
+					{"string":"furfluffy", "weight":5},
+					{"string":"furcolor", "weight":5},
+					{"string":"bodyshape", "weight":5},
+					{"string":"healing", "weight":5},
 				],
 			},
 			"title":[
-				{"string":"An [study] of Vulpoid [subjectName]"},
+				{"string":"[aAnStudy] of Vulpoid [subjectName]"},
+				{"string":"[aAnStudy] of [subjectName] in Vulpoids"},
 			],
-			"study":[
-				{"string":"Study"},
-				{"string":"Examination"},
+			"aAnStudy":[
+				{"string":"A Study"},
+				{"string":"An Examination"},
+				{"string":"A Review"},
+				{"string":"A Documentation"},
+				{"string":"An Overview"},
+				{"string":"An Understanding"},
+				{"string":"An Insight"},
+				{"string":"A Report"},
 			],
 			"subjectName":[
-				{"string":"Neural Structures", "hasTags":["medsubject":"neurology"]},
-				{"string":"Neurons", "hasTags":["medsubject":"neurology"]},
-				{"string":"Senses", "hasTags":["medsubject":"neurology"]},
-				{"string":"Brain Architecture", "hasTags":["medsubject":"neurology"]},
+				{"string":"Neural Structures", "hasTags":["medsubject:neurology"]},
+				{"string":"Sensory Capability", "hasTags":["medsubject:neurology"]},
+				{"string":"Olfactory Senses", "hasTags":["medsubject:neurology"]},
+				{"string":"Auditory Senses", "hasTags":["medsubject:neurology"]},
+				{"string":"Gustatory Senses", "hasTags":["medsubject:neurology"]},
+				{"string":"Visual Senses", "hasTags":["medsubject:neurology"]},
+				{"string":"Tactile Senses", "hasTags":["medsubject:neurology"]},
+				{"string":"Brain Architecture", "hasTags":["medsubject:neurology"]},
+				{"string":"Pressure Points", "hasTags":["medsubject:neurology"]},
 				
-				{"string":"Thermoregulation", "hasTags":["medsubject":"thermodynamics"]},
-				{"string":"Heat Tolerance", "hasTags":["medsubject":"thermodynamics"]},
-				{"string":"Cold Tolerance", "hasTags":["medsubject":"thermodynamics"]},
+				{"string":"Thermoregulation", "hasTags":["medsubject:thermodynamics"]},
+				{"string":"Temperature Tolerance", "hasTags":["medsubject:thermodynamics"]},
+				{"string":"Metabolic Heat", "hasTags":["medsubject:thermodynamics"]},
+				
+				{"string":"Aerodynamics", "hasTags":["medsubject:aerodynamics"]},
+				
+				{"string":"Gastrology", "hasTags":["medsubject:gastro"]},
+				{"string":"Nutrition", "hasTags":["medsubject:gastro"]},
+				{"string":"Gastric Capacity", "hasTags":["medsubject:gastro"]},
+				{"string":"Digestion", "hasTags":["medsubject:gastro"]},
+				
+				{"string":"Musculature", "hasTags":["medsubject:muscles"]},
+				{"string":"Strength", "hasTags":["medsubject:muscles"]},
+				{"string":"Dexterity", "hasTags":["medsubject:muscles"]},
+				{"string":"Endurance", "hasTags":["medsubject:muscles"]},
+				
+				{"string":"Skeletal Structure", "hasTags":["medsubject:skeleton"]},
+				{"string":"Durability", "hasTags":["medsubject:skeleton"]},
+				{"string":"Joint Dynamics", "hasTags":["medsubject:skeleton"]},
+				{"string":"Bone Density", "hasTags":["medsubject:skeleton"]},
+				
+				{"string":"[coatLocation] Coat Texture", "hasTags":["medsubject:furfluffy"]},
+				
+				{"string":"[coatLocation] Coat Coloration", "hasTags":["medsubject:furcolor"]},
+				
+				{"string":"Lipid Reallocation", "hasTags":["medsubject:bodyshape"]},
+				{"string":"Aesthetic Shaping", "hasTags":["medsubject:bodyshape"]},
+				{"string":"Facial Geometry", "hasTags":["medsubject:bodyshape"]},
+				{"string":"Pelvic Silhouette", "hasTags":["medsubject:bodyshape"]},
+				{"string":"Thoracic Silhouette", "hasTags":["medsubject:bodyshape"]},
+				
+				{"string":"Tissue Regeneration", "hasTags":["medsubject:healing"]},
+				{"string":"Organ Regrowth", "hasTags":["medsubject:healing"]},
+				{"string":"Limb Regeneration", "hasTags":["medsubject:healing"]},
+				{"string":"Physiologic Redundancy", "hasTags":["medsubject:healing"]},
+			],
+			"coatLocation":[
+				{"string":"Dorsal"}, #Back
+				{"string":"Ventral"}, #Belly
+				{"string":"Thoracic"}, #Chest
+				{"string":"Cranial"}, #Head
+				{"string":"Caudal"}, #Tail
+				{"string":"Trichoid"}, #Hair
 			],
 			"description":[
-				{"string":"TODO: Medical Description. The author [injuryBlurb]"},
+				{"string":"[detail] [blurb]"},
+			],
+			"detail":[
+				{"string":"The [study] provides an excellent overview of its subject, and stresses the importance of further research.", "maxQuality":2, "priority":-1},
+				{"string":"The [study] goes into impressive depth on its subject, serving as a valuable reference for any interested party.", "minQuality":3, "maxQuality":4, "priority":-1},
+				{"string":"The [study] is incredibly detailed, and is likely to be the final word on the subject for the forseeable future.", "minQuality":5, "priority":-1},
+				
+				{"string":"This [study] [explores] Vulpoid neurology by [neuroDetail]", "anyTags":["medsubject:neurology"]},
+				{"string":"This [study] [explores] Vulpoid thermodynamics by [thermoDetail]", "anyTags":["medsubject:thermodynamics"]},
+				{"string":"This [study] [explores] Vulpoid aerodynamics by [aeroDetail]", "anyTags":["medsubject:aerodynamics"]},
+				{"string":"This [study] [explores] Vulpoid gastronomy by [gastroDetail]", "anyTags":["medsubject:gastro"]},
+				{"string":"This [study] [explores] Vulpoid musculature by [muscDetail]", "anyTags":["medsubject:muscles"]},
+				{"string":"This [study] [explores] Vulpoid skeletal structure by [skelDetail]", "anyTags":["medsubject:skeleton"]},
+				{"string":"This [study] [explores] Vulpoid fur texture by [furTexDetail]", "anyTags":["medsubject:furfluffy"]},
+				{"string":"This [study] [explores] Vulpoid fur coloration by [furColDetail]", "anyTags":["medsubject:furcolor"]},
+				{"string":"This [study] [explores] Vulpoid appearance by [bodyDetail]", "anyTags":["medsubject:bodyshape"]},
+				{"string":"This [study] [explores] Vulpoid healing by [healDetail]", "anyTags":["medsubject:healing"]},
+			],
+			"explores":[
+				{"string":"[qualityAdv] explores"},
+				{"string":"[qualityAdv] reviews"},
+				{"string":"[qualityAdv] discusses"},
+				{"string":"[qualityAdv] investigates"},
+				{"string":"[qualityAdv] documents"},
+				{"string":"[qualityAdv] records"},
+			],
+			"qualityAdv":[
+				{"string":"briefly", "minQuality":1, "maxQuality":1},
+				{"string":"concisely", "minQuality":2, "maxQuality":2},
+				{"string":"academically", "minQuality":3, "maxQuality":3},
+				{"string":"thoroughly", "minQuality":4, "maxQuality":4},
+				{"string":"totally", "minQuality":5, "maxQuality":5},
+			],
+			
+			
+			"blurb":[
+				{"string":"It maintains a formal and academic tone, disseminating its findings efficiently and without fanfare.", "priority":-1},
+				
+				{"string":"There's noticable emphasis on the chemical effects of chocolate, despite [author]'s attempts to appear impartial.", "anyTags":["medsubject:neurology"], "weight":2},
+				{"string":"The data suggests that there may be unexpected connections with the brain's [brainRegion].", "anyTags":["medsubject:neurology"], "weight":5},
+				{"string":"It explores the effects of [neuroStimulus] as a stimulus.", "anyTags":["medsubject:neurology"], "weight":5},
+				
+				{"string":"There is brief mention of an incident where a Vulpoid's tail caught fire, but specifics aren't forthcoming.", "anyTags":["medsubject:thermodynamics"], "weight":5},
+				{"string":"It delves surprisingly far into materials science in order to explore the thermal properties of their fur.", "anyTags":["medsubject:thermodynamics"], "weight":5},
+				{"string":"It warns against a particular temperature range which is cold enough to freeze solid, but too warm for full cryosleep.", "anyTags":["medsubject:thermodynamics"], "weight":5},
+				{"string":"Several tests employ extreme external temerature fluctuations, which the [study] assures has 'minimal risk of long-term damage'.", "anyTags":["medsubject:thermodynamics"], "weight":5},
+				{"string":"The temperature extremes employed rival the surface of [temperaturePlanet], with some tests taking mere seconds until abort.", "anyTags":["medsubject:thermodynamics"], "weight":5},
+				
+				{"string":"A holo-representation of a wind-tunnel test provides a touch of unintentional absurd humor for the reader.", "anyTags":["medsubject:aerodynamics"], "weight":5},
+				{"string":"It grabs the reader's attention with a holovid of an orbital skydive[skydivingComplication]", "anyTags":["medsubject:aerodynamics"], "weight":5},
+				{"string":"Attention is called to its exploration of more exotic conditions, including a flight aboard a gas-skimmer.", "anyTags":["medsubject:aerodynamics"], "minQuality":3, "weight":5},
+				{"string":"Tests have reached as far as the storm cells of Jangala and Chalcedon. There's no mention of factional approval.", "anyTags":["medsubject:aerodynamics"], "minQuality":5, "weight":5},
+				
+				{"string":"The unusually high-quality food used for the tests hints that [author] may have been participating as well.", "anyTags":["medsubject:gastro"], "weight":5},
+				{"string":"[author] urges that its inclusion of BMI tables are for completeness only, since Vulpoid weight is nearly constant.", "anyTags":["medsubject:gastro"], "weight":5},
+				{"string":"The digestive shutdown reflex's interference in testing is lamented, and [author] recommends further research into suppressing or bypassing it.", "anyTags":["medsubject:gastro"], "weight":5},
+				{"string":"It proudly highlights the formulation of a new, slightly cheaper nutrient paste that still meets all Vulpoid nutritional requirements.", "anyTags":["medsubject:gastro"], "weight":5},
+				
+				{"string":"[gravStrength] is favored above other choices for the grav-plate settings during testing.", "anyTags":["medsubject:muscles", "medsubject:skeleton"], "weight":5},
+				{"string":"[author] goes on a brief tangent lamenting her own musculoskeletal strength, still in a clinical tone.", "anyTags":["medsubject:muscles", "medsubject:skeleton"], "weight":5},
+				{"string":"The results of stress tests indicate strengths no less than a full deviation weaker than an average human.", "anyTags":["medsubject:muscles", "medsubject:skeleton"], "weight":5},
+				
+				{"string":"It features numerous depictions of Vulpoid fur, but urges that a holo can't compare to the real thing.", "anyTags":["medsubject:furfluffy", "medsubject:furcolor"], "maxQuality":2, "weight":5},
+				{"string":"The holo-depictions of Vulpoid fur are impressively detailed, closely resembling its actual appearance.", "anyTags":["medsubject:furfluffy", "medsubject:furcolor"], "minQuality":3, "maxQuality":4, "weight":5},
+				{"string":"Next-generation hard-holos provide an impressively close approximation of real Vulpoid fur.", "anyTags":["medsubject:furfluffy", "medsubject:furcolor"], "minQuality":5, "weight":5},
+				
+				{"string":"An assortment of full-body holos are attached as a simple but effective visual reference.", "anyTags":["medsubject:furfluffy", "medsubject:furcolor", "medsubject:bodyshape"], "maxQuality":2, "weight":3},
+				{"string":"It comes packaged with a wide variety of full-body holos, with annotated cross-references for visual differences.", "anyTags":["medsubject:furfluffy", "medsubject:furcolor", "medsubject:bodyshape"], "minQuality":3, "maxQuality":4, "weight":3},
+				{"string":"The full-body holos can be configured to provide visual reference for any conceivable pose and variation.", "anyTags":["medsubject:furfluffy", "medsubject:furcolor", "medsubject:bodyshape"], "minQuality":5, "weight":3},
+				
+				{"string":"An attached inventory sheet lists the total number of spare organs, which slowly increases over the course of testing.", "anyTags":["medsubject:healing"], "weight":5},
+				{"string":"A section reviews a fault in normal immune suppression procedures that arises in niche circumstances.", "anyTags":["medsubject:healing"], "weight":5},
+				{"string":"It places most of the focus of its study on the healing and regeneration of the [organ].", "anyTags":["medsubject:healing"], "weight":5},
+				
+				{"string":"In one section, [author] laments that she was forced to abort numerous tests in the face of injuries.", "anyTags":["medsubject:thermodynamics", "medsubject:aerodynamics", "medsubject:gastro", "medsubject:muscles", "medsubject:skeleton", "medsubject:healing"], "maxQuality":2, "weight":1},
+				{"string":"[author] notes that while tests were quite successful, mounting injury rates prevented them from reaching the study's full potential.", "anyTags":["medsubject:thermodynamics", "medsubject:aerodynamics", "medsubject:gastro", "medsubject:muscles", "medsubject:skeleton", "medsubject:healing"], "minQuality":3, "maxQuality":4, "weight":1},
+				{"string":"A footnote under a personal injury list expresses [author]'s thanks for having a large enough workforce to fully explore the study.", "anyTags":["medsubject:thermodynamics", "medsubject:aerodynamics", "medsubject:gastro", "medsubject:muscles", "medsubject:skeleton", "medsubject:healing"], "minQuality":5, "weight":1},
+			],
+			"brainRegion":[
+				{"string":"frontal lobe"},
+				{"string":"cerebral cortex"},
+				{"string":"parietal lobe"},
+				{"string":"occipital lobe"},
+				{"string":"temporal lobe"},
+				{"string":"cerebellum"},
+				{"string":"pituitary gland"},
+				{"string":"respiratory centers"},
+				{"string":"hypothalamus"},
+			],
+			"neuroStimulus":[
+				{"string":"physical pain"},
+				{"string":"petting"},
+				{"string":"cuddling"},
+				{"string":"headpats"},
+				{"string":"scritches"},
+				{"string":"disappointing a human"},
+				{"string":"obeying a human"},
+				{"string":"being ignored by a human"},
+				{"string":"attention from a human"},
+				{"string":"non-perscription drugs"},
+				{"string":"perscription drugs"},
+				{"string":"chemical stimulants"},
+				{"string":"chemical depressants"},
+				{"string":"illegal narcotics"},
+				{"string":"chocolate"},
+			],
+			"temperaturePlanet":[
+				{"string":"Nomios"},
+				{"string":"Sindria"},
+				{"string":"Donn"},
+				{"string":"Culann"},
+			],
+			"skydivingComplication":[
+				{"string":".", "weight":19},
+				{"string":", though the footage abruptly cuts off before the end.", "weight":1},
+			],
+			"gravStrength":[
+				{"string":"Zero-gravity"},
+				{"string":"Low-gravity"},
+				{"string":"Standard-gravity"},
+				{"string":"High-gravity"},
+			],
+			"organ":[
+				{"string":"heart"},
+				{"string":"liver"},
+				{"string":"lungs"},
+				{"string":"kidneys"},
+				{"string":"stomach"},
+				{"string":"intestines"},
+				{"string":"pancreas"},
+				{"string":"spine"},
+				{"string":"arms"},
+				{"string":"legs"},
+				{"string":"tail"},
 			],
 		},
 		
+		
+		
 		{
 			"defname":"psychology",
+			"tags":{
+				"psychsubject":[
+					{"string":"dumb"},
+					{"string":"love"},
+					{"string":"obey"},
+				],
+			},
 			"title":[
-				{"string":"[theories] on [psychTopic]"},
-				{"string":"[theories] on [emphasisAdjective] [psychTopic]"},
-				{"string":"[author]'s [theories] on [psychTopic]"},
-				{"string":"[author]'s [theories] on [emphasisAdjective] [psychTopic]"},
+				{"string":"[theories] on Vulpoid [psychTopic]"},
+				{"string":"[theories] on [emphasisAdjective] Vulpoid [psychTopic]"},
+				{"string":"[author]'s [theories] on Vulpoid [psychTopic]"},
+				{"string":"[author]'s [theories] on [emphasisAdjective] Vulpoid [psychTopic]"},
 			],
 			"theories":[
 				{"string":"Theories"},
@@ -86,18 +286,103 @@
 				{"string":"Intrinsic"},
 			],
 			"psychTopic":[
-				{"string":"Psychology"},
-				{"string":"Altruism"},
-				{"string":"Obedience"},
-				{"string":"Affection"},
-				{"string":"Adoration"},
-				{"string":"Egalitarianism"},
-				{"string":"Submissiveness"},
+				{"string":"Competence", "anyTags":[]},
+				{"string":"Cognition", "anyTags":["psychsubject:dumb"]},
+				{"string":"Aptitude", "anyTags":["psychsubject:dumb"]},
+				{"string":"Prowess", "anyTags":["psychsubject:dumb"]},
+				{"string":"Affection", "anyTags":["psychsubject:love"]},
+				{"string":"Adoration", "anyTags":["psychsubject:love"]},
+				{"string":"Endearment", "anyTags":["psychsubject:love"]},
+				{"string":"Affinity", "anyTags":["psychsubject:love"]},
+				{"string":"Devotion", "anyTags":["psychsubject:love", "psychsubject:obey"]},
+				{"string":"Reverence", "anyTags":["psychsubject:love", "psychsubject:obey"]},
+				{"string":"Egalitarianism", "anyTags":["psychsubject:love", "psychsubject:obey"]},
+				{"string":"Altruism", "anyTags":["psychsubject:love", "psychsubject:obey"]},
+				{"string":"Submissiveness", "anyTags":["psychsubject:obey"]},
+				{"string":"Obedience", "anyTags":["psychsubject:obey"]},
+				{"string":"Subserviance", "anyTags":["psychsubject:obey"]},
+				{"string":"Pliability", "anyTags":["psychsubject:obey", "psychsubject:dumb"]},
+				{"string":"Deference", "anyTags":["psychsubject:obey", "psychsubject:dumb"]},
 			],
 			"description":[
-				{"string":"TODO: Psych Description."},
+				{"string":"[openBlurb] [detail] [blurb]"},
+			],
+			"openBlurb":[
+				{"string":"This [study] provides [aAnInsight] into Vulpoid psychology."},
+				{"string":"This [study] seeks to [explore] an aspect of Vulpoid psychology."},
+			],
+			"aAnInsight":[
+				{"string":"an insight"},
+				{"string":"a lens"},
+				{"string":"a revelation"},
+				{"string":"an examination"},
+				{"string":"an exploration"},
+				{"string":"a journey"},
+				{"string":"a dive"},
+			],
+			"explore":[
+				{"string":"explore"},
+				{"string":"investigate"},
+				{"string":"reveal"},
+				{"string":"discover"},
+				{"string":"uncover"},
+				{"string":"unearth"},
+				{"string":"elaborate on"},
+			],
+			"detail":[
+				{"string":"It studies their [psycheStudyLong] by [psycheResearchActivity]."}
+			],
+			"psycheStudyLong":[
+				{"string":"love of humans", "anyTags":["psychsubject:love"]},
+				{"string":"affinity for humans", "anyTags":["psychsubject:love"]},
+				{"string":"attraction to humans", "anyTags":["psychsubject:love"]},
+				{"string":"devotion to humans", "anyTags":["psychsubject:love", "psychsubject:obey"]},
+				{"string":"reverence for humans", "anyTags":["psychsubject:love", "psychsubject:obey"]},
+				{"string":"obedience towards humans", "anyTags":["psychsubject:obey"]},
+				{"string":"subserviance to humans", "anyTags":["psychsubject:obey"]},
+				{"string":"deference to humans", "anyTags":["psychsubject:obey", "psychsubject:dumb"]},
+				{"string":"cognitive ability", "anyTags":["psychsubject:dumb"]},
+				{"string":"logical reasoning", "anyTags":["psychsubject:dumb"]},
+				{"string":"emotional intelligence", "anyTags":["psychsubject:dumb", "psychsubject:love"]},
+				{"string":"docility"},
+			],
+			"psycheResearchActivity":[
+				{"string":"having them solve trolly problems"},
+				{"string":"deliberately ignoring them", "anyTags":["psychsubject:love", "psychsubject:obey"]},
+				{"string":"giving them conflicting orders", "anyTags":["psychsubject:obey"]},
+				{"string":"showering them in affection", "anyTags":["psychsubject:love", "psychsubject:obey"]},
+				{"string":"placing them in mazes", "anyTags":["psychsubject:dumb"]},
+				{"string":"administering various drugs"},
+				{"string":"providing negative reinforcement", "anyTags":["psychsubject:love", "psychsubject:obey"]},
+				{"string":"ordering them to ignore sad humans", "anyTags":["psychsubject:love", "psychsubject:obey"]},
+				{"string":"gauging emotional states", "anyTags":["psychsubject:love", "psychsubject:dumb"]},
+				{"string":"feeding them chocolate"},
+				{"string":"teaching them ethics"},
+			],
+			"blurb":[
+				{"string":"", "weight":5},
+				{"string":"In the appendix, [author] recommends that future reasearchers bring ponchos."},
+				{"string":"At one point, it digresses [intoDigression]", "weight":5},
+				{"string":"It includes a detailed mathematical model for the safe range of electric shocks."},
+				{"string":"The writing uses a fairly haughty style when referring to the Vulpoids."},
+				{"string":"The [study] provides an excellent overview of the subject, and stresses the importance of further research.", "maxQuality":2, "weight":5},
+				{"string":"The [study] goes into impressive depth on the subject, serving as a valuable reference for any interested party.", "minQuality":3, "maxQuality":4, "weight":5},
+				{"string":"The [study] is incredibly detailed, and is likely to be the final word on the subject for the forseeable future.", "minQuality":5, "weight":5},
+				{"string":"A single sentence makes reference to a 'noodle incident', which is not described elsewhere."},
+				{"string":"Many of the charts contain a single outlier, labelled as coming from Vulpoid G-3059."},
+			],
+			"intoDigression":[
+				{"string":"into a complaint about the difficulty of wrangling Vulpoids as a non-human."},
+				{"string":"into comments on the attractiveness of the human experimenters.", "anyTags":["psychsubject:love", "psychsubject:obey"]},
+				{"string":"and comments on the author's own thoughts towards the humans' orders.", "anyTags":["psychsubject:obey"]},
+				{"string":"into a short tirade on the Vulpoids' lack of intelligence.", "anyTags":["psychsubject:dumb"]},
+				{"string":"into a brief compliment of the Vulpoids' social abilities.", "anyTags":["psychsubject:dumb"]},
+				{"string":"into jealous comments regarding the test subjects' interactions with humans.", "anyTags":["psychsubject:love", "psychsubject:obey"]},
+				{"string":"and makes a self-aggrandizing speech on how [author] surpasses ordinary Vulpoids."},
 			],
 		},
+		
+		
 		
 		{
 			"defname":"humaninteraction",
@@ -108,6 +393,8 @@
 				{"string":"TODO: HI Description."},
 			],
 		},
+		
+		
 		
 		{
 			"defname":"funnyvideo",
@@ -157,6 +444,13 @@
 				{"string":"Tariff Dodge"},
 				{"string":"Kessel Run"},
 				{"string":"Corona Dive"},
+				{"string":"Melange"},
+				{"string":"Dragon's Breath"},  # Inhaling volatiles, or if you're psychotic, AM fuel.
+				{"string":"Perdition"},  # No idea - could be engineering, piloting ,or  even just a name
+				{"string":"Lobster Bucket"},
+				{"string":"Singularity"},
+				{"string":"Most [funny]", "weight":5},
+				{"string":"Greatest"},
 			],
 			"funny":[
 				{"string":"Funny"},
@@ -165,12 +459,14 @@
 				{"string":"Adorable"},
 				{"string":"Awesome"},
 				{"string":"Epic"},
+				{"string":"Cool"},
 			],
 			"description":[
 				#{"string":"TODO: Funny Video Description."},
 				{"string":"Spending [bigNumber] hours [inALocation]!", "hasTags":["topic:100hours"]},
 				{"string":"We [did] the [challenge] challenge!", "hasTags":["topic:challenge"]},
 				{"string":"[bigNumber] [funny] Vulpoid holovids!", "hasTags":["topic:foxvideos"]},
+				# a self-professed 'must-watch'
 			],
 		},
 		

@@ -139,6 +139,15 @@ public class VulpoidDataPlugin extends BaseSpecialItemPlugin {
                         }
                         if(missingTag) continue;
                     }
+                    if(obj.has("anyTags")) {
+                        boolean noTag = true;
+                        JSONArray hastags = obj.getJSONArray("anyTags");
+                        for(int j=0;j<hastags.length();j++) {
+                            String tag = hastags.getString(j);
+                            if(tags.contains(tag)) noTag = false;
+                        }
+                        if(noTag) continue;
+                    }
                     if(obj.has("noTags")) {
                         boolean invalidTag = false;
                         JSONArray notags = obj.getJSONArray("noTags");
@@ -175,7 +184,10 @@ public class VulpoidDataPlugin extends BaseSpecialItemPlugin {
             i = matcher.end();
         }
         builder.append(text.substring(i, text.length()));
-        return builder.toString();
+        String result = builder.toString();
+        // Check if they're equal so we don't go on forever if a token can't be filled.
+        if(!result.equals(text) && pattern.matcher(result).find()) result = replaceTokens(result, map);
+        return result;
     }
     
     @Override
