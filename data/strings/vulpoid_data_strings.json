@@ -6,10 +6,10 @@
 		
 		"description":[
 			{"string":"This TriPad contains an assortment of multimedia data concerning Vulpoids. The content is interesting by virtue of the subject matter, but hardly groundbreaking.", "priority":-100, "minQuality":1, "maxQuality":1},
-			{"string":"This TriPad contains an assortment of multimedia data concerning Vulpoids. Two.", "priority":-100, "minQuality":2, "maxQuality":2},
-			{"string":"This TriPad contains an assortment of multimedia data concerning Vulpoids. Three.", "priority":-100, "minQuality":3, "maxQuality":3},
-			{"string":"This TriPad contains an assortment of multimedia data concerning Vulpoids. Four.", "priority":-100, "minQuality":4, "maxQuality":4},
-			{"string":"This TriPad contains an assortment of multimedia data concerning Vulpoids. It's truly exceptional, with innovative ideas that will doubtless define future works.", "priority":-100, "minQuality":5, "maxQuality":5},
+			{"string":"This TriPad contains an assortment of multimedia data concerning Vulpoids. The data within holds some academic value, but it's nothing grounbreaking.", "priority":-100, "minQuality":2, "maxQuality":2},
+			{"string":"This TriPad contains an assortment of multimedia data concerning Vulpoids. The data within gives a new perspective onto already existing matters, providing a fertile soil for other works to improve upon.", "priority":-100, "minQuality":3, "maxQuality":3},
+			{"string":"This TriPad contains an assortment of multimedia data concerning Vulpoids. The content is excellent. A breath of fresh air in a somewhat stagnant academic atmosphere of Persean Sector. While not essentially grounbreaking, this data is an excellent food for thought for future researchers to digest.", "priority":-100, "minQuality":4, "maxQuality":4},
+			{"string":"This TriPad contains an assortment of multimedia data concerning Vulpoids. It's truly exceptional, with innovative ideas that will doubtless define future works. Whole academic guilds will pay almost any price to obtain such informational treasure.", "priority":-100, "minQuality":5, "maxQuality":5},
 			{"string":"This TriPad contains an assortment of multimedia data concerning Vulpoids.", "priority":-101},
 		],
 		
