@@ -2006,7 +2006,7 @@ SetEnabled vulpChatAssignment_pickResearch_foxVideosConfirm2 false
 SetEnabled vulpChatAssignment_pickResearch_foxVideosConfirm3 false
 SetEnabled vulpChatAssignment_pickResearch_foxVideosConfirm4 false
 SetEnabled vulpChatAssignment_pickResearch_foxVideosConfirm5 false
-FireAll EnableFoxVideosResearchOption","""Yeah, I can pull something together. Holo-media of them being adorable idiots is easy, be it images or vids. Medical studies too, practically everyone wants to get their hands on those scans. The real question is, how work do you want me to put into it?""","vulpChatAssignment_pickResearch_foxVideosConfirm1:""Get me something quick but respectable.""
+FireAll EnableFoxVideosResearchOption","""Yeah, I can pull something together. Holo-media of them being adorable idiots is easy, be it images or vids. Medical studies too, practically everyone wants to get their hands on those scans. The real question is, how much work do you want me to put into it?""","vulpChatAssignment_pickResearch_foxVideosConfirm1:""Get me something quick but respectable.""
 vulpChatAssignment_pickResearch_foxVideosConfirm2:""Go for a proper roadmap, but keep it streamlined.""
 vulpChatAssignment_pickResearch_foxVideosConfirm3:""Let's make this a professional operation.""
 vulpChatAssignment_pickResearch_foxVideosConfirm4:""I'm willing to commit to a significant investment.""
