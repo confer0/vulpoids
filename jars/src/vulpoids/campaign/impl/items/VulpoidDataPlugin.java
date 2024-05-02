@@ -100,7 +100,7 @@ public class VulpoidDataPlugin extends BaseSpecialItemPlugin {
             
             Map<String, String> writerMap = new HashMap();
             for(String key : rules.keySet()) {
-                writerMap.put(key, rules.get(key).get(random.nextInt(rules.get(key).size())));
+                if(!rules.get(key).isEmpty()) writerMap.put(key, rules.get(key).get(random.nextInt(rules.get(key).size())));
             }
             
             writerMap.put("author", author);
@@ -122,12 +122,6 @@ public class VulpoidDataPlugin extends BaseSpecialItemPlugin {
                 JSONObject obj = array.getJSONObject(i);
                 if(obj.has("minQuality") && obj.getInt("minQuality")>quality) continue;  //Quality too low
                 if(obj.has("maxQuality") && obj.getInt("maxQuality")<quality) continue;  //Quality too high
-                
-                int objPriority = 0;
-                if(obj.has("priority")) objPriority = obj.getInt("priority");
-                if(objPriority<highestPriority) continue;  //Priority too low
-                if(objPriority>highestPriority) validStrings.clear();  //New highest priority - purge old options
-                highestPriority = objPriority;
                 
                 if(tags!=null) {
                     if(obj.has("hasTags")) {
@@ -158,6 +152,13 @@ public class VulpoidDataPlugin extends BaseSpecialItemPlugin {
                         if(invalidTag) continue;
                     }
                 }
+                
+                // NOTE - This must always be the last thing checked, since it can eliminate other options.
+                int objPriority = 0;
+                if(obj.has("priority")) objPriority = obj.getInt("priority");
+                if(objPriority<highestPriority) continue;  //Priority too low
+                if(objPriority>highestPriority) validStrings.clear();  //New highest priority - purge old options
+                highestPriority = objPriority;
                 
                 int copiesToAdd = 1;
                 if(obj.has("weight")) copiesToAdd = obj.getInt("weight");
