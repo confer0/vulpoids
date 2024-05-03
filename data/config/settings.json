@@ -40,6 +40,7 @@
 		"illustrations":{
 			"vulp_bar_quest":"graphics/illustrations/bar_quest.png",
 			"citadel_biodome":"graphics/illustrations/citadel.png",
+			"vulpoid_advertisement":"graphics/illustrations/vulpoid_advertisement.png",
 			"vulp_execution":"graphics/illustrations/cold_option.png",
 			"laisa_death":"graphics/illustrations/laisa_death.png",
 			"citadel_cic":"graphics/illustrations/laisa_encounter.png",

@@ -401,32 +401,16 @@ vulp_badEndingHubAfterExplore:Consider doing something about the crew",,
 ,,,,,,,
 # Exodyne Tower,,,,,,,
 vulp_exploreBiodomeExodyne,DialogOptionSelected,$option == vulp_exploreBiodomeExodyne,"HideVisual
-$didBiodomeExodyne = true","The massive tower and its associated complexes require a number of teams to search, entering through multiple access points to swiftly cover ground.
+$didBiodomeExodyne = true","The massive tower is filled with administrative complexes, clearly having once hosted an entire sub-division of the Exodyne Biotech company.
 
-Administrative offices and board rooms form the bulk of the tower's interior. An entire sub-division of the Exodyne Biotech company was once hosted here, with everything from accounting to marketing.",vulp_exploreBiodomeExodyne1:Continue,,
-vulp_exploreBiodomeExodyne1,DialogOptionSelected,$option == vulp_exploreBiodomeExodyne1,,"Most of the data has been encrypted or outright removed, but your technicians are able to recover some pieces of marketing material.
+Most of the datacores have been wiped or removed, but some marketing material has been recovered.",vulp_exploreBiodomeExodyne1:Continue,,
+vulp_exploreBiodomeExodyne1,DialogOptionSelected,$option == vulp_exploreBiodomeExodyne1,"ShowImageVisual vulpoid_advertisement
+$player.sawVulpoidAdvertisement = true","Holos of the non-human crew feature under the name 'Vulpoids'. They appear to be a pre-release version, with their public reveal being scheduled a cycle after the Collapse.
 
-It appears to focus on the non-human crew using an assortment of images and slogans to appeal to one's curiosity while providing little information. They urge you to 'call now' for a quote, but the listed comms ID hasn't been active since the Collapse.",vulp_exploreBiodomeExodyne2:Continue,,
-vulp_exploreBiodomeExodyne2,DialogOptionSelected,$option == vulp_exploreBiodomeExodyne2,,"Your analysis teams produce a summary for you. The word 'Vulpoid' features frequently, and is either the name of the non-humans, or at least related to the product line.
+Mention of them being licensed as delta-level AI suggests they were designed for civilian use, though they must have been quite expensive.",vulp_exploreBiodomeExodyne2:Continue,# TODO SHOW ILLUSTRATION,
+vulp_exploreBiodomeExodyne2,DialogOptionSelected,$option == vulp_exploreBiodomeExodyne2,HideVisual,"The teams in the outlying complex, on the other hand, have been stymied. The facilities are locked down, and your chief engineer believes that they're equipped with a self-destruct to prevent corporate espionage.
 
-It's also apparent that the non-humans are, in fact, the product that's being sold. Full-body pictures feature prominently, and there's even mention of them being licensed under Domain AI regulatory standards.
-
-Their exact intended usage hasn't been conclusively pinned down, but the advertisements seem consistent with the target audience being wealthy individuals or businesses.",vulp_exploreBiodomeExodyne3:Continue,,
-vulp_exploreBiodomeExodyne3,DialogOptionSelected,$option == vulp_exploreBiodomeExodyne3,,"The teams in the outlying complex, on the other hand, have been largely stymied. Many of the major facilities are locked down, and your ops chief and chief engineer have agreed that any attempt at breaching them is likely to cause them to self-destruct as an espionage prevention measure.
-
-Mechanisms like these are rare, but not unheard of, especially when it comes to cutting-edge research. It's almost certainly possible to disable it from the bridge.",vulp_exploreBiodomeExodyne4:Continue,,
-vulp_exploreBiodomeExodyne4,DialogOptionSelected,$option == vulp_exploreBiodomeExodyne4,,"What information has been recovered from the facilities is largely as-expected. Cutting-edge biotechnology centered on organism design. The most valuable piece of data that's managed to be extracted is an anatomical diagram, which can be cross-referenced with the scans of the crew that your teams previously took.
-
-They line up extremely well with the diagram, even better than would be predicted with standard generational genetic drift models. Ther low observed bone and muscle density are shown to actually be slightly stronger than design spec, calling into question their suitability as spacers.",vulp_exploreBiodomeExodyne5:Continue,,
-vulp_exploreBiodomeExodyne5,DialogOptionSelected,$option == vulp_exploreBiodomeExodyne5,,"Most notably, the diagram makes mention of additional documentation for the brain structure. Unfortunately your teams have been unable to locate it, but the cursory labels still enable some basic analysis.
-
-Your science officer points out different regions to you, explaining which ones appear under and over-developed relative to a standard human.
-
-Their language and social centers are fairly impressive, and appear to have strong connections to their own emotional state. Logical reasoning, on the other hand, is fairly flimsy. Science even tenatively suggests that certain structures resemble a hardware implementation of the loyalty-assurance algorithms used in delta-level AI.",vulp_exploreBiodomeExodyne6:Continue,,
-vulp_exploreBiodomeExodyne6,DialogOptionSelected,$option == vulp_exploreBiodomeExodyne6,"AddRemoveAnyItem SPECIAL industry_bp population 1
-Call $global.vulpFactory_ref generateExodyneBonus","Other minor physical traits are noted and cataloged. A nerve cluster on the back of the neck to link to the hypothalamus, possibly inducing sleep or social affection. This fact is passed on to the security teams.
-
-Little else of note is discovered within the Exodyne facilities. The next-most exciting find is a high-level specification on the technologies and techniques used to maintain the arcology's infrastructure. Unfortunately, there's little within that isn't already reflected in the Sector's colonization techniques.",vulp_exploreBiodomeHubReturn:Conclude the search,,
+Mechanisms like these are rare but not unheard of, especially when it comes to cutting-edge research. It's almost certainly possible to disable it from the bridge.",vulp_exploreBiodomeHubReturn:Conclude the search,,
 ,,,,,,,
 # Domain CSF,,,,,,,
 vulp_exploreBiodomeDomain,DialogOptionSelected,$option == vulp_exploreBiodomeDomain,"HideVisual
@@ -757,6 +741,8 @@ $askedProfecto
 !$askedHelpful",,,"vulp_interrogationHubHelpful:""Do Profecto Vulpoids also like humans?""",,
 vulp_interrogationHubFemaleOption,VulpInterrogationHubOptions,"$askedWhatAreYou
 !$askedFemale",,,"vulp_interrogationHubFemale:""Why are all of you female?""",,
+vulp_interrogationHubSawAdOption,VulpInterrogationHubOptions,"$player.sawVulpoidAdvertisement
+!$askedSawAd",,,"vulp_interrogationHubSawAd:""I came across some advertisements, was that you in them?""",,
 vulp_interrogationHubShipOption,VulpInterrogationHubOptions,!$askedShip,,,"vulp_interrogationHubShip:""Can you tell me a bit about this ship?""",,
 vulp_interrogationHubResearchOption,VulpInterrogationHubOptions,"$askedShip
 !$askedResearch",,,"vulp_interrogationHubResearch:""What were they researching?""",,
@@ -780,6 +766,14 @@ She scrunches her nose in frustration. It looks adorable.",vulp_interrogationHub
 vulp_interrogationHubVulpoids1,DialogOptionSelected,$option == vulp_interrogationHubVulpoids1,FireAll VulpInterrogationHubOptions,"""To their credit, they really do want to help. It's how they're designed, they're compelled to do chores and follow orders.""
 
 ""That, and an have an obsessive adoration for humans. Sometimes I tell them a human gave an order if I need something done fast, but they always get upset when the human doesn't show up.""",,,
+vulp_interrogationHubSawAd,DialogOptionSelected,$option == vulp_interrogationHubSawAd,"$askedSawAd = true 0
+SetVulpoidExpression default","""Oh, those old things! I haven't checked on them in ages, I almost thought the data would have rotted out of the cores by now.""
+
+""Yeah, it was me though. Pretty extravagent designs, but tastes in the core are so eclectic that it takes boldness to grab their attention.""",vulp_interrogationHubSawAd1:Continue,,
+vulp_interrogationHubSawAd1,DialogOptionSelected,$option == vulp_interrogationHubSawAd1,"SetVulpoidExpression bruh
+FireAll VulpInterrogationHubOptions","""Speaking of bold, they decided to go with practical effects. Which was fine, except they also wanted that whole 'primordial soup' motif.""
+
+""I was brushing bits of pink goo out of my fur for days after the shoot.""",,,
 vulp_interrogationHubProfecto,DialogOptionSelected,$option == vulp_interrogationHubProfecto,"$askedProfecto = true 0
 SetVulpoidExpression default
 FireAll VulpInterrogationHubOptions","She perks up at this question, excited for a chance to puff herself up.
@@ -1036,9 +1030,11 @@ She gives you a peck on the cheek, and you assure her you'll make the accommodat
 ,,,,,,,
 # Ending Triggers,,,,,,,
 vulp_interrogationLeaveAndAddEmbarked,DialogOptionSelected,$option == vulp_interrogationLeaveAndAddEmbarked,"AddVulpoidFromImportant laisa special_vulpoid_embarked
+SetPersonFaction laisa player
 $option = vulp_interrogationLeave
 FireBest DialogOptionSelected",,,,
 vulp_interrogationLeaveAndAddFrozen,DialogOptionSelected,$option == vulp_interrogationLeaveAndAddFrozen,"AddVulpoidFromImportant laisa special_vulpoid
+SetPersonFaction laisa player
 $option = vulp_interrogationLeave
 FireBest DialogOptionSelected",,,,
 vulp_interrogationLeave,DialogOptionSelected,$option == vulp_interrogationLeave,"HideVisual
