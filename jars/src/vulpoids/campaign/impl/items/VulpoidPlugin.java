@@ -25,6 +25,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -209,6 +211,7 @@ public class VulpoidPlugin extends BaseSpecialItemPlugin {
             not_important = false;
         }
         
+        String factionId = person.getFaction().getId();
         if(Global.getSector().getPlayerFleet() != null && getId().equals(Vulpoids.SPECIAL_ITEM_OFFICER)) {
             boolean found_match = false;
             for (OfficerDataAPI officer : Global.getSector().getPlayerFleet().getFleetData().getOfficersCopy()) {
@@ -236,6 +239,8 @@ public class VulpoidPlugin extends BaseSpecialItemPlugin {
                 Global.getSector().getCharacterData().addAdmin(person);
             }
         }
+        // Doing this so that the faction can be preserved. We technically *don't* want that rn, but futureproofing.
+        person.setFaction(factionId);
         stack.getSpecialDataIfSpecial().setData(personToJson(person));
     }
     
@@ -540,6 +545,7 @@ public class VulpoidPlugin extends BaseSpecialItemPlugin {
         String disallowReason = disallowCycleReason();
         if (disallowReason==null) {
             String new_id = "";
+            String factionId = person.getFaction().getId();
             switch(getId()) {
                 case Vulpoids.SPECIAL_ITEM_DEFAULT:
                     new_id = Vulpoids.SPECIAL_ITEM_EMBARKED;
@@ -556,6 +562,8 @@ public class VulpoidPlugin extends BaseSpecialItemPlugin {
                     new_id = Vulpoids.SPECIAL_ITEM_DEFAULT;
                     break;
             }
+            // We need to do this because removing an admin (and maybe officer) sets them to indie.
+            person.setFaction(factionId);
             Global.getSoundPlayer().playUISound("ui_cargo_crew", 1f, 1f);
             stack.getCargo().addSpecial(new SpecialItemData(new_id, personToJson(person)), 1);
         } else {
