@@ -1872,9 +1872,16 @@ vulpChat_greetingFailsafe,VulpoidChatGreeting,,FireAll VulpoidChatTopLevelOption
 ,,,,,,,
 ,,,,,,,
 ,,,,,,,
-,,,,,,,
-vulpChatAssignmentOption,VulpoidChatTopLevelOptions,,,,vulpChatAssignment:Discuss current assignment,,
-vulpChatAssignment,DialogOptionSelected,$option == vulpChatAssignment,FireAll VulpoidChatAssignmentOptions,,,,
+vulpChatAssignment_inquireOptionDefault,VulpoidChatTopLevelOptions,,,,vulpChatAssignment_inquire:Discuss assignment,,
+vulpChatAssignment_pickResearchOption,VulpoidChatTopLevelOptions,$vulp_profectoAssignment == special_vulpoid_embarked,,,vulpChatAssignment_pickResearch:Assign a research project,,
+vulpChatAssignment_disableResearchOptionIfAlreadyActive,VulpoidChatTopLevelOptions,$vulp_researchProject != null,"SetEnabled vulpChatAssignment_pickResearch false
+SetTooltip vulpChatAssignment_pickResearch ""$name is already working on a project.""",,,,
+vulpChatAssignment_pickResearch,DialogOptionSelected,$option == vulpChatAssignment_pickResearch,FireAll VulpoidPickResearchOptions,,,,
+vulpChatAssignment_levelDownOfficerOption,VulpoidChatTopLevelOptions,$vulp_profectoAssignment == special_vulpoid_officer,,,vulpChatAssignment_levelDownOfficer:Retrain a skill,# TODO - IMPLEMENT THIS,
+vulpChatAssignment_devFinishResearchOption,VulpoidChatTopLevelOptions,"$global.isDevMode
+$vulp_researchCompletionDay > 0",SetOptionColor vulpChatAssignment_devFinishResearch gray,,200:vulpChatAssignment_devFinishResearch:>> (dev) Instantly finish research,,
+vulpChatAssignment_devFinishResearch,DialogOptionSelected,$option == vulpChatAssignment_devFinishResearch,"$vulp_researchCompletionDay = 0
+DismissDialog",,,,
 ,,,,,,,
 vulpChatSurroundingsOption,VulpoidChatTopLevelOptions,,,,vulpChatSurroundings:Socialize about surroundings,,
 vulpChatSurroundings,DialogOptionSelected,$option == vulpChatSurroundings,OpenListBasedDialog localEntities VulpoidChatTopLevelOptions,,,,
@@ -1885,6 +1892,9 @@ vulpChatSurroundings,DialogOptionSelected,$option == vulpChatSurroundings,OpenLi
 vulpChatPetOption,VulpoidChatTopLevelOptions,,,,vulpChatPet:Pet,,
 vulpChatPet,DialogOptionSelected,$option == vulpChatPet,OpenListBasedDialog VulpoidPettingOptions VulpoidChatTopLevelOptions,,,,
 ,,,,,,,
+vulpChatPet_giftOption,VulpoidChatTopLevelOptions,,,,vulpChatPet_gift:Offer gifts,,
+vulpChatPet_gift,DialogOptionSelected,$option == vulpChatPet_gift,OpenListBasedDialog VulpoidPettingGiftOptions VulpoidChatTopLevelOptions,,,,
+,,,,,,,
 vulpChat_exitOption,VulpoidChatTopLevelOptions,,"SetShortcut vulpChat_exit ""ESCAPE""",,100:vulpChat_exit:Dismiss,,
 vulpChat_exit,DialogOptionSelected,$option == vulpChat_exit,"HideFirstPerson
 ExitRulesToPlugin",,,,
@@ -1892,20 +1902,9 @@ ExitRulesToPlugin",,,,
 ,,,,,,,
 ,,,,,,,
 ,,,,,,,
-vulpChatAssignment_inquireOptionDefault,VulpoidChatAssignmentOptions,,,,vulpChatAssignment_inquire:Socialize about assignment,,
-#vulpChatAssignment_inquireOptionResearchDone,VulpoidChatAssignmentOptions,VulpoidResearch isComplete,SetOptionColor vulpChatAssignment_getResearch highlight,,vulpChatAssignment_getResearch:Follow up on research project,# Handled on greeting instead.,
-vulpChatAssignment_pickResearchOption,VulpoidChatAssignmentOptions,$vulp_profectoAssignment == special_vulpoid_embarked,FireBest VulpoidChatDisableResearchIfActive,,vulpChatAssignment_pickResearch:Assign a research project,,
-vulpChatAssignment_disableResearchOptionIfAlreadyActive,VulpoidChatDisableResearchIfActive,$vulp_researchProject != null,"SetEnabled vulpChatAssignment_pickResearch false
-SetTooltip vulpChatAssignment_pickResearch ""$name is already working on a project.""",,,,
-vulpChatAssignment_pickResearch,DialogOptionSelected,$option == vulpChatAssignment_pickResearch,FireAll VulpoidPickResearchOptions,,,,
-vulpChatAssignment_levelDownOfficerOption,VulpoidChatAssignmentOptions,$vulp_profectoAssignment == special_vulpoid_officer,,,vulpChatAssignment_levelDownOfficer:Retrain a skill,# TODO - IMPLEMENT THIS,
 ,,,,,,,
-vulpChatAssignment_devFinishResearchOption,VulpoidChatAssignmentOptions,"$global.isDevMode
-$vulp_researchCompletionDay > 0",SetOptionColor vulpChatAssignment_devFinishResearch gray,,200:vulpChatAssignment_devFinishResearch:>> (dev) Instantly finish research,,
-vulpChatAssignment_devFinishResearch,DialogOptionSelected,$option == vulpChatAssignment_devFinishResearch,"$vulp_researchCompletionDay = 0
-DismissDialog",,,,
-vulpChatAssignment_exitOption,VulpoidChatAssignmentOptions,,"SetShortcut vulpChatAssignment_exit ""ESCAPE""",,100:vulpChatAssignment_exit:Back,,
-vulpChatAssignment_exit,DialogOptionSelected,$option == vulpChatAssignment_exit,FireAll VulpoidChatTopLevelOptions,,,,
+,,,,,,,
+,,,,,,,
 ,,,,,,,
 # Chitchat about current assignment,,,,,,,
 vulpChatAssignment_inquireDefault,DialogOptionSelected,$option == vulpChatAssignment_inquire,SetVulpoidExpression default,"""Not much to say, really.""",,"# Generic, should not fire",
@@ -1925,7 +1924,7 @@ $vulp_profectoAssignment == special_vulpoid_admin",SetVulpoidExpression default,
 ,,,,,,,
 # Research picker options,,,,,,,
 vulpChatAssignment_pickResearchOption_exit,VulpoidPickResearchOptions,,SetShortcut vulpChatAssignment_pickResearch_exit ESCAPE,,100:vulpChatAssignment_pickResearch_exit:Back,,
-vulpChatAssignment_pickResearch_exit,DialogOptionSelected,$option == vulpChatAssignment_pickResearch_exit,FireAll VulpoidChatAssignmentOptions,,,,
+vulpChatAssignment_pickResearch_exit,DialogOptionSelected,$option == vulpChatAssignment_pickResearch_exit,FireAll VulpoidChatTopLevelOptions,,,,
 ,,,,,,,
 # Greeting overrides for completed research,,,,,,,
 vulpChat_greetingResearchComplete,VulpoidChatGreeting,VulpoidResearch isComplete score:1000,"FireBest VulpoidResearchComplete
@@ -1950,7 +1949,7 @@ SetVulpoidExpression bruh","""Most of what's left is just encrypted computer rec
 vulpChatAssignment_pickResearch:Cancel",,
 vulpChatAssignment_pickResearch_terraformerConfirm,DialogOptionSelected,$option == vulpChatAssignment_pickResearch_terraformerConfirm,"SetVulpoidExpression default
 VulpoidResearch setProject terraformer 360
-FireAll VulpoidChatAssignmentOptions","""Alright, I'll look into it!""",,,
+FireAll VulpoidChatTopLevelOptions","""Alright, I'll look into it!""",,,
 # Terraformer In Progress,,,,,,,
 vulpChatAssignment_inquireEmbarkedResearch_terraformer,DialogOptionSelected,"$option == vulpChatAssignment_inquire
 $vulp_profectoAssignment == special_vulpoid_embarked
@@ -2022,27 +2021,27 @@ vulpChatAssignment_pickResearch_foxVideosConfirm1,DialogOptionSelected,$option =
 $foxVideosLevel = 1
 RemoveCommodity vulpoids 10
 RemoveCommodity credits 5000
-FireAll VulpoidChatAssignmentOptions","""Alright, send the dummies over to my suite and I'll get started!""",,,
+FireAll VulpoidChatTopLevelOptions","""Alright, send the dummies over to my suite and I'll get started!""",,,
 vulpChatAssignment_pickResearch_foxVideosConfirm2,DialogOptionSelected,$option == vulpChatAssignment_pickResearch_foxVideosConfirm2,"VulpoidResearch setProject foxVideos 730
 $foxVideosLevel = 2
 RemoveCommodity vulpoids 30
 RemoveCommodity credits 15000
-FireAll VulpoidChatAssignmentOptions","""Okay, I'll start drawing things up! Send the dummies over to my suite in the meantime.""",,,
+FireAll VulpoidChatTopLevelOptions","""Okay, I'll start drawing things up! Send the dummies over to my suite in the meantime.""",,,
 vulpChatAssignment_pickResearch_foxVideosConfirm3,DialogOptionSelected,$option == vulpChatAssignment_pickResearch_foxVideosConfirm3,"VulpoidResearch setProject foxVideos 1095
 $foxVideosLevel = 3
 RemoveCommodity vulpoids 50
 RemoveCommodity credits 25000
-FireAll VulpoidChatAssignmentOptions","""Sounds good! I'll reach out to the quartermaster to book out some conference rooms.""",,,
+FireAll VulpoidChatTopLevelOptions","""Sounds good! I'll reach out to the quartermaster to book out some conference rooms.""",,,
 vulpChatAssignment_pickResearch_foxVideosConfirm4,DialogOptionSelected,$option == vulpChatAssignment_pickResearch_foxVideosConfirm4,"VulpoidResearch setProject foxVideos 1460
 $foxVideosLevel = 4
 RemoveCommodity vulpoids 100
 RemoveCommodity credits 50000
-FireAll VulpoidChatAssignmentOptions","""Exciting! In that case, I'll see if I can persuade the quartermaster into giving me a bay to work with!""",,,
+FireAll VulpoidChatTopLevelOptions","""Exciting! In that case, I'll see if I can persuade the quartermaster into giving me a bay to work with!""",,,
 vulpChatAssignment_pickResearch_foxVideosConfirm5,DialogOptionSelected,$option == vulpChatAssignment_pickResearch_foxVideosConfirm5,"VulpoidResearch setProject foxVideos 1825
 $foxVideosLevel = 5
 RemoveCommodity vulpoids 300
 RemoveCommodity credits 150000
-FireAll VulpoidChatAssignmentOptions","""Yes, thank you $playerSirOrMadam! Oh don't worry, I've got some fantastic plans!""",,,
+FireAll VulpoidChatTopLevelOptions","""Yes, thank you $playerSirOrMadam! Oh don't worry, I've got some fantastic plans!""",,,
 # Fox Videos In Progress,,,,,,,
 vulpChatAssignment_inquireEmbarkedResearch_foxVideos_chasingTail,DialogOptionSelected,"$option == vulpChatAssignment_inquire
 $vulp_profectoAssignment == special_vulpoid_embarked
@@ -2107,11 +2106,200 @@ AddRemoveAnyItem SPECIAL vulpoid_data5 $name 1","She passes you a datapad as she
 ,,,,,,,
 ,,,,,,,
 ,,,,,,,
+# Petting Options,,,,,,,
+vulpChatPet_headpatsOption,VulpoidPettingOptions,,,,vulpChatPet_headpats:Headpats,,
+vulpChatPet_pettingOption,VulpoidPettingOptions,,,,vulpChatPet_headpats:Petting,,
+vulpChatPet_scritchesOption,VulpoidPettingOptions,,,,vulpChatPet_headpats:Scritches,,
+vulpChatPet_snugglesOption,VulpoidPettingOptions,,,,vulpChatPet_headpats:Snuggles,,
+vulpChatPet_tummyRubOption,VulpoidPettingOptions,,,,vulpChatPet_headpats:Tummy rubs,,
+vulpChatPet_brushiesOption,VulpoidPettingOptions,,,,vulpChatPet_headpats:Tail brushes,,
+,,,,,,# Sternum Scratch?,
+,,,,,,# Games / play?,
+vulpChatPet_ticTacToeOption,VulpoidPettingOptions,,,,vulpChatPet_ticTacToe:Play tic-tac-toe,# Tic-tac-toe,
+,,,,,,# Profecto only - actual games? ...chess? *space* chess?,
+# Headpats,,,,,,,
+vulpChatPet_headpats,DialogOptionSelected,$option == vulpChatPet_headpats,SetVulpoidExpression blush,"You place your hand on the top of her head, resting your palm atop the velvety fur.
+
+Though you've scarcely started petting her, her tail is already wagging furiously.",vulpChatPet_headpats1:Pet,,
+vulpChatPet_headpats1,DialogOptionSelected,$option == vulpChatPet_headpats1,,"Your fingers sink deep into her soft hair, enveloped in fluff as you gently massage her scalp.
+
+Her eyes are closed in a look of contentment. She unconsciously tilts her head back, attempting to follow your hand as you continue to pet her.","vulpChatPet_headpatsBack:TODO
+vulpChatPet_headpatsEars:TODO
+vulpChatPet_headpatsFace:Hold your arm still",,
+vulpChatPet_headpatsBack,DialogOptionSelected,$option == vulpChatPet_headpatsBack,,,,,
+vulpChatPet_headpatsEars,DialogOptionSelected,$option == vulpChatPet_headpatsEars,,,,,
+vulpChatPet_headpatsFace,DialogOptionSelected,$option == vulpChatPet_headpatsFace,,"Rather than follow her head as it inclines, you leave your hand in place. As she leans back, your hand follows a trail from her scalp, down her forehead, until it rests on her face.
+
+The tilting stops there, your fingers resting above her still-closed eyes. Her cool, wet nose taps against your wrist.",vulpChatPet_headpatsFace1:Continue,,
+vulpChatPet_headpatsFace1,DialogOptionSelected,$option == vulpChatPet_headpatsFace1,SetVulpoidExpression default,"It takes a moment for her to realize the petting has stopped. She opens her eyes in realization, and laughs through the cage of your fingers.","vulpChatPet_headpatsFacePet:TODO
+vulpChatPet_headpatsFaceGrab:Gently grab her",,
+vulpChatPet_headpatsFacePet,DialogOptionSelected,$option == vulpChatPet_headpatsFacePet,,,,,
+vulpChatPet_headpatsFaceGrab,DialogOptionSelected,$option == vulpChatPet_headpatsFaceGrab,,"You spread your fingers and wrap them around her like a facehugger.
+
+""Ack! No, I've been captured!"" she laughs as she playfully attempts to squirm out.",vulpChatPet_headpatsFaceGrab1:Continue,,
+vulpChatPet_headpatsFaceGrab1,DialogOptionSelected,$option == vulpChatPet_headpatsFaceGrab1,,"You keep messing with her for a time, as she laughingly plays along.",,,
 ,,,,,,,
-vulpChatPet_headpatsOption,VulpoidPettingOptions,,,,vulpChatPet_headpats:Give headpats,,
 ,,,,,,,
-vulpChatPet_giftOption,VulpoidPettingOptions,,,,vulpChatPet_gift:Offer gifts,,
-vulpChatPet_gift,DialogOptionSelected,$option == vulpChatPet_gift,OpenListBasedDialog VulpoidPettingGiftOptions,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+#Tic-Tac-Toe,,,,,,,
+vulpChatPet_ticTacToe,DialogOptionSelected,$option == vulpChatPet_ticTacToe,"$tttUL = ""[]"" 0
+$tttUM = ""[]"" 0
+$tttUR = ""[]"" 0
+$tttML = ""[]"" 0
+$tttMM = ""[]"" 0
+$tttMR = ""[]"" 0
+$tttBL = ""[]"" 0
+$tttBM = ""[]"" 0
+$tttBR = ""[]"" 0
+$tttCount = 0 0
+$tttWin = false 0
+$option = vulpChatPet_ticTacToe1
+FireBest DialogOptionSelected",,,,
+vulpChatPet_ticTacToeDummy,DialogOptionSelected,"$option == vulpChatPet_ticTacToe1
+$vulp_profectoAssignment == vulpoids","FireAll PlayerTicTacToeOptions
+SetVulpoidExpression default","""Okay, I'll do my best $playerSirOrMadam! You go first!""",,,
+vulpChatPet_ticTacToeProfecto,DialogOptionSelected,"$option == vulpChatPet_ticTacToe1
+$vulp_profectoAssignment != vulpoids","FireAll PlayerTicTacToeOptions
+SetVulpoidExpression default","""Tic-tac-toe? Alright, let's see how you perform. You're up.""",,,
+vulpChatPet_ticTacToe_playerLoosesDummy,PlayerTicTacToeOptions,"$tttWin == ""0""
+$vulp_profectoAssignment == vulpoids","SetVulpoidExpression cry
+ExitRulesToPlugin","""Oh no, I'm sorry $playerSirOrMadam! We can go again, I'm sure you'll win next time!""",,,
+vulpChatPet_ticTacToe_playerLoosesProfecto,PlayerTicTacToeOptions,"$tttWin == ""0""
+$vulp_profectoAssignment != vulpoids",ExitRulesToPlugin,"""And that makes three. Good game, $playerSirOrMadam.""",,,
+vulpChatPet_ticTacToe_playerPrintBoard,PlayerTicTacToeOptions,$tttWin == false,FireBest PrintTicTacToeBoard,,,,
+vulpChatPet_ticTacToe_playerULOption,PlayerTicTacToeOptions,"$tttUL == ""[]""",,,vulpChatPet_ticTacToe_playerUL:Upper Left,,
+vulpChatPet_ticTacToe_playerUMOption,PlayerTicTacToeOptions,"$tttUM == ""[]""",,,vulpChatPet_ticTacToe_playerUM:Upper Middle,,
+vulpChatPet_ticTacToe_playerUROption,PlayerTicTacToeOptions,"$tttUR == ""[]""",,,vulpChatPet_ticTacToe_playerUR:Upper Right,,
+vulpChatPet_ticTacToe_playerMLOption,PlayerTicTacToeOptions,"$tttML == ""[]""",,,vulpChatPet_ticTacToe_playerML:Middle Left,,
+vulpChatPet_ticTacToe_playerMMOption,PlayerTicTacToeOptions,"$tttMM == ""[]""",,,vulpChatPet_ticTacToe_playerMM:Middle,,
+vulpChatPet_ticTacToe_playerMROption,PlayerTicTacToeOptions,"$tttMR == ""[]""",,,vulpChatPet_ticTacToe_playerMR:Middle Right,,
+vulpChatPet_ticTacToe_playerBLOption,PlayerTicTacToeOptions,"$tttBL == ""[]""",,,vulpChatPet_ticTacToe_playerBL:Bottom Left,,
+vulpChatPet_ticTacToe_playerBMOption,PlayerTicTacToeOptions,"$tttBM == ""[]""",,,vulpChatPet_ticTacToe_playerBM:Bottom Middle,,
+vulpChatPet_ticTacToe_playerBROption,PlayerTicTacToeOptions,"$tttBR == ""[]""",,,vulpChatPet_ticTacToe_playerBR:Bottom Right,,
+vulpChatPet_ticTacToe_playerUL,DialogOptionSelected,$option == vulpChatPet_ticTacToe_playerUL,"$tttUL = ""X""
+$tttCount++
+$option = vulpChatPet_ticTacToe_playerPostPlay
+FireBest DialogOptionSelected",,,,
+vulpChatPet_ticTacToe_playerUM,DialogOptionSelected,$option == vulpChatPet_ticTacToe_playerUM,"$tttUM = ""X""
+$tttCount++
+$option = vulpChatPet_ticTacToe_playerPostPlay
+FireBest DialogOptionSelected",,,,
+vulpChatPet_ticTacToe_playerUR,DialogOptionSelected,$option == vulpChatPet_ticTacToe_playerUR,"$tttUR = ""X""
+$tttCount++
+$option = vulpChatPet_ticTacToe_playerPostPlay
+FireBest DialogOptionSelected",,,,
+vulpChatPet_ticTacToe_playerML,DialogOptionSelected,$option == vulpChatPet_ticTacToe_playerML,"$tttML = ""X""
+$tttCount++
+$option = vulpChatPet_ticTacToe_playerPostPlay
+FireBest DialogOptionSelected",,,,
+vulpChatPet_ticTacToe_playerMM,DialogOptionSelected,$option == vulpChatPet_ticTacToe_playerMM,"$tttMM = ""X""
+$tttCount++
+$option = vulpChatPet_ticTacToe_playerPostPlay
+FireBest DialogOptionSelected",,,,
+vulpChatPet_ticTacToe_playerMR,DialogOptionSelected,$option == vulpChatPet_ticTacToe_playerMR,"$tttMR = ""X""
+$tttCount++
+$option = vulpChatPet_ticTacToe_playerPostPlay
+FireBest DialogOptionSelected",,,,
+vulpChatPet_ticTacToe_playerBL,DialogOptionSelected,$option == vulpChatPet_ticTacToe_playerBL,"$tttBL = ""X""
+$tttCount++
+$option = vulpChatPet_ticTacToe_playerPostPlay
+FireBest DialogOptionSelected",,,,
+vulpChatPet_ticTacToe_playerBM,DialogOptionSelected,$option == vulpChatPet_ticTacToe_playerBM,"$tttBM = ""X""
+$tttCount++
+$option = vulpChatPet_ticTacToe_playerPostPlay
+FireBest DialogOptionSelected",,,,
+vulpChatPet_ticTacToe_playerBR,DialogOptionSelected,$option == vulpChatPet_ticTacToe_playerBR,"$tttBR = ""X""
+$tttCount++
+$option = vulpChatPet_ticTacToe_playerPostPlay
+FireBest DialogOptionSelected",,,,
+vulpChatPet_ticTacToe_playerPostPlay,DialogOptionSelected,$option == vulpChatPet_ticTacToe_playerPostPlay,"FireBest TicTacToeCheckWins
+FireBest VulpoidTicTacToeOptions",,,,
+vulpChatPet_ticTacToe_playerWinsDummy,VulpoidTicTacToeOptions,"$tttWin == ""X""
+$vulp_profectoAssignment == vulpoids",ExitRulesToPlugin,"""You won! Good job, $playerSirOrMadam!""",,,
+vulpChatPet_ticTacToe_playerWinsProfecto,VulpoidTicTacToeOptions,"$tttWin == ""X""
+$vulp_profectoAssignment != vulpoids",ExitRulesToPlugin,"""There it is, well done! Good game, $playerSirOrMadam!""",,,
+vulpChatPet_ticTacToe_vulpoidTieDummy,VulpoidTicTacToeOptions,"$tttWin == ""[]""
+$vulp_profectoAssignment == vulpoids",ExitRulesToPlugin,"""The board's full. Is that a tie, or do you win? I think you win!""",,,
+vulpChatPet_ticTacToe_vulpoidTieProfecto,VulpoidTicTacToeOptions,"$tttWin == ""[]""
+$vulp_profectoAssignment != vulpoids",ExitRulesToPlugin,"""That's a tie. Good game, $playerSirOrMadam.""",,,
+vulpChatPet_ticTacToe_vulpoidUL,VulpoidTicTacToeOptions,"$tttUL == ""[]""","$tttUL = ""0""
+$tttCount++
+$option = vulpChatPet_ticTacToe_vulpoidPostPlay
+FireBest DialogOptionSelected",She plays in the upper left space.,,# TODO - Make Profectos have actual strategy.,
+vulpChatPet_ticTacToe_vulpoidUM,VulpoidTicTacToeOptions,"$tttUM == ""[]""","$tttUM = ""0""
+$tttCount++
+$option = vulpChatPet_ticTacToe_vulpoidPostPlay
+FireBest DialogOptionSelected",She plays in the upper middle space.,,# Only regular Vulpoids should be picking at random.,
+vulpChatPet_ticTacToe_vulpoidUR,VulpoidTicTacToeOptions,"$tttUR == ""[]""","$tttUR = ""0""
+$tttCount++
+$option = vulpChatPet_ticTacToe_vulpoidPostPlay
+FireBest DialogOptionSelected",She plays in the upper right space.,,,
+vulpChatPet_ticTacToe_vulpoidML,VulpoidTicTacToeOptions,"$tttML == ""[]""","$tttML = ""0""
+$tttCount++
+$option = vulpChatPet_ticTacToe_vulpoidPostPlay
+FireBest DialogOptionSelected",She plays in the middle left space.,,,
+vulpChatPet_ticTacToe_vulpoidMM,VulpoidTicTacToeOptions,"$tttMM == ""[]""","$tttMM = ""0""
+$tttCount++
+$option = vulpChatPet_ticTacToe_vulpoidPostPlay
+FireBest DialogOptionSelected",She plays in the middle space.,,,
+vulpChatPet_ticTacToe_vulpoidMR,VulpoidTicTacToeOptions,"$tttMR == ""[]""","$tttMR = ""0""
+$tttCount++
+$option = vulpChatPet_ticTacToe_vulpoidPostPlay
+FireBest DialogOptionSelected",She plays in the middle right space.,,,
+vulpChatPet_ticTacToe_vulpoidBL,VulpoidTicTacToeOptions,"$tttBL == ""[]""","$tttBL = ""0""
+$tttCount++
+$option = vulpChatPet_ticTacToe_vulpoidPostPlay
+FireBest DialogOptionSelected",She plays in the bottom left space.,,,
+vulpChatPet_ticTacToe_vulpoidBM,VulpoidTicTacToeOptions,"$tttBM == ""[]""","$tttBM = ""0""
+$tttCount++
+$option = vulpChatPet_ticTacToe_vulpoidPostPlay
+FireBest DialogOptionSelected",She plays in the bottom middle space.,,,
+vulpChatPet_ticTacToe_vulpoidBR,VulpoidTicTacToeOptions,"$tttBR == ""[]""","$tttBR = ""0""
+$tttCount++
+$option = vulpChatPet_ticTacToe_vulpoidPostPlay
+FireBest DialogOptionSelected",She plays in the bottom right space.,,,
+vulpChatPet_ticTacToe_vulpoidPostPlay,DialogOptionSelected,$option == vulpChatPet_ticTacToe_vulpoidPostPlay,"FireBest TicTacToeCheckWins
+FireAll PlayerTicTacToeOptions",,,,
+vulpChatPet_ticTacToe_checkwinsLV,TicTacToeCheckWins,"$tttUL == $tttML
+$tttBL == $tttML
+$tttUL != ""[]""","$tttWin = $tttUL 0
+FireBest PrintTicTacToeBoard",,,,
+vulpChatPet_ticTacToe_checkwinsMV,TicTacToeCheckWins,"$tttUM == $tttMM
+$tttBM == $tttMM
+$tttUM != ""[]""","$tttWin = $tttUM 0
+FireBest PrintTicTacToeBoard",,,,
+vulpChatPet_ticTacToe_checkwinsRV,TicTacToeCheckWins,"$tttUR == $tttMR
+$tttBR == $tttMR
+$tttUR != ""[]""","$tttWin = $tttUR 0
+FireBest PrintTicTacToeBoard",,,,
+vulpChatPet_ticTacToe_checkwinsUH,TicTacToeCheckWins,"$tttUL == $tttUM
+$tttUR == $tttUM
+$tttUL != ""[]""","$tttWin = $tttUL 0
+FireBest PrintTicTacToeBoard",,,,
+vulpChatPet_ticTacToe_checkwinsMH,TicTacToeCheckWins,"$tttML == $tttMM
+$tttMR == $tttMM
+$tttML != ""[]""","$tttWin = $tttML 0
+FireBest PrintTicTacToeBoard",,,,
+vulpChatPet_ticTacToe_checkwinsBH,TicTacToeCheckWins,"$tttBL == $tttBM
+$tttBR == $tttBM
+$tttBL != ""[]""","$tttWin = $tttBL 0
+FireBest PrintTicTacToeBoard",,,,
+vulpChatPet_ticTacToe_checkwinsDD,TicTacToeCheckWins,"$tttUL == $tttMM
+$tttBR == $tttMM
+$tttUL != ""[]""","$tttWin = $tttUL 0
+FireBest PrintTicTacToeBoard",,,,
+vulpChatPet_ticTacToe_checkwinsDU,TicTacToeCheckWins,"$tttBL == $tttMM
+$tttUR == $tttMM
+$tttBL != ""[]""","$tttWin = $tttBL 0
+FireBest PrintTicTacToeBoard",,,,
+vulpChatPet_ticTacToe_checkwinsTie,TicTacToeCheckWins,$tttCount >= 9,"$tttWin = ""[]"" 0
+FireBest PrintTicTacToeBoard",,,,
+vulpChatPet_ticTacToe_printBoard,PrintTicTacToeBoard,,,"$tttUL $tttUM $tttUR
+$tttML $tttMM $tttMR
+$tttBL $tttBM $tttBR",,,
 ,,,,,,,
 ,,,,,,,
 ,,,,,,,
@@ -2154,7 +2342,7 @@ vulpMeal_cannibal:Long Fox",,
 ,,,,,,,
 ,,,,,,,
 ,,,,,,,
-,,,The forbidden dish - vulpoids,,,,
+,,,,,,,
 ,,,,,,,
 ,,,,,,,
 ,,,,,,,
