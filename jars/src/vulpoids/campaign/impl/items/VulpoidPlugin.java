@@ -160,6 +160,10 @@ public class VulpoidPlugin extends BaseSpecialItemPlugin {
             PersonAPI new_person = VulpoidCreator.createProfectoVulpoid();
             jsonStr = personToJson(new_person);
             stack.getSpecialDataIfSpecial().setData(jsonStr);
+        } else if(jsonStr.charAt(0) != '{') {
+            PersonAPI new_person = Global.getSector().getImportantPeople().getPerson(jsonStr);
+            jsonStr = personToJson(new_person);
+            stack.getSpecialDataIfSpecial().setData(jsonStr);
         }
         person = jsonToPerson(jsonStr);
         

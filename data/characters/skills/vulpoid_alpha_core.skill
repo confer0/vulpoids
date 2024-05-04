@@ -1,0 +1,16 @@
+{
+	"id":"vulpoid_alpha_core",
+	"governingAptitude":"technology",
+	"compressHullmods":false,
+	"scope":"NONE",
+	"effectGroups":[
+		{
+			"requiredSkillLevel":1,
+			"effectBasedOnLevel":false,
+			"effects":[
+				{"type":"SHIP", "script":"vulpoids.impl.campaign.skills.VulpoidAlphaCore$Level1"},
+				{"type":"GOVERNED_OUTPOST", "script":"vulpoids.impl.campaign.skills.VulpoidAlphaCore$Level2"},
+			]
+		},
+	],
+}
