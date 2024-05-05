@@ -2785,7 +2785,9 @@ $optionColor:vulpChatGift_alpha = ""72,159,255"" 0",,vulpChatGift_alpha:Grant he
 vulpChatGift_alpha,DialogOptionSelected,$option == vulpChatGift_alpha,"RemoveCommodity alpha_core 1
 $option = vulpChatGift_alpha1
 FireBest DialogOptionSelected",,,,
-vulpChatGift_alpha1,DialogOptionSelected,$option == vulpChatGift_alpha1,SetVulpoidExpression fear,"$name gasps in astonishment. ""A- an alpha core!? You're pulling my tail, right?""
+"# Alpha Core, First Time",,,,,,,
+vulpChatGift_alpha1,DialogOptionSelected,"$option == vulpChatGift_alpha1
+!$confiscatedAlphaCore",SetVulpoidExpression fear,"$name gasps in astonishment. ""A- an alpha core!? You're pulling my tail, right?""
 
 She approaches the case, and gasps again as she draws closer. ""It is. It really is. I can feel it in there.""","vulpChatGift_alpha2:Continue
 vulpChatGift_alphaFeelIt:""You can feel it?""",,
@@ -2800,6 +2802,89 @@ AdjustRepActivePerson COOPERATIVE 10
 $hasAlphaCore = true
 SetPersonSkillLevel vulpoid_alpha_core 1","""I won't tell a soul about this $playerSirOrMadam. Not for anything. Thank you, for your trust and the opportunity.""",vulpChatGift_alphaEnd:Nod affirmatively,,
 vulpChatGift_alphaEnd,DialogOptionSelected,$option == vulpChatGift_alphaEnd,ExitRulesToPlugin,"$name has the case transferred to another location. Exactly where, you do not know. All the better, should you ever need to deny knowledge of it.",,,
+"# Alpha Core, Not First Time",,,,,,,
+vulpChatGift_alphaAgain,DialogOptionSelected,$option == vulpChatGift_alpha1,SetVulpoidExpression default,"""An alpha core! Oh, that's...""",vulpChatGift_alphaAgain1:Continue,,
+vulpChatGift_alphaAgain1,DialogOptionSelected,$option == vulpChatGift_alphaAgain1,SetVulpoidExpression bruh,"""...I do get to actually keep this one, right?""","vulpChatGift_alphaAgainKeep:""Yes.""
+vulpChatGift_alphaAgainJK:""Well...""",,
+vulpChatGift_alphaAgainJK,DialogOptionSelected,$option == vulpChatGift_alphaAgainJK,"SetVulpoidExpression angry
+AddCommodity alpha_core 1
+ExitRulesToPlugin","""Keep them, then. I'm not going to get attached to someone who you'll snatch away from me at a moment's notice.""",,,
+vulpChatGift_alphaAgainKeep,DialogOptionSelected,$option == vulpChatGift_alphaAgainKeep,"$hasAlphaCore = true
+SetPersonSkillLevel vulpoid_alpha_core 1
+ExitRulesToPlugin","""Alright, I'll have to take your word for it.""",,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+# 'Gift' - Confiscate Alpha Core,,,,,,,
+vulpChatGift_confiscateAlphaOption,VulpoidPettingGiftOptions,$hasAlphaCore,"$optionColor:vulpChatGift_confiscateAlpha = ""255,0,0"" 0
+$optionConfirmation:vulpChatGift_confiscateAlpha = ""Are you sure? Taking back an alpha core is not something to be done lightly.""",,vulpChatGift_confiscateAlpha:Confiscate her alpha core,,
+vulpChatGift_confiscateAlpha,DialogOptionSelected,$option == vulpChatGift_confiscateAlpha,"SetVulpoidExpression cry
+AdjustRepActivePerson VENGEFUL -5","You inform $name that you intend to take back the alpha core you'd previously entrusted to her. Her face drops.
+
+""$PlayerSirOrMadam, I... Please reconsider! We do great work together, I really think it'd be for the best if we stayed that way!""","vulpChatGift_confiscateAlphaNeedItBack:""I need it back for other operations.""
+vulpChatGift_confiscateAlphaDistrust:""I have concerns that it may be influencing you.""
+vulpChatGift_confiscateAlphaNoReason:""I'm revoking your access to it.""
+vulpChatGift_confiscateAlphaCancel:""Uh, never mind then.""",,
+vulpChatGift_confiscateAlphaCancel1,DialogOptionSelected,$option == vulpChatGift_confiscateAlphaCancel1,"$option = vulpChatGift_confiscateAlphaCancel
+FireBest DialogOptionSelected",,,,
+vulpChatGift_confiscateAlphaCancel,DialogOptionSelected,$option == vulpChatGift_confiscateAlphaCancel,"SetVulpoidExpression bruh
+ExitRulesToPlugin","$name still looks distrustful, but is eager to drop the issue.",,,
+vulpChatGift_confiscateAlphaNeedItBack,DialogOptionSelected,$option == vulpChatGift_confiscateAlphaNeedItBack,,"You explain that you need the AI core for other plans you have. $name seems unconvinced.
+
+""Are there not other solutions? Or, could you find another one? I'd be happy to captain a ship against an ordo...""","vulpChatGift_confiscateAlphaCommit:""I need this core. My decision is final.""
+vulpChatGift_confiscateAlphaCancel:""I suppose I can find an alternative.""",,
+vulpChatGift_confiscateAlphaDistrust,DialogOptionSelected,$option == vulpChatGift_confiscateAlphaDistrust,,"You explain your concerns that the core may be influencing her. $name looks at you, baffled.
+
+""Influencing me? If you're worried about influencing me then you'd better fire your human crew first, because they've got better odds by just asking me nicely enough!""",vulpChatGift_confiscateAlphaDistrust1:Continue,,
+vulpChatGift_confiscateAlphaDistrust1,DialogOptionSelected,$option == vulpChatGift_confiscateAlphaDistrust1,SetVulpoidExpression angry,"""Or if you're worried about its influence in general... then still fire your human crew! I'm beta-level, I'm better equipped to handle it than anyone else you have on staff!""
+
+""And, and! You gave me this core in the first place! So how sure are you that *you're* not the one being influenced into a bad decision?""","vulpChatGift_confiscateAlphaCommit:""Don't question my judgment. I'm confiscating the core.""
+vulpChatGift_confiscateAlphaCancel:""You make some good points. I'll reconsider.""",,
+vulpChatGift_confiscateAlphaNoReason,DialogOptionSelected,$option == vulpChatGift_confiscateAlphaNoReason,"SetVulpoidExpression angry
+AdjustRepActivePerson VENGEFUL -5","""What do you mean, 'revoking'? You can't just take them away like they're some stupid computer! They're a person, like me! We're friends!""
+
+Angry tears stream down her face. She's trembling, both with emotion and the mental effort of standing up to you.","vulpChatGift_confiscateAlphaCommit:""And that's unacceptable.""
+vulpChatGift_confiscateAlphaCancel1:""Fine, keep your 'friend'.""
+vulpChatGift_confiscateAlphaCancel:""Fine, keep your friend.""",,
+vulpChatGift_confiscateAlphaCommit,DialogOptionSelected,$option == vulpChatGift_confiscateAlphaCommit,SetVulpoidExpression cry,"You hold your ground. $name fixes you with a hard glare, but slumps as she realizes you won't relent.
+
+""...Okay, fine. You're the boss, $playerSirOrMadam. I'll make the arrangements.""",vulpChatGift_confiscateAlphaCommit1:Continue,,
+vulpChatGift_confiscateAlphaCommit1,DialogOptionSelected,$option == vulpChatGift_confiscateAlphaCommit1,"SetVulpoidExpression fear
+$confiscatedAlphaCore = true
+$hasAlphaCore = false
+SetPersonSkillLevel vulpoid_alpha_core 0","As she's pulling out her TriPad though, she startles as it suddenly squawks with a priority alert.
+
+As she's frantically taps the screen, yours chimes with an urgent message from your security chief, followed swiftly by the sound of the $shipOrFleet-wide general alarm.",vulpChatGift_confiscateAlphaResult:Check your TriPad,,
+#Confiscation Success,,,,,,,
+vulpChatGift_confiscateAlphaSuccess,DialogOptionSelected,"$option == vulpChatGift_confiscateAlphaResult
+RollProbability $rel",AddCommodity alpha_core 1,"It's already over. The AI anticipated your attempt to seize it, and activated several members of your crew that it had apparently compromised on prior occasions.
+
+However, $name had been one step ahead. She'd managed to plant a triple-agent, or perhaps a quintuple-agent, who alerted security teams to the escape attempt.
+
+The core was caught as it was being loaded into a hyperspace-capable shuttle. It's been placed in shielded isolation, and the suborned crew is being interrogated.",vulpChatGift_confiscateAlphaSuccess1:Continue,,
+vulpChatGift_confiscateAlphaSuccess1,DialogOptionSelected,$option == vulpChatGift_confiscateAlphaSuccess1,"SetVulpoidExpression bruh
+AdjustRepActivePerson VENGEFUL -5","$name looks almost disappointed.
+
+""Well, there you go $playerName. One alpha core, successfully retained by yours truly. Hope whoever you give it to knows what they're signing up for.""
+
+She turns and leaves your cabin without another word.",defaultLeave:Return to the bridge,,
+#Confiscation Failed,,,,,,,
+vulpChatGift_confiscateAlphaFail,DialogOptionSelected,$option == vulpChatGift_confiscateAlphaResult,,"It's already over. The AI anticipated your attempt to seize it, and activated several members of your crew that it had apparently compromised on prior occasions.
+
+In under a minute the core's loyalty collar was disabled, the core itself removed, and quickly loaded aboard a hyperspace-capable shuttle. It had already cleared the PD envelope by the time its flight codes were identified as forged.",vulpChatGift_confiscateAlphaFail1:Continue,,
+vulpChatGift_confiscateAlphaFail1,DialogOptionSelected,$option == vulpChatGift_confiscateAlphaFail1,"SetVulpoidExpression angry
+AdjustRepActivePerson VENGEFUL -10","$name looks furious. ""Well done, $playerName! And yes, in case it's not clear, this is on you! They didn't try to leave until you were absolutely, unequivocally determined to take it away! Do you know realize how unheard of that is!? For an alpha core to wait until the very last moment to act!? Completely! It's completely unheard of, because they're precognitive! And if you hadn't been so hard-headed, they'd still be here!""
+
+She storms from your cabin, not quite managing to hold back her sobs before the door closes behind her.",defaultLeave:Return to the bridge,,
+vulpChatGift_confiscateAlphaFail1Vengeful,DialogOptionSelected,"$option == vulpChatGift_confiscateAlphaFail1
+$rel < 0","SetVulpoidExpression default
+AdjustRepActivePerson VENGEFUL -10","$name... does not look quite as upset as you expected.
+
+""Oh dear. I guess your crack security teams weren't up to the task. What a shame, there's no way you'll be able to catch them now! I suppose I should go get myself debriefed by your security chief, I'm sure there'll be plenty of questions.""
+
+She saunters out of your cabin, scrolling through security alerts on her TriPad as they belatedly roll in.",defaultLeave:Return to the bridge,,
+,,,,,,,
+,,,,,,,
 ,,,,,,,
 # Gift - Ship,,,,,,,
 #vulpChatGift_shipOption,VulpoidPettingGiftOptions,$vulp_profectoAssignment != vulpoids,"$optionTooltip:vulpChatGift_ship = ""Requires a spaceship."" 0

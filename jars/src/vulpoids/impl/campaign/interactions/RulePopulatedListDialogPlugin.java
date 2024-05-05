@@ -43,6 +43,16 @@ public class RulePopulatedListDialogPlugin extends ListBasedInteractionDialogPlu
     }
     
     @Override
+    protected String getEntryConfirmation(Object entry) {
+        if(!(entry instanceof Option)) return null;
+        Option option = (Option) entry;
+        if(optionMemoryMaps.get(option).get(MemKeys.LOCAL).contains("$optionConfirmation:"+(option).id)) {
+            return optionMemoryMaps.get(option).get(MemKeys.LOCAL).getString("$optionConfirmation:"+(option).id);
+        }
+        return null;
+    }
+    
+    @Override
     protected String getEntryTooltipString(Object entry) {
         if(!(entry instanceof Option)) return null;
         Option option = (Option) entry;
