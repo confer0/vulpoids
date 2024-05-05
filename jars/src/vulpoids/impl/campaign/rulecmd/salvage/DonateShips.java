@@ -3,23 +3,16 @@ package vulpoids.impl.campaign.rulecmd.salvage;
 
 import com.fs.starfarer.api.Global;
 import com.fs.starfarer.api.campaign.CargoAPI;
-import com.fs.starfarer.api.campaign.CargoPickerListener;
-import com.fs.starfarer.api.campaign.CargoStackAPI;
 import com.fs.starfarer.api.campaign.FleetMemberPickerListener;
 import com.fs.starfarer.api.campaign.InteractionDialogAPI;
 import com.fs.starfarer.api.campaign.SectorEntityToken;
 import com.fs.starfarer.api.campaign.rules.MemoryAPI;
-import com.fs.starfarer.api.characters.PersonAPI;
 import com.fs.starfarer.api.fleet.FleetMemberAPI;
-import com.fs.starfarer.api.impl.campaign.rulecmd.AddRemoveCommodity;
 import com.fs.starfarer.api.impl.campaign.rulecmd.BaseCommandPlugin;
 import com.fs.starfarer.api.impl.campaign.rulecmd.FireBest;
-import com.fs.starfarer.api.ui.TooltipMakerAPI;
 import com.fs.starfarer.api.util.Misc;
 import java.util.List;
 import java.util.Map;
-import vulpoids.campaign.impl.items.VulpoidPlugin;
-import vulpoids.impl.campaign.ids.Vulpoids;
 
 public class DonateShips extends BaseCommandPlugin {
     
@@ -54,10 +47,8 @@ public class DonateShips extends BaseCommandPlugin {
         List<FleetMemberAPI> members = Global.getSector().getPlayerFleet().getFleetData().getMembersInPriorityOrder();
         if(selection_text == null) selection_text = "Select a Ship";
         final String final_selection_text = selection_text;
-        final boolean final_remove = remove;
         final String final_fireOnExit = fireOnExit;
-
-        final float width = 310f;
+        
         dialog.showFleetMemberPickerDialog(final_selection_text, "Select", "Cancel", 3, 10, 64, true, false, members, new FleetMemberPickerListener() {
             @Override
             public void pickedFleetMembers(List<FleetMemberAPI> members) {

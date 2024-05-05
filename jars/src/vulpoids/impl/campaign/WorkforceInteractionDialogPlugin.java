@@ -18,14 +18,10 @@ import com.fs.starfarer.api.impl.campaign.RuleBasedInteractionDialogPluginImpl;
 import com.fs.starfarer.api.impl.campaign.rulecmd.FireAll;
 import com.fs.starfarer.api.util.Misc;
 import java.awt.Color;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import vulpoids.impl.campaign.econ.workforces.*;
 
 
@@ -49,7 +45,7 @@ public class WorkforceInteractionDialogPlugin implements InteractionDialogPlugin
         visual = dialog.getVisualPanel();
         market = dialog.getInteractionTarget().getMarket();
         
-        conditions = new ArrayList<String>();
+        conditions = new ArrayList();
         for (MarketConditionSpecAPI spec : Global.getSettings().getAllMarketConditionSpecs()) {
             try {
                 Class conditionClass = Class.forName(spec.getScriptClass());
@@ -119,7 +115,7 @@ public class WorkforceInteractionDialogPlugin implements InteractionDialogPlugin
 		}
                 break;
             case "LEAVE":
-                Map<String, MemoryAPI> memoryMap = new HashMap<String, MemoryAPI>();
+                Map<String, MemoryAPI> memoryMap = new HashMap();
                 MemoryAPI memory = dialog.getInteractionTarget().getMemory();
 
                 memoryMap.put(MemKeys.LOCAL, memory);

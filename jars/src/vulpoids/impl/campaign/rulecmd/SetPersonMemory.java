@@ -7,7 +7,6 @@ import com.fs.starfarer.api.characters.PersonAPI;
 import com.fs.starfarer.api.impl.campaign.rulecmd.BaseCommandPlugin;
 import com.fs.starfarer.api.util.Misc.Token;
 import com.fs.starfarer.api.util.Misc.VarAndMemory;
-import java.awt.Color;
 import java.util.List;
 import java.util.Map;
 
@@ -15,7 +14,6 @@ public class SetPersonMemory extends BaseCommandPlugin {
     
     public boolean execute(String ruleId, InteractionDialogAPI dialog, List<Token> params, Map<String, MemoryAPI> memoryMap) {
         if(params.size()<3) return false;
-        VarAndMemory personvar = params.get(0).getVarNameAndMemory(memoryMap);
         PersonAPI person;
         String memflag;
         String vartype;

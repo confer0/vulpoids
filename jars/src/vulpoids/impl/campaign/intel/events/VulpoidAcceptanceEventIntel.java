@@ -6,8 +6,6 @@ import com.fs.starfarer.api.campaign.InteractionDialogAPI;
 import com.fs.starfarer.api.campaign.TextPanelAPI;
 import com.fs.starfarer.api.campaign.econ.Industry;
 import com.fs.starfarer.api.campaign.econ.MarketAPI;
-import com.fs.starfarer.api.characters.FullName;
-import com.fs.starfarer.api.characters.FullName.Gender;
 import com.fs.starfarer.api.characters.PersonAPI;
 import com.fs.starfarer.api.impl.campaign.ids.Factions;
 import com.fs.starfarer.api.impl.campaign.ids.FleetTypes;
@@ -142,7 +140,6 @@ public class VulpoidAcceptanceEventIntel extends BaseEventIntel {
         if (addEventFactorBulletPoints(info, mode, isUpdate, tc, initPad)) {
             return;
         }
-        Color h = Misc.getHighlightColor();
         if (isUpdate && getListInfoParam() instanceof EventStageData) {
             EventStageData esd = (EventStageData) getListInfoParam();
             // TODO
@@ -170,14 +167,11 @@ public class VulpoidAcceptanceEventIntel extends BaseEventIntel {
 
     @Override
     public void addStageDescriptionText(TooltipMakerAPI info, float width, Object stageId) {
-        float opad = 10f;
-        float small = 0f;
-
         EventStageData stage = getDataFor(stageId);
         if (stage == null) return;
 
         if (isStageActive(stageId)) {
-            addStageDesc(info, stageId, small, false);
+            addStageDesc(info, stageId, 0f, false);
         }
     }
 

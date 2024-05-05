@@ -56,10 +56,6 @@ public class KnightBombardmentExpeditionIntel extends PunitiveExpeditionIntel {
 
         info.addImage(getFactionForUIColors().getLogo(), width, 128, opad);
 
-        //FactionAPI faction = getFaction();
-        String has = faction.getDisplayNameHasOrHave();
-        String is = faction.getDisplayNameIsOrAre();
-
         addInitialDescSection(info, opad);
         
         info.addPara("This expedition is being conducted in retalliation for the production of Vulpoids, and for the "+

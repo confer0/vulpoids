@@ -28,7 +28,7 @@ public class BaseWorkforce extends BaseMarketConditionPlugin {
         return getUnmetRequirements(false);
     }
     public List<String> getUnmetRequirements(boolean for_placement) {
-        ArrayList<String> unmet_requirements = new ArrayList<>();
+        ArrayList<String> unmet_requirements = new ArrayList();
         if(market.isPlanetConditionMarketOnly()) {
             unmet_requirements.add("inhabited");
         } else {

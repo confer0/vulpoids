@@ -7,7 +7,6 @@ import com.fs.starfarer.api.campaign.rules.Option;
 import com.fs.starfarer.api.campaign.rules.RuleAPI;
 import com.fs.starfarer.api.campaign.rules.RulesAPI;
 import com.fs.starfarer.api.util.Misc;
-import com.fs.starfarer.api.util.Pair;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;

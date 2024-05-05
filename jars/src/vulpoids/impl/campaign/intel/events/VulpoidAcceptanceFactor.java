@@ -39,7 +39,6 @@ public class VulpoidAcceptanceFactor extends BaseEventFactor {
     public TooltipCreator getMainRowTooltip(final BaseEventIntel intel) {
         return new BaseFactorTooltip() {
             public void createTooltip(TooltipMakerAPI tooltip, boolean expanded, Object tooltipParam) {
-                float opad = 10f;
                 tooltip.addPara("Exporting Vulpoids onto the wider markets of the Sector will slowly improve "+
                         "their widespread acceptance. Even if most people don't have reliable access to them, "+
                         "the fact that wealthy people are eager to have them will steer public opinion in its "+

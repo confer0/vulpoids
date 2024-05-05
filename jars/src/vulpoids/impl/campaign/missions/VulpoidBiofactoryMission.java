@@ -33,7 +33,6 @@ import com.fs.starfarer.api.impl.campaign.ids.Factions;
 import com.fs.starfarer.api.impl.campaign.ids.FleetTypes;
 import com.fs.starfarer.api.impl.campaign.ids.HullMods;
 import com.fs.starfarer.api.impl.campaign.ids.Industries;
-import com.fs.starfarer.api.impl.campaign.ids.Items;
 import com.fs.starfarer.api.impl.campaign.ids.MemFlags;
 import com.fs.starfarer.api.impl.campaign.ids.Tags;
 import com.fs.starfarer.api.impl.campaign.intel.bar.events.historian.SpecialItemOffer;
@@ -67,7 +66,7 @@ public class VulpoidBiofactoryMission extends HubMissionWithSearch implements Fl
     public void reportFleetDespawnedToListener(CampaignFleetAPI fleet, CampaignEventListener.FleetDespawnReason reason, Object param) {
         if (isDone() || result != null) return;
         if (this.data.fleet == fleet) {
-            String id = getMissionId();
+            //String id = getMissionId();
             //getPerson().getMemoryWithoutUpdate().set("$" + id + "_failed", true);  //TODO
         }
     }
@@ -83,7 +82,7 @@ public class VulpoidBiofactoryMission extends HubMissionWithSearch implements Fl
             boolean cancelBounty = (fleet.isStationMode() && fleet.getFlagship() == null) ||
                     (!fleet.isStationMode() && fleet.getFlagship() != null);
             if (cancelBounty) {
-                String id = getMissionId();
+                //String id = getMissionId();
                 //getPerson().getMemoryWithoutUpdate().set("$" + id + "_failed", true);  //TODO
                 return;
             }
@@ -105,7 +104,7 @@ public class VulpoidBiofactoryMission extends HubMissionWithSearch implements Fl
         }
         
 
-        String id = getMissionId();
+        //String id = getMissionId();
         //Global.getSector().getMemoryWithoutUpdate().set(completedKey, true);
         Global.getSector().getMemoryWithoutUpdate().set("$vulp_beatFactoryFleet", true);
     }
@@ -173,9 +172,6 @@ public class VulpoidBiofactoryMission extends HubMissionWithSearch implements Fl
         data.system = system;
 
         FleetSize size = FleetSize.MEDIUM;
-        FleetQuality quality = FleetQuality.DEFAULT;
-        OfficerQuality oQuality = OfficerQuality.AI_GAMMA;
-        OfficerNum oNum = OfficerNum.ALL_SHIPS;
 
         if (data.difficulty <= 5) {
                 size = FleetSize.MEDIUM;
@@ -192,7 +188,7 @@ public class VulpoidBiofactoryMission extends HubMissionWithSearch implements Fl
         }
 
         beginStageTrigger(Stage.ACTIVE);
-        triggerCreateFleet(size, quality, Factions.REMNANTS, FleetTypes.PATROL_LARGE, data.system);
+        triggerCreateFleet(size, FleetQuality.DEFAULT, Factions.REMNANTS, FleetTypes.PATROL_LARGE, data.system);
         //triggerSetFleetOfficers(oNum, oQuality);
         triggerAutoAdjustFleetSize(size, size.next());
         //triggerSetFleetFaction(Factions.REMNANTS);
@@ -213,7 +209,7 @@ public class VulpoidBiofactoryMission extends HubMissionWithSearch implements Fl
         triggerFleetOnlyEngageableWhenVisibleToPlayer();
         endTrigger();
 
-        List<Abortable> before = new ArrayList<Abortable>(getChanges());
+        List<Abortable> before = new ArrayList(getChanges());
         List<CampaignFleetAPI> fleets = runStageTriggersReturnFleets(Stage.ACTIVE);
         //if (fleets.isEmpty()) return null;
 
@@ -368,7 +364,6 @@ public class VulpoidBiofactoryMission extends HubMissionWithSearch implements Fl
     @Override
     public void addDescriptionForNonEndStage(TooltipMakerAPI info, float width, float height) {
         float opad = 10f;
-        Color h = Misc.getHighlightColor();
         if (currentStage == Stage.ACTIVE) {
             if (data.system != null) {
                 info.addPara("You've been given the location of a ship from the long-gone Exodyne "+
@@ -400,7 +395,6 @@ public class VulpoidBiofactoryMission extends HubMissionWithSearch implements Fl
 
     @Override
     public boolean addNextStepText(TooltipMakerAPI info, Color tc, float pad) {
-        Color h = Misc.getHighlightColor();
         if (currentStage == Stage.ACTIVE) {
             if (data.system != null) {
                 info.addPara("Target fleet is in the " + data.system.getNameWithLowercaseTypeShort() + ".", tc, pad);

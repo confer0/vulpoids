@@ -25,8 +25,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -343,11 +341,6 @@ public class VulpoidPlugin extends BaseSpecialItemPlugin {
 
         float pad = 3f;
         float opad = 10f;
-        float small = 5f;
-        Color h = Misc.getHighlightColor();
-        Color g = Misc.getGrayColor();
-        Color b = Misc.getButtonTextColor();
-        b = Misc.getPositiveHighlightColor();
         
         Color body_color = getColor();
         Color text_color = new Color(255,255,255);
@@ -432,14 +425,14 @@ public class VulpoidPlugin extends BaseSpecialItemPlugin {
         Color highlight_color = text_color;
         if(Vulpoids.SPECIAL_ITEM_OFFICER.equals(getId())) highlight_color = Misc.getHighlightColor();
         officerTooltip.addSectionHeading("Combat Skills", highlight_color, body_color, Alignment.MID, 0);
-        addSkillsToTooltip(officerTooltip, skills, expanded, true, false, opad);
+        addSkillsToTooltip(officerTooltip, skills, true, false, opad);
         skillTooltip.endSubTooltip();
         
         TooltipMakerAPI adminTooltip = skillTooltip.beginSubTooltip(tooltip.getWidthSoFar()/2-opad);
         highlight_color = text_color;
         if(Vulpoids.SPECIAL_ITEM_ADMIN.equals(getId())) highlight_color = Misc.getHighlightColor();
         adminTooltip.addSectionHeading("Industrial Skills", highlight_color, body_color, Alignment.MID, 0);
-        addSkillsToTooltip(adminTooltip, skills, expanded, false, true, opad);
+        addSkillsToTooltip(adminTooltip, skills, false, true, opad);
         skillTooltip.endSubTooltip();
         
         float factorHeight = Math.max(adminTooltip.getHeightSoFar(), officerTooltip.getHeightSoFar());
@@ -458,7 +451,7 @@ public class VulpoidPlugin extends BaseSpecialItemPlugin {
         if(Global.getSector().getMemoryWithoutUpdate().getBoolean("$isDevMode")) tooltip.addPara(personToJson(person), opad);
     }
     
-    private void addSkillsToTooltip(TooltipMakerAPI tooltip, ArrayList<SkillLevelAPI> skills, boolean expanded, boolean officer, boolean admin, float pad) {
+    private void addSkillsToTooltip(TooltipMakerAPI tooltip, ArrayList<SkillLevelAPI> skills, boolean officer, boolean admin, float pad) {
         ArrayList<SkillLevelAPI> valid_skills = new ArrayList();
         ArrayList<SkillLevelAPI> elite_skills = new ArrayList();
         for (SkillLevelAPI skill : skills) {

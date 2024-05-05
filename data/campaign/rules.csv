@@ -1750,7 +1750,8 @@ $kpNumGifts++",,,kpVulpoid:A thousand Vulpoids,,
 kpVulpoidSel,DialogOptionSelected,$option == kpVulpoid,"ResetVulpoidPortrait vulp_dummy_terran
 SetImportantName vulp_dummy_terran ""Vulpoids""
 ShowThirdPerson vulp_dummy_terran
-RemoveCommodity vulpoids 1000","Kanta's synthetic voice booms out, ""YES. They shall serve most delightfully as playthings for my Cydonia, his experiments shall amuse us."" With a creak of metal and clatter of beads and trophies, Kanta turns to look upon Cydonia.
+RemoveCommodity vulpoids 1000
+VulpoidPopulation setAtLeast 3","Kanta's synthetic voice booms out, ""YES. They shall serve most delightfully as playthings for my Cydonia, his experiments shall amuse us."" With a creak of metal and clatter of beads and trophies, Kanta turns to look upon Cydonia.
 
 His face is one of pure, sinister glee. ""Yes, yes, my queen. Oh, there is great potential in this, I can assure you...""
 

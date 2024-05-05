@@ -9,7 +9,6 @@ import com.fs.starfarer.api.util.Misc;
 import java.util.List;
 import java.util.Map;
 import vulpoids.impl.campaign.VulpoidCreator;
-import vulpoids.impl.campaign.ids.Vulpoids;
 
 public class ResetVulpoidPortrait extends BaseCommandPlugin {
 

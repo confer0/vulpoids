@@ -195,7 +195,6 @@ public class TurnInVulpoids extends BaseCommandPlugin {
                 float repChange = computeReputationValue(combined);
 
                 float pad = 3f;
-                float small = 5f;
                 float opad = 10f;
 
                 panel.setParaFontOrbitron();

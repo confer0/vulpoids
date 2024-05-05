@@ -9,8 +9,6 @@ import com.fs.starfarer.api.impl.campaign.rulecmd.BaseCommandPlugin;
 import com.fs.starfarer.api.util.Misc;
 import java.util.List;
 import java.util.Map;
-import vulpoids.impl.campaign.econ.VulpoidPopulation;
-import vulpoids.impl.campaign.ids.Vulpoids;
 import vulpoids.impl.campaign.intel.events.VulpoidAcceptanceEventIntel;
 import vulpoids.impl.campaign.intel.events.VulpoidAcceptanceGenericOneTimeFactor;
 import vulpoids.impl.campaign.missions.VulpoidProductionMission;
