@@ -117,6 +117,8 @@ public class LobsterBioforgeMission extends HubMissionWithSearch {
             case "foundCoordinates":
                 setCurrentStage(Stage.VOLTURN, dialog, memoryMap);
                 return true;
+            case "isVolturnStage":
+                return currentStage == Stage.VOLTURN;
         }
         return super.callEvent(ruleId, dialog, params, memoryMap);
     }
