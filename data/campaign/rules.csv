@@ -1605,27 +1605,23 @@ vulpLobster_raidOption,PopulateOptions,"$global.lobsterForge_ref != null
 Call $global.lobsterForge_ref isVolturnStage",FireBest VulpLobsterRaidCheckHostilesNearby,,2:vulpLobster_raidStart:Prepare a raid to extract the Volturnian Lobster Bioforge,,
 vulpLobsterDisableRaidIfNeeded,VulpLobsterRaidCheckHostilesNearby,HostileFleetNearbyAndAware,"SetEnabled vulpLobster_raidStart false
 SetTooltip vulpLobster_raidStart ""A nearby hostile fleet is tracking your movements, making an aquatic raid inadvisable.""",,,,
-vulpLobster_raidStart,DialogOptionSelected,$option == vulpLobster_raidStart,"$entity.raidDifficulty = 3 0
-$entity.raidGoBackTrigger = PopulateOptions 0
-$entity.raidContinueTrigger = VulpLobsterPraidFinishedB 0
-$entity.raidRestrictToTrigger = VulpLobsterPraidFinishedA 0
-AddRaidObjective genericIcon ""Seize the lost bioforge"" MINIMAL 3 VulpLobsterPraidFinishedA true
-ShowImageVisual raid_prepare","You convene your officers to plan a raid to capture the pirates so that they might be brought to justice and, it is safe to assume, result in an appropriate bounty payout.
+vulpLobster_raidStart,DialogOptionSelected,$option == vulpLobster_raidStart,"#$raidDifficulty = 10 0
+$raidGoBackTrigger = PopulateOptions 0
+$raidContinueTrigger = VulpLobsterPraidFinishedB 0
+$raidRestrictToTrigger = VulpLobsterPraidFinishedA 0
+AddRaidObjective genericIcon ""Seize the lost bioforge"" MINIMAL 0 VulpLobsterPraidFinishedA true
+ShowImageVisual raid_prepare","You convene your officers to plan the raid. The location is undefended in principle, but Volturn is populous enough that it's impossible to completely evade detection and response. Fortunately the local garrisons are perpetually stretched thin by insurgents, limiting the strength of response you'll face.
 
-The pirates are few in number and woefully undersupplied.",mktRaidNonMarket:Continue,,
+As long as your salvors move swiftly, your forces will only need to repel a quick reaction force before they can exfiltrate with the forge.",mktRaidNonMarket:Continue,,
 VulpLobsterPraidFinishedA,VulpLobsterPraidFinishedA,,,"Your officers were conservative in planning, crafting an imaginative tactical scenario which assumed the pirates possess all sorts of armaments and preparation which, in the end, they did not: anti-armor capability, a drone recon network, sentry turrets, field fortifications, and finally an EW-proof ghost gun ambush.
 
 In the end, the operation is a simple matter of cutting the lights then punching through flimsy shelter walls to stun-round those few pirates with live firearms detected and flagged by the marines' personal combat radar.
 
 They missed the hand-made bomb, however.",,,
-VulpLobsterPraidFinishedB,VulpLobsterPraidFinishedB,,"AddTextSmall ""Took pirate prisoners"" highlight
-$player.locr_piratesOnBoardPrisoners = true
-AdjustRepPerson locr_pirate_contact VENGEFUL -20
-unset $entity.locr_pirate
-EndConversation DO_NOT_FIRE
-FireAll PopulateOptions","The pirate leader is justifiably defeated-looking, ashamed at being taken so easily despite the circumstances.
+VulpLobsterPraidFinishedB,VulpLobsterPraidFinishedB,,"AddRemoveAnyItem SPECIAL lobster_bioforge 1
+Call $global.lobsterForge_ref finish","The pirate leader is justifiably defeated-looking, ashamed at being taken so easily despite the circumstances.
 
-The pirates are removed to the $shipOrFleet brigs, packed closer than even the minimal comforts of the lowest crewmember's berth.",,,
+The pirates are removed to the $shipOrFleet brigs, packed closer than even the minimal comforts of the lowest crewmember's berth.",defaultLeave:Leave,,
 ,,,,,,,
 ,,,,,,,
 ,,,,,,,

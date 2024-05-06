@@ -33,6 +33,9 @@ public class LobsterBioforgeMission extends HubMissionWithSearch {
     protected boolean create(MarketAPI createdAt, boolean barEvent) {
         Global.getSector().getMemoryWithoutUpdate().set("$" + getMissionId() + "_ref", this);
         
+        setRepRewardPerson(0f);
+        setRepRewardFaction(0f);
+        
         addAsteroids();
         
         setStoryMission();
@@ -119,6 +122,9 @@ public class LobsterBioforgeMission extends HubMissionWithSearch {
                 return true;
             case "isVolturnStage":
                 return currentStage == Stage.VOLTURN;
+            case "finish":
+                setCurrentStage(Stage.GOT_FORGE, dialog, memoryMap);
+                return true;
         }
         return super.callEvent(ruleId, dialog, params, memoryMap);
     }
