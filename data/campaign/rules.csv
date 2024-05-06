@@ -1170,10 +1170,6 @@ $repairing = true 120","You offload the required crew and equipment, with assura
 
 At worst, they'll have the idylic world below.",100:defaultLeave:Leave,,
 ,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
 #vulp_continuePostDefenders,BeatDefendersContinue,$vulp_planetBivouac score:1000,,Your $shipOrFleet finishes its approach to $entityName without further incident.,0:salBeatDefendersContinue:Continue,,
 vulp_bivouacContinuePostDefenders,BeatDefendersContinue,$vulp_planetBivouac score:1000,,"As your $shipOrFleet recovers from the engagement, you step back and evaluate whether to begin with the wreck of the Eridani ship, or the moon below.",100:defaultLeave:Leave,,
 vulp_bivouacBeatDefenders,BeginSalvage,$vulp_planetBivouac score:1000,SetShortcut defaultLeave ESCAPE,"Detailed scans of the planet confirm that, despite the extraordinary locale, it is a flawlessly terraformed world. A rival to even Gilead, lost out here in the abyss.
@@ -1525,6 +1521,95 @@ VulpProductionPatherHail,VulpProductionPatherHail,,$entity.ignorePlayerCommReque
 VulpProductionComplimentHail,VulpProductionComplimentHail,,$entity.ignorePlayerCommRequests = true,"$PersonRank $name appears on your display, with several Vulpoids cooing over $himOrHer.
 
 ""Captain $playerName, I thought I recognized you! I wanted to personally thank you for your efforts in supplying Vulpoids to my home, it's proven quite delightful for me.""",cutCommLink:Cut the comm link,# TODO: Multiple factions,
+,,,,,,,
+,,,,,,,
+# Lobster Biofactory - Research Offer (Directed here from ChatSurroundings),,,,,,,
+vulpLobster_researchOffer,DialogOptionSelected,$option == vulpLobster_researchOffer,,"""Well they're not native per-se. They're bioengineered, that's just the world they got seeded on before the Collapse.""
+
+""More to the point, I ran a few genetic tests on $lobsterName. Just screening for illnesses, but I found genetic markers for an Exodyne Bioforging system.""","vulpLobster_researchOffer1:""Don't the lobsters grow wild?""",,
+vulpLobster_researchOffer1,DialogOptionSelected,$option == vulpLobster_researchOffer1,,"""Yes, specifically wild, not in captivity! They would have been designed as an agricultural product, which wouldn't sell well if you can't actually farm them. So they tune it so it'll only thrive on that specific world, charge a colossal amount for the initial seeding, then upsell on bigger products like us!""","vulpLobster_researchOffer2:""So if we had the bioforge...""",,
+vulpLobster_researchOffer2,DialogOptionSelected,$option == vulpLobster_researchOffer2,,"""...We could seed 'Volturnian' lobsters on any oceanic or terran world we wanted!"" She gives a small clap. For you, or for herself, or perhaps both.",vulpLobster_researchOffer3:Continue,,
+vulpLobster_researchOffer3,DialogOptionSelected,$option == vulpLobster_researchOffer3,SetVulpoidExpression bruh,"""It's just the matter of finding the darn thing. The Chartery of Opis was pretty quiet about it in the public record, and there's zero sign that the Diktat ever even knew about it. Records probably got caught up in the purges.""
+
+""The thing is, the current Diktat intelligence agencies are pretty good at their jobs. So the fact that they still haven't found it means both that it's well-hidden, and that there's no good leads on Volturn.""","vulpLobster_researchOfferExists:""Do we know it still exists?""
+vulpLobster_researchOfferSecret:""Maybe they're keeping it secret.""
+vulpLobster_researchOfferWhereToLook:""Where would we look, then?""",,
+vulpLobster_researchOfferExists,DialogOptionSelected,$option == vulpLobster_researchOfferExists,SetVulpoidExpression default,"""A fair question! But yes, I think it does. There's no record of it being moved before the Collapse, and these things are tough enough to withstand any natural conditions. All signs point to it being lost, not destroyed.""",vulpLobster_researchOfferWhereToLook:Continue,,
+vulpLobster_researchOfferSecret,DialogOptionSelected,$option == vulpLobster_researchOfferSecret,SetVulpoidExpression default,"""I did consider that. But the Diktat is nothing if not boastful. I've judged that they would definitely have advertised their possession of Domain-era technology, if they had it.""",vulpLobster_researchOfferWhereToLook:Continue,,
+vulpLobster_researchOfferWhereToLook,DialogOptionSelected,$option == vulpLobster_researchOfferWhereToLook,"SetVulpoidExpression default
+AddTextSmall ""Research available with any Embarked Profecto"" highlight
+SetTextHighlightColors ""125,175,240,255""
+SetTextHighlights ""Embarked""
+$player.vulp_lobsterResearchAvailable = true","""As to its location, I don't know. If I did, I'd be telling you that. But given some time, I think I could figure it out. Or maybe another Profecto, I won't complain about less paperwork!""",vulpLobster_researchOfferEnd:Continue,,
+vulpLobster_researchOfferEnd,DialogOptionSelected,$option == vulpLobster_researchOfferEnd,ExitRulesToPlugin,"""Let me know when you get it, I'd like to print $lobsterName a friend!""",,,
+,,,,,,,
+# Lobster Biofactory - Opis,,,,,,,
+vulpLobster_approachAsteroid,OpenInteractionDialog,$vulp_OpisAsteroid score:100,"ShowImageVisual asteroid_belt_moon
+SetShortcut defaultLeave ESCAPE",Your $shipOrFleet approaches one of the fragments of Opis.,"vulpLobster_asteroid:Explore the asteroid
+defaultLeave:Leave",,
+vulpLobster_asteroid1,DialogOptionSelected,"$option == vulpLobster_asteroid
+Call $global.lobsterForge_ref isAsteroidNumber 1","Call $global.lobsterForge_ref exploreAsteroid
+DespawnEntity","This asteroid is one of the countless pieces of the shattered moon Opis. While it appears similar to every other, there's one trait that sets it apart: this fragment is from the moon's surface.
+
+Structures across its face are shattered and crushed by the unimaginable forces that rent apart the world. Compacted into heavy sheets of twisted metal, they're scarcely recognizable.",vulpLobster_asteroid1_1:Send down a salvage team,,
+vulpLobster_asteroid1_1,DialogOptionSelected,$option == vulpLobster_asteroid1_1,ShowImageVisual survey,"The salvage operation is immensely tedious. The crumpled plates must be carefully peeled away to avoid further damage to anything underneath, and every cut is like like boring through armor plating.
+
+Several exhaustingly dull hours later, your ops chief delivers the unfortunate news. The few datacores that were even distinguishable were still beyond any hope of recovery.
+
+You'll have to hope for better luck at another candidate.",defaultLeave:Leave,,
+vulpLobster_asteroid2,DialogOptionSelected,"$option == vulpLobster_asteroid
+Call $global.lobsterForge_ref isAsteroidNumber 2","Call $global.lobsterForge_ref exploreAsteroid
+ShowImageVisual survey
+DespawnEntity","The site scintillates oddly under the beams of your scanner sweeps. Your sensors officer pulls up a topographic view, revealing the faded outline of a crater. Apparently a subsequent impact in the last few decades has crushed the site into chaff.
+
+Your salvors make an honest attempt at picking through outlying structures that escaped the worst damage, but it doesn't take long for them to return empty-handed.
+
+Another candidate down.",defaultLeave:Leave,,
+vulpLobster_asteroid3,DialogOptionSelected,"$option == vulpLobster_asteroid
+Call $global.lobsterForge_ref isAsteroidNumber 3","Call $global.lobsterForge_ref exploreAsteroid
+DespawnEntity","As your sensors officer scans the predicted location, they frown. ""Captain, it looks like someone's already been through here."" They pull up the details on their screen, showing a large, messy gouge in the rock where the structure should be.
+
+""Glassy fracture patterns in the surrounding rock, looks like a mining operation decided to try extracting the compacted metal. Usually more trouble than it's worth, but..."" They give you a shrug.
+
+There's nothing left here to study. At least this one was quick.",defaultLeave:Leave,,
+vulpLobster_asteroid4,DialogOptionSelected,"$option == vulpLobster_asteroid
+Call $global.lobsterForge_ref isAsteroidNumber 4","Call $global.lobsterForge_ref exploreAsteroid
+ShowImageVisual survey
+DespawnEntity","The site appears relatively untouched. That is to say it looks like a planetkiller went off underneath it, but that's what's expected. Your salvage teams descend down, ready to resume the disheartening task of peeling debris off of more debris.
+
+The hours tick by uneventfully, with team after team reporting no findings. As the last team calls in, ops simply turns to you and shakes their head.
+
+The site holds nothing of substance.",defaultLeave:Leave,,
+vulpLobster_asteroid5,DialogOptionSelected,"$option == vulpLobster_asteroid
+Call $global.lobsterForge_ref isAsteroidNumber 5","Call $global.lobsterForge_ref exploreAsteroid
+DespawnEntity","Your sensors officer doesn't even need to perform a proper scan. Overlaying the topographic map of the asteroid against the archived charts of Opis makes the issue clear - the piece you care about is missing.
+
+""It looks like there was a collision with another major body. Broke off a huge chunk."" Sensors leans back for a moment, pondering. ""This happened at least 5, 10 cycles ago. Even if the structures survived a second disaster, they could be anywhere in the belt by now.""
+
+Another dead end.",defaultLeave:Leave,,
+vulpLobster_asteroid6,DialogOptionSelected,"$option == vulpLobster_asteroid
+Call $global.lobsterForge_ref isAsteroidNumber 6","Call $global.lobsterForge_ref exploreAsteroid
+ShowImageVisual survey
+DespawnEntity","This site looks more promising than any of the previous. It sits on the anti-spinward face of the asteroid, suggesting less damage from the PK, and better protection from subsequent bombardment. Your salvors descend, tentatively hopeful.
+
+Crumpled bulkheads are peeled away, exposing access points for half-collapsed subsurface facilities.",vulpLobster_asteroid6_1:Continue,,
+vulpLobster_asteroid6_1,DialogOptionSelected,$option == vulpLobster_asteroid6_1,"Call $global.lobsterForge_ref foundCoordinates
+ShowImageVisual salvor_ruins","The facilities are far from undamaged, but are finally just intact enough that datacores can be found. Severely damaged, they need to be read through external scanning lest they be destroyed by running power through them.
+
+A few hours later, your science officer reports in. They've successfully extracted the location of the Volturnian Bioforge, sunk deep beneath the surface of its planetary ocean.
+
+It will take some effort to retrieve, but it lies within reach.",defaultLeave:Leave,,
+,,,,,,,
+# Lobster Biofactory - Volturn,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
 ,,,,,,,
 ,,,,,,,
 ,,,,,,,
@@ -1956,7 +2041,7 @@ vulpChatAssignment_inquireEmbarkedResearch_terraformer,DialogOptionSelected,"$op
 $vulp_profectoAssignment == special_vulpoid_embarked
 $vulp_researchProject == terraformer score:100",SetVulpoidExpression bruh,"""Research is going well. I won't lie though, it's a lot of work. I may need to increase my coolant budget again.""",,,
 # Terraformer Completed,,,,,,,
-vulpChat_researchComplete_terraformer,VulpoidResearchComplete,$vulp_researchProject == terraformer,,"She enters carrying a small library of datapads, which she eagerly lays out in presentation.
+vulpChat_researchComplete_terraformer,VulpoidResearchComplete,$vulp_researchProject == terraformer,,"Laisa enters carrying a small library of datapads, which she eagerly lays out in presentation.
 
 ""Great news $playerSirOrMadam. I've had a breakthrough in my analysis.""",vulpChat_researchComplete_terraformer1:Continue,,
 vulpChat_researchComplete_terraformer1,DialogOptionSelected,$option == vulpChat_researchComplete_terraformer1,,"She presents you with a datapad showing the encrypted transmission logs from the Citadel. A particular comms address has been highlighted, with records dating up to several decades post-Collapse.
@@ -1987,6 +2072,44 @@ vulpChat_researchComplete_terraformer7,DialogOptionSelected,$option == vulpChat_
 VulpoidTerraformer giveIntel","""None of the information I had access to described that ship. But it must have been something special, especially if the XIV tried to escort it instead of scrapping it for parts.""
 
 You thank her for the information and send the final coordinates to your nav officer. A site so deep in abyssal hyperspace is almost certainly untouched, but will be difficult to reach and return from.",vulpChat_researchCompleteFinish:Continue,,
+,,,,,,,
+# Lobster Research,,,,,,,
+vulpChatAssignment_pickResearchOption_lobster,VulpoidPickResearchOptions,"$player.vulp_lobsterResearchAvailable
+!$player.vulp_didLobsterResearch",,,vulpChatAssignment_pickResearch_lobster:Try to uncover the Volturnian Lobster Bioforge,,
+vulpChatAssignment_pickResearch_lobster,DialogOptionSelected,$option == vulpChatAssignment_pickResearch_lobster,SetVulpoidExpression bruh,"""Right, let's see. The Diktat doesn't have it, so there probably won't be leads on their worlds. The ARC is bold enough that they'd probably give it a shot, so low odds on Umbra. My best bet would be Nortia, there's a chance some of the refugees brought over valuable information before Opis blew.""
+
+""This is going to be time-consuming. I need to be quiet during my investigations, lest a Diktat spy get wise and snap up the forge before we can get to it. Call it six months.""","vulpChatAssignment_pickResearch_lobsterConfirm:Confirm
+vulpChatAssignment_pickResearch:Cancel",,
+vulpChatAssignment_pickResearch_lobsterConfirm,DialogOptionSelected,$option == vulpChatAssignment_pickResearch_lobsterConfirm,"SetVulpoidExpression default
+VulpoidResearch setProject lobster 180
+$player.vulp_didLobsterResearch = true
+FireAll VulpoidChatTopLevelOptions","""Right, let's see if I can start a revolution as cover... Kidding, kidding!""
+
+""...Probably kidding.""",,,
+# Lobster In Progress,,,,,,,
+vulpChatAssignment_inquireEmbarkedResearch_lobster,DialogOptionSelected,"$option == vulpChatAssignment_inquire
+$vulp_profectoAssignment == special_vulpoid_embarked
+$vulp_researchProject == lobster score:100",SetVulpoidExpression angry,"""Dolos Macario is a piece of work. I swear, keeping my operations under wraps is absurdly difficult! I'm not even plotting against the Diktat, just trying to avoid their notice, but that itself is attracting his spies! No wonder they've lasted so long, with him running their IntSec.""",,,
+vulpChatAssignment_inquireEmbarkedResearch_lobsterMetMacario,DialogOptionSelected,"$option == vulpChatAssignment_inquire
+$vulp_profectoAssignment == special_vulpoid_embarked
+$vulp_researchProject == lobster score:100
+$player.metMacario",SetVulpoidExpression angry,"""Dolos Macario is a piece of work. I swear, keeping my operations under wraps is absurdly difficult. I keep attracting spies because I'm trying to avoid attracting spies! Any chance you could pull some strings, get him off my back?""
+
+""Actually, scratch that. Not that I don't trust you, but there's literally nothing you could do that'd make him less curious.""",,,
+# Lobster Completed,,,,,,,
+vulpChat_researchComplete_lobster,VulpoidResearchComplete,$vulp_researchProject == lobster,,"$name enters, wearing a ridiculous lobster-themed hat. ""Hello $playerSirOrMadam! Don’t mind the hat, I was just wrapping something up.""
+
+""And speaking of wrapped up, I've finally got a decent lead on the Volturnian Bioforge! Well, decent might be a bit strong... How about some good news, bad news?""","vulpChat_researchComplete_lobster1:""Alright, let's hear the good news.""",,
+vulpChat_researchComplete_lobster1,DialogOptionSelected,$option == vulpChat_researchComplete_lobster1,,"""So the good news is, I've pretty well confirmed that the bioforge is still on Volturn! It was hosted in a subsurface facility, and remained there through the course of the Askonia Crisis. We find that facility, we get the forge.""","vulpChat_researchComplete_lobster2:""And the bad news?""",,
+vulpChat_researchComplete_lobster2,DialogOptionSelected,$option == vulpChat_researchComplete_lobster2,SetVulpoidExpression bruh,"""The whole facility was relocated to prevent it from being struck at by rebels during the Crisis. Any pre-Crisis leads to its location are nearly useless, and the oceans are far too big to find it without something to narrow our search.""","vulpChat_researchComplete_lobster3:""I presume there's more good news?""",,
+vulpChat_researchComplete_lobster3,DialogOptionSelected,$option == vulpChat_researchComplete_lobster3,SetVulpoidExpression default,"""There is! The Chartery didn't want to loose the thing, they kept track of where they put it. And it's not like it was military tech, they just didn't want angry rebels dropping a depth charge on it. So there's a good assortment of sites that should theoretically have recoverable coordinate data for us!""","vulpChat_researchComplete_lobster4:""Great, where are they?""",,
+vulpChat_researchComplete_lobster4,DialogOptionSelected,$option == vulpChat_researchComplete_lobster4,SetVulpoidExpression blush,"""So, remember how I said this was good news, bad news...?""","vulpChat_researchComplete_lobster5:""Where are the sites, $name?""",,
+vulpChat_researchComplete_lobster5,DialogOptionSelected,$option == vulpChat_researchComplete_lobster5,,"""Opis.""","vulpChat_researchComplete_lobster6:""...""",,
+vulpChat_researchComplete_lobster6,DialogOptionSelected,$option == vulpChat_researchComplete_lobster6,SetVulpoidExpression angry,"""Okay, look. I know it blew up. But all we need is a single datacore that we can scrape the location from. I've charted out a few chunks of continental crust that should have facilities that aren't completely atomized.""
+
+""Send down a salvage team, pull apart that rubble, and get one functional datacore out of the mess. I'll provide the sniffers to pull the coordinate data, and as soon as we get it you can launch a raid on Volturn to grab the forge.""","vulpChat_researchComplete_lobster7:""I'll see what I can do.""",,
+vulpChat_researchComplete_lobster7,DialogOptionSelected,$option == vulpChat_researchComplete_lobster7,"SetVulpoidExpression default
+BeginMission lobsterForge","""Well they're not going anywhere! I'm quite confident I managed to divert all the Diktat spies, so they're still in the dark as to what I was looking for.""",vulpChat_researchCompleteFinish:Continue,,
 ,,,,,,,
 # Fox Videos Research,,,,,,,
 vulpChatAssignment_pickResearchOption_foxVideos,VulpoidPickResearchOptions,,,,vulpChatAssignment_pickResearch_foxVideos:Compile some data on Vulpoids,,
@@ -2962,11 +3085,23 @@ vulpChatSurroundings_cruorDummy,DialogOptionSelected,"$option == vulpChatSurroun
 $vulp_profectoAssignment == vulpoids score:100","SetVulpoidExpression default
 ExitRulesToPlugin",TODO: cruor dummy,,,
 vulpChatSurroundings_volturnOption,VulpoidChatSurroundingsOptions,$topic.id == volturn score:1000,,,vulpChatSurroundings_volturn:Volturn,,volturn
-vulpChatSurroundings_volturn,DialogOptionSelected,$option == vulpChatSurroundings_volturn,"SetVulpoidExpression default
-ExitRulesToPlugin",TODO: volturn,,,
+vulpChatSurroundings_volturn,DialogOptionSelected,$option == vulpChatSurroundings_volturn,"SetVulpoidExpression bruh
+ExitRulesToPlugin","""In a way, it's a shame that Volturnian Lobsters are so popular. They take up a place in public consciousness that would otherwise be more aware of the oppression the population suffers under. I wonder if the rebel forces have ever considered adopting it as their symbol, it might have more impact than they realize.""",,,
+vulpChatSurroundings_volturnProfectoLobster,DialogOptionSelected,"$option == vulpChatSurroundings_volturn
+$lobsterName != null","SetVulpoidExpression default
+ExitRulesToPlugin","""I've already asked the quartermaster to pick up some specialty feed for $lobsterName, the off-world stuff just isn't as good.""",,,
+vulpChatSurroundings_volturnProfectoLobsterOfferResearch,DialogOptionSelected,"$option == vulpChatSurroundings_volturn
+$lobsterName != null
+!$player.vulp_lobsterResearchAvailable",SetVulpoidExpression default,"""Volturn, home of the famous Volturnian lobster."" She lets the statement hang for a moment. ""But technically...""","vulpLobster_researchOffer:""Technically?""",,
 vulpChatSurroundings_volturnDummy,DialogOptionSelected,"$option == vulpChatSurroundings_volturn
 $vulp_profectoAssignment == vulpoids score:100","SetVulpoidExpression default
-ExitRulesToPlugin",TODO: volturn dummy,,,
+ExitRulesToPlugin","""That's where the blue lobsters come from! Hiii, lobsters!"" she waves at the viewscreen.",,,
+vulpChatSurroundings_volturnDummyLobster,DialogOptionSelected,"$option == vulpChatSurroundings_volturn
+$vulp_profectoAssignment == vulpoids score:100
+$lobsterName != false","SetVulpoidExpression default
+ExitRulesToPlugin","""That's where $lobsterName is from! Wave hi to your friends, $lobsterName!""
+
+She puppets the lobster's claw into waving at the world below.",,,
 vulpChatSurroundings_nortiaOption,VulpoidChatSurroundingsOptions,$topic.id == nortia score:1000,,,vulpChatSurroundings_nortia:Nortia,,nortia
 vulpChatSurroundings_nortia,DialogOptionSelected,$option == vulpChatSurroundings_nortia,"SetVulpoidExpression default
 ExitRulesToPlugin",TODO: nortia,,,

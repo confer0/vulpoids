@@ -32,7 +32,6 @@ import com.fs.starfarer.api.impl.campaign.ids.Entities;
 import com.fs.starfarer.api.impl.campaign.ids.Factions;
 import com.fs.starfarer.api.impl.campaign.ids.FleetTypes;
 import com.fs.starfarer.api.impl.campaign.ids.HullMods;
-import com.fs.starfarer.api.impl.campaign.ids.Industries;
 import com.fs.starfarer.api.impl.campaign.ids.MemFlags;
 import com.fs.starfarer.api.impl.campaign.ids.Tags;
 import com.fs.starfarer.api.impl.campaign.intel.bar.events.historian.SpecialItemOffer;
@@ -424,7 +423,7 @@ public class VulpoidBiofactoryMission extends HubMissionWithSearch implements Fl
 
     @Override
     public String getBaseName() {
-        return "A Foxy Fleet";
+        return "The Pet Project";
     }
 
     @Override
@@ -439,44 +438,36 @@ public class VulpoidBiofactoryMission extends HubMissionWithSearch implements Fl
     @Override
     public boolean callEvent(String ruleId, InteractionDialogAPI dialog, List<Misc.Token> params, Map<String, MemoryAPI> memoryMap) {
         String action = params.get(0).getString(memoryMap);
-        if("giveDronesHint".equals(action)) {
-            gotDronesHint = true;
+        switch (action) {
+            case "giveDronesHint":
+                gotDronesHint = true;
+                return true;
+            case "applyPunishment":
+                Random random = new Random();
+                float crMult = 1;
+                for (FleetMemberAPI member : Global.getSector().getPlayerFleet().getMembersWithFightersCopy()) {
+                    float crLost = Math.min(member.getRepairTracker().getBaseCR(), member.getDeployCost() * 0.5f);
+                    crLost += 0.01f * (float)random.nextInt(10);
+                    crLost *= crMult;
+                    if (crLost > 0) {
+                        member.getRepairTracker().applyCREvent(-crLost, "Citadel explosion");
+                        AddRemoveCommodity.addCRLossText(member, dialog.getTextPanel(), crLost);
+                    }
+                }   int n_crew_lost = 250;
+                if(Global.getSector().getPlayerFleet().getCargo().getCrew() < 750) n_crew_lost = 1+(int)((1f/3f) * Global.getSector().getPlayerFleet().getCargo().getCrew());
+                AddRemoveCommodity.addCommodityLossText(Commodities.CREW, n_crew_lost, dialog.getTextPanel());
+                Global.getSector().getPlayerFleet().getCargo().removeCrew(n_crew_lost);
+                Global.getSoundPlayer().playSound("gate_explosion", 1, 1, Global.getSoundPlayer().getListenerPos(), Misc.ZERO);
+                CustomCampaignEntityAPI derelict_ship = (CustomCampaignEntityAPI)Global.getSector().getMemoryWithoutUpdate().get("$vulpFactoryShip");
+                derelict_ship.setExpired(true);
+                return true;
+            case "generateEridaniBonus":
+                SectorEntityToken entity = SpecialItemOfferCreator.createEntity(new Random());
+                SpecialItemOffer offer = new SpecialItemOffer(entity, 2, Vulpoids.MANGONUT_TREE_ITEM);
+                offer.init(dialog);
+                return true;
         }
-        else if("applyPunishment".equals(action)) {
-            
-            Random random = new Random();
-            float crMult = 1;
-            for (FleetMemberAPI member : Global.getSector().getPlayerFleet().getMembersWithFightersCopy()) {
-                float crLost = Math.min(member.getRepairTracker().getBaseCR(), member.getDeployCost() * 0.5f);
-                crLost += 0.01f * (float)random.nextInt(10);
-                crLost *= crMult;
-                if (crLost > 0) {
-                    member.getRepairTracker().applyCREvent(-crLost, "Citadel explosion");
-                    AddRemoveCommodity.addCRLossText(member, dialog.getTextPanel(), crLost);
-                }
-            }
-            int n_crew_lost = 250;
-            if(Global.getSector().getPlayerFleet().getCargo().getCrew() < 750) n_crew_lost = 1+(int)((1f/3f) * Global.getSector().getPlayerFleet().getCargo().getCrew());
-            AddRemoveCommodity.addCommodityLossText(Commodities.CREW, n_crew_lost, dialog.getTextPanel());
-            Global.getSector().getPlayerFleet().getCargo().removeCrew(n_crew_lost);
-            
-            Global.getSoundPlayer().playSound("gate_explosion", 1, 1, Global.getSoundPlayer().getListenerPos(), Misc.ZERO);
-            CustomCampaignEntityAPI derelict_ship = (CustomCampaignEntityAPI)Global.getSector().getMemoryWithoutUpdate().get("$vulpFactoryShip");
-            derelict_ship.setExpired(true);
-            
-        }
-        else if("generateEridaniBonus".equals(action)) {
-            SectorEntityToken entity = SpecialItemOfferCreator.createEntity(new Random());
-            SpecialItemOffer offer = new SpecialItemOffer(entity, 2, Vulpoids.MANGONUT_TREE_ITEM);
-            offer.init(dialog);
-        }
-        else if("generateExodyneBonus".equals(action)) {
-            Global.getSector().getPlayerFaction().addKnownIndustry(Industries.POPULATION);
-        }
-        else {
-            return super.callEvent(ruleId, dialog, params, memoryMap);
-        }
-        return true;
+        return super.callEvent(ruleId, dialog, params, memoryMap);
     }
 }
 

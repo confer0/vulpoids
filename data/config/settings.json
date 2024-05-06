@@ -38,6 +38,8 @@
 			"terraformer_supression":"graphics/icons/markets/terraformer_supression.png",
 		},
 		"illustrations":{
+			"asteroid_belt_moon":"graphics/illustrations/asteroid_belt_moon.jpg",
+			
 			"vulp_bar_quest":"graphics/illustrations/bar_quest.png",
 			"citadel_biodome":"graphics/illustrations/citadel.png",
 			"vulpoid_advertisement":"graphics/illustrations/vulpoid_advertisement.png",
