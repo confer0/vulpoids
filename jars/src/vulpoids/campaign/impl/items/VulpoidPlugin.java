@@ -3,6 +3,7 @@ package vulpoids.campaign.impl.items;
 import java.awt.Color;
 
 import com.fs.starfarer.api.Global;
+import com.fs.starfarer.api.campaign.CargoAPI;
 import com.fs.starfarer.api.campaign.CargoStackAPI;
 import com.fs.starfarer.api.campaign.CargoTransferHandlerAPI;
 import com.fs.starfarer.api.campaign.SpecialItemData;
@@ -21,9 +22,12 @@ import com.fs.starfarer.api.impl.campaign.ids.Skills;
 import com.fs.starfarer.api.ui.Alignment;
 import com.fs.starfarer.api.ui.TooltipMakerAPI;
 import com.fs.starfarer.api.util.Misc;
+import com.fs.starfarer.campaign.fleet.CargoData;
+import com.fs.starfarer.campaign.ui.trade.CargoItemStack;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 import java.util.Random;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -534,7 +538,8 @@ public class VulpoidPlugin extends BaseSpecialItemPlugin {
     @Override
     public boolean shouldRemoveOnRightClickAction() {
         refreshPerson();
-        return disallowCycleReason()==null;
+        return false;
+        //return disallowCycleReason()==null;
     }
     
     @Override
@@ -561,8 +566,21 @@ public class VulpoidPlugin extends BaseSpecialItemPlugin {
             }
             // We need to do this because removing an admin (and maybe officer) sets them to indie.
             person.setFaction(factionId);
+            
             Global.getSoundPlayer().playUISound("ui_cargo_crew", 1f, 1f);
-            stack.getCargo().addSpecial(new SpecialItemData(new_id, personToJson(person)), 1);
+            
+            //stack.getCargo().addSpecial(new SpecialItemData(new_id, personToJson(person)), 1);
+            CargoData cargoData = (CargoData) stack.getCargo();
+            List<CargoItemStack> stacks = cargoData.getStacks();
+            for (int i=0; i<stacks.size(); i++) {
+                if(stacks.get(i).equals(stack)) {
+                    CargoAPI newCargo = Global.getFactory().createCargo(true);
+                    newCargo.addSpecial(new SpecialItemData(new_id, personToJson(person)), 1);
+                    CargoItemStack newItem = (CargoItemStack) newCargo.getStacksCopy().get(0);
+                    newItem.setCargo(cargoData);
+                    stacks.set(i, newItem);
+                }
+            }
         } else {
             Global.getSector().getCampaignUI().getMessageDisplay().addMessage(disallowReason, Misc.getNegativeHighlightColor());
         }
