@@ -1613,15 +1613,35 @@ AddRaidObjective genericIcon ""Seize the lost bioforge"" MINIMAL 0 VulpLobsterPr
 ShowImageVisual raid_prepare","You convene your officers to plan the raid. The location is undefended in principle, but Volturn is populous enough that it's impossible to completely evade detection and response. Fortunately the local garrisons are perpetually stretched thin by insurgents, limiting the strength of response you'll face.
 
 As long as your salvors move swiftly, your forces will only need to repel a quick reaction force before they can exfiltrate with the forge.",mktRaidNonMarket:Continue,,
-VulpLobsterPraidFinishedA,VulpLobsterPraidFinishedA,,,"Your officers were conservative in planning, crafting an imaginative tactical scenario which assumed the pirates possess all sorts of armaments and preparation which, in the end, they did not: anti-armor capability, a drone recon network, sentry turrets, field fortifications, and finally an EW-proof ghost gun ambush.
+VulpLobsterPraidFinishedA,VulpLobsterPraidFinishedA,,HideVisual,"The marine shuttles dive through the atmosphere, adjusting their course to dodge past the envelopes of planetary defenses. Your comms officer announces that the shuttles have been detected, and the nearest Diktat garrison has dispatched a MuniSec squad of their own to make arrests.
 
-In the end, the operation is a simple matter of cutting the lights then punching through flimsy shelter walls to stun-round those few pirates with live firearms detected and flagged by the marines' personal combat radar.
+The shuttles reach the water's surface and release the salvage submersible, hugging the waves to stay out of reach of radar. To the Diktat's sensor grids it will look like an overconfident smuggler who's waiting for a boat to come by and exchange goods. In reality of course, they're filled several squads of marines ready to repel the MuniSec officers.",,,
+VulpLobsterPraidFinishedB,VulpLobsterPraidFinishedB,,HideVisual,"With the Diktat still minutes away, you turn your sights to the submersible. Designed to be single-use, its heavy ballast weights have it sinking faster than a stone, rushing towards the facility several kilometers below. But the ocean doesn't give way easily, and second after second ticks by agonizingly slowly as both the sub and MuniSec approach their respective destinations.",vulpLobster_raidFinishedB1:Continue,,
+vulpLobster_raidFinishedB1,DialogOptionSelected,$option == vulpLobster_raidFinishedB1,,"The sub arrives first, slamming into the facility with a crash that rings through the holo-feeds. The sound is unnerving, but you know that the facility is designed to take much more of a beating than that. A claim your salvors are eager to put to the test with their cutting tools.
 
-They missed the hand-made bomb, however.",,,
-VulpLobsterPraidFinishedB,VulpLobsterPraidFinishedB,,"AddRemoveAnyItem SPECIAL lobster_bioforge 1
-Call $global.lobsterForge_ref finish","The pirate leader is justifiably defeated-looking, ashamed at being taken so easily despite the circumstances.
+You spare a glance at the display showing the incoming MuniSec. Two minutes to contact.",vulpLobster_raidFinishedB2:Continue,,
+vulpLobster_raidFinishedB2,DialogOptionSelected,$option == vulpLobster_raidFinishedB2,,"The facility itself is in a disturbing state of disrepair. The air is visibly humid, and the interior walls are speckled with rust. Your salvors move swiftly, knowing their time is limited.
 
-The pirates are removed to the $shipOrFleet brigs, packed closer than even the minimal comforts of the lowest crewmember's berth.",defaultLeave:Leave,,
+Thankfully, the bioforge has made itself easy to find. Left unattended, it's extended material uptake conduits throughout the facility in an attempt to maintain itself. The salvors need only follow the roots to their base.
+
+One minute to contact.",vulpLobster_raidFinishedB3:Continue,,
+vulpLobster_raidFinishedB3,DialogOptionSelected,$option == vulpLobster_raidFinishedB3,,"The heart of the bioforge lies illuminated by your salvors' helmet lamps. A glowing blue vat of nanite fluid, resting upon colossal tangles of conduit like the tentacles of an eldritch sea creature. On a slower day, you might pause to appreciate the accidental artistry.
+
+Instead it's unceremoniously cut free from its nest and thrown onto an agrav sled.
+
+""Contact,"" your tactical officer reports. The marines are stalling over comms for as long as they can, but you can see them readying their weapons.",vulpLobster_raidFinishedB4:Continue,,
+vulpLobster_raidFinishedB4,DialogOptionSelected,$option == vulpLobster_raidFinishedB4,,"The submersible releases its ballast and roars up towards the surface as gunfire erupts between the shuttles. Your comms officer's displays come alive as your $shipOrFleet illuminates the EM spectrum, buying extra seconds of confusion before the Diktat forces can coordinate an escalation.
+
+The MuniSec forces are forced to scatter mere moments before the sub breaches the surface. No time is wasted in scooping it up and roaring back into orbit, shuttles weaving through a sky illuminated by the streaks of tracer rounds.",vulpLobster_raidFinishedB5:Continue,,
+vulpLobster_raidFinishedB5,DialogOptionSelected,$option == vulpLobster_raidFinishedB5,"AddRemoveAnyItem SPECIAL lobster_bioforge 1
+Call $global.lobsterForge_ref finish
+MakeNearbyFleetsHostile sindrian_diktat 100000 30 true ","As the bioforge is being secured aboard your $shipOrFleet, your comms officer flags for your attention.
+
+""Captain, it looks like they've figured out what we stole. There's an alert put out to all nearby fleets.""",defaultLeave:Leave,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
 ,,,,,,,
 ,,,,,,,
 ,,,,,,,
