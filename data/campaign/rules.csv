@@ -1601,7 +1601,9 @@ A few hours later, your science officer reports in. They've successfully extract
 It will take some effort to retrieve, but it lies within reach.",defaultLeave:Leave,,
 ,,,,,,,
 # Lobster Biofactory - Volturn,,,,,,,
-vulpLobster_raidOption,PopulateOptions,"$global.lobsterForge_ref != null
+vulpLobster_raidOption,PopulateOptions,"$market.id == volturn
+$menuState == main
+$global.lobsterForge_ref != null
 Call $global.lobsterForge_ref isVolturnStage",FireBest VulpLobsterRaidCheckHostilesNearby,,2:vulpLobster_raidStart:Prepare a raid to extract the Volturnian Lobster Bioforge,,
 vulpLobsterDisableRaidIfNeeded,VulpLobsterRaidCheckHostilesNearby,HostileFleetNearbyAndAware,"SetEnabled vulpLobster_raidStart false
 SetTooltip vulpLobster_raidStart ""A nearby hostile fleet is tracking your movements, making an aquatic raid inadvisable.""",,,,
@@ -1683,17 +1685,6 @@ vulp_disableTrainingProgramOption,DisableWorkforceOptionIfNeeded,"$market.workfo
 $market.workforces == 0","SetTooltip vulp_trainingProgramHub ""This planet does not have enough Vulpoids to muster a trained workforce.""
 SetEnabled vulp_trainingProgramHub false",,,,
 vulp_trainingProgramHub,DialogOptionSelected,$option == vulp_trainingProgramHub,WorkforceMenu,,,,
-#vulp_increasePopSizeOption,PopulateOptions,"$isVulpoidRep
-$market.vulpsForNextPop > 0","SetTooltip vulp_increasePopSize ""Directly contribute $market.vulpsForNextPop Vulpoids to the colony's reserves, increasing the population size. You have $player.vulpoids Vulpoids.""
-SetTooltipHighlights vulp_increasePopSize $market.vulpsForNextPop $player.vulpoids
-FireBest DisableIncreaseVulpPopOptionIfNeeded",,vulp_increasePopSize:Assign additional Vulpoids,,
-#vulp_disableIncreasePopSizeOptionNotEnough,DisableIncreaseVulpPopOptionIfNeeded,!PlayerHasCargo vulpoids $market.vulpsForNextPop,"SetTooltip vulp_increasePopSize ""You need $market.vulpsForNextPop Vulpoids to manually increase the Vulpoid population. You have $player.vulpoids Vulpoids.""
-SetTooltipHighlights vulp_increasePopSize $market.vulpsForNextPop $player.vulpoids
-SetEnabled vulp_increasePopSize false",,,,
-#vulp_disableIncreasePopSizeOptionBombard,DisableIncreaseVulpPopOptionIfNeeded,$recentlyBombarded score:1000,"SetTooltip vulp_increasePopSize ""A recent orbital bombardment has devastated the colony's Vulpoid population. You'll need to wait up to a month for the population to stabilize.""
-SetEnabled vulp_increasePopSize false",,,,
-#vulp_increasePopSize,DialogOptionSelected,$option == vulp_increasePopSize,"RemoveCommodity vulpoids $market.vulpsForNextPop
-FireAll PopulateOptions",TODO,,,
 vulp_askFunFact,PopulateOptions,$isVulpoidRep,,,vulp_getFunFact:Make conversation,,
 ,,,,,,,
 ,,,,,,,
