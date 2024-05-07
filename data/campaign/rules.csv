@@ -407,7 +407,7 @@ Most of the datacores have been wiped or removed, but some marketing material ha
 vulp_exploreBiodomeExodyne1,DialogOptionSelected,$option == vulp_exploreBiodomeExodyne1,"ShowImageVisual vulpoid_advertisement
 $player.sawVulpoidAdvertisement = true","Holos of the non-human crew feature under the name 'Vulpoids'. They appear to be a pre-release version, with their public reveal being scheduled a cycle after the Collapse.
 
-Mention of them being licensed as delta-level AI suggests they were designed for civilian use, though they must have been quite expensive.",vulp_exploreBiodomeExodyne2:Continue,# TODO SHOW ILLUSTRATION,
+Mention of them being licensed as delta-level AI suggests they were designed for civilian use, though they must have been quite expensive.",vulp_exploreBiodomeExodyne2:Continue,,
 vulp_exploreBiodomeExodyne2,DialogOptionSelected,$option == vulp_exploreBiodomeExodyne2,HideVisual,"The teams in the outlying complex, on the other hand, have been stymied. The facilities are locked down, and your chief engineer believes that they're equipped with a self-destruct to prevent corporate espionage.
 
 Mechanisms like these are rare but not unheard of, especially when it comes to cutting-edge research. It's almost certainly possible to disable it from the bridge.",vulp_exploreBiodomeHubReturn:Conclude the search,,
@@ -1077,7 +1077,7 @@ CallEvent $global.vulp_terraformingIntel beatFleet","Your sensors officer report
 
 At the heart of the debris field, the Eridani-Utopia vessel has remained in one piece, ready to be boarded.",,,
 ,,,,,,,
-# TODO INTERACT WITH DERELICT SHIP - HAS TAG $vulp_terraformer,,,,,,,
+,,,,,,,
 vulp_terraformerOpenDialog_return,OpenInteractionDialog,"$vulp_terraformer score:1000
 $explored
 !$repaired",ShowImageVisual space_wreckage,"Your $shipOrFleet approaches $aOrAn $nameInText.
@@ -3219,25 +3219,25 @@ vulpChatSurroundings_asharuStellarShade,DialogOptionSelected,$option == vulpChat
 ExitRulesToPlugin","""I wonder if the shade could ever be towed back into place? Unlikely, but interesting to ponder about...""",,,
 vulpChatSurroundings_jangalaOption,VulpoidChatSurroundingsOptions,$topic.id == jangala score:1000,,,"vulpChatSurroundings_jangala:Jangala
 vulpChatSurroundings_jangalaStation:Jangala Station",,jangala
-vulpChatSurroundings_jangala,DialogOptionSelected,$option == vulpChatSurroundings_jangala,"SetVulpoidExpression default
-ExitRulesToPlugin",TODO: jangala,,,# TODO - Variation for after visiting the shrine
+vulpChatSurroundings_jangala,DialogOptionSelected,$option == vulpChatSurroundings_jangala,"SetVulpoidExpression bruh
+ExitRulesToPlugin","""Ugh, nasty planet. Hot, humid, and the air is full of spores. At least it makes for an easy excuse to keep the suit on.""",,,# TODO - Variation for after visiting the shrine
 vulpChatSurroundings_jangalaDummy,DialogOptionSelected,"$option == vulpChatSurroundings_jangala
 $vulp_profectoAssignment == vulpoids score:100","$option = vulpChatSurroundings_dummiesNotWelcome
 FireBest DialogOptionSelected",,,,
 vulpChatSurroundings_jangalaStation,DialogOptionSelected,$option == vulpChatSurroundings_jangalaStation,"SetVulpoidExpression default
-ExitRulesToPlugin",TODO: jangala station,,,
+ExitRulesToPlugin","""A pretty nice place to visit, assuming you don't get caught up in a protest. Nobody minds if you keep the suit on, and there's loads to see and do.""",,,
 vulpChatSurroundings_jangalaStationDummy,DialogOptionSelected,"$option == vulpChatSurroundings_jangalaStation
 $vulp_profectoAssignment == vulpoids score:100","$option = vulpChatSurroundings_dummiesNotWelcome
 FireBest DialogOptionSelected",,,,
 vulpChatSurroundings_garnirOption,VulpoidChatSurroundingsOptions,$topic.id == corvus_IIIa score:1000,,,"vulpChatSurroundings_garnir:Garnir
 vulpChatSurroundings_garnirDepot:Garnir Extraction Depot",,garnir
-vulpChatSurroundings_garnir,DialogOptionSelected,$option == vulpChatSurroundings_garnir,"SetVulpoidExpression default
-ExitRulesToPlugin",TODO: garnir,,,
+vulpChatSurroundings_garnir,DialogOptionSelected,$option == vulpChatSurroundings_garnir,"SetVulpoidExpression bruh
+ExitRulesToPlugin","""The conditions here are pretty unfortunate. Loathe as I am to support the Hegemony, I feel like they'd do good stepping in here.""",,,
 vulpChatSurroundings_garnirDummy,DialogOptionSelected,"$option == vulpChatSurroundings_garnir
 $vulp_profectoAssignment == vulpoids score:100","SetVulpoidExpression default
-ExitRulesToPlugin",TODO: garnir dummy,,,
-vulpChatSurroundings_garnirDepot,DialogOptionSelected,$option == vulpChatSurroundings_garnirDepot,"SetVulpoidExpression default
-ExitRulesToPlugin",TODO: garnir depot,,,
+ExitRulesToPlugin","""I heard about this! They used to move ice from here to Asharu to cool it off! That's so smart, why don't they do that any more?""",,,
+vulpChatSurroundings_garnirDepot,DialogOptionSelected,$option == vulpChatSurroundings_garnirDepot,"SetVulpoidExpression bruh
+ExitRulesToPlugin","""It's a real shame to see an Eridani station reduced to this state. Imagine what might have been achieved if the station had been kept operational, Asharu might be properly terraformed today.""",,,
 vulpChatSurroundings_garnirDepotDummy,DialogOptionSelected,"$option == vulpChatSurroundings_garnirDepot
 $vulp_profectoAssignment == vulpoids score:100","SetVulpoidExpression default
 ExitRulesToPlugin",TODO: garnir depot dummy,,,
@@ -3245,16 +3245,14 @@ ExitRulesToPlugin",TODO: garnir depot dummy,,,
 # Duzahk,,,,,,,
 vulpChatSurroundings_akaMainyuOption,VulpoidChatSurroundingsOptions,$topic.id == duzahk1 score:1000,,,vulpChatSurroundings_akaMainyu:Aka Mainyu,,akaMainyu
 vulpChatSurroundings_akaMainyu,DialogOptionSelected,$option == vulpChatSurroundings_akaMainyu,"SetVulpoidExpression default
-ExitRulesToPlugin",TODO: akaMainyu,,,
+ExitRulesToPlugin","""Aka Mainyu is incredibly extreme, even for a hot Jupiter world. It's a fascinating case study for high-temperature plasma dispersal dynamics.""",,,
 vulpChatSurroundings_akaMainyuDummy,DialogOptionSelected,"$option == vulpChatSurroundings_akaMainyu
 $vulp_profectoAssignment == vulpoids score:100","SetVulpoidExpression default
-ExitRulesToPlugin",TODO: akaMainyu Dummy,,,
-vulpChatSurroundings_drujOption,VulpoidChatSurroundingsOptions,$topic.id == duzahk2 score:1000,,,vulpChatSurroundings_druj:Druj,,druj
+ExitRulesToPlugin","""Wow, that's a huge storm! I guess that's good, it means there's a breeze so it's not as hot!""",,,
+vulpChatSurroundings_drujOption,VulpoidChatSurroundingsOptions,"$topic.id == duzahk2 score:1000
+$vulp_profectoAssignment != vulpoids",,,vulpChatSurroundings_druj:Druj,,druj
 vulpChatSurroundings_druj,DialogOptionSelected,$option == vulpChatSurroundings_druj,"SetVulpoidExpression default
-ExitRulesToPlugin",TODO: druj,,,
-vulpChatSurroundings_drujDummy,DialogOptionSelected,"$option == vulpChatSurroundings_druj
-$vulp_profectoAssignment == vulpoids score:100","SetVulpoidExpression default
-ExitRulesToPlugin",TODO: druj Dummy,,,
+ExitRulesToPlugin","""Druj is theoretically a fairly boring world, but Aka Mainyu's effects make it marginally more interesting! The surface is a library of long-term reactive plasma erosion phenomena, though it being made of rocks instead of actual hull plating limits the value of the insights.""",,,
 ,,,,,,,
 # Eos Exodus,,,,,,,
 vulpChatSurroundings_tartessusOption,VulpoidChatSurroundingsOptions,$topic.id == tartessus score:1000,,,vulpChatSurroundings_tartessus:Tartessus,,tartessus
@@ -3295,28 +3293,34 @@ ExitRulesToPlugin","""Oh, that planet's scary! It's a good thing nobody's allowe
 # Galatia,,,,,,,
 vulpChatSurroundings_ancyraOption,VulpoidChatSurroundingsOptions,$topic.id == ancyra score:1000,,,"vulpChatSurroundings_ancyra:Ancyra
 vulpChatSurroundings_ancyraStation:Ancyra Orbital Facility",,ancyra
-vulpChatSurroundings_ancyra,DialogOptionSelected,$option == vulpChatSurroundings_ancyra,"SetVulpoidExpression default
-ExitRulesToPlugin",TODO: ancyra,,,
+vulpChatSurroundings_ancyra,DialogOptionSelected,$option == vulpChatSurroundings_ancyra,"SetVulpoidExpression bruh
+ExitRulesToPlugin","""Ancyra is such an odd case. By all means, a populous habitable world like this should be well-developed. But it's resource-poor, and wedged between Jangala, Eventide, and Chicomoztoc. There's just no economic niche for it to fill.""
+
+""It's actually nice, in a way. Things are calmer outside the spotlight.""",,,
 vulpChatSurroundings_ancyraDummy,DialogOptionSelected,"$option == vulpChatSurroundings_ancyra
 $vulp_profectoAssignment == vulpoids score:100","SetVulpoidExpression default
 ExitRulesToPlugin",TODO: ancyra Dummy,,,
 vulpChatSurroundings_ancyraStation,DialogOptionSelected,$option == vulpChatSurroundings_ancyraStation,"SetVulpoidExpression default
-ExitRulesToPlugin",TODO: ancyraStation,,,
+ExitRulesToPlugin","""Old stations like this are a beautiful sight. I love seeing how they've been maintained through the centuries, it gives a more concrete sense of how much time has really passed.""",,,
 vulpChatSurroundings_ancyraStationDummy,DialogOptionSelected,"$option == vulpChatSurroundings_ancyraStation
 $vulp_profectoAssignment == vulpoids score:100","SetVulpoidExpression default
 ExitRulesToPlugin",TODO: ancyraStation Dummy,,,
 vulpChatSurroundings_derinkuyuOption,VulpoidChatSurroundingsOptions,$topic.id == derinkuyu_station score:1000,,,vulpChatSurroundings_derinkuyu:Derinkuyu Mining Station,,derinkuyu
-vulpChatSurroundings_derinkuyu,DialogOptionSelected,$option == vulpChatSurroundings_derinkuyu,"SetVulpoidExpression default
-ExitRulesToPlugin",TODO: derinkuyu,,,
+vulpChatSurroundings_derinkuyu,DialogOptionSelected,$option == vulpChatSurroundings_derinkuyu,"SetVulpoidExpression bruh
+ExitRulesToPlugin","""I, uh, don't completely trust these guys. Not that their actions were completely indefensible, but I wouldn't want to be a bystander next time they ran into a crisis.""",,,
 vulpChatSurroundings_derinkuyuDummy,DialogOptionSelected,"$option == vulpChatSurroundings_derinkuyu
 $vulp_profectoAssignment == vulpoids score:100","SetVulpoidExpression default
-ExitRulesToPlugin",TODO: derinkuyu Dummy,,,
+ExitRulesToPlugin","""They made this station themselves? That's cool!""",,,
 vulpChatSurroundings_academyOption,VulpoidChatSurroundingsOptions,$topic.id == station_galatia_academy score:1000,,,vulpChatSurroundings_academy:Galatia Academy,,academy
 vulpChatSurroundings_academy,DialogOptionSelected,$option == vulpChatSurroundings_academy,"SetVulpoidExpression default
-ExitRulesToPlugin",TODO: academy,,,
+$option = vulpChatSurroundings_academy1
+FireBest DialogOptionSelected
+ExitRulesToPlugin","""Oh I love the Academy. I could spend lifetimes here and never get bored... Not just the science, but also the politicking! If you thought pirates were bloodthirsty, you haven't seen an egotistical professor trying to secure their reputation among jealous peers.""",,,
+vulpChatSurroundings_academy1,DialogOptionSelected,"$option == vulpChatSurroundings_academy1
+$player.metBaird",,"""I must say, I'm jealous that you know Provost Baird personally. Keep an eye on your back though, it could prove more exposed than hers is.""",,,
 vulpChatSurroundings_academyDummy,DialogOptionSelected,"$option == vulpChatSurroundings_academy
-$vulp_profectoAssignment == vulpoids score:100","SetVulpoidExpression default
-ExitRulesToPlugin",TODO: academy Dummy,,,
+$vulp_profectoAssignment == vulpoids score:100","SetVulpoidExpression bruh
+ExitRulesToPlugin","""I dunno if I'm allowed there... I'm not very clever.""",,,
 ,,,,,,,
 # Hybrasil,,,,,,,
 vulpChatSurroundings_culannOption,VulpoidChatSurroundingsOptions,$topic.id == culann score:1000,,,"vulpChatSurroundings_culann:Culann
@@ -3325,7 +3329,7 @@ vulpChatSurroundings_culann,DialogOptionSelected,$option == vulpChatSurroundings
 ExitRulesToPlugin","""It's a bit creepy planetside, if I'm to be honest. Factories and military bases are miserable places, but the customer service reps always have those big fake smiles. Skeeves me out.""",,,
 vulpChatSurroundings_culannDummy,DialogOptionSelected,"$option == vulpChatSurroundings_culann
 $vulp_profectoAssignment == vulpoids score:100","SetVulpoidExpression default
-ExitRulesToPlugin",TODO: culann dummy,,,
+ExitRulesToPlugin","""The sky is pretty, the station looks like a huge shooting star!""",,,
 vulpChatSurroundings_culannStarforge,DialogOptionSelected,$option == vulpChatSurroundings_culannStarforge,"SetVulpoidExpression default
 ExitRulesToPlugin","""Fun for a day trip. Free refreshments as you browse all the exciting ways you can blow up a starship, what's not to love?""
 
@@ -3335,10 +3339,10 @@ $vulp_profectoAssignment == vulpoids score:100","SetVulpoidExpression default
 ExitRulesToPlugin",TODO: culann starforge dummy,,,
 vulpChatSurroundings_eochuBresOption,VulpoidChatSurroundingsOptions,$topic.id == eochu_bres score:1000,,,vulpChatSurroundings_eochuBres:Eochu Bres,,eochuBres
 vulpChatSurroundings_eochuBres,DialogOptionSelected,$option == vulpChatSurroundings_eochuBres,"SetVulpoidExpression default
-ExitRulesToPlugin",TODO: eochuBres,,,
+ExitRulesToPlugin","""Xanadu is a quite comfortable city to live in, as long as you've got the funds for it. More to the point, it's a place I actually could live in long term, since Tri-Tachyon is actually willing to let us own property. Credits are credits, after all.""",,,
 vulpChatSurroundings_eochuBresDummy,DialogOptionSelected,"$option == vulpChatSurroundings_eochuBres
-$vulp_profectoAssignment == vulpoids score:100","SetVulpoidExpression default
-ExitRulesToPlugin",TODO: eochuBres dummy,,,
+$vulp_profectoAssignment == vulpoids score:100","SetVulpoidExpression bruh
+ExitRulesToPlugin","""Your security chief said we're not allowed to visit the low city. They're worried we'd give away our kidneys.""",,,
 vulpChatSurroundings_cromCruachOption,VulpoidChatSurroundingsOptions,$topic.id == crom_cruach score:1000,,,vulpChatSurroundings_cromCruach:cromCruach,,cromCruach
 vulpChatSurroundings_cromCruach,DialogOptionSelected,$option == vulpChatSurroundings_cromCruach,"SetVulpoidExpression default
 ExitRulesToPlugin",TODO: cromCruach,,,
