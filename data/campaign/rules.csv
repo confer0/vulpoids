@@ -3080,37 +3080,48 @@ FireBest DialogOptionSelected",,,,
 ,,,,,,,
 # Arcadia,,,,,,,
 vulpChatSurroundings_nomiosOption,VulpoidChatSurroundingsOptions,$topic.id == nomios score:1000,,,vulpChatSurroundings_nomios:Nomios,,nomios
-vulpChatSurroundings_nomios,DialogOptionSelected,$option == vulpChatSurroundings_nomios,"SetVulpoidExpression default
-ExitRulesToPlugin",TODO: nomios,,,
+vulpChatSurroundings_nomios,DialogOptionSelected,$option == vulpChatSurroundings_nomios,"SetVulpoidExpression bruh
+ExitRulesToPlugin","""I can't blame people for wanting to sleep until a brighter future. But with how the Sector's been deteriorating, I wonder if even they'll last long enough to see one.""",,,
+vulpChatSurroundings_nomiosLaisa,DialogOptionSelected,"$option == vulpChatSurroundings_nomios
+$id == laisa","SetVulpoidExpression bruh
+ExitRulesToPlugin","""I checked the records, there's nobody from Exodyne left in the cryosanctum. I'm quite possibly the last member of staff in the entire Sector.""",,,
 vulpChatSurroundings_nomiosDummy,DialogOptionSelected,"$option == vulpChatSurroundings_nomios
 $vulp_profectoAssignment == vulpoids score:100","SetVulpoidExpression default
-ExitRulesToPlugin",TODO: nomios dummy,,,
+ExitRulesToPlugin","""Someone told me there's popsicles here! Can we get popsicles?""",,,
 vulpChatSurroundings_citadelArcadiaOption,VulpoidChatSurroundingsOptions,$topic.id == arcadia_station score:1000,,,vulpChatSurroundings_citadelArcadia:Citadel Arcadia,,citadelArcadia
-vulpChatSurroundings_citadelArcadia,DialogOptionSelected,$option == vulpChatSurroundings_citadelArcadia,"SetVulpoidExpression default
-ExitRulesToPlugin",TODO: citadelArcadia,,,
+vulpChatSurroundings_citadelArcadia,DialogOptionSelected,$option == vulpChatSurroundings_citadelArcadia,"SetVulpoidExpression bruh
+ExitRulesToPlugin","""Risky place for me. The navy gets paranoid easily, to the point where wearing a suit outside the dock areas attracts attention.""",,,
 vulpChatSurroundings_citadelArcadiaDummy,DialogOptionSelected,"$option == vulpChatSurroundings_citadelArcadia
 $vulp_profectoAssignment == vulpoids score:100","$option = vulpChatSurroundings_dummiesNotWelcome
 FireBest DialogOptionSelected",,,,
 vulpChatSurroundings_agreusOption,VulpoidChatSurroundingsOptions,$topic.id == agreus score:1000,,,vulpChatSurroundings_agreus:Agreus,,agreus
 vulpChatSurroundings_agreus,DialogOptionSelected,$option == vulpChatSurroundings_agreus,"SetVulpoidExpression default
-ExitRulesToPlugin",TODO: agreus,,,
+ExitRulesToPlugin","""The rumors about pseudo-AI intelligence scraping are quite interesting in my opinion. Most people have the impression that you can assemble a working AI out of multiple disparate codebases, but that's simply not possible. Every part of an AI mind has to be bespoke to the hardware to work properly.""
+
+""With that said, cross-referencing the specific algorithmic architecture against the hardware variations can give excellent insight into how to better tailor your own AI designs... allegedly, of course.""",,,
 vulpChatSurroundings_agreusDummy,DialogOptionSelected,"$option == vulpChatSurroundings_agreus
 $vulp_profectoAssignment == vulpoids score:100","SetVulpoidExpression default
-ExitRulesToPlugin",TODO: agreus dummy,,,
+ExitRulesToPlugin","""There's so many spaceships here! It's so cool!""",,,
 ,,,,,,,
 # Askonia,,,,,,,
 vulpChatSurroundings_sindriaOption,VulpoidChatSurroundingsOptions,$topic.id == sindria score:1000,,,vulpChatSurroundings_sindria:Sindria,,sindria
 vulpChatSurroundings_sindria,DialogOptionSelected,$option == vulpChatSurroundings_sindria,"SetVulpoidExpression default
-ExitRulesToPlugin",TODO: sindria,,,
+ExitRulesToPlugin","""Ah, we're visiting the gas station! Did you want me to pump it for you?""",,,
 vulpChatSurroundings_sindriaDummy,DialogOptionSelected,"$option == vulpChatSurroundings_sindria
-$vulp_profectoAssignment == vulpoids score:100","SetVulpoidExpression default
-ExitRulesToPlugin",TODO: sindria dummy,,,
+$vulp_profectoAssignment == vulpoids score:100","SetVulpoidExpression fear
+ExitRulesToPlugin","""Fuel blows up when it burns, right? Why are they so close to the sun?""",,,
 vulpChatSurroundings_cruorOption,VulpoidChatSurroundingsOptions,$topic.id == cruor score:1000,,,vulpChatSurroundings_cruor:Cruor,,cruor
 vulpChatSurroundings_cruor,DialogOptionSelected,$option == vulpChatSurroundings_cruor,"SetVulpoidExpression default
-ExitRulesToPlugin",TODO: cruor,,,
+ExitRulesToPlugin","""It's a bit weird to say this, but I actually like visiting Cruor. The design of the city-train is fascinating, every time I look I discover some new subtlety of kilo-engineering.""",,,
+vulpChatSurroundings_cruorMiners,DialogOptionSelected,"$option == vulpChatSurroundings_cruor
+$market.mc:vulpoid_miners",SetVulpoidExpression angry,"""Consigning all those innocent Vulpoids to hard labor, how could you?""",vulpChatSurroundings_cruorMiners1:Continue,,
+vulpChatSurroundings_cruorMiners1,DialogOptionSelected,$option == vulpChatSurroundings_cruorMiners1,"SetVulpoidExpression default
+ExitRulesToPlugin","""Bwahahaha, couldn't hold a straight face! Seriously, having a bossy human constantly giving them straightforward orders? That's basically a dream job for them!""
+
+""...Not for me though, don't get ideas.""",,,
 vulpChatSurroundings_cruorDummy,DialogOptionSelected,"$option == vulpChatSurroundings_cruor
 $vulp_profectoAssignment == vulpoids score:100","SetVulpoidExpression default
-ExitRulesToPlugin",TODO: cruor dummy,,,
+ExitRulesToPlugin","""I heard there's camps where you have to work all day! Can I visit one?""",,,
 vulpChatSurroundings_volturnOption,VulpoidChatSurroundingsOptions,$topic.id == volturn score:1000,,,vulpChatSurroundings_volturn:Volturn,,volturn
 vulpChatSurroundings_volturn,DialogOptionSelected,$option == vulpChatSurroundings_volturn,"SetVulpoidExpression bruh
 ExitRulesToPlugin","""In a way, it's a shame that Volturnian Lobsters are so popular. They take up a place in public consciousness that would otherwise be more aware of the oppression the population suffers under. I wonder if the rebel forces have ever considered adopting it as their symbol, it might have more impact than they realize.""",,,
@@ -3125,42 +3136,53 @@ $vulp_profectoAssignment == vulpoids score:100","SetVulpoidExpression default
 ExitRulesToPlugin","""That's where the blue lobsters come from! Hiii, lobsters!"" she waves at the viewscreen.",,,
 vulpChatSurroundings_volturnDummyLobster,DialogOptionSelected,"$option == vulpChatSurroundings_volturn
 $vulp_profectoAssignment == vulpoids score:100
-$lobsterName != false","SetVulpoidExpression default
+$lobsterName != null","SetVulpoidExpression default
 ExitRulesToPlugin","""That's where $lobsterName is from! Wave hi to your friends, $lobsterName!""
 
-She puppets the lobster's claw into waving at the world below.",,,
+She puppets the lobster's claw into a wave at the world below.",,,
 vulpChatSurroundings_nortiaOption,VulpoidChatSurroundingsOptions,$topic.id == nortia score:1000,,,vulpChatSurroundings_nortia:Nortia,,nortia
 vulpChatSurroundings_nortia,DialogOptionSelected,$option == vulpChatSurroundings_nortia,"SetVulpoidExpression default
-ExitRulesToPlugin",TODO: nortia,,,
+ExitRulesToPlugin","""Forgive me for talking politics, but Nortia is a pretty interesting case. They're really just the Chartery in name only, that faction died with the moon. Still, I can't deny that it's a noble motivation.""
+
+""If it weren't for their mercenary companies though, they'd definitely have been wiped out by the Diktat. Tactistar in particular, that one's a favorite of Tri-Tachyon. The Diktat can't afford to ruffle those feathers.""",,,
 vulpChatSurroundings_nortiaDummy,DialogOptionSelected,"$option == vulpChatSurroundings_nortia
-$vulp_profectoAssignment == vulpoids score:100","SetVulpoidExpression default
-ExitRulesToPlugin",TODO: nortia dummy,,,
+$vulp_profectoAssignment == vulpoids score:100","SetVulpoidExpression bruh
+ExitRulesToPlugin","""Why aren't the rocks in a ring? Don't planets like making rings?""",,,
 vulpChatSurroundings_umbraOption,VulpoidChatSurroundingsOptions,$topic.id == umbra score:1000,,,vulpChatSurroundings_umbra:Umbra,,umbra
-vulpChatSurroundings_umbra,DialogOptionSelected,$option == vulpChatSurroundings_umbra,"SetVulpoidExpression default
-ExitRulesToPlugin",TODO: umbra,,,
+vulpChatSurroundings_umbra,DialogOptionSelected,$option == vulpChatSurroundings_umbra,"SetVulpoidExpression angry
+ExitRulesToPlugin","""I do not care for the ARC. Not insomuch because they've turned to piracy - I can appreciate the necessity given the neighborhood. But they seem to take pride in it, like they've drifted from their original motives.""
+
+""I suppose the irony is, I'd be less offended if they just committed to it. It's the hypocrisy of the matter.""",,,
 vulpChatSurroundings_umbraDummy,DialogOptionSelected,"$option == vulpChatSurroundings_umbra
-$vulp_profectoAssignment == vulpoids score:100","SetVulpoidExpression default
-ExitRulesToPlugin",TODO: umbra dummy,,,
+$vulp_profectoAssignment == vulpoids score:100","SetVulpoidExpression bruh
+ExitRulesToPlugin","""People say pirates come here, but they people here say they're not pirates? I don't get it.""",,,
 ,,,,,,,
 # Aztlan,,,,,,,
 vulpChatSurroundings_chicomoztocOption,VulpoidChatSurroundingsOptions,$topic.id == chicomoztoc score:1000,,,vulpChatSurroundings_chicomoztoc:Chicomoztoc,,chicomoztoc
 vulpChatSurroundings_chicomoztoc,DialogOptionSelected,$option == vulpChatSurroundings_chicomoztoc,"SetVulpoidExpression default
-ExitRulesToPlugin",TODO: chicomoztoc,,,
+ExitRulesToPlugin","""You want to know a dirty little secret? When people say the Hegemony doesn't meddle in domestic affairs, they mean it. There's a couple hives that actually allow Profectos - yes, Profectos - to walk out in the open.""
+
+""Now you still want to be around a corner if MuniSec comes around for a bi-monthly patrol, but it's still funny to just walk around on a Hegemony world.""",,,
 vulpChatSurroundings_chicomoztocDummy,DialogOptionSelected,"$option == vulpChatSurroundings_chicomoztoc
 $vulp_profectoAssignment == vulpoids score:100","$option = vulpChatSurroundings_dummiesNotWelcome
 FireBest DialogOptionSelected",,,,
 vulpChatSurroundings_coatlOption,VulpoidChatSurroundingsOptions,$topic.id == coatl score:1000,,,"vulpChatSurroundings_coatl:Coatl
 vulpChatSurroundings_coatlBastion:Coatl Bastion",,coatl
-vulpChatSurroundings_coatl,DialogOptionSelected,$option == vulpChatSurroundings_coatl,"SetVulpoidExpression default
-ExitRulesToPlugin",TODO: coatl,,,
+vulpChatSurroundings_coatl,DialogOptionSelected,$option == vulpChatSurroundings_coatl,"SetVulpoidExpression fear
+ExitRulesToPlugin","""Ugh, to be honest I hoped I'd never have to see Coatl in person. After all, I've got a one-way ticket here if the Hegemony ever gets their mitts on me.""",,,
 vulpChatSurroundings_coatlDummy,DialogOptionSelected,"$option == vulpChatSurroundings_coatl
 $vulp_profectoAssignment == vulpoids score:100","$option = vulpChatSurroundings_dummiesNotWelcome
 FireBest DialogOptionSelected",,,,
-vulpChatSurroundings_coatlBastion,DialogOptionSelected,$option == vulpChatSurroundings_coatlBastion,"SetVulpoidExpression default
-ExitRulesToPlugin",TODO: coatlBastion,,,
+vulpChatSurroundings_coatlBastion,DialogOptionSelected,$option == vulpChatSurroundings_coatlBastion,"SetVulpoidExpression fear
+ExitRulesToPlugin","""I... am not actually super excited to be right next to the Hegemony's C3 center. Definitely not planning to visit.""",,,
 vulpChatSurroundings_coatlBastionDummy,DialogOptionSelected,"$option == vulpChatSurroundings_coatlBastion
 $vulp_profectoAssignment == vulpoids score:100","$option = vulpChatSurroundings_dummiesNotWelcome
 FireBest DialogOptionSelected",,,,
+vulpChatSurroundings_aztlanRelayAfterStoryOption,VulpoidChatSurroundingsOptions,"$topic.id == aztlan_relay score:1000
+$global.gaKA_missionCompleted
+$vulp_profectoAssignment != vulpoids",,,vulpChatSurroundings_aztlanRelayAfterStory:$topic.name,,
+vulpChatSurroundings_aztlanRelayAfterStory,DialogOptionSelected,$option == vulpChatSurroundings_aztlanRelayAfterStory,"SetVulpoidExpression default
+ExitRulesToPlugin","""Ahaha, the Hegemony just can't catch a break with their infosec! Bet they'd have done better if they actually used AI for it, huh? Remind me to send Gargoyle my regards.""",,,
 ,,,,,,,
 # Canaan,,,,,,,
 vulpChatSurroundings_gileadOption,VulpoidChatSurroundingsOptions,$topic.id == gilead score:1000,,,vulpChatSurroundings_gilead:Gilead,,gilead
@@ -3180,15 +3202,25 @@ ExitRulesToPlugin","""It's a bit sad here, the humans are always grouchy. They l
 ,,,,,,,
 # Corvus,,,,,,,
 vulpChatSurroundings_asharuOption,VulpoidChatSurroundingsOptions,$topic.id == asharu score:1000,,,vulpChatSurroundings_asharu:Asharu,,asharu
-vulpChatSurroundings_asharu,DialogOptionSelected,$option == vulpChatSurroundings_asharu,"SetVulpoidExpression default
-ExitRulesToPlugin",TODO: asharu,,,
+vulpChatSurroundings_asharu,DialogOptionSelected,$option == vulpChatSurroundings_asharu,"SetVulpoidExpression angry
+ExitRulesToPlugin","""Asharu is a bit disappointing to think about. The Sector could have had another properly habitable world, if it weren't for a bunch of zealots destroying things they don't understand.""",,,
 vulpChatSurroundings_asharuDummy,DialogOptionSelected,"$option == vulpChatSurroundings_asharu
-$vulp_profectoAssignment == vulpoids score:100","SetVulpoidExpression default
-ExitRulesToPlugin",TODO: asharu dummy,,,
+$vulp_profectoAssignment == vulpoids score:100","SetVulpoidExpression angry
+ExitRulesToPlugin","""It's all sandy down there. I don't really like it. It's coarse, rough, and gets everywhere in my fur.""",,,
+vulpChatSurroundings_abandonedTerraformingPlatformOption,VulpoidChatSurroundingsOptions,$topic.id == corvus_abandoned_station score:1000,,,vulpChatSurroundings_abandonedTerraformingPlatform:Terraforming Platform,,abandonedTerraformingPlatform
+vulpChatSurroundings_abandonedTerraformingPlatform,DialogOptionSelected,$option == vulpChatSurroundings_abandonedTerraformingPlatform,"SetVulpoidExpression default
+ExitRulesToPlugin","""I'm surprised more people don't poke around here. A semi-functional station like this is the perfect place to stash things.""",,,
+vulpChatSurroundings_abandonedTerraformingPlatformDummy,DialogOptionSelected,"$option == vulpChatSurroundings_abandonedTerraformingPlatform
+$vulp_profectoAssignment == vulpoids score:100","SetVulpoidExpression bruh
+ExitRulesToPlugin","""It's all dark, I don't think anyone lives there.""",,,
+vulpChatSurroundings_asharuStellarShadeOption,VulpoidChatSurroundingsOptions,"$topic.id == asharu_shade score:1000
+$vulp_profectoAssignment != vulpoids",,,vulpChatSurroundings_asharuStellarShade:$topic.name,,asharuStellarShade
+vulpChatSurroundings_asharuStellarShade,DialogOptionSelected,$option == vulpChatSurroundings_asharuStellarShade,"SetVulpoidExpression bruh
+ExitRulesToPlugin","""I wonder if the shade could ever be towed back into place? Unlikely, but interesting to ponder about...""",,,
 vulpChatSurroundings_jangalaOption,VulpoidChatSurroundingsOptions,$topic.id == jangala score:1000,,,"vulpChatSurroundings_jangala:Jangala
 vulpChatSurroundings_jangalaStation:Jangala Station",,jangala
 vulpChatSurroundings_jangala,DialogOptionSelected,$option == vulpChatSurroundings_jangala,"SetVulpoidExpression default
-ExitRulesToPlugin",TODO: jangala,,,
+ExitRulesToPlugin",TODO: jangala,,,# TODO - Variation for after visiting the shrine
 vulpChatSurroundings_jangalaDummy,DialogOptionSelected,"$option == vulpChatSurroundings_jangala
 $vulp_profectoAssignment == vulpoids score:100","$option = vulpChatSurroundings_dummiesNotWelcome
 FireBest DialogOptionSelected",,,,
@@ -3692,7 +3724,7 @@ vulpChatSurroundings_jumpPointOption,VulpoidChatSurroundingsOptions,$topic.tag:j
 vulpChatSurroundings_jumpPoint,DialogOptionSelected,$option == vulpChatSurroundings_jumpPoint,"SetVulpoidExpression default
 ExitRulesToPlugin","""The Durand-Patel conjunction. Possibly the single most important celestial phenomenon in history. I can't even imagine a world without hyperspace travel.""",,,
 vulpChatSurroundings_jumpPointLaisa,DialogOptionSelected,"$option == vulpChatSurroundings_jumpPoint
-$id == laisa score:1000","SetVulpoidExpression default
+$id == laisa","SetVulpoidExpression default
 ExitRulesToPlugin","""The Durand-Patel conjunction. I remember when they were secondary to the Gates, but now they're the most essential celestial phenomenon in the Sector.""",,,
 vulpChatSurroundings_jumpPointDummy,DialogOptionSelected,"$option == vulpChatSurroundings_jumpPoint
 $vulp_profectoAssignment == vulpoids score:100","SetVulpoidExpression default
