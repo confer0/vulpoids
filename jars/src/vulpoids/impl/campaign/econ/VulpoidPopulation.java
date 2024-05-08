@@ -107,6 +107,7 @@ public class VulpoidPopulation extends BaseMarketConditionPlugin implements Mark
         return stability;
     }
     public float getAvailabilityGrowth() {
+        if(!market.isPlayerOwned()) return 0;
         float growth = getAvailability() - MIN_AVAILABILITY_FOR_GROWTH + 1;
         growth *= AVAILABILITY_GROWTH_MULT;
         growth = Math.max(growth, 0);

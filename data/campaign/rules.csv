@@ -1986,20 +1986,38 @@ vulpChat_greetingFailsafe,VulpoidChatGreeting,,FireAll VulpoidChatTopLevelOption
 ,,,,,,,
 ,,,,,,,
 vulpChatAssignment_inquireOptionDefault,VulpoidChatTopLevelOptions,,,,vulpChatAssignment_inquire:Discuss assignment,,
+,,,,,,,
+,,,,,,,
+vulpChatAssignment_addPopulationOption,VulpoidChatTopLevelOptions,VulpoidPopulation getUpgradeableColony,,,vulpChatAssignment_addPopulation:Distribute Vulpoids to $vulp_upgradeableMarketName,,
+vulpChatAssignment_disableAddPopulationOption,VulpoidChatTopLevelOptions,!PlayerHasCargo vulpoids $vulp_upgradeableMarketRequirements,"SetEnabled vulpChatAssignment_addPopulation false
+SetTooltip vulpChatAssignment_addPopulation ""You'd need at least $vulp_upgradeableMarketRequirements Vulpoids to meaningfully increase the local Vulpoid population.""",,,,
+vulpChatAssignment_addPopulation,DialogOptionSelected,$option == vulpChatAssignment_addPopulation,"SetTextHighlights ""$vulp_upgradeableMarketRequirements""","Distributing $vulp_upgradeableMarketRequirements Vulpoids across $vulp_upgradeableMarketName will increase the size of its local Vulpoid population. This will likely improve market stability, immigration, and may make it possible to operate additional workforces.","vulpChatAssignment_addPopulationAccept:Accept
+vulpChatAssignment_addPopulationCancel:Cancel",,
+vulpChatAssignment_addPopulationAccept,DialogOptionSelected,$option == vulpChatAssignment_addPopulationAccept,SetVulpoidExpression default,"You inform the Vulpoid that she'll be going to $vulp_upgradeableMarketName along with a number of her sisters.
+
+""Okay $playerSirOrMadam! I'll go get ready right away, I promise we'll all make you proud!""",vulpChatAssignment_addPopulationAccept1:Continue,,
+vulpChatAssignment_addPopulationAccept1,DialogOptionSelected,$option == vulpChatAssignment_addPopulationAccept1,"VulpoidPopulation vulp_doColonyUpgrade
+RemoveCommodity vulpoids $vulp_upgradeableMarketRequirements
+ExitRulesToPlugin","She hurries from your cabin, and you inform your quartermaster to begin loading shuttles.",,,
+vulpChatAssignment_addPopulationCancel,DialogOptionSelected,$option == vulpChatAssignment_addPopulationCancel,FireAll VulpoidChatTopLevelOptions,,,,
+,,,,,,,
 vulpChatAssignment_pickResearchOption,VulpoidChatTopLevelOptions,$vulp_profectoAssignment == special_vulpoid_embarked,,,vulpChatAssignment_pickResearch:Assign a research project,,
 vulpChatAssignment_disableResearchOptionIfAlreadyActive,VulpoidChatTopLevelOptions,$vulp_researchProject != null,"SetEnabled vulpChatAssignment_pickResearch false
 SetTooltip vulpChatAssignment_pickResearch ""$name is already working on a project.""",,,,
 vulpChatAssignment_pickResearch,DialogOptionSelected,$option == vulpChatAssignment_pickResearch,FireAll VulpoidPickResearchOptions,,,,
-vulpChatAssignment_levelDownOfficerOption,VulpoidChatTopLevelOptions,$vulp_profectoAssignment == special_vulpoid_officer,,,vulpChatAssignment_levelDownOfficer:Retrain a skill,# TODO - IMPLEMENT THIS,
 vulpChatAssignment_devFinishResearchOption,VulpoidChatTopLevelOptions,"$global.isDevMode
 $vulp_researchCompletionDay > 0",SetOptionColor vulpChatAssignment_devFinishResearch gray,,200:vulpChatAssignment_devFinishResearch:>> (dev) Instantly finish research,,
 vulpChatAssignment_devFinishResearch,DialogOptionSelected,$option == vulpChatAssignment_devFinishResearch,"$vulp_researchCompletionDay = 0
 DismissDialog",,,,
 ,,,,,,,
+#vulpChatAssignment_levelDownOfficerOption,VulpoidChatTopLevelOptions,$vulp_profectoAssignment == special_vulpoid_officer,,,vulpChatAssignment_levelDownOfficer:Retrain a skill,# TODO - IMPLEMENT THIS,
+,,,,,,,
+,,,,,,,
+,,,,,,,
 vulpChatSurroundingsOption,VulpoidChatTopLevelOptions,,,,vulpChatSurroundings:Socialize about surroundings,,
 vulpChatSurroundings,DialogOptionSelected,$option == vulpChatSurroundings,OpenListBasedDialog localEntities VulpoidChatTopLevelOptions,,,,
 ,,,,,,,
-#vulpChatCurrentAffairsOption,VulpoidChatTopLevelOptions,,,,vulpChatCurrentAffairs:Socialize about current affairs,,
+#vulpChatCurrentAffairsOption,VulpoidChatTopLevelOptions,,,,vulpChatCurrentAffairs:Socialize about current affairs,# TODO,
 #vulpChatCurrentAffairs,DialogOptionSelected,$option == vulpChatCurrentAffairs,OpenListBasedDialog currentAffairs VulpoidChatTopLevelOptions,,,,
 ,,,,,,,
 vulpChatPetOption,VulpoidChatTopLevelOptions,,,,vulpChatPet:Pet,,
@@ -2034,6 +2052,12 @@ vulpChatAssignment_inquireOfficer,DialogOptionSelected,"$option == vulpChatAssig
 $vulp_profectoAssignment == special_vulpoid_officer",SetVulpoidExpression default,"""Command is going smoothly. The crew love me, of course, but it's hard having to send them into danger.""",,"# TODO - use a command to reference the commanded ship, if any. Have callouts for unassigned, assigned civ, assigned combat, zig, etc.",
 vulpChatAssignment_inquireAdmin,DialogOptionSelected,"$option == vulpChatAssignment_inquire
 $vulp_profectoAssignment == special_vulpoid_admin",SetVulpoidExpression default,"""Colony administration is going nicely! I might make an in-person visit some time, see if the rec facilities are up to standard.""",,"# TODO - use a command to reference the administrated colony, if any",
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
 ,,,,,,,
 # Research picker options,,,,,,,
 vulpChatAssignment_pickResearchOption_exit,VulpoidPickResearchOptions,,SetShortcut vulpChatAssignment_pickResearch_exit ESCAPE,,100:vulpChatAssignment_pickResearch_exit:Back,,
