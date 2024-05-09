@@ -3,8 +3,10 @@ package vulpoids.impl.campaign.intel.misc;
 import java.awt.Color;
 
 import com.fs.starfarer.api.Global;
+import com.fs.starfarer.api.campaign.SectorEntityToken;
 import com.fs.starfarer.api.campaign.econ.MarketAPI;
 import com.fs.starfarer.api.impl.campaign.intel.misc.FleetLogIntel;
+import com.fs.starfarer.api.ui.SectorMapAPI;
 import com.fs.starfarer.api.ui.TooltipMakerAPI;
 import com.fs.starfarer.api.util.Misc;
 
@@ -68,5 +70,8 @@ public class ShinyProducedIntel extends FleetLogIntel {
     public String getName() {
         return "Profecto Vulpoid Produced";
     }
-
+    
+    public SectorEntityToken getMapLocation(SectorMapAPI map) {
+        return market.getPrimaryEntity();
+    }
 }

@@ -410,7 +410,7 @@ public class VulpoidAcceptanceEventIntel extends BaseEventIntel {
 
     @Override
     protected void notifyStageReached(EventStageData stage) {
-        if(stage.id == Stage.SANCTIONS_START) {
+        if(stage.id == Stage.START) {
             Global.getSector().getPlayerFaction().addKnownIndustry(Vulpoids.INDUSTRY_VULPOIDAGENCY);
             String dealmakerParams = Global.getSettings().getSpecialItemSpec(Items.DEALMAKER_HOLOSUITE).getParams();
             dealmakerParams += ", "+Vulpoids.INDUSTRY_VULPOIDAGENCY;

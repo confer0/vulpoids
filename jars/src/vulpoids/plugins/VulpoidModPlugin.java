@@ -31,6 +31,7 @@ import vulpoids.impl.campaign.VulpoidCreator;
 import vulpoids.impl.campaign.econ.FilteredAir;
 import vulpoids.impl.campaign.econ.LobstersGrowing;
 import vulpoids.impl.campaign.ids.Vulpoids;
+import vulpoids.impl.campaign.intel.events.VulpoidAcceptanceEventIntel;
 
 public class VulpoidModPlugin extends BaseModPlugin {
 
@@ -117,7 +118,7 @@ public class VulpoidModPlugin extends BaseModPlugin {
                     b.supply(spec.getId(), Vulpoids.CARGO_ITEM, size-3, Misc.ucFirst(spec.getName().toLowerCase()));
                 
                     int supplied_amount = b.getSupply(Vulpoids.CARGO_ITEM).getQuantity().getModifiedInt();
-                    if (supplied_amount > 0 && Global.getSector().getPlayerFaction().knowsIndustry(Vulpoids.INDUSTRY_VULPOIDAGENCY)) {
+                    if (supplied_amount > 0 && VulpoidAcceptanceEventIntel.get()!=null && VulpoidAcceptanceEventIntel.get().getProgress()>=VulpoidAcceptanceEventIntel.PROGRESS_SANCTIONS_START) {
                         Global.getSector().getMemoryWithoutUpdate().set(Vulpoids.KEY_EXPORTED_VULPOIDS, true);
                         for(MarketAPI market : Global.getSector().getEconomy().getMarketsCopy()) {
                             market.addCondition(Vulpoids.CONDITION_VULPOID_DEMAND, supplied_amount);
