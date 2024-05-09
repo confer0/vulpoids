@@ -15,6 +15,7 @@ public class Vulpoids {
     
     public static final String INDUSTRY_ORGANFARM = "organfarms";
     public static final String INDUSTRY_BIOFACILITY = "biofacility";
+    public static final String INDUSTRY_VULPOIDAGENCY = "vulpoidagency";
     
     public static final String SPECIAL_ITEM_DEFAULT = "special_vulpoid";
     public static final String SPECIAL_ITEM_EMBARKED = "special_vulpoid_embarked";

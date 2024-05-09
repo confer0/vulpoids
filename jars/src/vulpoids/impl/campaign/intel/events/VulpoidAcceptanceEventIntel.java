@@ -9,6 +9,7 @@ import com.fs.starfarer.api.campaign.econ.MarketAPI;
 import com.fs.starfarer.api.characters.PersonAPI;
 import com.fs.starfarer.api.impl.campaign.ids.Factions;
 import com.fs.starfarer.api.impl.campaign.ids.FleetTypes;
+import com.fs.starfarer.api.impl.campaign.ids.Items;
 import com.fs.starfarer.api.impl.campaign.ids.Ranks;
 import com.fs.starfarer.api.impl.campaign.ids.Tags;
 import com.fs.starfarer.api.impl.campaign.ids.Voices;
@@ -409,6 +410,12 @@ public class VulpoidAcceptanceEventIntel extends BaseEventIntel {
 
     @Override
     protected void notifyStageReached(EventStageData stage) {
+        if(stage.id == Stage.SANCTIONS_START) {
+            Global.getSector().getPlayerFaction().addKnownIndustry(Vulpoids.INDUSTRY_VULPOIDAGENCY);
+            String dealmakerParams = Global.getSettings().getSpecialItemSpec(Items.DEALMAKER_HOLOSUITE).getParams();
+            dealmakerParams += ", "+Vulpoids.INDUSTRY_VULPOIDAGENCY;
+            Global.getSettings().getSpecialItemSpec(Items.DEALMAKER_HOLOSUITE).setParams(dealmakerParams);
+        }
         if (stage.id == Stage.KNIGHT_ATTACK) {
             sendKnightAttack();
         }

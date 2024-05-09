@@ -7,6 +7,7 @@ import com.fs.starfarer.api.campaign.econ.MarketConditionAPI;
 import com.fs.starfarer.api.campaign.econ.MarketImmigrationModifier;
 import com.fs.starfarer.api.characters.FullName;
 import com.fs.starfarer.api.characters.PersonAPI;
+import com.fs.starfarer.api.combat.MutableStat;
 import com.fs.starfarer.api.impl.campaign.econ.BaseMarketConditionPlugin;
 import com.fs.starfarer.api.impl.campaign.ids.Factions;
 import com.fs.starfarer.api.impl.campaign.ids.MemFlags;
@@ -14,6 +15,7 @@ import com.fs.starfarer.api.impl.campaign.population.PopulationComposition;
 import com.fs.starfarer.api.ui.TooltipMakerAPI;
 import com.fs.starfarer.api.util.Misc;
 import vulpoids.impl.campaign.VulpoidCreator;
+import vulpoids.impl.campaign.econ.impl.VulpoidAgency;
 import vulpoids.impl.campaign.econ.workforces.BaseWorkforce;
 import vulpoids.impl.campaign.ids.Vulpoids;
 import vulpoids.impl.campaign.intel.misc.VulpPopGrownIntel;
@@ -25,11 +27,12 @@ public class VulpoidPopulation extends BaseMarketConditionPlugin implements Mark
     final float MAX_POPULATION = 10; // Just in case.
     //private int last_reported_production = 0;
     
-    private int workforce_cap = 0;
+    private MutableStat workforceCap;
+    
     final int MIN_POPULATION_FOR_WORKFORCE = 3;
     //final float POPULATION_WORKFORCE_MULT = 0.5f; // 3>0, 4>1, 5>1, 6>2, 7>3.
     final float POPULATION_WORKFORCE_MULT = 1; // 3>1, 4>2, 5>3, 6>4, 7>4.
-    final int MAX_WORKFORCE_CAP = 4;
+    final int MAX_NATIVE_WORKFORCE_CAP = 4;
     
     final int MIN_AVAILABILITY = -6;  // 1 Vulpoid per 1M Humans
     final int MAX_AVAILABILITY = 2;  // 100 Vulpoids per 1 Human
@@ -50,6 +53,7 @@ public class VulpoidPopulation extends BaseMarketConditionPlugin implements Mark
     
     @Override
     public void advance(float amount) {
+        if(workforceCap==null) workforceCap = new MutableStat(0f);
         if(!market.getMemoryWithoutUpdate().contains(MemFlags.RECENTLY_BOMBARDED)) {
             float days = Misc.getDays(amount);
             int popCap = getPopCap();
@@ -68,23 +72,33 @@ public class VulpoidPopulation extends BaseMarketConditionPlugin implements Mark
         } else {
             population = Math.min(population, getPopCap());
         }
-        workforce_cap = (int)population - MIN_POPULATION_FOR_WORKFORCE + 1;
-        workforce_cap = (int)(workforce_cap * POPULATION_WORKFORCE_MULT);
-        workforce_cap = Math.max(workforce_cap, 0);
-        workforce_cap = Math.min(workforce_cap, MAX_WORKFORCE_CAP);
-        market.getMemoryWithoutUpdate().set(Vulpoids.KEY_WORKFORCE_CAP, workforce_cap);
+        int native_workforce_cap = (int)population - MIN_POPULATION_FOR_WORKFORCE + 1;
+        native_workforce_cap = (int)(native_workforce_cap * POPULATION_WORKFORCE_MULT);
+        native_workforce_cap = Math.max(native_workforce_cap, 0);
+        native_workforce_cap = Math.min(native_workforce_cap, MAX_NATIVE_WORKFORCE_CAP);
+        workforceCap.modifyFlat(condition.getId(), native_workforce_cap);
+        market.getMemoryWithoutUpdate().set(Vulpoids.KEY_WORKFORCE_CAP, workforceCap.getModifiedInt());
         market.getMemoryWithoutUpdate().set(Vulpoids.KEY_VULPOID_POP_AMOUNT, population);
         market.getMemoryWithoutUpdate().set(Vulpoids.KEY_VULPS_FOR_NEXT_POP, Misc.getWithDGS((int)Math.pow(10, (int)(population+1))));
     }
     private int getPopCap() {
         int popCap = (int)MIN_POPULATION;
-        Industry industry = market.getIndustry("organfarms");
-        if (industry ==  null) industry = market.getIndustry("biofacility");
+        Industry industry = market.getIndustry(Vulpoids.INDUSTRY_ORGANFARM);
+        if (industry ==  null) industry = market.getIndustry(Vulpoids.INDUSTRY_BIOFACILITY);
         if(industry != null) popCap = Math.max(popCap, industry.getSupply("vulpoids").getQuantity().getModifiedInt());
+        
+        industry = market.getIndustry(Vulpoids.INDUSTRY_VULPOIDAGENCY);
+        if(industry != null) {
+            VulpoidAgency agency = (VulpoidAgency) industry;
+            popCap = Math.max(popCap, agency.getVulpoidImport());
+        }
+        
         popCap = Math.max(popCap, market.getMemoryWithoutUpdate().getInt("$vulpProductionQuantity"));  // For NPC production missions
+        
         // Can only support so many with modern infrastructure.
         // For every rich executive with 10 Vulpoids, there'll be at least 10 people with no more than 1.
         popCap = Math.min(popCap, market.getSize());
+        
         return popCap;
     }
     
@@ -92,7 +106,7 @@ public class VulpoidPopulation extends BaseMarketConditionPlugin implements Mark
     
     public int getPopulation() {return (int)population;}
     public void setPopulation(int population) {this.population=population;}
-    public int getWorkforceCap() {return workforce_cap;}
+    public MutableStat getWorkforceCap() {return workforceCap;}
     public int getAvailability() {
         int availability = getPopulation()-market.getSize();
         availability = Math.max(availability, MIN_AVAILABILITY);
@@ -122,7 +136,7 @@ public class VulpoidPopulation extends BaseMarketConditionPlugin implements Mark
     public void apply(String id) {
         advance(0);
         if(!market.getMemoryWithoutUpdate().contains(Vulpoids.KEY_WORKFORCES)) market.getMemoryWithoutUpdate().set(Vulpoids.KEY_WORKFORCES, 0);
-        market.getMemoryWithoutUpdate().set(Vulpoids.KEY_WORKFORCE_CAP, workforce_cap);
+        market.getMemoryWithoutUpdate().set(Vulpoids.KEY_WORKFORCE_CAP, workforceCap.getModifiedInt());
         if(market.isPlayerOwned()) {
             PersonAPI vulpoid_comms = VulpoidCreator.createVulpoid();
             vulpoid_comms.setId("vulpoid_rep");
@@ -212,7 +226,7 @@ public class VulpoidPopulation extends BaseMarketConditionPlugin implements Mark
         else if(p < 10) tooltip.addPara("Billions of Vulpoids make entire oceans of fluffy affection, deep enough to drown in.", opad);
         else            tooltip.addPara("Tens of billions of Vulpoids live so densely on "+name+" that there's not a single place not smothered by eager adoration.", opad);
         
-        int w = getWorkforceCap();
+        int w = workforceCap.getModifiedInt();
         String w_s = "s";
         if (w==1) w_s = "";
         if(w > 0) tooltip.addPara("Supports %s Vulpoid workforce"+w_s, opad, Misc.getHighlightColor(), ""+w);

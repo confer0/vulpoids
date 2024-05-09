@@ -20,6 +20,7 @@ import com.fs.starfarer.api.characters.PersonAPI;
 import com.fs.starfarer.api.impl.campaign.econ.impl.BoostIndustryInstallableItemEffect;
 import com.fs.starfarer.api.impl.campaign.ids.Commodities;
 import com.fs.starfarer.api.impl.campaign.ids.Conditions;
+import com.fs.starfarer.api.impl.campaign.ids.Items;
 import com.fs.starfarer.api.impl.campaign.ids.MemFlags;
 import com.fs.starfarer.api.impl.campaign.ids.Planets;
 import com.fs.starfarer.api.impl.campaign.ids.Ranks;
@@ -38,6 +39,12 @@ public class VulpoidModPlugin extends BaseModPlugin {
         
         ImportantPeopleAPI ip = Global.getSector().getImportantPeople();
         PersonAPI person;
+        
+        String dealmakerParams = Global.getSettings().getSpecialItemSpec(Items.DEALMAKER_HOLOSUITE).getParams();
+        if(!dealmakerParams.contains(Vulpoids.INDUSTRY_VULPOIDAGENCY) && Global.getSector().getPlayerFaction().knowsIndustry(Vulpoids.INDUSTRY_VULPOIDAGENCY)) {
+            dealmakerParams += ", "+Vulpoids.INDUSTRY_VULPOIDAGENCY;
+            Global.getSettings().getSpecialItemSpec(Items.DEALMAKER_HOLOSUITE).setParams(dealmakerParams);
+        }
         
         if (ip.getPerson(Vulpoids.PERSON_LAISA) == null) {
             person = VulpoidCreator.createProfectoVulpoid();
@@ -110,7 +117,7 @@ public class VulpoidModPlugin extends BaseModPlugin {
                     b.supply(spec.getId(), Vulpoids.CARGO_ITEM, size-3, Misc.ucFirst(spec.getName().toLowerCase()));
                 
                     int supplied_amount = b.getSupply(Vulpoids.CARGO_ITEM).getQuantity().getModifiedInt();
-                    if (supplied_amount > 0) {
+                    if (supplied_amount > 0 && Global.getSector().getPlayerFaction().knowsIndustry(Vulpoids.INDUSTRY_VULPOIDAGENCY)) {
                         Global.getSector().getMemoryWithoutUpdate().set(Vulpoids.KEY_EXPORTED_VULPOIDS, true);
                         for(MarketAPI market : Global.getSector().getEconomy().getMarketsCopy()) {
                             market.addCondition(Vulpoids.CONDITION_VULPOID_DEMAND, supplied_amount);
