@@ -104,7 +104,7 @@
 		"biodome",
 		"improved_automatics",
 		"missile_reload",
-		"surveying_equipment",
+		"terraforming_bays",
 	],
     "center": [
         161,
@@ -347,14 +347,14 @@
             "type": "ENERGY"
         },
         {
-            "angle": -90,
+            "angle": -120,
             "arc": 360,
             "id": "WS 016",
             "locations": [
-                95,
-                -120,
-                95,
-                -121
+                90,
+                -95,
+                90,
+                -94
             ],
             "mount": "HIDDEN",
             "size": "LARGE",
