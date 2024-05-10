@@ -652,19 +652,18 @@ vulp_interrogationBombshellWhenReady,DialogOptionSelected,$option == vulp_interr
 AdjustRepActivePerson COOPERATIVE 5","She almost seems like she's going to cry again, but collects herself.
 
 ""That's kind of you, thank you. But I just needed a moment, I'm ready to talk now.""",vulp_interrogationProperStart:Continue,,
-vulp_interrogationBombshellHug,DialogOptionSelected,$option == vulp_interrogationBombshellHug,"ShowImageVisual laisa_hug1
+vulp_interrogationBombshellHug,DialogOptionSelected,$option == vulp_interrogationBombshellHug,"ShowImageVisual laisa_hug2
 SetVulpoidExpression blush
 AdjustRepActivePerson COOPERATIVE 10
 UpdateMemory","You stand and walk around the table, and she looks at you with confusion in her teared-up eyes.
 
 The moment your arms wrap around her, you can hear her tail thumping against the back of her chair as it wags back and forth.",vulp_interrogationBombshellHug2:Continue,,
 vulp_interrogationBombshellHug2_notnice,DialogOptionSelected,"$option == vulp_interrogationBombshellHug2
-$rel < -0.251",ShowImageVisual laisa_hug2,"She allows the hug to continue for a moment, before slowly easing back.
+$rel <= -0.25",ShowImageVisual laisa_hug1,"She allows the hug to continue for a moment, before slowly easing back.
 
 ""That was... nice, thank you. I think I'm ready to talk now.""",vulp_interrogationProperStart:Continue,,
 vulp_interrogationBombshellHug2_nice,DialogOptionSelected,"$option == vulp_interrogationBombshellHug2
-$rel >= -0.251","AdjustRepActivePerson COOPERATIVE 5
-ShowImageVisual laisa_hug3","Her arms tighten around you, and her snout nuzzles into your shoulder. You can feel the motion of her tail through her entire body as it wags back and forth.
+$rel > -0.25",AdjustRepActivePerson COOPERATIVE 5,"Her arms tighten around you, and her snout nuzzles into your shoulder. You can feel the motion of her tail through her entire body as it wags back and forth.
 
 The watchful gaze of your guard prickles on the back of your neck, but the moment is still and calm.
 
