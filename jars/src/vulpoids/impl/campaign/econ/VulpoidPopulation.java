@@ -53,7 +53,6 @@ public class VulpoidPopulation extends BaseMarketConditionPlugin implements Mark
     
     @Override
     public void advance(float amount) {
-        if(!market.getPrimaryEntity().getMarket().equals(market)) market = market.getPrimaryEntity().getMarket();
         if(workforceCap==null) workforceCap = new MutableStat(0f);
         if(!market.getMemoryWithoutUpdate().contains(MemFlags.RECENTLY_BOMBARDED)) {
             float days = Misc.getDays(amount);
@@ -135,6 +134,10 @@ public class VulpoidPopulation extends BaseMarketConditionPlugin implements Mark
     
     @Override
     public void apply(String id) {
+        // Fixing a weird bug where it could have a market that wasn't the original.
+        // Probably the result of a mod conflict, but only visible here because it's non-transient. 
+       if(market.getPrimaryEntity()!=null) market = market.getPrimaryEntity().getMarket();
+        
         advance(0);
         if(!market.getMemoryWithoutUpdate().contains(Vulpoids.KEY_WORKFORCES)) market.getMemoryWithoutUpdate().set(Vulpoids.KEY_WORKFORCES, 0);
         market.getMemoryWithoutUpdate().set(Vulpoids.KEY_WORKFORCE_CAP, workforceCap.getModifiedInt());
@@ -245,11 +248,15 @@ public class VulpoidPopulation extends BaseMarketConditionPlugin implements Mark
             case 0:     tooltip.addPara("Nearly everyone on "+name+" has a Vulpoid to tend to their needs.", opad); break;
             case 1:     tooltip.addPara("Every citizen of "+name+" has a personal Vulpoid eager to be their best friend, and many have more than one.", opad); break;
             case 2:     tooltip.addPara("Every person on "+name+" has dozens of Vulpoids catering to their every whim, living a life of luxury unheard of in the Persean Sector.", opad); break;
-                                        // Mentioning hundreds is overkill imho. Tweaked case 1 and 2 desc a bit
         }
         
         if (getAvailabilityStability()>0) tooltip.addPara("%s stability", opad, Misc.getHighlightColor(), "+"+(int)getAvailabilityStability());
         if (getAvailabilityGrowth()>0) tooltip.addPara("%s population growth (based on market size)", opad, Misc.getHighlightColor(), "+"+(int)getAvailabilityGrowth());
+        
+        tooltip.addPara("TEST 1: "+market.getSize(), opad);
+        tooltip.addPara("TEST 2: "+market.getPrimaryEntity().getMarket().getSize(), opad);
+        tooltip.addPara("TEST 3: "+market.getPrimaryEntity().getMarket().equals(market), opad);
+        tooltip.addPara("TEST 4: "+Global.getSector().getEconomy().getMarket(market.getId()).getSize(), opad);
         
         if(getPopulation() >= market.getSize()) {
             tooltip.addPara("\nThe Vulpoid population has matched the human population, and cannot be sustainably increased.", opad);
