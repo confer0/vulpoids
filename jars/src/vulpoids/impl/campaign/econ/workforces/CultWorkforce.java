@@ -16,7 +16,7 @@ public class CultWorkforce extends BaseWorkforce {
     float pathDays = 0;
     @Override
     public boolean isAvailableToPlayer() {
-        return Global.getSector().getMemoryWithoutUpdate().getBoolean("$vulp_triggeredLuddicRenaissance");
+        return Global.getSector().getPlayerMemoryWithoutUpdate().getBoolean("$unlockedVulpoidCults");
     }
     @Override
     public void apply(String id) {

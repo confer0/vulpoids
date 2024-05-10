@@ -1488,6 +1488,7 @@ vulp_gileadShrineAcceptanceLeave,DialogOptionSelected,$option == vulp_gileadShri
 unset $market.vulp_bringVulpoidToShrine
 VulpoidAcceptance resolveGilead
 $global.vulpoidsAccepted = true
+$player.unlockedVulpoidCults = true
 VulpoidAcceptance donate vulpoid_cults 0 null null","As you start your way back to the shaded halls of the transport complex, you notice several pilgrims discreetly putting away recording devices.
 
 This incident is likely to cause quite a splash once it reaches the wider population.",shrineDoLeave:Leave,,
