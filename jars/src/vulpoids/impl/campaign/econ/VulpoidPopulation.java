@@ -253,11 +253,6 @@ public class VulpoidPopulation extends BaseMarketConditionPlugin implements Mark
         if (getAvailabilityStability()>0) tooltip.addPara("%s stability", opad, Misc.getHighlightColor(), "+"+(int)getAvailabilityStability());
         if (getAvailabilityGrowth()>0) tooltip.addPara("%s population growth (based on market size)", opad, Misc.getHighlightColor(), "+"+(int)getAvailabilityGrowth());
         
-        tooltip.addPara("TEST 1: "+market.getSize(), opad);
-        tooltip.addPara("TEST 2: "+market.getPrimaryEntity().getMarket().getSize(), opad);
-        tooltip.addPara("TEST 3: "+market.getPrimaryEntity().getMarket().equals(market), opad);
-        tooltip.addPara("TEST 4: "+Global.getSector().getEconomy().getMarket(market.getId()).getSize(), opad);
-        
         if(getPopulation() >= market.getSize()) {
             tooltip.addPara("\nThe Vulpoid population has matched the human population, and cannot be sustainably increased.", opad);
         } else if (getPopCap() <= getPopulation()) {
