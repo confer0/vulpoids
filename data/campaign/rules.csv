@@ -2297,22 +2297,36 @@ vulpChatPet_headpats,DialogOptionSelected,$option == vulpChatPet_headpats,SetVul
 Though you've scarcely started petting her, her tail is already wagging furiously.",vulpChatPet_headpats1:Pet,,
 vulpChatPet_headpats1,DialogOptionSelected,$option == vulpChatPet_headpats1,,"Your fingers sink deep into her soft hair, enveloped in fluff as you gently massage her scalp.
 
-Her eyes are closed in a look of contentment. She unconsciously tilts her head back, attempting to follow your hand as you continue to pet her.","vulpChatPet_headpatsBack:TODO
-vulpChatPet_headpatsEars:TODO
+Her eyes are closed in a look of contentment. She unconsciously tilts her head back, attempting to follow your hand as you continue to pet her.","vulpChatPet_headpatsBack:Wrap around to the back
+vulpChatPet_headpatsEars:Scratch her ears
 vulpChatPet_headpatsFace:Hold your arm still",,
-vulpChatPet_headpatsBack,DialogOptionSelected,$option == vulpChatPet_headpatsBack,,,,,
-vulpChatPet_headpatsEars,DialogOptionSelected,$option == vulpChatPet_headpatsEars,,,,,
+vulpChatPet_headpatsBack,DialogOptionSelected,$option == vulpChatPet_headpatsBack,,"You draw your hand down the side of her head, giving her a brief scritch on the back of her neck before threading your fingers up underneath her hair.
+
+You're elbow-deep in a blanket of fluffy as you scratch the back of her head. She coos happily, and once again leans back into the hand that's petting her.",vulpChatPet_headpatsBack1:Continue,,
+vulpChatPet_headpatsBack1,DialogOptionSelected,$option == vulpChatPet_headpatsBack1,,"As you continue scratching her head she cuddles up closer to you, wrapping her arms around you in a gentle hug. You reciprocate with your free arm, the other one still preoccupied with giving her scritches.
+
+You hold each other for a while longer, both enjoying the feeling of your fingers running through her hair.",vulpChatPet_headpatsBackEnd:Finish,,
+vulpChatPet_headpatsBackEnd,DialogOptionSelected,$option == vulpChatPet_headpatsBackEnd,ExitRulesToPlugin,"You pull away your hand, and though she attempts to lean back into it for a moment, she takes the cue and straightens up again.",,,
+vulpChatPet_headpatsEars,DialogOptionSelected,$option == vulpChatPet_headpatsEars,,TODO,vulpChatPet_headpatsEars1:TODO,,
+vulpChatPet_headpatsEars1,DialogOptionSelected,$option == vulpChatPet_headpatsEars1,,TODO,vulpChatPet_headpatsEarsEnd:Finish,,
+vulpChatPet_headpatsEarsEnd,DialogOptionSelected,$option == vulpChatPet_headpatsEarsEnd,ExitRulesToPlugin,TODO,,,
 vulpChatPet_headpatsFace,DialogOptionSelected,$option == vulpChatPet_headpatsFace,,"Rather than follow her head as it inclines, you leave your hand in place. As she leans back, your hand follows a trail from her scalp, down her forehead, until it rests on her face.
 
 The tilting stops there, your fingers resting above her still-closed eyes. Her cool, wet nose taps against your wrist.",vulpChatPet_headpatsFace1:Continue,,
-vulpChatPet_headpatsFace1,DialogOptionSelected,$option == vulpChatPet_headpatsFace1,SetVulpoidExpression default,"It takes a moment for her to realize the petting has stopped. She opens her eyes in realization, and laughs through the cage of your fingers.","vulpChatPet_headpatsFacePet:TODO
+vulpChatPet_headpatsFace1,DialogOptionSelected,$option == vulpChatPet_headpatsFace1,SetVulpoidExpression default,"It takes a moment for her to realize the petting has stopped. She opens her eyes in realization, and laughs through the cage of your fingers.","vulpChatPet_headpatsFacePet:Continue petting
 vulpChatPet_headpatsFaceGrab:Gently grab her",,
-vulpChatPet_headpatsFacePet,DialogOptionSelected,$option == vulpChatPet_headpatsFacePet,,,,,
+vulpChatPet_headpatsFacePet,DialogOptionSelected,$option == vulpChatPet_headpatsFacePet,SetVulpoidExpression blush,"You resume petting her, this time stroking her soft cheek with your palm. She leans in again, squishing her check against your hand.
+
+You give her a gentle pinch, and earn a stuck-out tongue and brief laugh in response.",vulpChatPet_headpatsFacePet1:Continue,,
+vulpChatPet_headpatsFacePet1,DialogOptionSelected,$option == vulpChatPet_headpatsFacePet1,,"You resume stroking her cheek, and she closes her eyes and snuggles up again.
+
+You stay like that for a time, $name's eyes closed with a blissful smile as her head is cradled comfortably in your hand.",vulpChatPet_headpatsFacePetEnd:Finish,,
+vulpChatPet_headpatsFacePetEnd,DialogOptionSelected,$option == vulpChatPet_headpatsFacePetEnd,ExitRulesToPlugin,"You gently nudge her head upright again, and she takes the cue to straighten up.",,,
 vulpChatPet_headpatsFaceGrab,DialogOptionSelected,$option == vulpChatPet_headpatsFaceGrab,,"You spread your fingers and wrap them around her like a facehugger.
 
 ""Ack! No, I've been captured!"" she laughs as she playfully attempts to squirm out.",vulpChatPet_headpatsFaceGrab1:Continue,,
-vulpChatPet_headpatsFaceGrab1,DialogOptionSelected,$option == vulpChatPet_headpatsFaceGrab1,,"You keep messing with her for a time, as she laughingly plays along.",,,
-,,,,,,,
+vulpChatPet_headpatsFaceGrab1,DialogOptionSelected,$option == vulpChatPet_headpatsFaceGrab1,,"You keep messing with her for a time, as she laughingly plays along.",vulpChatPet_headpatsFaceGrabEnd:Finish,,
+vulpChatPet_headpatsFaceGrabEnd,DialogOptionSelected,$option == vulpChatPet_headpatsFaceGrabEnd,ExitRulesToPlugin,"You give her one last bop on the nose, and she gives you a quick smooch in return before straightening up.",,,
 ,,,,,,,
 ,,,,,,,
 ,,,,,,,
