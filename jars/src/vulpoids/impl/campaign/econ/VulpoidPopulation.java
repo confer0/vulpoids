@@ -53,6 +53,7 @@ public class VulpoidPopulation extends BaseMarketConditionPlugin implements Mark
     
     @Override
     public void advance(float amount) {
+        if(!market.getPrimaryEntity().getMarket().equals(market)) market = market.getPrimaryEntity().getMarket();
         if(workforceCap==null) workforceCap = new MutableStat(0f);
         if(!market.getMemoryWithoutUpdate().contains(MemFlags.RECENTLY_BOMBARDED)) {
             float days = Misc.getDays(amount);
