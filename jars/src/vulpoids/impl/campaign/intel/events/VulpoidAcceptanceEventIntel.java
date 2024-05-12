@@ -142,7 +142,6 @@ public class VulpoidAcceptanceEventIntel extends BaseEventIntel {
         }
         if (isUpdate && getListInfoParam() instanceof EventStageData) {
             EventStageData esd = (EventStageData) getListInfoParam();
-            // TODO
             
             switch((Stage)esd.id) {
                 case SANCTIONS_START:
@@ -213,7 +212,6 @@ public class VulpoidAcceptanceEventIntel extends BaseEventIntel {
                         "will be subject to major sanctions for the forseeable future.", opad);
                 label.setHighlight("Inquisitorial Council", "Ministry of Technology Standards", "major sanctions");
                 label.setHighlightColors(lc, heg, Misc.getNegativeHighlightColor());
-                // TODO - 60% access penalty is what the League blockade uses.
             }
         } else if (stageId == Stage.SANCTIONS_END) {
             if(progress<PROGRESS_SANCTIONS_START) {
@@ -299,7 +297,6 @@ public class VulpoidAcceptanceEventIntel extends BaseEventIntel {
                 public void createTooltip(TooltipMakerAPI tooltip, boolean expanded, Object tooltipParam) {
                     float opad = 10f;
                     
-                    // TODO
                     if (esd.id == Stage.SANCTIONS_START) {
                         tooltip.addTitle("Major faction retaliation");
                     } else if (esd.id == Stage.SANCTIONS_END) {
@@ -444,7 +441,7 @@ public class VulpoidAcceptanceEventIntel extends BaseEventIntel {
         Global.getSector().getImportantPeople().addPerson(curate);
         Global.getSector().getEntityById("gilead").getMarket().addPerson(curate);
         Global.getSector().getEntityById("gilead").getMarket().getCommDirectory().addPerson(curate);
-        // TODO - add intel to point you specifically here
+        
         sendUpdateIfPlayerHasIntel(getDataFor(Stage.KNIGHT_BOMBARD), false);
     }
     public void resolveGileadEvent() {

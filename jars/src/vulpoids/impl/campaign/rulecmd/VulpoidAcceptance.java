@@ -20,6 +20,7 @@ public class VulpoidAcceptance extends BaseCommandPlugin {
         String option = params.get(0).getString(memoryMap);
         switch(option) {
             case "officialStance":
+                if (VulpoidAcceptanceEventIntel.get()==null) return false;
                 return VulpoidAcceptanceEventIntel.get().getProgress() >= VulpoidAcceptanceEventIntel.PROGRESS_SANCTIONS_START;
             case "donate":
                 String workforce = params.get(1).getString(memoryMap);

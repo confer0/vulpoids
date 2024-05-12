@@ -298,7 +298,7 @@ public class VulpoidProductionMission extends HubMissionWithBarEvent implements 
             e.triggerSetFleetGenericHailPermanent("VulpProductionPatherHail");
             e.endCreate();
         }
-        // TODO
+        
         if (rollProbability(PROB_COMPLIMENTS)) {
             DelayedFleetEncounter e = new DelayedFleetEncounter(genRandom, getMissionId());
             //e.setDelay(0f);

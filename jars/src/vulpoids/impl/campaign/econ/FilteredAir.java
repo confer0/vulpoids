@@ -63,7 +63,6 @@ public class FilteredAir extends BaseMarketConditionPlugin {
     
     @Override
     public String getIconName() {
-        // TODO
         if(getSuppressedConditions().isEmpty()) {
             if(market.hasCondition(Conditions.MILD_CLIMATE)) return "graphics/icons/markets/terraformer_idyllic.png";
             else return "graphics/icons/markets/terraformer_improvement.png";

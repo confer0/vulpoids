@@ -22,13 +22,13 @@ public class CultWorkforce extends BaseWorkforce {
     public void apply(String id) {
         super.apply(id);
         if(shouldApply()) {
-            // TODO STABILITY
+            market.getStability().modifyFlat(id, STAB_BONUS, getName());
         }
     }
     @Override
     public void unapply(String id) {
         super.unapply(id);
-        // TODO STABILITY
+        market.getStability().unmodifyFlat(id);
     }
     @Override
     public void advance(float amount) {

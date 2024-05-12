@@ -15,7 +15,7 @@ import com.fs.starfarer.api.characters.MarketConditionSpecAPI;
 import com.fs.starfarer.api.combat.EngagementResultAPI;
 import com.fs.starfarer.api.impl.campaign.DevMenuOptions;
 import com.fs.starfarer.api.impl.campaign.RuleBasedInteractionDialogPluginImpl;
-import com.fs.starfarer.api.impl.campaign.rulecmd.FireAll;
+import com.fs.starfarer.api.impl.campaign.rulecmd.EndConversation;
 import com.fs.starfarer.api.util.Misc;
 import java.awt.Color;
 import java.util.ArrayList;
@@ -53,6 +53,7 @@ public class WorkforceInteractionDialogPlugin implements InteractionDialogPlugin
                     try {
                         BaseWorkforce b = (BaseWorkforce)conditionClass.newInstance();
                         if(b.isAvailableToPlayer()) conditions.add(spec.getId());
+                        else if(market.hasCondition(spec.getId())) conditions.add(spec.getId());  // In case an update bars access
                     } catch (InstantiationException | IllegalAccessException ex) {}
                 }
             } catch (ClassNotFoundException ex) {}
@@ -133,7 +134,8 @@ public class WorkforceInteractionDialogPlugin implements InteractionDialogPlugin
                 RuleBasedInteractionDialogPluginImpl plugin = new RuleBasedInteractionDialogPluginImpl();
                 plugin.init(dialog);
                 dialog.setPlugin(plugin);
-                FireAll.fire(null, dialog, memoryMap, "PopulateOptions");
+                //FireAll.fire(null, dialog, memoryMap, "PopulateOptions");
+                new EndConversation().execute(null, dialog, new ArrayList(), memoryMap);
                 break;
             default:
                 // We assume that the options are correctly enabled/disabled, so just blindly un/apply them.

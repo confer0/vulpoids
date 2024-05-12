@@ -23,7 +23,7 @@ public class VulpoidBrain {
     
     final static int DAYS_FOR_INDUSTRIAL = 365;
     
-    public static class Level1 implements MarketSkillEffect {
+    public static class ChangePortrait implements MarketSkillEffect {
         @Override
         public void apply(MarketAPI market, String id, float level) {
             PersonAPI admin = market.getAdmin();
@@ -43,6 +43,7 @@ public class VulpoidBrain {
                 //market.getCommDirectory().removePerson(admin);
                 for(AdminData player_admin : Global.getSector().getCharacterData().getAdmins()) if(player_admin.getPerson().getId().equals(admin.getId())) admin=player_admin.getPerson();
                 admin.setPortraitSprite(VulpoidCreator.setPortraitPropertyAtIndex(admin.getPortraitSprite(), VulpoidCreator.INDEX_CLOTHING, VulpoidCreator.CLOTHING_CLOTHED));
+                admin.setPortraitSprite(VulpoidCreator.setPortraitPropertyAtIndex(admin.getPortraitSprite(), VulpoidCreator.INDEX_EXPRESSION, VulpoidCreator.EXPRESSION_DEFAULT));
                 String default_post = admin.getMemoryWithoutUpdate().getString(Vulpoids.KEY_DEFAULT_POST);
                 if(default_post != null) admin.setPostId(default_post);
                 else admin.setPostId(null);
@@ -63,6 +64,25 @@ public class VulpoidBrain {
             market.getMemoryWithoutUpdate().unset(Vulpoids.KEY_MARKET_VULPOID_ADMIN);
             market.getMemoryWithoutUpdate().unset(Vulpoids.KEY_MARKET_VULPOID_ADMIN_TIMESTAMP);
         }
+        @Override
+        public String getEffectDescription(float level) {
+            return null;
+        }
+        @Override
+        public String getEffectPerLevelDescription() {
+            return null;
+        }
+        @Override
+        public ScopeDescription getScopeDescription() {
+            return ScopeDescription.GOVERNED_OUTPOST;
+        }
+    }
+    
+    public static class Level1 implements MarketSkillEffect {
+        @Override
+        public void apply(MarketAPI market, String id, float level) {}
+        @Override
+        public void unapply(MarketAPI market, String id) {}
         @Override
         public String getEffectDescription(float level) {
             return "Learns Industrial Planning after a year of service.";

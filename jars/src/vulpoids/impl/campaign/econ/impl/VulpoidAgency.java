@@ -29,7 +29,7 @@ public class VulpoidAgency extends BaseIndustry {
         super.apply(true);
         special = cachedSpecial;
         
-        int vulpDemand = market.getSize();
+        int vulpDemand = market.getSize() - 2;
         /*if(market.getIndustry(Industries.POPULATION)!=null) {
             vulpDemand = market.getIndustry(Industries.POPULATION).getDemand(Vulpoids.CARGO_ITEM).getQuantity().getModifiedInt();
         } else {
@@ -39,14 +39,13 @@ public class VulpoidAgency extends BaseIndustry {
         
         demand(Vulpoids.CARGO_ITEM, vulpDemand);
         
-        vulpImport = vulpDemand;
+        vulpImport = getDemand(Vulpoids.CARGO_ITEM).getQuantity().getModifiedInt();
         Pair<String, Integer> deficit = getMaxDeficit(Vulpoids.CARGO_ITEM);
         vulpImport -= deficit.two;
         if(!isFunctional()) vulpImport = 0;
         
-        if(vulpImport>0 && !market.hasCondition(Vulpoids.CONDITION_VULPOID_POPULATION)) market.addCondition(Vulpoids.CONDITION_VULPOID_POPULATION);
-        // TODO - Require some amount of satisfaction?
-        if(getPopPlugin()!=null) getPopPlugin().getWorkforceCap().modifyFlat(getId(), 1);
+        if(vulpImport>0 && !market.hasCondition(Vulpoids.CONDITION_VULPOID_POPULATION) && market.hasIndustry(getId())) market.addCondition(Vulpoids.CONDITION_VULPOID_POPULATION);
+        if(vulpImport >= 3 && getPopPlugin()!=null) getPopPlugin().getWorkforceCap().modifyFlat(getId(), 1);
         
         if(getSpecialItem()!=null && getSpecialItem().getId().equals(Items.DEALMAKER_HOLOSUITE)) {
             market.getIncomeMult().modifyPercent(getId(), DEALMAKER_INCOME_PERCENT_BONUS, Misc.ucFirst(Global.getSettings().getSpecialItemSpec(getSpecialItem().getId()).getName().toLowerCase())+" (VDA)");
@@ -84,7 +83,8 @@ public class VulpoidAgency extends BaseIndustry {
         float opad = 10f;
         Color h = Misc.getHighlightColor();
         tooltip.addPara("Imports Vulpoids to increase population", opad);
-        tooltip.addPara("Grants %s additional Vulpoid workforce", opad, h, ""+1);
+        if(vulpImport<3) tooltip.addPara("Will grant %s additional Vulpoid workforce when importing at least %s units of Vulpoids", opad, h, "1", "3");
+        else tooltip.addPara("Grants %s additional Vulpoid workforce", opad, h, ""+1);
     }
     
     
@@ -98,12 +98,12 @@ public class VulpoidAgency extends BaseIndustry {
         if (mode == AICoreDescriptionMode.INDUSTRY_TOOLTIP || mode == AICoreDescriptionMode.MANAGE_CORE_TOOLTIP) {
             CommoditySpecAPI coreSpec = Global.getSettings().getCommoditySpec(aiCoreId);
             TooltipMakerAPI text = tooltip.beginImageWithText(coreSpec.getIconName(), 48);
-            text.addPara(pre + "Reduces upkeep cost by %s. Grants %s additional workforce.", 0f, highlight,
+            text.addPara(pre + "Reduces upkeep cost by %s. Imports %s additional unit.", 0f, highlight,
                     "" + (int)((1f - UPKEEP_MULT) * 100f) + "%", ""+1);
             tooltip.addImageWithText(opad);
             return;
         }
-        tooltip.addPara(pre + "Reduces upkeep cost by %s. Grants %s additional workforce.", opad, highlight,
+        tooltip.addPara(pre + "Reduces upkeep cost by %s. Imports %s additional unit.", opad, highlight,
                 "" + (int)((1f - UPKEEP_MULT) * 100f) + "%", ""+1);
     }
 
@@ -146,12 +146,11 @@ public class VulpoidAgency extends BaseIndustry {
     
     @Override
     protected void applyAlphaCoreModifiers() {
-        //demandReduction.modifyFlat(getModId(0), -1, "Alpha Core");
-        if(getPopPlugin()!=null) getPopPlugin().getWorkforceCap().modifyFlat(getModId(1), 1);
+        demandReduction.modifyFlat(getModId(0), -1, "Alpha Core");
     }
     @Override
     protected void applyNoAICoreModifiers() {
-        if(getPopPlugin()!=null) getPopPlugin().getWorkforceCap().unmodifyFlat(getModId(1));
+        demandReduction.unmodifyFlat(getModId(0));
     }
     
     @Override
@@ -160,37 +159,20 @@ public class VulpoidAgency extends BaseIndustry {
     }
     @Override
     protected void applyImproveModifiers() {
-        /*if (isImproved()) {
-            market.getIncomeMult().modifyPercent(getModId(2), IMPROVE_BONUS,
-                    getImprovementsDescForModifiers() + " (" + getNameForModifier() + ")");
-        } else {
-            market.getIncomeMult().unmodifyPercent(getModId(2));
-        }*/
         if (isImproved()) {
-            if(getPopPlugin()!=null) getPopPlugin().getWorkforceCap().modifyFlat(getModId(2), 1);
+            demandReduction.modifyFlat(getModId(1), -1, "Improvements");
         } else {
-            if(getPopPlugin()!=null) getPopPlugin().getWorkforceCap().unmodifyFlat(getModId(2));
+            demandReduction.unmodifyFlat(getModId(1));
         }
     }
     @Override
     public void addImproveDesc(TooltipMakerAPI info, ImprovementDescriptionMode mode) {
-        /*float opad = 10f;
-        Color highlight = Misc.getHighlightColor();
-        float a = IMPROVE_BONUS;
-        String aStr = "" + (int)Math.round(a * 1f) + "%";
-        if (mode == ImprovementDescriptionMode.INDUSTRY_TOOLTIP) {
-            info.addPara("Colony income increased by %s.", 0f, highlight, aStr);
-        } else {
-            info.addPara("Increases colony income by %s.", 0f, highlight, aStr);
-        }
-        info.addSpacer(opad);
-        super.addImproveDesc(info, mode);*/
         float opad = 10f;
         Color highlight = Misc.getHighlightColor();
         if (mode == ImprovementDescriptionMode.INDUSTRY_TOOLTIP) {
-            info.addPara("Grants %s additional workforce.", 0f, highlight, ""+1);
+            info.addPara("Imports %s additional unit.", 0f, highlight, ""+1);
         } else {
-            info.addPara("Grants %s additional workforce.", 0f, highlight, ""+1);
+            info.addPara("Imports %s additional unit.", 0f, highlight, ""+1);
         }
         info.addSpacer(opad);
         super.addImproveDesc(info, mode);

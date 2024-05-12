@@ -32,6 +32,7 @@ import com.fs.starfarer.api.impl.campaign.ids.Entities;
 import com.fs.starfarer.api.impl.campaign.ids.Factions;
 import com.fs.starfarer.api.impl.campaign.ids.FleetTypes;
 import com.fs.starfarer.api.impl.campaign.ids.HullMods;
+import com.fs.starfarer.api.impl.campaign.ids.Items;
 import com.fs.starfarer.api.impl.campaign.ids.MemFlags;
 import com.fs.starfarer.api.impl.campaign.ids.Tags;
 import com.fs.starfarer.api.impl.campaign.intel.bar.events.historian.SpecialItemOffer;
@@ -54,6 +55,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import vulpoids.impl.campaign.ids.Vulpoids;
+import vulpoids.impl.campaign.intel.events.VulpoidAcceptanceEventIntel;
 
 public class VulpoidBiofactoryMission extends HubMissionWithSearch implements FleetEventListener {
     
@@ -224,7 +226,7 @@ public class VulpoidBiofactoryMission extends HubMissionWithSearch implements Fl
         v.addTag(Tags.TAG_NO_AUTOFIT);
         v.addTag(Tags.SHIP_LIMITED_TOOLTIP);
         v.addTag(Tags.VARIANT_UNBOARDABLE);
-        v.getHints().add(ShipHullSpecAPI.ShipTypeHints.CIVILIAN);  // TODO: I believe this makes it deploy last?
+        v.getHints().add(ShipHullSpecAPI.ShipTypeHints.CIVILIAN);  // I believe this makes it deploy last?
         //v.addTag(Tags.TAG_AUTOMATED_NO_PENALTY);
         v.addPermaMod("supercomputer", true);  //S-mod targeting supercomputer. Makes the boss a monster, but you loose it on recovery.
         v.removeMod(HullMods.ADVANCED_TARGETING_CORE);  // Removing this so it doesn't stack, it's effectively the replacement.
@@ -465,6 +467,15 @@ public class VulpoidBiofactoryMission extends HubMissionWithSearch implements Fl
                 SectorEntityToken entity = SpecialItemOfferCreator.createEntity(new Random());
                 SpecialItemOffer offer = new SpecialItemOffer(entity, 2, Vulpoids.MANGONUT_TREE_ITEM);
                 offer.init(dialog);
+                return true;
+            case "introduceToSector":
+                new VulpoidAcceptanceEventIntel(null, true);
+                
+                Global.getSector().getPlayerFaction().addKnownIndustry(Vulpoids.INDUSTRY_VULPOIDAGENCY);
+                String dealmakerParams = Global.getSettings().getSpecialItemSpec(Items.DEALMAKER_HOLOSUITE).getParams();
+                dealmakerParams += ", "+Vulpoids.INDUSTRY_VULPOIDAGENCY;
+                Global.getSettings().getSpecialItemSpec(Items.DEALMAKER_HOLOSUITE).setParams(dealmakerParams);
+                
                 return true;
         }
         return super.callEvent(ruleId, dialog, params, memoryMap);

@@ -20,8 +20,6 @@ public class ChatAbility extends BaseDurationAbility {
         InteractionDialogAPI dialog = Global.getSector().getCampaignUI().getCurrentInteractionDialog();
         plugin.init(dialog);
         dialog.setPlugin(plugin);
-        // TODO - test this? Or is the current method good enough.
-        //Global.getSector().getCampaignUI().getCurrentInteractionDialog().getVisualPanel().closeCoreUI();
     }
     
     @Override

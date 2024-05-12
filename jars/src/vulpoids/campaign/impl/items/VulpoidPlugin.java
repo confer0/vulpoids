@@ -366,9 +366,6 @@ public class VulpoidPlugin extends BaseSpecialItemPlugin {
                         "right people.", opad);
                 break;
             case Vulpoids.SPECIAL_ITEM_EMBARKED:
-                // TODO - Not really happy with this. Could be better.
-                //portrait.addPara("Profecto Vulpoids retain a powerful innate desire to help humans, though are self-aware "+
-                //        "enough to resist it. "+"If one earns their trust, their psychology makes their loyalty unbreakable.", opad);
                 portrait.addPara("Profecto Vulpoids retain a powerful innate desire to help humans, though are self-aware "+
                         "enough to resist it. Their trust is not lightly earned, but once done their loyalty and commitment "+
                         "is all but unbreakable.", opad);
