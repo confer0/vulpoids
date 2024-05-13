@@ -328,7 +328,9 @@ public class VulpoidModPlugin extends BaseModPlugin {
             }
             @Override
             public void apply(Industry industry) {
-                industry.supply(spec.getId(), Commodities.ORGANS, -100, Misc.ucFirst(spec.getName().toLowerCase()));
+                if(Vulpoids.INDUSTRY_ORGANFARM.equals(industry.getId())) {
+                    industry.supply(spec.getId(), Commodities.ORGANS, -100, Misc.ucFirst(spec.getName().toLowerCase()));
+                }
                 
                 if(!industry.getMarket().hasCondition(Conditions.VOLTURNIAN_LOBSTER_PENS)) {
                     PlanetAPI planet = industry.getMarket().getPlanetEntity();

@@ -3094,10 +3094,10 @@ $optionColor:vulpChatGift_ship = ""72,159,255"" 0",,vulpChatGift_ship:Give the c
 ,,,,,,,
 vulpChatSurroundings_defaultOption,VulpoidChatSurroundingsOptions,,,,,,
 ,,,,,,,
-vulpChatSurroundings_genericPlanetOption,VulpoidChatSurroundingsOptions,$topic.tag:planet,,,vulpChatSurroundings_genericPlanet:$topic.name,,
-vulpChatSurroundings_genericPlanet,DialogOptionSelected,$option == vulpChatSurroundings_genericPlanet,"SetVulpoidExpression default
+#vulpChatSurroundings_genericPlanetOption,VulpoidChatSurroundingsOptions,$topic.tag:planet,,,vulpChatSurroundings_genericPlanet:$topic.name,,
+#vulpChatSurroundings_genericPlanet,DialogOptionSelected,$option == vulpChatSurroundings_genericPlanet,"SetVulpoidExpression default
 ExitRulesToPlugin","""Not much to say about that rock, huh?""",,,
-vulpChatSurroundings_genericPlanetGasGiant,DialogOptionSelected,"$option == vulpChatSurroundings_genericPlanet
+#vulpChatSurroundings_genericPlanetGasGiant,DialogOptionSelected,"$option == vulpChatSurroundings_genericPlanet
 $topic.tag:gas_giant","SetVulpoidExpression default
 ExitRulesToPlugin","""Not much to say about that ball, huh?""",,,
 ,,,,,,,
