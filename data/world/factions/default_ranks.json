@@ -7,7 +7,7 @@
 	
 	"posts":{
 		"vulp_barmaid":{"name":"Barmaid"},
-	
+		"vulp_representative":{"name":"Representative"},
 	},
 }
 

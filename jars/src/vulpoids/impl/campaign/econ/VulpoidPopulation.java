@@ -144,7 +144,8 @@ public class VulpoidPopulation extends BaseMarketConditionPlugin implements Mark
         if(market.isPlayerOwned()) {
             PersonAPI vulpoid_comms = VulpoidCreator.createVulpoid();
             vulpoid_comms.setId("vulpoid_rep");
-            vulpoid_comms.setName(new FullName("Vulpoid Representative", "", FullName.Gender.FEMALE));
+            vulpoid_comms.setName(new FullName("Vulpoid", "", FullName.Gender.FEMALE));
+            vulpoid_comms.setPostId("vulp_representative");
             VulpoidCreator.setPersonPortraitPropertyAtIndex(vulpoid_comms, VulpoidCreator.INDEX_CLOTHING, VulpoidCreator.CLOTHING_CLOTHED);
             vulpoid_comms.getMemoryWithoutUpdate().set("$isVulpoidRep", true);
             market.getCommDirectory().addPerson(vulpoid_comms);
