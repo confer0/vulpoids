@@ -23,7 +23,7 @@ public class ResetVulpoidPortrait extends BaseCommandPlugin {
         }
         if (person == null) return false;
         VulpoidCreator.setPersonPortraitPropertyAtIndex(person, VulpoidCreator.INDEX_EXPRESSION, VulpoidCreator.EXPRESSION_DEFAULT);
-        VulpoidCreator.setPersonPortraitPropertyAtIndex(person, VulpoidCreator.INDEX_CLOTHING, VulpoidCreator.CLOTHING_NUDE);
+        VulpoidCreator.setPersonPortraitPropertyAtIndex(person, VulpoidCreator.INDEX_CLOTHING, VulpoidCreator.CLOTHING_CLOTHED);
         return true;
     }
     

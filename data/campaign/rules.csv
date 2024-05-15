@@ -1887,7 +1887,7 @@ The 'doctor' flinches at this accusation, but his excitement is still evident as
 kpVulpoidShinyLeave,DialogOptionSelected,$option == kpVulpoidShinyLeave,"HideThirdPerson
 ResetVulpoidPortrait $global.selectedVulpoid
 SetVulpoidExpression $global.selectedVulpoid angry
-SetVulpoidClothing $global.selectedVulpoid nude
+SetVulpoidClothing $global.selectedVulpoid clothed
 MovePersonFromMemoryToMarket $global.selectedVulpoid
 SetPersonFaction $global.selectedVulpoid pirates
 SetPersonRank $global.selectedVulpoid vulp_testSubject

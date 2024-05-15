@@ -188,7 +188,7 @@ public class VulpoidPlugin extends BaseSpecialItemPlugin {
     public void resetClothingAndExpressions() {
         switch(getId()) {
             case Vulpoids.SPECIAL_ITEM_DEFAULT:
-                VulpoidCreator.setPersonPortraitPropertyAtIndex(person, VulpoidCreator.INDEX_CLOTHING, VulpoidCreator.CLOTHING_NUDE);
+                VulpoidCreator.setPersonPortraitPropertyAtIndex(person, VulpoidCreator.INDEX_CLOTHING, VulpoidCreator.CLOTHING_CLOTHED);
                 VulpoidCreator.setPersonPortraitPropertyAtIndex(person, VulpoidCreator.INDEX_EXPRESSION, VulpoidCreator.EXPRESSION_FROZEN);
                 break;
             case Vulpoids.SPECIAL_ITEM_EMBARKED:

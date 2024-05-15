@@ -39,7 +39,7 @@ public class VulpoidCreator {
     public static PersonAPI createVulpoid() {
         PersonAPI person = Global.getFactory().createPerson();
         person.setName(new FullName("Vulpoid", "", FullName.Gender.FEMALE));
-        String portrait = getRandomClimatePortrait(CLOTHING_NUDE);
+        String portrait = getRandomClimatePortrait(CLOTHING_CLOTHED);
         person.setPortraitSprite(portrait);
         person.setFaction(Factions.PLAYER);
         person.setRankId(Vulpoids.RANK_SERVANT);
@@ -66,7 +66,6 @@ public class VulpoidCreator {
     };
     
     public static final String CLOTHING_CLOTHED = "clothed";
-    public static final String CLOTHING_NUDE = "nude";
     public static final String CLOTHING_SUIT = "spacer";
     
     public static final String EXPRESSION_ANGRY = "angry";
