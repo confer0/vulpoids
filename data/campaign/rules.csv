@@ -2495,7 +2495,7 @@ $tttBL $tttBM $tttBR",,,
 ,,,,,,,
 ,,,,,,,
 "# Gift - Food, for a nice meal",,,,,,,
-vulpChatGift_mealOption,VulpoidPettingGiftOptions,"PlayerHasCargo food 10
+#vulpChatGift_mealOption,VulpoidPettingGiftOptions,"PlayerHasCargo food 10
 $vulp_profectoAssignment != vulpoids",$optionDisabled:vulpChatGift_meal = false 0,,vulpChatGift_meal:Arrange for a nice meal together,# Note: Only Profectos allowed. Regular Vulpoids can go to Tri-Donalds. ...TODO: Tri-Donalds.,
 vulpChatGift_mealDisable,VulpoidPettingGiftOptions,$player.heldFeast,"$optionTooltip:vulpChatGift_meal = ""You've already hosted a notable meal recently, and to hold another so soon would reflect poorly.""
 $optionDisabled:vulpChatGift_meal = true 0",,,,
