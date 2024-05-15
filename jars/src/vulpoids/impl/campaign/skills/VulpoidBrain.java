@@ -66,7 +66,7 @@ public class VulpoidBrain {
         }
         @Override
         public String getEffectDescription(float level) {
-            return null;
+            return "";
         }
         @Override
         public String getEffectPerLevelDescription() {
