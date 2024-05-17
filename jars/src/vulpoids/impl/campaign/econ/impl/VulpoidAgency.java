@@ -23,6 +23,11 @@ public class VulpoidAgency extends BaseIndustry {
     public static float IMPROVE_BONUS = 25f;
     
     @Override
+    public void advance(float amount) {
+        if(vulpImport>0 && !market.hasCondition(Vulpoids.CONDITION_VULPOID_POPULATION)) market.addCondition(Vulpoids.CONDITION_VULPOID_POPULATION);
+    }
+    
+    @Override
     public void apply() {
         SpecialItemData cachedSpecial = special;
         special = null;
@@ -44,7 +49,6 @@ public class VulpoidAgency extends BaseIndustry {
         vulpImport -= deficit.two;
         if(!isFunctional()) vulpImport = 0;
         
-        if(vulpImport>0 && !market.hasCondition(Vulpoids.CONDITION_VULPOID_POPULATION) && market.hasIndustry(getId())) market.addCondition(Vulpoids.CONDITION_VULPOID_POPULATION);
         if(vulpImport >= 3 && getPopPlugin()!=null) getPopPlugin().getWorkforceCap().modifyFlat(getId(), 1);
         
         if(getSpecialItem()!=null && getSpecialItem().getId().equals(Items.DEALMAKER_HOLOSUITE)) {

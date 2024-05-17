@@ -146,7 +146,7 @@ public class VulpoidPopulation extends BaseMarketConditionPlugin implements Mark
             vulpoid_comms.setId("vulpoid_rep");
             vulpoid_comms.setName(new FullName("Vulpoid", "", FullName.Gender.FEMALE));
             vulpoid_comms.setPostId("vulp_representative");
-            VulpoidCreator.setPersonPortraitPropertyAtIndex(vulpoid_comms, VulpoidCreator.INDEX_CLOTHING, VulpoidCreator.CLOTHING_CLOTHED);
+            //VulpoidCreator.setPersonPortraitPropertyAtIndex(vulpoid_comms, VulpoidCreator.INDEX_CLOTHING, VulpoidCreator.CLOTHING_CLOTHED);
             vulpoid_comms.getMemoryWithoutUpdate().set("$isVulpoidRep", true);
             market.getCommDirectory().addPerson(vulpoid_comms);
         }

@@ -286,9 +286,12 @@ Suddenly, the comms are filled with the sounds of human...
 vulp_exploreWreck6,DialogOptionSelected,$option == vulp_exploreWreck6,"SetImportantVulpoidName vulp_dummy_terran ""Opposition Crew?""
 SetImportantVulpoidName vulp_dummy_desert ""Opposition Crew?""
 SetImportantVulpoidName vulp_dummy_arctic ""Opposition Crew?""
-ResetVulpoidPortrait vulp_dummy_terran
-ResetVulpoidPortrait vulp_dummy_desert
-ResetVulpoidPortrait vulp_dummy_arctic
+SetVulpoidClothing vulp_dummy_terran ""clothed""
+SetVulpoidExpression vulp_dummy_terran ""default""
+SetVulpoidClothing vulp_dummy_desert ""clothed""
+SetVulpoidExpression vulp_dummy_desert ""default""
+SetVulpoidClothing vulp_dummy_arctic ""clothed""
+SetVulpoidExpression vulp_dummy_arctic ""default""
 ShowPersonVisual true vulp_dummy_terran
 ShowSecondPerson vulp_dummy_arctic
 ShowThirdPerson vulp_dummy_desert","Tactical is busy barking out harsh orders to cut out the chatter, but directs your attention to the corresponding team's cameras.
@@ -1858,7 +1861,8 @@ $personName licks $hisOrHer lips uncomfortably. ""Good deal. I'm looking forward
 kpVulpoid,KPFindGifts,"PlayerHasCargo vulpoids 1000
 $kpNumGifts < 5
 $kpNumGifts++",,,kpVulpoid:A thousand Vulpoids,,
-kpVulpoidSel,DialogOptionSelected,$option == kpVulpoid,"ResetVulpoidPortrait vulp_dummy_terran
+kpVulpoidSel,DialogOptionSelected,$option == kpVulpoid,"SetVulpoidClothing vulp_dummy_terran dress
+SetVulpoidExpression vulp_dummy_terran default 
 SetImportantVulpoidName vulp_dummy_terran ""Vulpoids""
 ShowThirdPerson vulp_dummy_terran
 RemoveCommodity vulpoids 1000
@@ -1875,8 +1879,8 @@ $kpNumGifts < 5
 $kpNumGifts++",,,kpVulpoidShiny:A Profecto Vulpoid,,
 kpVulpoidShinyPick,DialogOptionSelected,$option == kpVulpoidShiny,"VulpoidPicker selectRemoveVulpoid ""Select a Vulpoid to offer as tribute to Kanta""
 $vulpoidselectedoption = kanta",,,,
-kpVulpoidShinySel,VulpoidSelected,$vulpoidselectedoption == kanta,"ResetVulpoidPortrait $global.selectedVulpoid
-SetVulpoidExpression $global.selectedVulpoid fear
+kpVulpoidShinySel,VulpoidSelected,$vulpoidselectedoption == kanta,"SetVulpoidExpression $global.selectedVulpoid fear
+SetVulpoidClothing clothed
 ShowThirdPersonFromMemory $global.selectedVulpoid
 AdjustRepPerson $global.selectedVulpoid INHOSPITABLE -200","$global.selectedVulpoidName is brought into the court, and Cydonia immediately begins circling around her like a fighter on an attack run, studying her from every angle. Kanta quietly nods along as $global.selectedVulpoidName fearfully elaborates on her rarity, and gives benchmarks for her cognitive ability.
 
@@ -1885,7 +1889,6 @@ kpVulpoidShinySel1,DialogOptionSelected,$option == kpVulpoidShiny1,,"After a bri
 
 The 'doctor' flinches at this accusation, but his excitement is still evident as he directs the Profecto towards his laboratory.",kpVulpoidShinyLeave:Continue,,
 kpVulpoidShinyLeave,DialogOptionSelected,$option == kpVulpoidShinyLeave,"HideThirdPerson
-ResetVulpoidPortrait $global.selectedVulpoid
 SetVulpoidExpression $global.selectedVulpoid angry
 SetVulpoidClothing $global.selectedVulpoid clothed
 MovePersonFromMemoryToMarket $global.selectedVulpoid

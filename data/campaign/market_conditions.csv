@@ -1,7 +1,6 @@
 name,id,planetary,decivRemove,script,desc,icon,order
-Vulpoid Population,vulpoid_condition,,TRUE,vulpoids.impl.campaign.econ.VulpoidCondition,,graphics/icons/markets/fox_planet_modifier.png,143
 Vulpoid Demand,vulpoid_demand,,,vulpoids.impl.campaign.econ.VulpoidDemandCondition,Hidden condition that adds Vulpoid demand.,,1000
-Vulpoid Population,vulpoid_population,,TRUE,vulpoids.impl.campaign.econ.VulpoidPopulation,,,30
+Vulpoid Population,vulpoid_population,,TRUE,vulpoids.impl.campaign.econ.VulpoidPopulation,,,21
 ,,,,,,,
 Anti-Vulpoid Sanctions,vulpoid_blockade,,TRUE,vulpoids.impl.campaign.econ.VulpoidBlockade,"Political sanctions and religious proclamations regarding Vulpoid manufacture are significantly impairing trade to and from $market. Any prospective trader is forced to cut through massive swathes of red tape, and any failure to abide by the strict and convoluted regulations could see the revocation of licenses or even seizure of assets.",graphics/icons/campaign/vulpoidAcceptance_sanctions.png,1390
 ,,,,,,,
@@ -33,5 +32,5 @@ Vulpoid Clerks,vulpoid_clerks,,TRUE,vulpoids.impl.campaign.econ.workforces.Clerk
 
 This can free up human workers for more skilled jobs, thereby increasing the colony's industrial capacity. The increased wages, in combination with other economic shifts, will negatively impact income.",graphics/icons/markets/workforce_clerks.png,39
 ,,,,,,,
-Filtered Air,filtered_air,,TRUE,vulpoids.impl.campaign.econ.FilteredAir,"$market is host to advanced climate-manipulation technology. Exotic fields blanket the upper atmosphere, arranging and directing clouds of nanofog as they tailor the planet's weather patterns.",,29
+Filtered Air,filtered_air,,TRUE,vulpoids.impl.campaign.econ.FilteredAir,"$market is host to advanced climate-manipulation technology. Exotic fields blanket the upper atmosphere, arranging and directing clouds of nanofog as they tailor the planet's weather patterns.",,30
 Growing Lobster Population,lobsters_growing,TRUE,TRUE,vulpoids.impl.campaign.econ.LobstersGrowing,"Through the use of a Domain-era Bioforge, this planet's oceans are gaining a wild population of Volturnian lobsters.",graphics/icons/markets/lobsters_growing.png,137
