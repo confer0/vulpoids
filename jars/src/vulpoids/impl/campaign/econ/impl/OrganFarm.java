@@ -182,7 +182,8 @@ public class OrganFarm extends BaseIndustry {
         if (isBiofacilityVulpBiofactory()) {
             return "The pinnacle of Exodyne Biotech's technological achievement. With a bioforge at its heart, "+
                     "this sleek and advanced megacomplex is capable of producing an endless flow of fluffy friends, "+
-                    "while cast-offs are reprocessed to supplement the pre-existing organ production.";
+                    "while arcane machinery recovered from Citadel negates all problems related to organ production, "+
+                    "thus increasing efficiency of an entire industry and especially growth vats tenfold.";
         }
         if (isOrganFarmLobsterBioforge()) {
             return "A specialized bioforge enables the production of Volturnian lobsters outside of their homeworld. "+
