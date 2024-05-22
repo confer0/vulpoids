@@ -2571,7 +2571,7 @@ unset $ateAnother",,,,
 ,,,,,,,
 # Dummy - Same every time,,,,,,,
 vulpChatGift_mangonutDummySel,DialogOptionSelected,"$option == vulpChatGift_mangonut
-$vulp_profectoAssignment == vulpoids score:1000","SetVulpoidExpression default
+$vulp_profectoAssignment == vulpoids score:100","SetVulpoidExpression default
 RemoveCommodity mangonuts 1
 $option = vulpChatGift_mangonutDummy
 FireBest DialogOptionSelected",,,,
@@ -2633,7 +2633,7 @@ Her body sways awkwardly, suspended in something between a dance and a drunken s
 ""Sooo... waddya you wanna do now...?""","vulpChatGift_mangonutDummySnuggle:Snuggle with her
 vulpChatGift_mangonutEatAnother:Offer a second mangonut",,
 vulpChatGift_mangonutDummyEatSecond,DialogOptionSelected,"$option == vulpChatGift_mangonutEatAnother
-$vulp_profectoAssignment == vulpoids score:1000
+$vulp_profectoAssignment == vulpoids score:100
 $numNuts == 2",FireBest VulpDisableEatAnother,"""Oh, yay!"" She eagerly reaches out and devours the second mangonut, fruit and pit.
 
 ""Ehehehe, I can feel my fur! I'm so fluffy, it's like - woah! That's really fluffy! Have you ever felt, you... you should! We should snuggle!""
@@ -2641,7 +2641,7 @@ $numNuts == 2",FireBest VulpDisableEatAnother,"""Oh, yay!"" She eagerly reaches 
 Something that could could be generously called an idea crosses her mind. ""Oh, wait! D'you have any more fruit? Pretty please?""","vulpChatGift_mangonutDummySnuggle:Just snuggle on the couch
 vulpChatGift_mangonutEatAnother:Give her a third mangonut",,
 vulpChatGift_mangonutDummyEatThird,DialogOptionSelected,"$option == vulpChatGift_mangonutEatAnother
-$vulp_profectoAssignment == vulpoids score:1000
+$vulp_profectoAssignment == vulpoids score:100
 $numNuts == 3","SetVulpoidExpression blush
 FireBest VulpDisableEatAnother","The third fruit disappears in short order, though not quite as quickly as the second.
 
@@ -2656,7 +2656,7 @@ You help support her as she staggers towards the bed. The moment she reaches it 
 
 Quiet, muffled snoring immediately emerges from the pillow her face is buried in.",vulpChatGift_mangonutDummySnuggleGetUp:Continue,,
 vulpChatGift_mangonutDummyEatFourth,DialogOptionSelected,"$option == vulpChatGift_mangonutEatAnother
-$vulp_profectoAssignment == vulpoids score:1000
+$vulp_profectoAssignment == vulpoids score:100
 $numNuts == 4",,"""Yay, mo- (hic!) more!""
 
 She nearly falls over herself just reaching for the fruit, and devours it clumsily but ravenously. As she finishes, her face is a picture of total, happy delirium.
@@ -2804,7 +2804,7 @@ As she finishes, she sags in your arms like an empty space suit. Supporting her 
 ""I loooo- (hic!) -oove youuu... (hic!) sooo... (hic!) mu- (hic!) -uch..."" she awkwardly hiccups out, barely coherent.",vulpChatGift_mangonutProfectoRest:Cut her off and put her to bed,,
 ,,,,,,,
 vulpChatGift_mangonutLaisa,DialogOptionSelected,"$option == vulpChatGift_mangonut
-$id == laisa score:1000
+$id == laisa score:100
 $mangonutsEaten < 1","SetVulpoidExpression fear
 $eatingMangonutsFirstTime = true 0","""Oh no, please don't even mention those to me. I still can't believe they're still around, I thought I was free of them centuries ago.""","vulpChatGift_mangonutLaisa1:""Why, what's wrong?""",,
 vulpChatGift_mangonutLaisa1,DialogOptionSelected,$option == vulpChatGift_mangonutLaisa1,SetVulpoidExpression bruh,"$name looks questioningly at you. ""Seriously? Have you seen the theobromine content in those things? It's like an entire box of chocolate in a single fruit.""","vulpChatGift_mangonutLaisaExplainChocolate:""What's wrong with that?""
@@ -2834,7 +2834,7 @@ FireBest VulpDisableEatFour","""But, well, the mangonuts will make me pretty sap
 In other words, the lack of inhibition will make her more transparent about her natural feelings.","vulpChatGift_mangonutEatFour:""Alright, let's do it."" (give her four mangonuts)
 vulpChatGift_mangonutLaisaCancel:""Maybe it's best we didn't.""",,
 vulpChatGift_mangonutLaisaEat,DialogOptionSelected,"$option == vulpChatGift_mangonutEatFour
-$id == laisa score:1000
+$id == laisa score:100
 $eatingMangonutsFirstTime",SetVulpoidExpression default,"She stares at the mangonuts for a moment, hesitating before she collects herself.
 
 In the next moment, the fruits disappear. The sheer speed at which she devours them reflects a significant past experience, undiluted by their centuries of absence.
