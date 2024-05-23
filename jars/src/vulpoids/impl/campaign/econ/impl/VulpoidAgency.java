@@ -24,6 +24,7 @@ public class VulpoidAgency extends BaseIndustry {
     
     @Override
     public void advance(float amount) {
+        super.advance(amount);
         if(vulpImport>0 && !market.hasCondition(Vulpoids.CONDITION_VULPOID_POPULATION)) market.addCondition(Vulpoids.CONDITION_VULPOID_POPULATION);
     }
     

@@ -3,7 +3,7 @@
     "name": "Vulpoids - Lost Project",
     "author": "confer0 & Yanzihko",
     "utility": "false",
-    "version": "0.9.6",
+    "version": "0.9.7",
     "description": "Rediscover the long-lost technology of the Exodyne Biotech megacorporation, and use it to change the face of the Persean Sector into something a little fluffier. Compatible both with 0.96a-RC6 and 0.97a-RC6 versions of Starsector",
     "gameVersion": "0.97a-RC6",
 	"jars": ["jars/dist/Vulpoids.jar"],
