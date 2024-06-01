@@ -55,20 +55,21 @@ public class VulpoidPopulation extends BaseMarketConditionPlugin implements Mark
     public void advance(float amount) {
         if(workforceCap==null) workforceCap = new MutableStat(0f);
         if(!market.getMemoryWithoutUpdate().contains(MemFlags.RECENTLY_BOMBARDED)) {
+            int prev_population = (int)population;
             float days = Misc.getDays(amount);
             int popCap = getPopCap();
             if (population < popCap - 2) {
-                // Checking if pop is zero so we don't ping when installing the biofactory.
-                if (population != 0) Global.getSector().getIntelManager().addIntel(new VulpPopGrownIntel(market, popCap - 2));
                 population = popCap - 2;
             }
             double population_growth = days / 30f;  // Takes ~1 month to increase to -1.
             if(population >= popCap - 1) population_growth /= 10; // Takes ~1 year to increase to +0 from -1.
             if(population >= popCap) population_growth = 0;  // I can't believe I forgot this lol.
-            if ((int)population < (int)(population+population_growth)) Global.getSector().getIntelManager().addIntel(new VulpPopGrownIntel(market, (int)population+1));
             population += population_growth;
             population = Math.min(population, MAX_POPULATION);
             population = Math.max(population, MIN_POPULATION);
+            if(prev_population < (int)population) {
+                Global.getSector().getIntelManager().addIntel(new VulpPopGrownIntel(market, (int)population));
+            }
         } else {
             population = Math.min(population, getPopCap());
         }
