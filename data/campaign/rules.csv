@@ -31,6 +31,17 @@ BeginMission vulpFactory false","No sooner have you entered the bar than you're 
 From that reaction you can assume he's just thawed out from pre-Collapse, and a closer look at his clothes confirms this - the lab coat has the logo of the long-gone Exodyne Biotech megacorporation.
 
 ""Woah, sorry about that. But you're a starship, captain, right? I've got something incredibly important to tell you about, you're going to want to hear this.""",vulp_barEvent1:Find a seat,,
+vulp_barEventStartRandomSector,DialogOptionSelected,"$option == marketVisitBar
+!$global.vulp_gotFactoryMission
+$global.nex_randomSector
+$market.ind:cryosanctum
+HasFoughtRemnant","ShowImageVisual vulp_bar_quest
+$global.vulp_gotFactoryMission = true
+BeginMission vulpFactory false","No sooner have you entered the bar than you're quickly approached by a man in a lab coat. Your guards step forward to block his approach, and he stops dead in his tracks.
+
+From that reaction you can assume he's just thawed out from pre-Collapse, and a closer look at his clothes confirms this - the lab coat has the logo of the long-gone Exodyne Biotech megacorporation.
+
+""Woah, sorry about that. But you're a starship, captain, right? I've got something incredibly important to tell you about, you're going to want to hear this.""",vulp_barEvent1:Find a seat,,
 vulp_barEvent1,DialogOptionSelected,$option == vulp_barEvent1,,"You humor him and find a free booth. He wastes no time launching into his explanation.
 
 ""I'm from before the... 'Collapse', right? Got put on ice because my medical implants needed the Gates to connect to their verification server, but that's not important.""
@@ -301,7 +312,7 @@ vulp_exploreWreck7,DialogOptionSelected,$option == vulp_exploreWreck7,,"The team
 
 The simultaneous conversations are difficult to follow through comms, but you grasp that nothing of consequence is being said - it appears that the creatures are just extremely curious about humans. ""Do you eat food?"" is a highlight.
 
-The team is promptly persuaded to get back in gear, and these apparent non-humans are placed under arrest. Your science officer is has dispatched analysis teams to board the vessel and hopefully get some clear answers.",vulp_exploreWreck8:Continue,,
+The team is promptly persuaded to get back in gear, and these apparent non-humans are placed under arrest. Your science officer has dispatched analysis teams to board the vessel and hopefully get some clear answers.",vulp_exploreWreck8:Continue,,
 vulp_exploreWreck8,DialogOptionSelected,$option == vulp_exploreWreck8,ShowImageVisual citadel_biodome,"Your bridge is on edge with the alien nature of the ship's crew, but the boarding continues all the same.
 
 Tactical's chewing out of the first team did the trick, and there are no further incidents as additional teams encounter unsuited crew and place them under arrest.
@@ -531,7 +542,7 @@ vulp_exploreCIC2,DialogOptionSelected,$option == vulp_exploreCIC2,HideVisual,"Sa
 The problem is that the ship is equipped with an anti-tamper system. It's been rigged to destroy experimental features if it detects interference, presumably as a bid to prevent corporate espionage. The system has been manually enabled, and its command codes aren't responding to the usual overrides.
 
 Your ops chief confirms that you'll need the codes to disable that system before it's possible to recover the ship or any of the experimental technology on board.",vulp_exploreCIC3:Continue,,
-vulp_exploreCIC3,DialogOptionSelected,$option == vulp_exploreCIC3,"AddAbility vulpoid_chat
+vulp_exploreCIC3,DialogOptionSelected,$option == vulp_exploreCIC3,"Call $global.vulpFactory_ref unlockChatAbility # Prevents the name from popping up
 $global.vulp_tookCaptain = true
 Call $global.vulpFactory_ref updateStage
 $option = vulp_exploreCIC3_unlock
@@ -1238,6 +1249,7 @@ vulpAcceptance_fikenhildStoryAccept,DialogOptionSelected,$option == vulpAcceptan
 $option = vulpAcceptance_fikenhildEnd
 FireBest DialogOptionSelected",,,,
 vulpAcceptance_fikenhildEnd,DialogOptionSelected,$option == vulpAcceptance_fikenhildEnd,"VulpoidAcceptance donate vulpoid_celebrities 100 ""Fikenhild holo-celebrities"" ""You've secured an exclusive deal with one of Fikenhild's famed holo-entertainment studios. Their newest productions featuring Vulpoids have already proven enormously popular.""
+UpdateMemory
 $player.unlockedVulpoidCelebrities = true
 $option = vulpAcceptance_fikenhildEnd1
 FireBest DialogOptionSelected",,,,
@@ -1257,7 +1269,7 @@ SetStoryColor vulpAcceptance_cruorStoryOffer","You explain that you're the prima
 
 ""Well-reasoned captain! Your patriotism is commendable. For supplying a workforce of 1,000 units, I am prepared to issue a reward of 150,000 credits.""","vulpAcceptance_cruorAccept:Agree to the deal
 vulpAcceptance_cruorStoryOffer:Negotiate a production contract
-marketArrivalEventContinue:Disconnect the call",,
+cutCommLink:Cut the comm link",,
 vulpAcceptance_cruorOfferDisable,VulpAcceptanceCruorDisable,!PlayerHasCargo vulpoids 1000,"SetEnabled vulpAcceptance_cruorAccept false
 SetTooltip vulpAcceptance_cruorAccept ""Not enough Vulpoids.""",,,,
 vulpAcceptance_cruorAccept,DialogOptionSelected,$option == vulpAcceptance_cruorAccept,"RemoveCommodity vulpoids 1000
@@ -1271,11 +1283,12 @@ SetStoryOption vulpAcceptance_cruorStoryAccept 1 vulpAcceptance_cruorStoryAccept
 
 ""Very well then. We will arrange a one-cycle production contract, to be initiated within 4 months. Your facilities will provide 3 units of Vulpoids, for a payment of 6,500 credits per month, totalling 78,000 credits.""","vulpAcceptance_cruorStoryAccept:Agree to the new deal
 vulpAcceptance_cruorAccept:Agree to the original deal
-marketArrivalEventContinue:Disconnect the call",,
+cutCommLink:Cut the comm link",,
 vulpAcceptance_cruorStoryAccept,DialogOptionSelected,$option == vulpAcceptance_cruorStoryAccept,"VulpoidAcceptance productionContract 3 6500
 $option = vulpAcceptance_cruorEnd
-FireBest DialogOptionSelected ",,vulpAcceptance_cruorEnd:Continue,,
+FireBest DialogOptionSelected ",,,,
 vulpAcceptance_cruorEnd,DialogOptionSelected,$option == vulpAcceptance_cruorEnd,"VulpoidAcceptance donate vulpoid_miners 100 ""Cruor miners"" ""You've agreed to supply Vulpoid laborers to the mining camps of Cruor. The Sindrian Diktat is running propaganda pieces to inspire citizens to be as dedicated as a Vulpoid.""
+UpdateMemory
 $player.unlockedVulpoidMiners = true
 $option = vulpAcceptance_cruorEnd1
 FireBest DialogOptionSelected",,,,
@@ -1331,6 +1344,180 @@ He holds his palms up. ""Like I said earlier, just keep doing what you're doing.
 
 ""And if you pull this off, well..."" He looks away for a moment, no doubt at a splendid view. ""I figure we'll both be ending up on top.""",vulpAcceptance_arroyoOffer8:Continue,,
 vulpAcceptance_arroyoOffer8,DialogOptionSelected,$option == vulpAcceptance_arroyoOffer8,FireAll PopulateOptions,"""Now, was there anything else you wanted, or were you just trying to sell me something?""",,,
+,,,,,,,
+# Ragnar Complex - Orcus Rao,,,,,,,
+vulpAcceptance_raoOfferOption,PopulateOptions,"$id == rao
+VulpoidAcceptance sanctionsEnded
+!$market.mc:vulpoid_shipbreakers","SetTooltip vulpAcceptance_raoOffer ""Having Vulpoids working at a major Hegemony facility would go a long way to normalizing their presence in the Sector.""",,vulpAcceptance_raoOffer:Offer to sell some Vulpoids,,
+vulpAcceptance_raoOffer,DialogOptionSelected,$option == vulpAcceptance_raoOffer,,"You've barely gotten the word 'Vulpoid' out of your mouth before Rao lets out a bark of laughter.
+
+""Those things! I still can't believe how worked up High Command got about them! What'd they think would happen, the foxes gain military superiority by sheer volume of boots polished?""
+
+He lets out a disdainful snort. ""Then again, that's how half of those bootlickers got the job in the first place. Maybe it is a real concern for them.""",vulpAcceptance_raoOffer1:Continue,,
+vulpAcceptance_raoOffer1,DialogOptionSelected,$option == vulpAcceptance_raoOffer1,,"""Now I probably shouldn't be entertaining this. Security concerns and all that. But your 'AIs' are featherweights and these ships are barely a step above derelict. Worst case scenario is I finally get some action in this do-nothing post.""
+
+""So, show me what these things can do.""",vulpAcceptance_raoOffer2:Review their specifications,,
+vulpAcceptance_raoOffer2,DialogOptionSelected,$option == vulpAcceptance_raoOffer2,"SetTextHighlights ""1,000"" ""200,000""
+SetStoryColor vulpAcceptance_raoStoryOffer
+FireBest VulpAcceptanceRaoDisable","You and Rao eventually land on the Vulpoids' radiation tolerance limits. Genetic anti-tampering systems have the incidental effect of making them much more resilient to the effects of both short and long-term exposure.
+
+""They'd be a good fit for reactor duty - can't use rad-drones for the delicate jobs, and salvors want a small fortune in hazard pay. They'll complain about the pay cut of course, but actually wants to stick their head in a reactor pit.""
+
+""I think we'd want about 1,000 of the things to cover our bases. Up front if you don't mind, I don't like waiting. And for the pay we'd save..."" he pauses to calculate. ""I could do 200,000 credits.""","vulpAcceptance_raoAccept:Agree to the deal
+vulpAcceptance_raoStoryOffer:Negotiate a better deal
+cutCommLink:Cut the comm link",,
+vulpAcceptance_raoOfferDisable,VulpAcceptanceRaoDisable,!PlayerHasCargo vulpoids 1000,"SetEnabled vulpAcceptance_raoAccept false
+SetTooltip vulpAcceptance_raoAccept ""Not enough Vulpoids.""
+SetEnabled vulpAcceptance_raoStoryOffer false
+SetTooltip vulpAcceptance_raoStoryOffer ""Not enough Vulpoids.""",,,,
+vulpAcceptance_raoAccept,DialogOptionSelected,$option == vulpAcceptance_raoAccept,"RemoveCommodity vulpoids 1000
+AddCredits 200000
+VulpoidPopulation setAtLeast 3
+$option = vulpAcceptance_raoEnd
+FireBest DialogOptionSelected",,,,
+vulpAcceptance_raoStoryOffer,DialogOptionSelected,$option == vulpAcceptance_raoStoryOffer,"SetTextHighlights ""300,000""
+SetStoryOption vulpAcceptance_raoStoryAccept 1 negotiateDeliveryFee general ""Secured a better Vulpoid deal with Orcus Rao at Ragnar Complex""","You hem and haw on the price, pointing out the additional standards and regulations you'll need to follow in order to provide goods to a military installation. Rao gives sympathetic sigh at the thought of paperwork.
+
+""Yep, can't say I'm fond of desk work either. Tell you what, I'll take this through Procurements, call it 300,000 for the whole 'mil-spec' shebang. They've signed bigger checks for more ridiculous ideas than this.""","vulpAcceptance_raoStoryAccept:Agree to the new deal
+cutCommLink:Cut the comm link",,
+vulpAcceptance_raoStoryAccept,DialogOptionSelected,$option == vulpAcceptance_raoStoryAccept,"RemoveCommodity vulpoids 1000
+AddCredits 300000
+VulpoidPopulation setAtLeast 3
+$option = vulpAcceptance_raoEnd
+FireBest DialogOptionSelected",,,,
+vulpAcceptance_raoEnd,DialogOptionSelected,$option == vulpAcceptance_raoEnd,"VulpoidAcceptance donate vulpoid_shipbreakers 100 ""Ragnar shipbreakers"" ""Vulpoids are working alongside human shipbreakers at Ragnar Complex. The citizens of the Hegemony are getting to better know their new, radiation-tolerant coworkers.""
+UpdateMemory
+$option = vulpAcceptance_raoEnd1
+FireBest DialogOptionSelected",,,,
+vulpAcceptance_raoEnd1,DialogOptionSelected,$option == vulpAcceptance_raoEnd1,,"""Looking forward to seeing these things in action. Burn bright, captain.""",cutCommLink:Cut the comm link,,
+vulpAcceptance_ragnarBar,BarPrintDesc,"$faction.id == hegemony
+$market.id == ragnar_complex
+$market.vulpoidPopulation>=3
+$market.mc:vulpoid_shipbreakers",ShowImageVisual hegemony_bar,"You enter the crowded, well-lit space and take in the rows of taps adorning the wall under bottles from every one of the core worlds - and a few from elsewhere. Merchant-captains mingle with off-duty officers at the bar, served efficiently by the uniformed staff. In one corner, a pack of navy cadets shout and sing, desperately enjoying their last work-shift of freedom. A team of undersuited Vulpoids with hot dosimeter badges are following behind their off-duty shift lead like a flock of ducklings.",,,
+,,,,,,,
+# Agreus - Callisto Ibrahim,,,,,,,
+vulpAcceptance_ibrahimOfferOption,PopulateOptions,"$id == ibrahim
+VulpoidAcceptance officialStance
+!$market.mc:vulpoid_shipbreakers","SetTooltip vulpAcceptance_ibrahimOffer ""Having Vulpoids working at a major industrial facility would help normalize their presence in the Sector.""",,vulpAcceptance_ibrahimOffer:Offer to sell some Vulpoids,,
+vulpAcceptance_ibrahimOffer,DialogOptionSelected,$option == vulpAcceptance_ibrahimOffer,,"You raise the idea of selling some Vulpoids for use on Agreus. Ibrahim's expression is mixed, hesitation with a glint of opportunism in the eyes.
+
+""I'll admit I've been intrigued by them for a little while now. I noticed their spec sheet suggested a pretty high radiation tolerance, is that accurate?""",vulpAcceptance_ibrahimOffer1:Continue,,
+vulpAcceptance_ibrahimOffer1,DialogOptionSelected,$option == vulpAcceptance_ibrahimOffer1,,"You explain how their genetic anti-tampering systems also incidentally repair radiation damage, and answer a few other softball questions before Ibrahim decides to come around to her real point.
+
+""I suppose my biggest concern with them is the attitude. Maybe I've spent too much time dealing with Tri-Tach execs, but I don't really understand how they could be okay with just... not getting paid.""",vulpAcceptance_ibrahimOffer2:Continue,,
+vulpAcceptance_ibrahimOffer2,DialogOptionSelected,$option == vulpAcceptance_ibrahimOffer2,,"""So, what makes them tick? Are they really going to climb into a reactor pit because I asked nicely, or is there something I need to offer them?""","vulpAcceptance_ibrahimOfferSympathetic:""They care a lot about humans. If it means a human won't have to do it, they won't hesitate.""
+vulpAcceptance_ibrahimOfferWorkaholic:""They love being busy. They'll accept any task just for the sake of having work to do.""
+vulpAcceptance_ibrahimOfferObedient:""They're extremely obedient. Give them orders and they'll carry them out, no matter what.""
+vulpAcceptance_ibrahimOfferConsumerist:""They do adore accessories and knickknacks, if you really wanted to give them something.""",,
+vulpAcceptance_ibrahimOfferSympathetic,DialogOptionSelected,$option == vulpAcceptance_ibrahimOfferSympathetic,"$option = vulpAcceptance_ibrahimOffer3
+FireBest DialogOptionSelected","""Bleeding hearts, huh? Well, I've employed people with worse character flaws than that. I'll have to make sure any compensation is non-monetary then, wouldn't want them wasting their pay on the first peddler to feed them a sob story.""",,,
+vulpAcceptance_ibrahimOfferWorkaholic,DialogOptionSelected,$option == vulpAcceptance_ibrahimOfferWorkaholic,"$option = vulpAcceptance_ibrahimOffer3
+FireBest DialogOptionSelected","""Ah, work-motivated. Sensible way to make them. I've employed a few people like that, great workers as long as they don't clock their overtime. Still, wouldn't sit right with me if I gave them nothing at all. I'll think of some little thing to put my mind at ease.""",,,
+vulpAcceptance_ibrahimOfferObedient,DialogOptionSelected,$option == vulpAcceptance_ibrahimOfferObedient,"$option = vulpAcceptance_ibrahimOffer3
+FireBest DialogOptionSelected","Ibrahim frowns. ""I hope you know that's not always a good thing, captain. Anyone can make a bad call, a good subordinate is one that can give a little pushback. I think I'll find something to give them, maybe having possessions to care about will give them some resolve.""",,,
+vulpAcceptance_ibrahimOfferConsumerist,DialogOptionSelected,$option == vulpAcceptance_ibrahimOfferConsumerist,"$option = vulpAcceptance_ibrahimOffer3
+FireBest DialogOptionSelected","Ibrahim grins at the thought. ""Well if it's trinkets they like, this is the moon for them! Diamonds, chrome, laser lenses - half the stuff we scrape out of these ships is shiny garbage. I'll give them their pick of the scrap bin!""",,,
+vulpAcceptance_ibrahimOffer3,DialogOptionSelected,$option == vulpAcceptance_ibrahimOffer3,"SetTextHighlights ""3"" ""4"" ""96,000"" ""8,000""","""Right, let's set the terms. Standard production order for 3 units of Vulpoids, started within 4 months and lasting a cycle. We'll pay a total of 96,000 credits, in monthly installments of 8,000 apiece. Sound good?""","vulpAcceptance_ibrahimAccept:Agree to the deal
+cutCommLink:Cut the comm link",,
+vulpAcceptance_ibrahimAccept,DialogOptionSelected,$option == vulpAcceptance_ibrahimAccept,"VulpoidAcceptance productionContract 3 8000
+$option = vulpAcceptance_ibrahimEnd
+FireBest DialogOptionSelected ",,,,
+vulpAcceptance_ibrahimOffer3Hamatsu,DialogOptionSelected,"$option == vulpAcceptance_ibrahimOffer3
+$global.gaRH_completed","SetTextHighlights ""3"" ""4"" ""120,000"" ""10,000""","""Right, let's set the terms. Standard production order for 3 units of Vulpoids, started within 4 months and lasting a cycle. For your past work I'll approve the premium rate, a total of 120,000 credits, in monthly installments of 10,000 apiece. Sound good?""","vulpAcceptance_ibrahimAcceptHamatsu:Agree to the deal
+cutCommLink:Cut the comm link",,
+vulpAcceptance_ibrahimAcceptHamatsu,DialogOptionSelected,$option == vulpAcceptance_ibrahimAcceptHamatsu,"VulpoidAcceptance productionContract 3 10000
+$option = vulpAcceptance_ibrahimEnd
+FireBest DialogOptionSelected ",,,,
+vulpAcceptance_ibrahimEnd,DialogOptionSelected,$option == vulpAcceptance_ibrahimEnd,"VulpoidAcceptance donate vulpoid_shipbreakers 50 ""Agreus shipbreakers"" ""Vulpoids are working alongside human shipbreakers on Agreus. The independent operators are getting to better know their new, radiation-tolerant coworkers.""
+UpdateMemory
+$option = vulpAcceptance_ibrahimEnd1
+FireBest DialogOptionSelected",,,,
+vulpAcceptance_ibrahimEnd1,DialogOptionSelected,$option == vulpAcceptance_ibrahimEnd1,,"""Pleasure doing business captain, I'm looking forward to meeting them. Burn bright.""",cutCommLink:Cut the comm link,,
+vulpAcceptance_agreusBar,BarPrintDesc,"$faction.id == independent
+$market.id == agreus
+$market.vulpoidPopulation>=3
+$market.mc:vulpoid_shipbreakers",ShowImageVisual space_bar,"As you enter the bar you are buffeted by the human white-noise of conversation and revelry. Ad-holos buzz softly from ceiling-mounted units, shining garish highlights through glasses and bottles as spacer crews mingle with merchants and locals trading drinks for rumor, jobs, and opportunities. A team of Vulpoids in colorfully-decorated vac-suits are showing off their newest trinkets to each other and any passing human.",,,
+,,,,,,,
+# Mairaath - Procgen Administrator,,,,,,,
+vulpAcceptance_mairaathOfferOption,PopulateOptions,"$market.id == mairaath
+$post == administrator
+VulpoidAcceptance officialStance
+!$market.mc:vulpoid_rangers","SetTooltip vulpAcceptance_mairaathOffer ""The old Mayasuran Terraforming Cabal was known for, among other things, prodigious use of transgenic organisms. They might want to relive some aspect of those glory days.""",,vulpAcceptance_mairaathOffer:Offer to sell some Vulpoids,,
+vulpAcceptance_mairaathOffer,DialogOptionSelected,$option == vulpAcceptance_mairaathOffer,,"As you suggest the idea of Vulpoids on Mairaath, a look of distant longing enters $hisOrHer eyes.
+
+""I'm honored that you'd consider coming to us for this. It's reassuring to know that despite the years, some still remember Mairaath for the heights it reached, rather than just how low we were brought.""",vulpAcceptance_mairaathOffer1:Continue,,
+vulpAcceptance_mairaathOffer1,DialogOptionSelected,$option == vulpAcceptance_mairaathOffer1,,"$HeOrShe shakes $hisOrHer head resignedly. ""But regrettably, we're far from recovered. As much as I'd love to see artificial life walk the surface of Mairaath again, we're simply not in a position to afford such luxuries.""
+
+""Perhaps you'd have better luck on Kazeron? The Gens are never short for cash, nor the inclination to spend it.""","vulpAcceptance_mairaathOfferRanger:Suggest that the Vulpoids could help restore Mairaath's ecosystem
+vulpAcceptance_mairaathOfferFree:Offer to provide the Vulpoids free of charge
+cutCommLinkPolite:Thank $himOrHer for $hisOrHer time and cut the comm link",,
+vulpAcceptance_mairaathOfferFree,DialogOptionSelected,$option == vulpAcceptance_mairaathOfferFree,,"Shock, confusion, and an air of suspicion flicker across $hisOrHer face.
+
+""Really? I don't mean to sound ungrateful, but would you really do that with no expectation of reward? I'm afraid I can't have us burdened with outstanding 'favors' either.""","vulpAcceptance_mairaathOfferFreeReally:Reaffirm that they really would be free
+vulpAcceptance_mairaathOfferFreeAcceptance:Explain that their use here will drive more widespread acceptance
+cutCommLink:Back out and cut the comm link",,
+vulpAcceptance_mairaathOfferFreeReally,DialogOptionSelected,$option == vulpAcceptance_mairaathOfferFreeReally,FireBest VulpAcceptanceMairaathFreeUpFrontDisable,"""Well, ah, thank you! And I can assure you that this aid won't go unnoticed by our people. Every step towards recuperation is one worth celebrating!""
+
+$HeOrShe is clearly happy, if off-balance from an act of charity on this scale.
+
+""I suppose all that's left is the manner of delivery?""","vulpAcceptance_mairaathOfferFreeUpFront:""I can provide them up front. 1000 units.""
+vulpAcceptance_mairaathOfferFreeProduction:""My industries will produce 3 units for a cycle, starting within 4 months.""
+cutCommLink:Back out and cut the comm link","# 'Recuperation'. Synonymous with recovery, but with the connotation of illness or exertion - ie the idea that Mairaath isn't destroyed, just sick. It also has a secondary meaning of recovering something lost or stolen, and boy howdy does that ever apply.",
+vulpAcceptance_mairaathOfferFreeAcceptance,DialogOptionSelected,$option == vulpAcceptance_mairaathOfferFreeAcceptance,FireBest VulpAcceptanceMairaathFreeUpFrontDisable,"""Ah, a publicity play."" $HeOrShe almost seems relieved to be back in the familiar realm of transactional diplomacy.
+
+""We'd certainly be happy to be the beneficiaries of such an agreement. The banner of Mairaath is a rallying cry for the League, I can make sure your Vulpoids are seen beside it by the right people.""
+
+""I suppose all that's left is the manner of delivery?""","vulpAcceptance_mairaathOfferFreeUpFront:""I can provide them up front. 1000 units.""
+vulpAcceptance_mairaathOfferFreeProduction:""My industries will produce 3 units for a cycle, starting within 4 months.""
+cutCommLink:Back out and cut the comm link",,
+vulpAcceptance_mairaathOfferFreeUpFrontDisable,VulpAcceptanceMairaathFreeUpFrontDisable,!PlayerHasCargo vulpoids 1000,"SetEnabled vulpAcceptance_mairaathOfferFreeUpFront false
+SetTooltip vulpAcceptance_mairaathOfferFreeUpFront ""Not enough Vulpoids.""",,,,
+vulpAcceptance_mairaathOfferFreeUpFront,DialogOptionSelected,$option == vulpAcceptance_mairaathOfferFreeUpFront,"RemoveCommodity vulpoids 1000
+VulpoidPopulation setAtLeast 3
+$option = vulpAcceptance_mairaathFreeEnd
+FireBest DialogOptionSelected",,,,
+vulpAcceptance_mairaathOfferFreeProduction,DialogOptionSelected,$option == vulpAcceptance_mairaathOfferFreeProduction,"VulpoidAcceptance productionContract 3 0
+$option = vulpAcceptance_mairaathFreeEnd
+FireBest DialogOptionSelected ",,,,
+vulpAcceptance_mairaathOfferFreeEnd,DialogOptionSelected,$option == vulpAcceptance_mairaathOfferFreeEnd,"VulpoidAcceptance donate vulpoid_rangers 100 ""Charitable Mairaath rangers"" ""Mairaath is once again home to artificial life, slowly working to repair the planet's devastated climate. Incredibly, they were donated to the recuperation effort at no cost.""
+UpdateMemory
+$option = vulpAcceptance_mairaathOfferFreeEnd1
+FireBest DialogOptionSelected",,,,
+vulpAcceptance_mairaathOfferFreeEnd1,DialogOptionSelected,$option == vulpAcceptance_mairaathOfferFreeEnd1,,"""Thank you again, $playerSirOrMadam. The people of Mairaath will remember this day for cycles to come.""",cutCommLink:Cut the comm link,,
+vulpAcceptance_mairaathOfferRanger,DialogOptionSelected,$option == vulpAcceptance_mairaathOfferRanger,"SetTextHighlights ""3"" ""4"" ""5,000"" ""60,000""
+SetStoryOption vulpAcceptance_ibrahimAcceptRangerStory 1 negotiateDeliveryFee general ""Promoted increased fundraising for Vulpoids on Mairaath."" ","You expound on particular subsets of the Vulpoids' sensory abilities - originally refined with estate gardening in mind, but equally applicable to assisting in ecosystem restoration. As you continue, you can clearly see the lofty dreams of a green and blue Mairaath dancing behind the $post's eyes.
+
+""Our ecologists have been needing such systems since the astropoli were lost... This could be a real step towards recuperation. Payment though... On a matter of national identity like this, I believe we could fundraise.""
+
+""I think that if you can start supplying 3 units of Vulpoids within 4 months, I can raise 5,000 credits per month. If we run that for a cycle, it'll come to 60,000 credits for you.""","vulpAcceptance_ibrahimAcceptRanger:Agree to the deal
+vulpAcceptance_ibrahimAcceptRangerStory:Offer some promotional advice to get a better rate
+cutCommLink:Cut the comm link",,
+vulpAcceptance_ibrahimAcceptRanger,DialogOptionSelected,$option == vulpAcceptance_ibrahimAcceptRanger,"VulpoidAcceptance productionContract 3 5000
+$option = vulpAcceptance_mairaathRangerEnd
+FireBest DialogOptionSelected ",,,,
+vulpAcceptance_ibrahimAcceptRangerStory,DialogOptionSelected,$option == vulpAcceptance_ibrahimAcceptRangerStory,"VulpoidAcceptance productionContract 3 7500
+SetTextHighlights ""7,500"" ""90,000""
+$option = vulpAcceptance_mairaathRangerEnd
+FireBest DialogOptionSelected ","You send over a few data packets containing standard advertising agreements, assorted promotional media, and other marketing materials from your Vulpoid sales teams. After a quick review, the $post feels that this should enable them to secure better fundraising than expected - 7,500 credits per month, totalling 90,000 after the full cycle.",,,
+vulpAcceptance_mairaathRangerEnd,DialogOptionSelected,$option == vulpAcceptance_mairaathRangerEnd,"VulpoidAcceptance donate vulpoid_rangers 75 ""Mairaath rangers"" ""Mairaath is once again home to artificial life, slowly working to repair the planet's devastated climate. The fundraising campaign has brought widespread awareness and investment.""
+UpdateMemory
+$option = vulpAcceptance_mairaathOfferRangerEnd1
+FireBest DialogOptionSelected",,,,
+vulpAcceptance_mairaathRangerEnd1,DialogOptionSelected,$option == vulpAcceptance_mairaathRangerEnd1,,"""Thank you, captain. I have high hopes for this arrangement.""",,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
 ,,,,,,,
 ,,,,,,,
 ,,,,,,,
@@ -1416,6 +1603,10 @@ $HeOrShe slams down hard on the disconnect button, leaving you staring at a CGR 
 ,,,,,,,
 vulp_GileadShrineAcceptanceVisitOption,PopulateOptions,"$market.id == gilead
 $market.tag:luddic_shrine
+$menuState == main
+$market.vulp_bringVulpoidToShrine","FireBest VulpDisableGileadAcceptanceOption
+SetOptionColor vulp_gileadShrineAcceptanceVisitStart buttonShortcut",,4:vulp_gileadShrineAcceptanceVisitStart:Bring a Vulpoid down to the Luddic shrine,,
+vulp_GileadShrineAcceptanceVisitOptionRandomSector,PopulateOptions,"$global.nex_randomSector
 $menuState == main
 $market.vulp_bringVulpoidToShrine","FireBest VulpDisableGileadAcceptanceOption
 SetOptionColor vulp_gileadShrineAcceptanceVisitStart buttonShortcut",,4:vulp_gileadShrineAcceptanceVisitStart:Bring a Vulpoid down to the Luddic shrine,,
@@ -1603,10 +1794,8 @@ A few hours later, your science officer reports in. They've successfully extract
 It will take some effort to retrieve, but it lies within reach.",defaultLeave:Leave,,
 ,,,,,,,
 # Lobster Biofactory - Volturn,,,,,,,
-vulpLobster_raidOption,PopulateOptions,"$market.id == volturn
-$menuState == main
-$global.lobsterForge_ref != null
-Call $global.lobsterForge_ref isVolturnStage",FireBest VulpLobsterRaidCheckHostilesNearby,,2:vulpLobster_raidStart:Prepare a raid to extract the Volturnian Lobster Bioforge,,
+vulpLobster_raidOption,PopulateOptions,"$menuState == main
+$market.vulp_lobsterBioforgeRaidTarget",FireBest VulpLobsterRaidCheckHostilesNearby,,2:vulpLobster_raidStart:Prepare a raid to extract the Volturnian Lobster Bioforge,,
 vulpLobsterDisableRaidIfNeeded,VulpLobsterRaidCheckHostilesNearby,HostileFleetNearbyAndAware,"SetEnabled vulpLobster_raidStart false
 SetTooltip vulpLobster_raidStart ""A nearby hostile fleet is tracking your movements, making an aquatic raid inadvisable.""",,,,
 vulpLobster_raidStart,DialogOptionSelected,$option == vulpLobster_raidStart,"#$raidDifficulty = 10 0
@@ -2151,7 +2340,7 @@ $player.metMacario",SetVulpoidExpression angry,"""Dolos Macario is a piece of wo
 
 ""Actually, scratch that. Not that I don't trust you, but there's literally nothing you could do that'd make him less curious.""",,,
 # Lobster Completed,,,,,,,
-vulpChat_researchComplete_lobster,VulpoidResearchComplete,$vulp_researchProject == lobster,,"$name enters, wearing a ridiculous lobster-themed hat. ""Hello $playerSirOrMadam! Donâ€™t mind the hat, I was just wrapping something up.""
+vulpChat_researchComplete_lobster,VulpoidResearchComplete,$vulp_researchProject == lobster,,"$name enters, wearing a ridiculous lobster-themed hat. ""Hello $playerSirOrMadam! Don’t mind the hat, I was just wrapping something up.""
 
 ""And speaking of wrapped up, I've finally got a decent lead on the Volturnian Bioforge! Well, decent might be a bit strong... How about some good news, bad news?""","vulpChat_researchComplete_lobster1:""Alright, let's hear the good news.""",,
 vulpChat_researchComplete_lobster1,DialogOptionSelected,$option == vulpChat_researchComplete_lobster1,,"""So the good news is, I've pretty well confirmed that the bioforge is still on Volturn! It was hosted in a subsurface facility, and remained there through the course of the Askonia Crisis. We find that facility, we get the forge.""","vulpChat_researchComplete_lobster2:""And the bad news?""",,
@@ -2816,7 +3005,7 @@ vulpChatGift_mangonutLaisa2,DialogOptionSelected,$option == vulpChatGift_mangonu
 vulpChatGift_mangonutLaisa3:""I do have the whole tree. No risk of shortage.""",,
 vulpChatGift_mangonutLaisaCancel,DialogOptionSelected,$option == vulpChatGift_mangonutLaisaCancel,"SetVulpoidExpression blush
 ExitRulesToPlugin","""Yeah, best not,"" she says unconvincingly.",,,
-vulpChatGift_mangonutLaisa3,DialogOptionSelected,$option == vulpChatGift_mangonutLaisa3,SetVulpoidExpression bruh,"""That's true... You do have loads of them, no change I'd be going hungry. Just...""
+vulpChatGift_mangonutLaisa3,DialogOptionSelected,$option == vulpChatGift_mangonutLaisa3,SetVulpoidExpression bruh,"""That's true... You do have loads of them, no chance I'd be going hungry. Just...""
 
 She deliberates for a moment, expression torn between reluctance and hunger.",vulpChatGift_mangonutLaisa4:Continue,,
 vulpChatGift_mangonutLaisa4,DialogOptionSelected,$option == vulpChatGift_mangonutLaisa4,"SetVulpoidExpression angry
@@ -2966,7 +3155,7 @@ vulpChatGift_lobsterProfecto,DialogOptionSelected,$option == vulpChatGift_lobste
 AdjustRepActivePerson COOPERATIVE 5","""A Volturnian lobster! Thank you, $playerSirOrMadam!""
 
 $name carefully lifts the lobster from its tank, examining it from all angles. Its claws dangle gently, unconcerned about the Vulpoid holding it.","vulpChatGift_lobsterProfecto1:""Have you thought of a name?""",,
-vulpChatGift_lobsterProfecto1,DialogOptionSelected,$option == vulpChatGift_lobsterProfecto1,,"""I think they seem like aâ€¦ $lobsterName."" $name says, watching the lobster as if it'll provide feedback. ""Yes, $lobsterName it is!""
+vulpChatGift_lobsterProfecto1,DialogOptionSelected,$option == vulpChatGift_lobsterProfecto1,,"""I think they seem like a… $lobsterName."" $name says, watching the lobster as if it'll provide feedback. ""Yes, $lobsterName it is!""
 
 ""Thank you again $playerSirOrMadam. I'll be sure to take great care of them.""","vulpChatGift_lobsterEnd:""I'm sure you will.""",,
 ,,,,,,,
@@ -3166,6 +3355,8 @@ vulpChatSurroundings_cruorDummy,DialogOptionSelected,"$option == vulpChatSurroun
 $vulp_profectoAssignment == vulpoids score:100","SetVulpoidExpression default
 ExitRulesToPlugin","""I heard there's camps where you have to work all day! Can I visit one?""",,,
 vulpChatSurroundings_volturnOption,VulpoidChatSurroundingsOptions,$topic.id == volturn score:1000,,,vulpChatSurroundings_volturn:Volturn,,volturn
+vulpChatSurroundings_volturnOptionRandomSector,VulpoidChatSurroundingsOptions,"$global.nex_randomSector
+$topicMarket.mc:volturnian_lobster_pens",,,vulpChatSurroundings_volturn:'Volturn',,random sector volturn
 vulpChatSurroundings_volturn,DialogOptionSelected,$option == vulpChatSurroundings_volturn,"SetVulpoidExpression bruh
 ExitRulesToPlugin","""In a way, it's a shame that Volturnian Lobsters are so popular. They take up a place in public consciousness that would otherwise be more aware of the oppression the population suffers under. I wonder if the rebel forces have ever considered adopting it as their symbol, it might have more impact than they realize.""",,,
 vulpChatSurroundings_volturnProfectoLobster,DialogOptionSelected,"$option == vulpChatSurroundings_volturn
@@ -3645,7 +3836,7 @@ $vulp_profectoAssignment == vulpoids score:100","SetVulpoidExpression cry
 ExitRulesToPlugin","""It looks like it sucks down there. Maybe I could help, somehow?""",,,
 vulpChatSurroundings_madeiraOption,VulpoidChatSurroundingsOptions,$topic.id == madeira score:1000,,,vulpChatSurroundings_madeira:Madeira,,madeira
 vulpChatSurroundings_madeira,DialogOptionSelected,$option == vulpChatSurroundings_madeira,"SetVulpoidExpression default
-ExitRulesToPlugin","""Madeira has a pretty comfortable position. It's able to mine most of the volatiles it needs for fuel production itself, all on a habitable world. The Domain doesnâ€™t normally go for that, but the lack of ores and arable land was probably enough to convince them it wouldn't get uppity.""",,,
+ExitRulesToPlugin","""Madeira has a pretty comfortable position. It's able to mine most of the volatiles it needs for fuel production itself, all on a habitable world. The Domain doesn’t normally go for that, but the lack of ores and arable land was probably enough to convince them it wouldn't get uppity.""",,,
 vulpChatSurroundings_madeiraDummy,DialogOptionSelected,"$option == vulpChatSurroundings_madeira
 $vulp_profectoAssignment == vulpoids score:100","SetVulpoidExpression default
 ExitRulesToPlugin","""This moon is so pretty! It's got auroras, and glowing plants, and a big blue ball in the sky!""",,,
@@ -3896,7 +4087,7 @@ vulpChatSurroundings_fusionLampLaisa,DialogOptionSelected,"$option == vulpChatSu
 $id == laisa","SetVulpoidExpression default
 ExitRulesToPlugin","""Ah, the Fabrique Orbitale Orbital Fusion Lamp. I remember these, Eridani-Utopia loved them.""
 
-""You know, Fabrique used be Tri-Tachyon's major rival. Hard to imagine today. I wonder if there's another Sector out there where Fabrique is the universal brand, and TT is the one relegated to the past.""",,,
+""You know, Fabrique used to be Tri-Tachyon's major rival. Hard to imagine today. I wonder if there's another Sector out there where Fabrique is the universal brand, and TT is the one relegated to the past.""",,,
 vulpChatSurroundings_fusionLampKanta,DialogOptionSelected,"$option == vulpChatSurroundings_fusionLamp
 $vulp_profectoAssignment != vulpoids score:100
 $topicFaction.id == pirates

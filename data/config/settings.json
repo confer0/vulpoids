@@ -75,7 +75,10 @@
 			"vulpoidAcceptance_knightAttack":"graphics/icons/campaign/vulpoidAcceptance_knightAttack.png",
 			"vulpoidAcceptance_knightBombardment":"graphics/icons/campaign/vulpoidAcceptance_knightBombardment.png",
 			"vulpoidAcceptance_success":"graphics/icons/campaign/vulpoidAcceptance_success.png",
-		}
+		},
+		"codex":{
+			"vulp_pop_codex":"graphics/icons/markets/vulp_pop_codex.png",
+		},
 	}
 }
 

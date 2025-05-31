@@ -34,6 +34,13 @@ public class VulpoidDataPlugin extends BaseSpecialItemPlugin {
     @Override
     public void init(CargoStackAPI stack) {
         super.init(stack);
+        if(stack.getSpecialDataIfSpecial().getData()==null) {
+            title = DEFAULT_TITLE;
+            author = DEFAULT_AUTHOR;
+            publicationDate = DEFAULT_DATE;
+            description = DEFAULT_DESCRIPTION;
+            return;
+        }
         JSONObject json;
         try {
             json = new JSONObject(stack.getSpecialDataIfSpecial().getData());
@@ -197,7 +204,16 @@ public class VulpoidDataPlugin extends BaseSpecialItemPlugin {
     @Override
     public void createTooltip(TooltipMakerAPI tooltip, boolean expanded, CargoTransferHandlerAPI transferHandler, Object stackSource, boolean useGray) {
         float opad = 10f;
-
+        
+        if (Global.CODEX_TOOLTIP_MODE) {
+            tooltip.addSpacer(-opad);
+            tooltip.setParaSmallInsignia();
+            tooltip.addPara(spec.getDesc(), opad);
+            addCostLabel(tooltip, opad, transferHandler, stackSource);
+            return;
+        }
+        
+        
         tooltip.addTitle(getName());
         
         tooltip.addPara("Author: %s", opad, Misc.getGrayColor(), Misc.getBasePlayerColor(), author);

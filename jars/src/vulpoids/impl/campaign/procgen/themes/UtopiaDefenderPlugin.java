@@ -121,7 +121,7 @@ public class UtopiaDefenderPlugin extends BaseGenericPlugin implements SalvageDe
 
         for (FleetMemberAPI curr : fleet.getFleetData().getMembersListCopy()) {
             curr.getVariant().setVariantDisplayName("Ancient");
-            //curr.getVariant().addTag(Tags.TAG_RETAIN_SMODS_ON_RECOVERY);
+            curr.getVariant().addTag(Tags.TAG_RETAIN_SMODS_ON_RECOVERY);
             //if (curr.isCapital()) {
             //    curr.getVariant().addTag(Tags.VARIANT_ALWAYS_RECOVERABLE);
             //}

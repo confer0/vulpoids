@@ -5,6 +5,7 @@ import com.fs.starfarer.api.impl.campaign.ids.Commodities;
 import com.fs.starfarer.api.impl.campaign.ids.Industries;
 import com.fs.starfarer.api.ui.TooltipMakerAPI;
 import com.fs.starfarer.api.util.Misc;
+import vulpoids.impl.campaign.ids.Vulpoids;
 
 public class ServantWorkforce extends BaseWorkforce {
     final int STABILITY_BONUS = 4;
@@ -21,7 +22,7 @@ public class ServantWorkforce extends BaseWorkforce {
         if(shouldApply()) {
             market.getStability().modifyFlat(id, STABILITY_BONUS, getName());
             market.getIndustry(Industries.POPULATION).getDemand(Commodities.DRUGS).getQuantity().modifyFlat(id, -DRUG_DEMAND_REDUCTION, getName());
-            Industry mining = market.getIndustry(Industries.MINING);
+            Industry mining = Vulpoids.getMining(market);
             if(mining!=null) mining.getDemand(Commodities.DRUGS).getQuantity().modifyFlat(id, -DRUG_DEMAND_REDUCTION, getName());
         }
     }
@@ -31,7 +32,7 @@ public class ServantWorkforce extends BaseWorkforce {
         market.getStability().unmodifyFlat(id);
         Industry population = market.getIndustry(Industries.POPULATION);
         if(population!=null) population.getDemand(Commodities.DRUGS).getQuantity().unmodifyFlat(id);
-        Industry mining = market.getIndustry(Industries.MINING);
+        Industry mining = Vulpoids.getMining(market);
         if(mining!=null) mining.getDemand(Commodities.DRUGS).getQuantity().unmodifyFlat(id);
     }
     @Override

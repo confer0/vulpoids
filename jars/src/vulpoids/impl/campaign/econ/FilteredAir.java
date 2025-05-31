@@ -82,6 +82,13 @@ public class FilteredAir extends BaseMarketConditionPlugin {
     protected void createTooltipAfterDescription(TooltipMakerAPI tooltip, boolean expanded) {
         super.createTooltipAfterDescription(tooltip, expanded);
         
+        if(Global.CODEX_TOOLTIP_MODE) {
+            tooltip.addPara("The climate modulation can suppress the effects of negative conditions such as extreme weather and atmospheric "+
+                    "toxicity. It can not only suppress but even remove pollution over time. If the climate is already mild, however, "+
+                    "it can achieve the true edenic heights of late-Domain terraforming.", 10f);
+            return;
+        }
+        
         List<String> conds = new ArrayList();
         for (String suppressedCondition : getSuppressedConditions()) {
             conds.add(Global.getSettings().getMarketConditionSpec(suppressedCondition).getName());

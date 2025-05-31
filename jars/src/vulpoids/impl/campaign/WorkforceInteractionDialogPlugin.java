@@ -22,7 +22,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import vulpoids.impl.campaign.econ.workforces.*;
+import vulpoids.impl.campaign.econ.workforces.BaseWorkforce;
+import vulpoids.impl.campaign.ids.Vulpoids;
 
 
 public class WorkforceInteractionDialogPlugin implements InteractionDialogPlugin {
@@ -47,16 +48,10 @@ public class WorkforceInteractionDialogPlugin implements InteractionDialogPlugin
         
         conditions = new ArrayList();
         for (MarketConditionSpecAPI spec : Global.getSettings().getAllMarketConditionSpecs()) {
-            try {
-                Class conditionClass = Class.forName(spec.getScriptClass());
-                if(conditionClass!=null && BaseWorkforce.class.isAssignableFrom(conditionClass)) {
-                    try {
-                        BaseWorkforce b = (BaseWorkforce)conditionClass.newInstance();
-                        if(b.isAvailableToPlayer()) conditions.add(spec.getId());
-                        else if(market.hasCondition(spec.getId())) conditions.add(spec.getId());  // In case an update bars access
-                    } catch (InstantiationException | IllegalAccessException ex) {}
-                }
-            } catch (ClassNotFoundException ex) {}
+            if (!spec.hasTag(Vulpoids.CONDITION_WORKFORCE_TAG)) continue;
+            BaseWorkforce b = getPluginForCondition(spec.getId());
+            if (b.isAvailableToPlayer()) conditions.add(spec.getId());
+            else if (market.hasCondition(spec.getId())) conditions.add(spec.getId());  // In case an update bars access
         }
         
         dialog.setOptionOnEscape("Leave", "LEAVE");
@@ -150,15 +145,12 @@ public class WorkforceInteractionDialogPlugin implements InteractionDialogPlugin
     
     private BaseWorkforce getPluginForCondition(String condition) {
         if(market.hasCondition(condition)) return (BaseWorkforce) market.getCondition(condition).getPlugin();
-        String class_name = Global.getSettings().getMarketConditionSpec(condition).getScriptClass();
-        try {
-            Class c = Class.forName(class_name);
-            BaseWorkforce b = (BaseWorkforce) c.newInstance();
-            b.init(market, null);
-            return b;
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
-            throw new RuntimeException();
-        }
+        
+        MarketAPI dummy_market = Global.getFactory().createMarket(null, null, 0);
+        dummy_market.addCondition(condition);
+        BaseWorkforce b = (BaseWorkforce)dummy_market.getCondition(condition).getPlugin();
+        b.init(market, null);
+        return b;
     }
 
     @Override

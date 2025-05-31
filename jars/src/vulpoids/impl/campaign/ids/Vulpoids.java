@@ -1,5 +1,9 @@
 package vulpoids.impl.campaign.ids;
 
+import com.fs.starfarer.api.campaign.econ.Industry;
+import com.fs.starfarer.api.campaign.econ.MarketAPI;
+import com.fs.starfarer.api.impl.campaign.ids.Industries;
+
 public class Vulpoids {
     public static final String MOD_ID = "vulpoids";
     
@@ -21,7 +25,9 @@ public class Vulpoids {
     public static final String SPECIAL_ITEM_EMBARKED = "special_vulpoid_embarked";
     public static final String SPECIAL_ITEM_OFFICER = "special_vulpoid_officer";
     public static final String SPECIAL_ITEM_ADMIN = "special_vulpoid_admin";
+    public static final String SPECIAL_ITEM_CODEX = "special_vulpoid_codex";
     
+    public static final String ABILITY_CHAT = "vulpoid_chat";
     
     public static final String PERSON_LAISA = "laisa";
     public static final String PERSON_DUMMY_TERRAN = "vulp_dummy_terran";
@@ -59,6 +65,7 @@ public class Vulpoids {
     
     public static final String CONDITION_VULPOID_DEMAND = "vulpoid_demand";
     public static final String CONDITION_VULPOID_POPULATION = "vulpoid_population";
+    public static final String CONDITION_WORKFORCE_TAG = "vulpoid_workforce";
     public static final String CONDITION_VULPOID_BLOCKADE = "vulpoid_blockade";
     public static final String CONDITION_FILTERED_AIR = "filtered_air";
     public static final String CONDITION_LOBSTERS_GROWING = "lobsters_growing";
@@ -70,4 +77,32 @@ public class Vulpoids {
     
     public static final String RANK_SERVANT = "vulp_servant";
     public static final String RANK_PROFECTO = "vulp_profecto";
+    
+    
+    public static Industry getFarming(MarketAPI market) {
+        Industry industry = null;
+        industry = market.getIndustry(Industries.FARMING);
+        if(industry==null) industry = market.getIndustry(Industries.AQUACULTURE);
+        
+        // Ashes Of The Domain
+        if(industry==null) industry = market.getIndustry("monoculture");
+        if(industry==null) industry = market.getIndustry("artifarming");
+        if(industry==null) industry = market.getIndustry("subfarming");
+        if(industry==null) industry = market.getIndustry("fishery");
+        
+        return industry;
+    }
+    
+    public static Industry getMining(MarketAPI market) {
+        Industry industry = null;
+        industry = market.getIndustry(Industries.MINING);
+        
+        // Ashes Of The Domain
+        if(industry==null) industry = market.getIndustry("extractive");
+        if(industry==null) industry = market.getIndustry("fracking");
+        if(industry==null) industry = market.getIndustry("sublimation");
+        if(industry==null) industry = market.getIndustry("benefication");
+        
+        return industry;
+    }
 }

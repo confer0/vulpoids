@@ -1,5 +1,6 @@
 package vulpoids.impl.campaign.econ.workforces;
 
+import com.fs.starfarer.api.Global;
 import com.fs.starfarer.api.impl.campaign.econ.BaseMarketConditionPlugin;
 import com.fs.starfarer.api.ui.TooltipMakerAPI;
 import com.fs.starfarer.api.util.Misc;
@@ -49,6 +50,7 @@ public class BaseWorkforce extends BaseMarketConditionPlugin {
     public String[] getRequirements() {
         return new String[]{};
     }
+    public void linkCodexEntries() {}  // Use this to link specific entries to the industries - or worlds - they're associated with.
     public boolean isAvailableToPlayer() {
         return true;  // Use this for unlockable or NPC-only workforces.
     }
@@ -59,10 +61,20 @@ public class BaseWorkforce extends BaseMarketConditionPlugin {
     }
     @Override
     protected void createTooltipAfterDescription(TooltipMakerAPI tooltip, boolean expanded) {
-        if(!shouldApply()) {
-            float opad = 10f;
-            //tooltip.addPara("Due to a loss of population or some other factor, %s.", opad, Misc.getNegativeHighlightColor(), "our workforces are in disarray");
-            //tooltip.addPara("%s", opad, Misc.getHighlightColor(), "Suspend some workforces to restore normal operation");
+        float opad = 10f;
+        if(Global.CODEX_TOOLTIP_MODE) {
+            String list = "";
+            for (String curr : getRequirements()) {
+                curr = curr.trim();
+                list += curr + ", ";
+            }
+            if (!list.isEmpty()) list = list.substring(0, list.length()-2);
+            if (!list.isEmpty()) {
+                tooltip.addPara("Requirements: %s", opad, Misc.getTextColor(), list);
+            } else {
+                tooltip.addPara("Requirements: none", opad);
+            }
+        } else if(!shouldApply()) {
             tooltip.addPara("This workforce is unable to operate properly.", Misc.getNegativeHighlightColor(), opad);
             String list = "";
             for (String curr : getUnmetRequirements()) {

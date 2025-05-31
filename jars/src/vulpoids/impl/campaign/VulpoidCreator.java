@@ -79,7 +79,9 @@ public class VulpoidCreator {
     public static final String EXPRESSION_OFFICER = "military";
     public static final String EXPRESSION_FROZEN = "popsicle";
     
-    
+    public static String getDefaultIcon() {
+        return "graphics/icons/cargo/vulpoids/vulpoid_laisa.png";
+    }
     public static String getIcon(String portrait) {
         return "graphics/icons/cargo/vulpoids/vulpoid_"+getPortraitPropertyAtIndex(portrait, INDEX_CLIMATE)+".png";
     }

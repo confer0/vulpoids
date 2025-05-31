@@ -1,5 +1,7 @@
 package vulpoids.impl.campaign.econ.workforces;
 
+import com.fs.starfarer.api.impl.campaign.ids.Industries;
+import com.fs.starfarer.api.impl.codex.CodexDataV2;
 import com.fs.starfarer.api.ui.TooltipMakerAPI;
 import com.fs.starfarer.api.util.Misc;
 
@@ -25,5 +27,12 @@ public class TraderWorkforce extends BaseWorkforce {
             //tooltip.addPara("Our Vulpoids are catering to visiting traders at the spaceports, offering free headpats and encouraging more trade.", opad);
             tooltip.addPara("%s colony income", opad, Misc.getHighlightColor(), "+" + (int)INCOME_BONUS + "%");
         }
+    }
+    @Override
+    public void linkCodexEntries() {
+        CodexDataV2.makeRelated(
+                    CodexDataV2.getConditionEntryId(condition.getId()),
+                    CodexDataV2.getIndustryEntryId(Industries.SPACEPORT)
+            );
     }
 }

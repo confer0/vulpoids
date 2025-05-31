@@ -4,9 +4,9 @@ import com.fs.starfarer.api.Global;
 import com.fs.starfarer.api.campaign.AsteroidAPI;
 import com.fs.starfarer.api.campaign.InteractionDialogAPI;
 import com.fs.starfarer.api.campaign.SectorEntityToken;
-import com.fs.starfarer.api.campaign.StarSystemAPI;
 import com.fs.starfarer.api.campaign.econ.MarketAPI;
 import com.fs.starfarer.api.campaign.rules.MemoryAPI;
+import com.fs.starfarer.api.impl.campaign.ids.Conditions;
 import com.fs.starfarer.api.impl.campaign.ids.Tags;
 import com.fs.starfarer.api.impl.campaign.missions.hub.HubMissionWithSearch;
 import com.fs.starfarer.api.ui.SectorMapAPI;
@@ -47,12 +47,12 @@ public class LobsterBioforgeMission extends HubMissionWithSearch {
     }
     
     private void addAsteroids() {
-        StarSystemAPI system = Global.getSector().getStarSystem("askonia");
+        SectorEntityToken salus = getSalus();
         
         for(int i=0; i<NUM_ASTEROIDS; i++) {
-            AsteroidAPI asteroid = system.addAsteroid(25f);
+            AsteroidAPI asteroid = salus.getStarSystem().addAsteroid(25f);
             asteroid.setFacing(new Random().nextFloat() * 360f);
-            asteroid.setCircularOrbit(system.getEntityById("salus"), i*360f/NUM_ASTEROIDS, 1100, 40);
+            asteroid.setCircularOrbit(salus, i*360f/NUM_ASTEROIDS, 1100, 40);
             asteroid.setRotation(50);
             asteroid.setName("Opis Asteroid");
             asteroid.setCustomDescriptionId("opis_asteroid");
@@ -60,6 +60,38 @@ public class LobsterBioforgeMission extends HubMissionWithSearch {
             asteroid.addTag(Tags.NOT_RANDOM_MISSION_TARGET);
             asteroid.addTag(Tags.HAS_INTERACTION_DIALOG);
         }
+    }
+    
+    private SectorEntityToken getSalus() {
+        SectorEntityToken salus = Global.getSector().getEntityById("salus");
+        if(salus==null) salus = getVolturnInRandomSector();
+        return salus;
+    }
+    
+    private SectorEntityToken getVolturn() {
+        SectorEntityToken volturn = Global.getSector().getEntityById("volturn");
+        if(volturn==null) volturn = getVolturnInRandomSector();
+        return volturn;
+    }
+    
+    private SectorEntityToken getVolturnInRandomSector() {
+        SectorEntityToken volturn = Global.getSector().getEntityById("volturn");
+        // Random Sector support
+        if(volturn==null) {
+            // If it's got lobster pens, it's the one. Otherwise, first one with a water surface.
+            for (MarketAPI market : Global.getSector().getEconomy().getMarketsCopy()) {
+                if(market.hasCondition(Conditions.VOLTURNIAN_LOBSTER_PENS)) {
+                    volturn = market.getPrimaryEntity();
+                    break;
+                }
+                if(volturn==null && market.hasCondition(Conditions.WATER_SURFACE)) {
+                    volturn = market.getPrimaryEntity();
+                }
+            }
+            // Pretty sure this shouldn't happen, but if it does, just pick something.
+            if(volturn==null) volturn = Global.getSector().getEconomy().getMarketsCopy().get(0).getPrimaryEntity();
+        }
+        return volturn;
     }
     
     @Override
@@ -90,8 +122,8 @@ public class LobsterBioforgeMission extends HubMissionWithSearch {
     
     @Override
     public SectorEntityToken getMapLocation(SectorMapAPI map) {
-        if(currentStage == Stage.OPIS) return Global.getSector().getEntityById("salus");
-        if(currentStage == Stage.VOLTURN) return Global.getSector().getEntityById("volturn");
+        if(currentStage == Stage.OPIS) return getSalus();
+        if(currentStage == Stage.VOLTURN) return getVolturn();
         return super.getMapLocation(map);
     }
     
@@ -119,9 +151,8 @@ public class LobsterBioforgeMission extends HubMissionWithSearch {
                 return true;
             case "foundCoordinates":
                 setCurrentStage(Stage.VOLTURN, dialog, memoryMap);
+                getVolturn().getMarket().getMemoryWithoutUpdate().set("$vulp_lobsterBioforgeRaidTarget", true);
                 return true;
-            case "isVolturnStage":
-                return currentStage == Stage.VOLTURN;
             case "finish":
                 setCurrentStage(Stage.GOT_FORGE, dialog, memoryMap);
                 return true;

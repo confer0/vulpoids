@@ -42,6 +42,7 @@ import com.fs.starfarer.api.impl.campaign.missions.hub.HubMissionWithSearch;
 import com.fs.starfarer.api.impl.campaign.missions.hub.ReqMode;
 import com.fs.starfarer.api.impl.campaign.procgen.themes.BaseThemeGenerator;
 import com.fs.starfarer.api.impl.campaign.procgen.themes.RemnantSeededFleetManager.RemnantFleetInteractionConfigGen;
+import com.fs.starfarer.api.impl.campaign.rulecmd.AddAbility;
 import com.fs.starfarer.api.impl.campaign.rulecmd.AddRemoveCommodity;
 import com.fs.starfarer.api.impl.campaign.rulecmd.salvage.special.ShipRecoverySpecial.PerShipData;
 import com.fs.starfarer.api.impl.campaign.rulecmd.salvage.special.ShipRecoverySpecial.ShipCondition;
@@ -50,6 +51,8 @@ import com.fs.starfarer.api.loading.VariantSource;
 import com.fs.starfarer.api.ui.SectorMapAPI;
 import com.fs.starfarer.api.ui.TooltipMakerAPI;
 import com.fs.starfarer.api.util.Misc;
+import com.fs.starfarer.api.util.Misc.Token;
+import com.fs.starfarer.api.util.Misc.TokenType;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -467,6 +470,14 @@ public class VulpoidBiofactoryMission extends HubMissionWithSearch implements Fl
                 SectorEntityToken entity = SpecialItemOfferCreator.createEntity(new Random());
                 SpecialItemOffer offer = new SpecialItemOffer(entity, 2, Vulpoids.MANGONUT_TREE_ITEM);
                 offer.init(dialog);
+                return true;
+            case "unlockChatAbility":
+                // Done this way so the 'skill gained' text doesn't give the wrong name.
+                // In normal gameplay you only see the raw name there, and otherwise it's always the tooltip.
+                // But now that there's a codex, the spec name has to be correct.
+                new AddAbility().execute(null, null, new ArrayList<Token>(){{
+                    add(new Token(Vulpoids.ABILITY_CHAT, TokenType.LITERAL));
+                }}, null);
                 return true;
             case "introduceToSector":
                 new VulpoidAcceptanceEventIntel(null, true);

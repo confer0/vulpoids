@@ -24,7 +24,7 @@ public class VulpoidPopulation extends BaseMarketConditionPlugin implements Mark
     
     private float population = 0;
     final float MIN_POPULATION = 1;
-    final float MAX_POPULATION = 10; // Just in case.
+    //final float MAX_POPULATION = 10; // Just in case.
     //private int last_reported_production = 0;
     
     private MutableStat workforceCap;
@@ -53,8 +53,9 @@ public class VulpoidPopulation extends BaseMarketConditionPlugin implements Mark
     
     @Override
     public void advance(float amount) {
+        if(Global.CODEX_TOOLTIP_MODE) return;
         if(workforceCap==null) workforceCap = new MutableStat(0f);
-        if(!market.getMemoryWithoutUpdate().contains(MemFlags.RECENTLY_BOMBARDED)) {
+        //if(!market.getMemoryWithoutUpdate().contains(MemFlags.RECENTLY_BOMBARDED)) {
             int prev_population = (int)population;
             float days = Misc.getDays(amount);
             int popCap = getPopCap();
@@ -65,14 +66,14 @@ public class VulpoidPopulation extends BaseMarketConditionPlugin implements Mark
             if(population >= popCap - 1) population_growth /= 10; // Takes ~1 year to increase to +0 from -1.
             if(population >= popCap) population_growth = 0;  // I can't believe I forgot this lol.
             population += population_growth;
-            population = Math.min(population, MAX_POPULATION);
+            //population = Math.min(population, MAX_POPULATION);
             population = Math.max(population, MIN_POPULATION);
             if(prev_population < (int)population) {
                 Global.getSector().getIntelManager().addIntel(new VulpPopGrownIntel(market, (int)population));
             }
-        } else {
-            population = Math.min(population, getPopCap());
-        }
+        //} else {
+        //    population = Math.min(population, getPopCap());
+        //}
         int native_workforce_cap = (int)population - MIN_POPULATION_FOR_WORKFORCE + 1;
         native_workforce_cap = (int)(native_workforce_cap * POPULATION_WORKFORCE_MULT);
         native_workforce_cap = Math.max(native_workforce_cap, 0);
@@ -103,7 +104,17 @@ public class VulpoidPopulation extends BaseMarketConditionPlugin implements Mark
         return popCap;
     }
     
-    
+    public void onSaturationBombardment() {
+        population -= 1;
+        if (population < MIN_POPULATION) {
+            market.removeCondition(Vulpoids.CONDITION_VULPOID_POPULATION);
+            for (MarketConditionAPI workforce : market.getConditions()) {
+                if (workforce.getSpec().hasTag(Vulpoids.CONDITION_WORKFORCE_TAG)) {
+                    market.removeCondition(workforce.getId());
+                }
+            }
+        }
+    }
     
     public int getPopulation() {return (int)population;}
     public void setPopulation(int population) {this.population=population;}
@@ -135,6 +146,7 @@ public class VulpoidPopulation extends BaseMarketConditionPlugin implements Mark
     
     @Override
     public void apply(String id) {
+        if(Global.CODEX_TOOLTIP_MODE) return;
         // Fixing a weird bug where it could have a market that wasn't the original.
         // Probably the result of a mod conflict, but only visible here because it's non-transient. 
        if(market.getPrimaryEntity()!=null) market = market.getPrimaryEntity().getMarket();
@@ -181,7 +193,8 @@ public class VulpoidPopulation extends BaseMarketConditionPlugin implements Mark
     
     @Override
     public String getIconName() {
-        if(market.getMemoryWithoutUpdate().contains(MemFlags.RECENTLY_BOMBARDED)) return "graphics/icons/missions/tactical_bombardment.png";
+        // Codex apparently doesn't actually call for this, and just uses the default.
+        //if(market.getMemoryWithoutUpdate().contains(MemFlags.RECENTLY_BOMBARDED)) return "graphics/icons/missions/tactical_bombardment.png";
         if(population < 2) return "graphics/icons/markets/vulp_pop_01.png";
         else if(population < 3) return "graphics/icons/markets/vulp_pop_02.png";
         else if(population < 4) return "graphics/icons/markets/vulp_pop_03.png";
@@ -199,14 +212,15 @@ public class VulpoidPopulation extends BaseMarketConditionPlugin implements Mark
         super.createTooltipAfterDescription(tooltip, expanded);
         
         String name = market.getName();
+        if(Global.CODEX_TOOLTIP_MODE) name = "The market";  // Would normally be 'the planet', but I want an upper case 'The', and might as well support space stations.
         float opad = 10f;
         
-        if(market.getMemoryWithoutUpdate().contains(MemFlags.RECENTLY_BOMBARDED)) {
+        /*if(market.getMemoryWithoutUpdate().contains(MemFlags.RECENTLY_BOMBARDED)) {
             tooltip.addImage(Global.getSettings().getSpriteName("illustrations", "bombard_tactical_result"), opad);
             tooltip.addPara("\nA recent orbital bombardment has devastated the Vulpoid population. "+
                     "It will be take up to a month before the population can start to recover, assuming supply is still available.", opad);
             return;
-        }
+        }*/
         
         
         if(population<=3) tooltip.addImage(Global.getSettings().getSpriteName("illustrations", "vulp_pop_low"), opad);
@@ -218,50 +232,64 @@ public class VulpoidPopulation extends BaseMarketConditionPlugin implements Mark
                 "comforable life, and help placate the more rowdy parts of society.", opad);
         
         
-        tooltip.addPara("\nQuantity", market.getFaction().getBaseUIColor(), opad);
-        
-        int p = getPopulation();
-        if(p < 2)       tooltip.addPara("Only a few dozen Vulpoids are permanently present here.", opad);
-        else if(p < 3)  tooltip.addPara("A few hundred Vulpoids are present at any given time.", opad);
-        else if(p < 4)  tooltip.addPara("Thousands of Vulpoids are present across "+name+".", opad);
-        else if(p < 5)  tooltip.addPara("Tens of thousands of Vulpoids inhabit the cities of "+name+".", opad);
-        else if(p < 6)  tooltip.addPara("Hundreds of thousands of Vulpoids occupy whole districts of "+name+".", opad);
-        else if(p < 7)  tooltip.addPara("Millions of Vulpoids fill the cities of "+name+".", opad);
-        else if(p < 8)  tooltip.addPara("Tens of millions of Vulpoids fill entire arcologies on "+name+".", opad);
-        else if(p < 9)  tooltip.addPara("Hundreds of millions of Vulpoids live in seas of fluffy ears and wagging tails.", opad);
-        else if(p < 10) tooltip.addPara("Billions of Vulpoids make entire oceans of fluffy affection, deep enough to drown in.", opad);
-        else            tooltip.addPara("Tens of billions of Vulpoids live so densely on "+name+" that there's not a single place not smothered by eager adoration.", opad);
-        
-        int w = workforceCap.getModifiedInt();
-        String w_s = "s";
-        if (w==1) w_s = "";
-        if(w > 0) tooltip.addPara("Supports %s Vulpoid workforce"+w_s, opad, Misc.getHighlightColor(), ""+w);
-        
-        
-        tooltip.addPara("\nAvailability", market.getFaction().getBaseUIColor(), opad);
-        
-        switch(getAvailability()) {
-            case -6:    tooltip.addPara("Vulpoids on "+name+" are one-in-a-million, with only the very richest posessing them.", opad); break;
-            case -5:    tooltip.addPara("Only the upper echelons of "+name+"'s elites possess Vulpoids.", opad); break;
-            case -4:    tooltip.addPara("Even among the wealthier citizens of "+name+", Vulpoids are a rarity.", opad); break;
-            case -3:    tooltip.addPara("The wealthy citizens of "+name+" usually keep Vulpoids of their own.", opad); break;
-            case -2:    tooltip.addPara("Anyone of means on "+name+" has at least one Vulpoid to their name.", opad); break;
-            case -1:    tooltip.addPara("Vulpoids are common on "+name+", with over one in every dozen people having one.", opad); break;
-            case 0:     tooltip.addPara("Nearly everyone on "+name+" has a Vulpoid to tend to their needs.", opad); break;
-            case 1:     tooltip.addPara("Every citizen of "+name+" has a personal Vulpoid eager to be their best friend, and many have more than one.", opad); break;
-            case 2:     tooltip.addPara("Every person on "+name+" has dozens of Vulpoids catering to their every whim, living a life of luxury unheard of in the Persean Sector.", opad); break;
-        }
-        
-        if (getAvailabilityStability()>0) tooltip.addPara("%s stability", opad, Misc.getHighlightColor(), "+"+(int)getAvailabilityStability());
-        if (getAvailabilityGrowth()>0) tooltip.addPara("%s population growth (based on market size)", opad, Misc.getHighlightColor(), "+"+(int)getAvailabilityGrowth());
-        
-        if(getPopulation() >= market.getSize()) {
-            tooltip.addPara("\nThe Vulpoid population has matched the human population, and cannot be sustainably increased.", opad);
-        } else if (getPopCap() <= getPopulation()) {
-            tooltip.addPara("\nThe population has reached its maximum size for current production.", opad);
+        if(Global.CODEX_TOOLTIP_MODE) {
+            tooltip.addPara("Depending on production and imports, the population of Vulpoids on the planet can range from only "+
+                    "a few dozen, all the way to hundreds of thousands of foxes filling entire districts worth of space. In "+
+                    "addition to domestic chores and errands, sufficiently large populations can also be organized into "+
+                    "large-scale workforces by industrious colony administrators.", opad);
+            tooltip.addPara("The Vulpoid population cannot reasonably exceed the human population in orders of magnitude however, "+
+                    "as they'd struggle to maintain complex infrastructure or bureaucracy.", opad);
+            tooltip.addPara("The higher the Vulpoid population is relative to the human population, the more readily available "+
+                    "Vulpoids are to the average citizen. In large markets with few Vulpoids they might only be held by the "+
+                    "very wealthiest, while smaller markets with many Vulpoids might see one in nearly every household.", opad);
+            tooltip.addPara("Sufficiently high availability will bolster market stability, and may encourage population growth "+
+                    "to new colonies as people immigrate for a better life.", opad);
         } else {
-            int progress_percent = (int)((population*100)%100);
-            tooltip.addPara("\nProgress to next level: %s", opad, Misc.getHighlightColor(), progress_percent+"%");
+            tooltip.addPara("\nQuantity: "+(int)population, market.getFaction().getBaseUIColor(), opad);
+
+            int p = getPopulation();
+            if(p < 2)       tooltip.addPara("Only a few dozen Vulpoids are permanently present here.", opad);
+            else if(p < 3)  tooltip.addPara("A few hundred Vulpoids are present at any given time.", opad);
+            else if(p < 4)  tooltip.addPara("Thousands of Vulpoids are present across "+name+".", opad);
+            else if(p < 5)  tooltip.addPara("Tens of thousands of Vulpoids inhabit the cities of "+name+".", opad);
+            else if(p < 6)  tooltip.addPara("Hundreds of thousands of Vulpoids occupy whole districts of "+name+".", opad);
+            else if(p < 7)  tooltip.addPara("Millions of Vulpoids fill the cities of "+name+".", opad);
+            else if(p < 8)  tooltip.addPara("Tens of millions of Vulpoids fill entire arcologies on "+name+".", opad);
+            else if(p < 9)  tooltip.addPara("Hundreds of millions of Vulpoids live in seas of fluffy ears and wagging tails.", opad);
+            else if(p < 10) tooltip.addPara("Billions of Vulpoids make entire oceans of fluffy affection, deep enough to drown in.", opad);
+            else            tooltip.addPara("Tens of billions of Vulpoids live so densely on "+name+" that there's not a single place not smothered by eager adoration.", opad);
+
+            int w = workforceCap.getModifiedInt();
+            String w_s = "s";
+            if (w==1) w_s = "";
+            if(w > 0) tooltip.addPara("Supports %s Vulpoid workforce"+w_s, opad, Misc.getHighlightColor(), ""+w);
+
+
+            tooltip.addPara("\nAvailability: "+(int)(population-market.getSize()), market.getFaction().getBaseUIColor(), opad);
+
+            switch(getAvailability()) {
+                case -6:    tooltip.addPara("Vulpoids on "+name+" are one-in-a-million, with only the very richest posessing them.", opad); break;
+                case -5:    tooltip.addPara("Only the upper echelons of "+name+"'s elites possess Vulpoids.", opad); break;
+                case -4:    tooltip.addPara("Even among the wealthier citizens of "+name+", Vulpoids are a rarity.", opad); break;
+                case -3:    tooltip.addPara("The wealthy citizens of "+name+" usually keep Vulpoids of their own.", opad); break;
+                case -2:    tooltip.addPara("Anyone of means on "+name+" has at least one Vulpoid to their name.", opad); break;
+                case -1:    tooltip.addPara("Vulpoids are common on "+name+", with over one in every dozen people having one.", opad); break;
+                case 0:     tooltip.addPara("Nearly everyone on "+name+" has a Vulpoid to tend to their needs.", opad); break;
+                case 1:     tooltip.addPara("Every citizen of "+name+" has a personal Vulpoid eager to be their best friend, and many have more than one.", opad); break;
+                case 2:     tooltip.addPara("Every person on "+name+" has dozens of Vulpoids catering to their every whim, living a life of luxury unheard of in the Persean Sector.", opad); break;
+            }
+
+            if (getAvailabilityStability()>0) tooltip.addPara("%s stability", opad, Misc.getHighlightColor(), "+"+(int)getAvailabilityStability());
+            if (getAvailabilityGrowth()>0) tooltip.addPara("%s population growth (based on market size)", opad, Misc.getHighlightColor(), "+"+(int)getAvailabilityGrowth());
+
+            if(getPopulation() >= market.getSize()) {
+                tooltip.addPara("\nThe Vulpoid population has matched the human population, and cannot be sustainably increased.", opad);
+            } else if (getPopCap() <= getPopulation()) {
+                tooltip.addPara("\nThe population has reached its maximum size for current production.", opad);
+            } else {
+                int progress_percent = (int)((population*100)%100);
+                tooltip.addPara("\nProgress to next level: %s", opad, Misc.getHighlightColor(), progress_percent+"%");
+            }
         }
     }
     

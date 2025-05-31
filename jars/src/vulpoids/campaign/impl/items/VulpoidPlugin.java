@@ -24,6 +24,7 @@ import com.fs.starfarer.api.ui.TooltipMakerAPI;
 import com.fs.starfarer.api.util.Misc;
 import com.fs.starfarer.campaign.fleet.CargoData;
 import com.fs.starfarer.campaign.ui.trade.CargoItemStack;
+import com.fs.starfarer.ui.impl.StandardTooltipV2;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -227,7 +228,8 @@ public class VulpoidPlugin extends BaseSpecialItemPlugin {
                     break;
                 }
             }
-            if (!found_match) {
+            // Cargo check is very important, otherwise Codex creates lots of dummy people.
+            if (!found_match && stack.isInPlayerCargo()) {
                 Global.getSector().getPlayerFleet().getFleetData().addOfficer(person);
             }
         }
@@ -241,7 +243,9 @@ public class VulpoidPlugin extends BaseSpecialItemPlugin {
                     break;
                 }
             }
-            if (!found_match) {
+            // Cargo check is very important, otherwise Codex creates lots of dummy people.
+            // And the null check on cargo is for the main menu.
+            if (!found_match && stack.getCargo()!=null && stack.isInPlayerCargo()) {
                 Global.getSector().getCharacterData().addAdmin(person);
             }
         }
@@ -274,8 +278,10 @@ public class VulpoidPlugin extends BaseSpecialItemPlugin {
     
     @Override
     public String getName() {
+        if (Global.CODEX_TOOLTIP_MODE) {
+            return "Profecto Vulpoid";
+        }
         refreshPerson();
-        
         return person.getNameString();
     }
     
@@ -292,35 +298,37 @@ public class VulpoidPlugin extends BaseSpecialItemPlugin {
         float brX = cx+40;
         float brY = cy-40;
         
-        SpriteAPI sprite = Global.getSettings().getSprite(VulpoidCreator.getIcon(person.getPortraitSprite()));
-        //sprite.setAlphaMult(alphaMult);
-        //sprite.setNormalBlend();
+        // CODEX_TOOLTIP_MODE doesn't work here since the icons aren't in the tooltip.
+        boolean assume_codex = stack.getCargo() == null;
+        SpriteAPI sprite;
+        if (assume_codex) {
+            sprite = Global.getSettings().getSprite(VulpoidCreator.getDefaultIcon());
+        } else {
+            sprite = Global.getSettings().getSprite(VulpoidCreator.getIcon(person.getPortraitSprite()));
+        }
+        sprite.setAlphaMult(alphaMult);
         sprite.renderWithCorners(blX, blY, tlX, tlY, trX, trY, brX, brY);
+        
         if(Vulpoids.SPECIAL_ITEM_EMBARKED.equals(getId())) {
             sprite = Global.getSettings().getSprite("cargo", "vulp_embarked_icon");
+            sprite.setAlphaMult(alphaMult);
             sprite.renderWithCorners(blX, blY, tlX, tlY, trX, trY, brX, brY);
-            
-            if(disallowCycleReason()!=null) {
-                sprite = Global.getSettings().getSprite("cargo", "vulp_lock_icon");
-                sprite.renderWithCorners(blX, blY, tlX, tlY, trX, trY, brX, brY);
-            }
         }
         if(Vulpoids.SPECIAL_ITEM_OFFICER.equals(getId())) {
             sprite = Global.getSettings().getSprite("cargo", "vulp_officer_icon");
+            sprite.setAlphaMult(alphaMult);
             sprite.renderWithCorners(blX, blY, tlX, tlY, trX, trY, brX, brY);
-            
-            if(disallowCycleReason()!=null) {
-                sprite = Global.getSettings().getSprite("cargo", "vulp_lock_icon");
-                sprite.renderWithCorners(blX, blY, tlX, tlY, trX, trY, brX, brY);
-            }
         }
         else if(Vulpoids.SPECIAL_ITEM_ADMIN.equals(getId())) {
             sprite = Global.getSettings().getSprite("cargo", "vulp_admin_icon");
+            sprite.setAlphaMult(alphaMult);
             sprite.renderWithCorners(blX, blY, tlX, tlY, trX, trY, brX, brY);
-            if(disallowCycleReason()!=null) {
-                sprite = Global.getSettings().getSprite("cargo", "vulp_lock_icon");
-                sprite.renderWithCorners(blX, blY, tlX, tlY, trX, trY, brX, brY);
-            }
+        }
+        
+        if(!assume_codex && disallowCycleReason()!=null) {
+            sprite = Global.getSettings().getSprite("cargo", "vulp_lock_icon");
+            sprite.setAlphaMult(alphaMult);
+            sprite.renderWithCorners(blX, blY, tlX, tlY, trX, trY, brX, brY);
         }
     }
     
@@ -341,13 +349,24 @@ public class VulpoidPlugin extends BaseSpecialItemPlugin {
 
     @Override
     public void createTooltip(TooltipMakerAPI tooltip, boolean expanded, CargoTransferHandlerAPI transferHandler, Object stackSource) {
-        refreshPerson();
-
         float pad = 3f;
         float opad = 10f;
         
         Color body_color = getColor();
         Color text_color = new Color(255,255,255);
+        
+        
+        if(Global.CODEX_TOOLTIP_MODE) {
+            tooltip.addSpacer(-opad);
+            Misc.addDesignTypePara(tooltip, getDesignType(), opad);
+            tooltip.setParaSmallInsignia();
+            Color c = Misc.getTextColor();
+            tooltip.addPara(spec.getDesc(), c, opad);
+            addCostLabel(tooltip, opad, transferHandler, stackSource);
+            return;
+        }
+        
+        refreshPerson();
         
         String original_portrait = person.getPortraitSprite();
         // If it's default we don't use the default expression, we _want_ them to be locked into the frozen expression.
@@ -503,6 +522,7 @@ public class VulpoidPlugin extends BaseSpecialItemPlugin {
     }
     
     private boolean isInPlayerCargo() {
+        if(Global.CODEX_TOOLTIP_MODE) return false;
         for(CargoStackAPI player_stack : Global.getSector().getPlayerFleet().getCargo().getStacksCopy()) {
             if (player_stack.isSpecialStack() && stacksHaveSamePerson(stack, player_stack)) {
                 stack = player_stack; // It gets desynced when moved to another slot.

@@ -7,6 +7,7 @@ import com.fs.starfarer.api.campaign.TextPanelAPI;
 import com.fs.starfarer.api.campaign.econ.Industry;
 import com.fs.starfarer.api.campaign.econ.MarketAPI;
 import com.fs.starfarer.api.characters.PersonAPI;
+import com.fs.starfarer.api.impl.campaign.ids.Conditions;
 import com.fs.starfarer.api.impl.campaign.ids.Factions;
 import com.fs.starfarer.api.impl.campaign.ids.FleetTypes;
 import com.fs.starfarer.api.impl.campaign.ids.Ranks;
@@ -30,6 +31,7 @@ import com.fs.starfarer.api.ui.TooltipMakerAPI;
 import com.fs.starfarer.api.ui.TooltipMakerAPI.TooltipCreator;
 import com.fs.starfarer.api.util.Misc;
 import java.awt.Color;
+import java.util.List;
 import java.util.Random;
 import java.util.Set;
 import org.lwjgl.util.vector.Vector2f;
@@ -439,8 +441,11 @@ public class VulpoidAcceptanceEventIntel extends BaseEventIntel {
         Misc.makeImportant(curate, "VulpoidAcceptance");
         curate.getMemoryWithoutUpdate().set("$bombardmentOccurred", bombardmentOccurred);
         Global.getSector().getImportantPeople().addPerson(curate);
-        Global.getSector().getEntityById("gilead").getMarket().addPerson(curate);
-        Global.getSector().getEntityById("gilead").getMarket().getCommDirectory().addPerson(curate);
+        MarketAPI gilead;
+        if(Global.getSector().getEntityById("gilead")!=null) gilead = Global.getSector().getEntityById("gilead").getMarket();
+        else gilead = getChurchMarketInRandomSector();
+        gilead.addPerson(curate);
+        gilead.getCommDirectory().addPerson(curate);
         
         sendUpdateIfPlayerHasIntel(getDataFor(Stage.KNIGHT_BOMBARD), false);
     }
@@ -496,7 +501,11 @@ public class VulpoidAcceptanceEventIntel extends BaseEventIntel {
         
         if (target == null) return false;
         
-        MarketAPI from = Global.getSector().getEntityById("hesperus").getMarket();
+        // Bombardment fleet is _meant_ to come from Hesperus
+        MarketAPI from;
+        if(Global.getSector().getEntityById("hesperus")!=null) from = Global.getSector().getEntityById("hesperus").getMarket();
+        // If we can't find it - such as due to a random Sector - then we'll find something else.
+        else from = getChurchMarketInRandomSector();
         if (from == null) return false;
         
         PunExGoal goal = PunExGoal.BOMBARD;
@@ -510,5 +519,35 @@ public class VulpoidAcceptanceEventIntel extends BaseEventIntel {
             return false;
         }
         return true;
+    }
+    
+    
+    protected MarketAPI getChurchMarketInRandomSector() {
+        MarketAPI target = null;
+        // First choice is to just pick a random Church world.
+        List<MarketAPI> church_markets = Misc.getFactionMarkets(Factions.LUDDIC_CHURCH);
+        if(!church_markets.isEmpty()) {
+            for (MarketAPI church_market : church_markets) {
+                // Pretty sure there should always be one with this tag.
+                if (church_market.hasTag("luddic_shrine")) return church_market;
+            }
+            return church_markets.get(0);
+        }
+        // If we don't have that, then we'll just pick a market that's a good fit.
+        int best_score = -1;
+        for (MarketAPI market : Global.getSector().getEconomy().getMarketsCopy()) {
+            int score = 0;
+            // Note that we could do this selection first.
+            // But since Random Sector means you're playing with Nex, it's preferable to pick a world that currently belongs to the Church.
+            // Story beats are jumbled anyway, so it's NBD.
+            if (market.getMemoryWithoutUpdate().getString("$startingFactionId").equals(Factions.LUDDIC_CHURCH)) score+=2;
+            if (market.hasTag("luddic_shrine")) score+=1;
+            if (market.hasCondition(Conditions.MILD_CLIMATE)) score+=1;
+            if (score>best_score) target = market;
+        }
+        // Still no luck? Pick a random market outright.
+        if(target==null) target=Global.getSector().getEconomy().getMarketsCopy().get(0);
+        
+        return target;
     }
 }

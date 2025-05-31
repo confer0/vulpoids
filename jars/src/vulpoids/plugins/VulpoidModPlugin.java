@@ -9,6 +9,7 @@ import com.fs.starfarer.api.impl.campaign.econ.impl.BaseInstallableItemEffect;
 import com.fs.starfarer.api.campaign.econ.Industry;
 import com.fs.starfarer.api.ui.TooltipMakerAPI;
 import com.fs.starfarer.api.campaign.SpecialItemData;
+import com.fs.starfarer.api.campaign.SpecialItemSpecAPI;
 import com.fs.starfarer.api.campaign.econ.InstallableIndustryItemPlugin.InstallableItemDescriptionMode;
 import com.fs.starfarer.api.util.Misc;
 import com.fs.starfarer.api.impl.campaign.econ.impl.BaseIndustry;
@@ -16,27 +17,37 @@ import com.fs.starfarer.api.impl.campaign.econ.impl.BaseIndustry;
 import com.fs.starfarer.api.campaign.econ.MarketAPI;
 import com.fs.starfarer.api.characters.FullName;
 import com.fs.starfarer.api.characters.ImportantPeopleAPI;
+import com.fs.starfarer.api.characters.MarketConditionSpecAPI;
 import com.fs.starfarer.api.characters.PersonAPI;
+import com.fs.starfarer.api.impl.SharedUnlockData;
 import com.fs.starfarer.api.impl.campaign.econ.impl.BoostIndustryInstallableItemEffect;
 import com.fs.starfarer.api.impl.campaign.ids.Commodities;
 import com.fs.starfarer.api.impl.campaign.ids.Conditions;
+import com.fs.starfarer.api.impl.campaign.ids.Industries;
 import com.fs.starfarer.api.impl.campaign.ids.Items;
 import com.fs.starfarer.api.impl.campaign.ids.MemFlags;
 import com.fs.starfarer.api.impl.campaign.ids.Planets;
 import com.fs.starfarer.api.impl.campaign.ids.Ranks;
 import com.fs.starfarer.api.impl.campaign.ids.Skills;
 import com.fs.starfarer.api.impl.campaign.ids.Stats;
+import com.fs.starfarer.api.impl.codex.CodexDataV2;
 import com.fs.starfarer.api.util.Pair;
+import vulpoids.campaign.listeners.SaturationBombardmentListener;
 import vulpoids.impl.campaign.VulpoidCreator;
 import vulpoids.impl.campaign.econ.FilteredAir;
 import vulpoids.impl.campaign.econ.LobstersGrowing;
+import vulpoids.impl.campaign.econ.workforces.BaseWorkforce;
 import vulpoids.impl.campaign.ids.Vulpoids;
 import vulpoids.impl.campaign.intel.events.VulpoidAcceptanceEventIntel;
 
 public class VulpoidModPlugin extends BaseModPlugin {
-
+    
     @Override
     public void onGameLoad(boolean newGame) {
+        
+        if(!Global.getSector().getListenerManager().hasListenerOfClass(SaturationBombardmentListener.class)) {
+            Global.getSector().getListenerManager().addListener(new SaturationBombardmentListener());
+        }
         
         ImportantPeopleAPI ip = Global.getSector().getImportantPeople();
         PersonAPI person;
@@ -45,6 +56,14 @@ public class VulpoidModPlugin extends BaseModPlugin {
         if(!dealmakerParams.contains(Vulpoids.INDUSTRY_VULPOIDAGENCY) && Global.getSector().getPlayerFaction().knowsIndustry(Vulpoids.INDUSTRY_VULPOIDAGENCY)) {
             dealmakerParams += ", "+Vulpoids.INDUSTRY_VULPOIDAGENCY;
             Global.getSettings().getSpecialItemSpec(Items.DEALMAKER_HOLOSUITE).setParams(dealmakerParams);
+        }
+        
+        // Mod Compatibility - Ashes Of The Domain
+        if (Global.getSettings().getModManager().isModEnabled("aotd_vok")) {
+            addSpecialItemIndustry(Vulpoids.MANGONUT_TREE_ITEM, "subfarming");
+            addSpecialItemIndustry(Vulpoids.MANGONUT_TREE_ITEM, "artifarming");
+            addSpecialItemIndustry(Vulpoids.MIDAS_NANOFORGE_ITEM, "supplyheavy");
+            addSpecialItemIndustry(Vulpoids.MIDAS_NANOFORGE_ITEM, "weaponheavy");
         }
         
         if (ip.getPerson(Vulpoids.PERSON_LAISA) == null) {
@@ -251,8 +270,14 @@ public class VulpoidModPlugin extends BaseModPlugin {
                     b.getDemand(Commodities.METALS).getQuantity().modifyMult(spec.getId(), 0);
                     b.getDemand(Commodities.RARE_METALS).getQuantity().modifyMult(spec.getId(), 0);
                     
-                    b.demand(9, Commodities.ORE, size+3, Misc.ucFirst(spec.getName().toLowerCase()));
-                    b.demand(9, Commodities.RARE_ORE, size+1, Misc.ucFirst(spec.getName().toLowerCase()));
+                    int metal_demand = size+3;
+                    if (b.getDemand(Commodities.METALS).getQuantity().getFlatStatMod("ind_"+b.getId()+"_0")!=null) metal_demand = (int)b.getDemand(Commodities.METALS).getQuantity().getFlatStatMod("ind_"+b.getId()+"_0").getValue();
+                    int rare_metal_demand = size+1;
+                    if (b.getDemand(Commodities.RARE_METALS).getQuantity().getFlatStatMod("ind_"+b.getId()+"_0")!=null) rare_metal_demand = (int)b.getDemand(Commodities.RARE_METALS).getQuantity().getFlatStatMod("ind_"+b.getId()+"_0").getValue();
+                    //b.demand(9, Commodities.ORE, size+3, Misc.ucFirst(spec.getName().toLowerCase()));
+                    b.demand(9, Commodities.ORE, metal_demand+3, Misc.ucFirst(spec.getName().toLowerCase()));
+                    //b.demand(9, Commodities.RARE_ORE, size+1, Misc.ucFirst(spec.getName().toLowerCase()));
+                    b.demand(9, Commodities.RARE_ORE, rare_metal_demand+3, Misc.ucFirst(spec.getName().toLowerCase()));
                     Pair<String, Integer> deficit = b.getMaxDeficit(Commodities.ORE, Commodities.RARE_ORE);
                     int maxDeficit = size - 3;
                     if (deficit.two > maxDeficit) deficit.two = maxDeficit;
@@ -357,5 +382,177 @@ public class VulpoidModPlugin extends BaseModPlugin {
                 return new String [] {ItemEffectsRepo.HABITABLE};
             }
         });
+    }
+    
+    private static void addSpecialItemIndustry(String item, String industry) {
+        SpecialItemSpecAPI spec = Global.getSettings().getSpecialItemSpec(item);
+        if(!spec.getParams().contains(industry)) {
+            spec.setParams(spec.getParams()+","+industry);
+        }
+    }
+    
+    
+    @Override
+    public void onAboutToLinkCodexEntries() {
+        
+        // TODO - debug feature, remove.
+        SharedUnlockData.get().reportPlayerAwareOfSpecialItem(Vulpoids.SPECIAL_ITEM_CODEX, false);
+        
+        
+        CodexDataV2.makeRelated(
+                CodexDataV2.getItemEntryId(Vulpoids.SPECIAL_ITEM_CODEX),
+                CodexDataV2.getItemEntryId(Vulpoids.SPECIAL_ITEM_DEFAULT),
+                CodexDataV2.getItemEntryId(Vulpoids.SPECIAL_ITEM_EMBARKED),
+                CodexDataV2.getItemEntryId(Vulpoids.SPECIAL_ITEM_OFFICER),
+                CodexDataV2.getItemEntryId(Vulpoids.SPECIAL_ITEM_ADMIN)
+        );
+        CodexDataV2.makeRelated(
+                CodexDataV2.getCommodityEntryId(Vulpoids.CARGO_ITEM),
+                CodexDataV2.getItemEntryId(Vulpoids.SPECIAL_ITEM_CODEX)
+        );
+        CodexDataV2.makeRelated(
+                CodexDataV2.getCommodityEntryId(Vulpoids.CARGO_ITEM),
+                //CodexDataV2.getItemEntryId(Vulpoids.SPECIAL_ITEM_CODEX),
+                CodexDataV2.getCommodityEntryId(Vulpoids.MANGONUT_ITEM)
+        );
+        CodexDataV2.makeRelated(
+                CodexDataV2.getCommodityEntryId(Vulpoids.MANGONUT_TREE_ITEM),
+                CodexDataV2.getCommodityEntryId(Vulpoids.MANGONUT_ITEM)
+        );
+        
+        
+        CodexDataV2.makeRelated(
+                CodexDataV2.getCommodityEntryId(Vulpoids.CARGO_ITEM),
+                CodexDataV2.getIndustryEntryId(Vulpoids.INDUSTRY_BIOFACILITY),
+                CodexDataV2.getIndustryEntryId(Vulpoids.INDUSTRY_ORGANFARM),
+                CodexDataV2.getItemEntryId(Vulpoids.BIOFORGE_ITEM)
+        );
+        CodexDataV2.makeRelated(
+                CodexDataV2.getIndustryEntryId(Vulpoids.INDUSTRY_BIOFACILITY),
+                CodexDataV2.getIndustryEntryId(Vulpoids.INDUSTRY_ORGANFARM),
+                CodexDataV2.getIndustryEntryId(Vulpoids.INDUSTRY_VULPOIDAGENCY)
+        );
+        CodexDataV2.makeRelated(
+                CodexDataV2.getIndustryEntryId(Vulpoids.INDUSTRY_BIOFACILITY),
+                CodexDataV2.getIndustryEntryId(Vulpoids.INDUSTRY_ORGANFARM),
+                CodexDataV2.getItemEntryId(Vulpoids.BIOFORGE_ITEM),
+                CodexDataV2.getItemEntryId(Vulpoids.LOBSTER_BIOFORGE_ITEM),
+                CodexDataV2.getItemEntryId(Vulpoids.CORRUPT_BIOFORGE_ITEM)
+        );
+        
+        // Air Filter - Installed in population, consumes volatiles and rare metals, creates the filtered air condition. Suppresses pollution, toxic, storm, and interacts with mild.
+        CodexDataV2.makeRelated(
+                CodexDataV2.getIndustryEntryId(Industries.POPULATION),
+                CodexDataV2.getItemEntryId(Vulpoids.AIR_FILTER_ITEM)
+        );
+        CodexDataV2.makeRelated(
+                CodexDataV2.getItemEntryId(Vulpoids.AIR_FILTER_ITEM),
+                CodexDataV2.getCommodityEntryId(Commodities.VOLATILES)
+        );
+        CodexDataV2.makeRelated(
+                CodexDataV2.getItemEntryId(Vulpoids.AIR_FILTER_ITEM),
+                CodexDataV2.getCommodityEntryId(Commodities.RARE_METALS)
+        );
+        CodexDataV2.makeRelated(
+                CodexDataV2.getItemEntryId(Vulpoids.AIR_FILTER_ITEM),
+                CodexDataV2.getConditionEntryId(Vulpoids.CONDITION_FILTERED_AIR)
+        );
+        CodexDataV2.makeRelated(
+                CodexDataV2.getItemEntryId(Vulpoids.AIR_FILTER_ITEM),
+                CodexDataV2.getConditionEntryId(Vulpoids.CONDITION_FILTERED_AIR),
+                CodexDataV2.getConditionEntryId(Conditions.POLLUTION)
+        );
+        CodexDataV2.makeRelated(
+                CodexDataV2.getItemEntryId(Vulpoids.AIR_FILTER_ITEM),
+                CodexDataV2.getConditionEntryId(Vulpoids.CONDITION_FILTERED_AIR),
+                CodexDataV2.getConditionEntryId(Conditions.TOXIC_ATMOSPHERE)
+        );
+        CodexDataV2.makeRelated(
+                CodexDataV2.getItemEntryId(Vulpoids.AIR_FILTER_ITEM),
+                CodexDataV2.getConditionEntryId(Vulpoids.CONDITION_FILTERED_AIR),
+                CodexDataV2.getConditionEntryId(Conditions.EXTREME_WEATHER)
+        );
+        CodexDataV2.makeRelated(
+                CodexDataV2.getItemEntryId(Vulpoids.AIR_FILTER_ITEM),
+                CodexDataV2.getConditionEntryId(Vulpoids.CONDITION_FILTERED_AIR),
+                CodexDataV2.getConditionEntryId(Conditions.MILD_CLIMATE)
+        );
+        CodexDataV2.makeRelated(
+                CodexDataV2.getItemEntryId(Vulpoids.AIR_FILTER_ITEM),
+                CodexDataV2.getConditionEntryId(Vulpoids.CONDITION_FILTERED_AIR),
+                CodexDataV2.getConditionEntryId(Conditions.HABITABLE)
+        );
+        
+        // Midas Nanoforge - Installed in heavy industry or orbital works, consumes ores.
+        CodexDataV2.makeRelated(
+                CodexDataV2.getItemEntryId(Vulpoids.MIDAS_NANOFORGE_ITEM),
+                CodexDataV2.getCommodityEntryId(Commodities.ORE)
+        );
+        CodexDataV2.makeRelated(
+                CodexDataV2.getItemEntryId(Vulpoids.MIDAS_NANOFORGE_ITEM),
+                CodexDataV2.getCommodityEntryId(Commodities.RARE_ORE)
+        );
+        CodexDataV2.makeRelated(
+                CodexDataV2.getItemEntryId(Vulpoids.MIDAS_NANOFORGE_ITEM),
+                CodexDataV2.getIndustryEntryId(Industries.HEAVYINDUSTRY),
+                CodexDataV2.getIndustryEntryId(Industries.ORBITALWORKS)
+        );
+        
+        // Organ farms, for some reason, don't auto-link to organs.
+        CodexDataV2.makeRelated(
+                CodexDataV2.getIndustryEntryId(Vulpoids.INDUSTRY_ORGANFARM),
+                CodexDataV2.getIndustryEntryId(Vulpoids.INDUSTRY_BIOFACILITY),
+                CodexDataV2.getCommodityEntryId(Commodities.ORGANS)
+        );
+        
+        // Mangonut tree, links to farming and mangonuts. Doing it triangular so that farming gets mangonuts too.
+        CodexDataV2.makeRelated(
+                CodexDataV2.getIndustryEntryId(Industries.FARMING),
+                CodexDataV2.getItemEntryId(Vulpoids.MANGONUT_TREE_ITEM),
+                CodexDataV2.getCommodityEntryId(Vulpoids.MANGONUT_ITEM)
+        );
+        
+        
+        // Skills - Setting them as AI-only puts them at the bottom, which is good. But it also auto-links to AI cores.
+        // Because this method runs before the linking is done, we can't unlink them here, so we're forced to set them as non-AI, just NPC.
+        
+        // Skills of the same tier are linked.
+        CodexDataV2.makeRelated(
+                CodexDataV2.getSkillEntryId(Vulpoids.SKILL_ADMIN),
+                CodexDataV2.getSkillEntryId(Vulpoids.SKILL_OFFICER)
+        );
+        CodexDataV2.makeRelated(
+                CodexDataV2.getSkillEntryId(Vulpoids.SKILL_LAISA_ADMIN),
+                CodexDataV2.getSkillEntryId(Vulpoids.SKILL_LAISA_OFFICER)
+        );
+        // And we're also linking Laisa skills with their non-Laisa equivalent.
+        CodexDataV2.makeRelated(
+                CodexDataV2.getSkillEntryId(Vulpoids.SKILL_ADMIN),
+                CodexDataV2.getSkillEntryId(Vulpoids.SKILL_LAISA_ADMIN)
+        );
+        CodexDataV2.makeRelated(
+                CodexDataV2.getSkillEntryId(Vulpoids.SKILL_OFFICER),
+                CodexDataV2.getSkillEntryId(Vulpoids.SKILL_LAISA_OFFICER)
+        );
+        
+        
+        // Population and workforces
+        CodexDataV2.makeRelated(
+                CodexDataV2.getCommodityEntryId(Vulpoids.CARGO_ITEM),
+                CodexDataV2.getConditionEntryId(Vulpoids.CONDITION_VULPOID_POPULATION),
+                CodexDataV2.getIndustryEntryId(Vulpoids.INDUSTRY_BIOFACILITY),
+                CodexDataV2.getIndustryEntryId(Vulpoids.INDUSTRY_ORGANFARM),
+                CodexDataV2.getIndustryEntryId(Vulpoids.INDUSTRY_VULPOIDAGENCY)                
+        );
+        MarketAPI dummy_market = Global.getFactory().createMarket(null, null, 0);
+        for (MarketConditionSpecAPI spec : Global.getSettings().getAllMarketConditionSpecs()) {
+            if (!spec.hasTag(Vulpoids.CONDITION_WORKFORCE_TAG)) continue;
+            CodexDataV2.makeRelated(
+                    CodexDataV2.getConditionEntryId(spec.getId()),
+                    CodexDataV2.getConditionEntryId(Vulpoids.CONDITION_VULPOID_POPULATION)
+            );
+            dummy_market.addCondition(spec.getId());
+            ((BaseWorkforce)dummy_market.getCondition(spec.getId()).getPlugin()).linkCodexEntries();
+        }
     }
 }

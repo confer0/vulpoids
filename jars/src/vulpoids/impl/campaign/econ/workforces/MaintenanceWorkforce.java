@@ -1,5 +1,7 @@
 package vulpoids.impl.campaign.econ.workforces;
 
+import com.fs.starfarer.api.impl.campaign.ids.Industries;
+import com.fs.starfarer.api.impl.codex.CodexDataV2;
 import com.fs.starfarer.api.ui.TooltipMakerAPI;
 import com.fs.starfarer.api.util.Misc;
 
@@ -31,5 +33,12 @@ public class MaintenanceWorkforce extends BaseWorkforce {
             //tooltip.addPara("Our Vulpoids are assisting in orbital operations and stellar communications, greatly improving logistics.", opad);
             tooltip.addPara("%s colony accessibility", opad, Misc.getHighlightColor(), "+"+ACCESS_BONUS+"%");
         }
+    }
+    @Override
+    public void linkCodexEntries() {
+        CodexDataV2.makeRelated(
+                    CodexDataV2.getConditionEntryId(condition.getId()),
+                    CodexDataV2.getIndustryEntryId(Industries.SPACEPORT)
+            );
     }
 }
