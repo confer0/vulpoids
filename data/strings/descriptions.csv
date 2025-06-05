@@ -1,7 +1,7 @@
 id,type,text1,text2,text3,text4,notes
 vulpoids,RESOURCE,"Vulpoids are an experimental lifeform designed by the long-gone Exodyne Biotech megacorporation. Envisioned as 'useful pets', they're made to be highly affectionate towards humans, and psychologically compelled to assist and obey their owners however they can. Their humanoid anatomy and basic level of intelligence makes them able to do chores, but not complex tasks.
 
-Their design was leaked during development, attracting substantial public controversy. Ethical concerms dominated the conversation, but an inquest into whether the Vulpoids exceeded the legal limit of delta-level AI forced Exodyne to relocate their research facilities into fringe space. The inquest was not completed before the Collapse, so whether Vulpoids should qualify as delta or gamma remains unclear.
+Their design was leaked during development, attracting substantial public controversy. Ethical concerns dominated the conversation, but an inquest into whether the Vulpoids exceeded the legal limit of delta-level AI forced Exodyne to relocate their research facilities into fringe space. The inquest was not completed before the Collapse, so whether Vulpoids should qualify as delta or gamma remains unclear.
 
 Vulpoids are a triumph of Domain-era bioengineering, designed to require a minimum of ameneties while providing as much as possible for their owner. Their calorie needs are low, their adorableness is high, and their fur is incredibly fluffy. Regrettably, the Sector is a much rougher enviroment than they were designed for. Their low strength, lack of independence, and inability to learn complex skills makes them ill-suited to serve as spacers. A Vulpoid in the Sector won't last long without an owner to take care of it.",,,,
 mangonuts,RESOURCE,"A genetically-modified fruit grown from mangonut trees. The flesh is sweet, with a somewhat meaty texture. The sterile pit is also soft enough to eat, and has a delicious, nutty flavor. Both components are highly nutritious, and contain natural preservatives that keep the fruit fresh for cycles after picking. A next-generation foodstuff from the late pre-Collapse era.
@@ -16,5 +16,14 @@ Its interior volume is unmatched in scale, possessing a vast, self-sustaining bi
 
 This vessel was presumably intended to be used by the Eridani-Utopia Terraforming Corporation to terraform the worlds of the Persean Sector. However it failed to arrive before the Collapse, and it lost its course in hyperspace and plunged into the Orion-Perseus Abyss. Crews insist that it is haunted as a result, claiming to have caught glimpses of sinister violet lights in otherwise empty corridors.",Unidentified Vessel,"Target profile superficially matches an Astral-class carrier, with near-total structual redesign using non-publicized pre-Collapse industrial methods. Multiple exotic energy sources detected. Exercise extreme caution.",,
 vulp_bivouac,CUSTOM,"A terran-compatible ecosystem has taken a firm hold on this world despite the improbable locale. With a nitrogen-oxygen atmosphere and large bodies of liquid water, life has managed to thrive under purple lamplight.",,,,
-mine_strike_station,SHIP_SYSTEM,Teleports a heavy phase mine to the target area. The mine will slowly track nearby enemy ships and explodes a few seconds after its proximity trigger is activated. Long range.,Offensive,Teleports a heavy proximity mine to the target area. Long range.,,
 opis_asteroid,CUSTOM,A large fragment of continental crust from the lost moon Opis. The surface is still scattered with the crushed remnants of buildings.,,,,
+,,,,,,
+vulp_bar_quest,GALLERY,Exodyne Cryo-Sleeper,"The man's cybernetics were uncannily foreign, highly sophisticated yet brazenly utilitarian in a manner not usually seen in the modern Sector. A recently thawed cryo-sleeper, from a Domain megacorporation that failed to endure the Collapse.",,,
+citadel_biodome,GALLERY,Citadel-Class Biodome,"The biodome felt like an ancient holovid brought to life, a bubble of the Domain's glory sealed away from the decay of the Sector. This is the utopian vision of Persean worlds envisioned by the colonists pouring through the Gates.",,,
+vulp_execution,GALLERY,,,,,
+laisa_death,GALLERY,,,,,
+citadel_cic,GALLERY,,,,,
+vulpoid_advertisement,GALLERY,Vulpoid Advertisement,,,,
+vulp_pop_low,GALLERY,"Vulpoids, TODO",,,,
+vulp_pop_med,GALLERY,"Vulpoids, TODO",,,,
+vulp_pop_high,GALLERY,"Vulpoids, TODO",,,,

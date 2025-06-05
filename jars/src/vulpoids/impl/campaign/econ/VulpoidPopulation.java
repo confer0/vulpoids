@@ -204,7 +204,8 @@ public class VulpoidPopulation extends BaseMarketConditionPlugin implements Mark
         else if(population < 8) return "graphics/icons/markets/vulp_pop_07.png";
         else if(population < 9) return "graphics/icons/markets/vulp_pop_08.png";
         else if(population < 10) return "graphics/icons/markets/vulp_pop_09.png";
-        else return "graphics/icons/markets/vulp_pop_10.png";
+        else if(population < 11) return "graphics/icons/markets/vulp_pop_10.png";
+        else return "graphics/icons/markets/vulp_pop_inf.png";
     }
     
     @Override
@@ -214,14 +215,6 @@ public class VulpoidPopulation extends BaseMarketConditionPlugin implements Mark
         String name = market.getName();
         if(Global.CODEX_TOOLTIP_MODE) name = "The market";  // Would normally be 'the planet', but I want an upper case 'The', and might as well support space stations.
         float opad = 10f;
-        
-        /*if(market.getMemoryWithoutUpdate().contains(MemFlags.RECENTLY_BOMBARDED)) {
-            tooltip.addImage(Global.getSettings().getSpriteName("illustrations", "bombard_tactical_result"), opad);
-            tooltip.addPara("\nA recent orbital bombardment has devastated the Vulpoid population. "+
-                    "It will be take up to a month before the population can start to recover, assuming supply is still available.", opad);
-            return;
-        }*/
-        
         
         if(population<=3) tooltip.addImage(Global.getSettings().getSpriteName("illustrations", "vulp_pop_low"), opad);
         else if(population>=6) tooltip.addImage(Global.getSettings().getSpriteName("illustrations", "vulp_pop_high"), opad);
@@ -237,7 +230,7 @@ public class VulpoidPopulation extends BaseMarketConditionPlugin implements Mark
                     "a few dozen, all the way to hundreds of thousands of foxes filling entire districts worth of space. In "+
                     "addition to domestic chores and errands, sufficiently large populations can also be organized into "+
                     "large-scale workforces by industrious colony administrators.", opad);
-            tooltip.addPara("The Vulpoid population cannot reasonably exceed the human population in orders of magnitude however, "+
+            tooltip.addPara("The Vulpoid population cannot reasonably exceed the human population in orders of magnitude, "+
                     "as they'd struggle to maintain complex infrastructure or bureaucracy.", opad);
             tooltip.addPara("The higher the Vulpoid population is relative to the human population, the more readily available "+
                     "Vulpoids are to the average citizen. In large markets with few Vulpoids they might only be held by the "+
@@ -257,7 +250,8 @@ public class VulpoidPopulation extends BaseMarketConditionPlugin implements Mark
             else if(p < 8)  tooltip.addPara("Tens of millions of Vulpoids fill entire arcologies on "+name+".", opad);
             else if(p < 9)  tooltip.addPara("Hundreds of millions of Vulpoids live in seas of fluffy ears and wagging tails.", opad);
             else if(p < 10) tooltip.addPara("Billions of Vulpoids make entire oceans of fluffy affection, deep enough to drown in.", opad);
-            else            tooltip.addPara("Tens of billions of Vulpoids live so densely on "+name+" that there's not a single place not smothered by eager adoration.", opad);
+            else if(p < 11) tooltip.addPara("Tens of billions of Vulpoids live so densely on "+name+" that there's not a single place not smothered by eager adoration.", opad);
+            else            tooltip.addPara("There's so many Vulpoids on "+name+" that counting them has become infeasible, the population having become a veritable singularity of fluffy cuteness exceeding even the wildest dreams of their designers.", opad);
 
             int w = workforceCap.getModifiedInt();
             String w_s = "s";

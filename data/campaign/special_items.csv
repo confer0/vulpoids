@@ -9,18 +9,43 @@ Mangonut Mother Tree,mangonut_tree,"pather2, codex_unlockable",Exodyne Biotech,,
 
 Recovered records suggest this tree was designed by Exodyne Biotech at the request of Eridani-Utopia. It was likely intended to be used alongside the Vulpoids to create a luxury resort world.",151
 ,,,,,,,,,,,,,,,
-Profecto Vulpoid,special_vulpoid_codex,codex_unlockable,Exodyne Biotech,,100000,1,0,,graphics/icons/cargo/vulpoids/vulpoid_no_designation_base.png,ui_cargo_prefecto,ui_cargo_prefecto_drop,vulpoids.campaign.impl.items.VulpoidPlugin,,asdfasdfasdf,0
+Profecto Vulpoid,special_vulpoid_codex,codex_unlockable,Exodyne Biotech,,100000,1,0,,graphics/icons/cargo/vulpoids/vulpoid_no_designation_base.png,ui_cargo_prefecto,ui_cargo_prefecto_drop,vulpoids.campaign.impl.items.VulpoidPlugin,,"Profecto Vulpoids are a rare 'mutation' that arises from errors in the Vulpoid biomanufacturing process. While most faults in the process will result in neurological or metabolic collapse, a rare and poorly understood chain of failures can occur in the cognitive regressor system. Meant to keep Vulpoid intelligence just below the gamma level, the failure mode somehow causes an explosion in neural development that, if survived, results in capabilities roughly on par with a beta core.
+
+Profectos exist in a fascinating psychological space of having the underlying servile instincts of standard Vulpoids, while also being cognizant that these instincts are artificial in origin. Of course, the artificial origins of their feelings makes the experience no less real, and in a more peaceful time it would be a fascinating subject for philisophical discussion. Unfortunately, this is the Persean Sector.",0
 Profecto Vulpoid Cryosleeper,special_vulpoid,codex_unlockable,Exodyne Biotech,,100000,1,0,,graphics/icons/cargo/vulpoids/vulpoid_no_designation_base.png,ui_cargo_prefecto,ui_cargo_prefecto_drop,vulpoids.campaign.impl.items.VulpoidPlugin,,"A Profecto Vulpoid placed in cryosleep.
-Being physically identical to their standard counterparts, Profectos are similarly well-optimized to easily enter and exit cryosleep.",504
-Profecto Vulpoid Passenger,special_vulpoid_embarked,"mission_item, codex_unlockable",Exodyne Biotech,,100000,1,0,,graphics/icons/cargo/vulpoids/vulpoid_travel_base.png,ui_cargo_prefecto,ui_cargo_prefecto_drop,vulpoids.campaign.impl.items.VulpoidPlugin,,asdf,503
-Profecto Vulpoid Lieutenant,special_vulpoid_officer,"mission_item, codex_unlockable",Exodyne Biotech,,100000,1,0,,graphics/icons/cargo/vulpoids/vulpoid_admiral_base.png,ui_cargo_prefecto,ui_cargo_prefecto_drop,vulpoids.campaign.impl.items.VulpoidPlugin,,asdf,502
-Profecto Vulpoid Administrator,special_vulpoid_admin,"mission_item, codex_unlockable",Exodyne Biotech,,100000,1,0,,graphics/icons/cargo/vulpoids/vulpoid_admin_base.png,ui_cargo_prefecto,ui_cargo_prefecto_drop,vulpoids.campaign.impl.items.VulpoidPlugin,,asdf,501
+
+Being physically identical to their standard counterparts, Profectos are designed to easily enter and exit cryosleep for shipment as cargo. Rather than being an intensive medical procedure, Vulpoid cryosuspension is most analagous to a deep sleep, where weeks pass like seconds under the lull of pleasant, indistinct dreams.
+
+Profectos in cryosleep can be stored and traded without much difficulty, as their cryopods are easily 'mistaken' for one containing a human.",504
+Profecto Vulpoid Passenger,special_vulpoid_embarked,"mission_item, codex_unlockable",Exodyne Biotech,,100000,1,0,,graphics/icons/cargo/vulpoids/vulpoid_travel_base.png,ui_cargo_prefecto,ui_cargo_prefecto_drop,vulpoids.campaign.impl.items.VulpoidPlugin,,"A Profecto Vulpoid staying in a stateroom aboard a fleet.
+
+While Vulpoids should technically have no issue with staying in a crew berth, they naturally gravitate towards higher-class spaces thanks to their original design as domestic servants. As officers find no issue with a Vulpoid being closer to hand, this almost inevitably results in a Profecto making itself at home in the suites.
+
+Absent any larger responsibilities, a Profecto can be tasked with various projects that they're chiefly suited to - chief among these being compiling assorted data on Vulpoids.",503
+Profecto Vulpoid Lieutenant,special_vulpoid_officer,"mission_item, codex_unlockable",Exodyne Biotech,,100000,1,0,,graphics/icons/cargo/vulpoids/vulpoid_admiral_base.png,ui_cargo_prefecto,ui_cargo_prefecto_drop,vulpoids.campaign.impl.items.VulpoidPlugin,,"A Profecto Vulpoid serving as a naval officer.
+
+In no field is the gap between standard and Profecto Vulpoids more apparent than spacecraft command. The neurological changes that lead to Profecto development brings their reflexes up from 'adorably clumsy' to 'lightning-fast', improves their situational awareness enough to keep track of a battle, and gives them enough self-confidence to issue the orders required of a commanding officer.
+
+Although they don't initially come with the same skills as a trained human, Profectos learn quickly and masterfully. With time and experience they'll surpass all but the most capable admirals.",502
+Profecto Vulpoid Administrator,special_vulpoid_admin,"mission_item, codex_unlockable",Exodyne Biotech,,100000,1,0,,graphics/icons/cargo/vulpoids/vulpoid_admin_base.png,ui_cargo_prefecto,ui_cargo_prefecto_drop,vulpoids.campaign.impl.items.VulpoidPlugin,,"A Profecto Vulpoid serving as a colonial administrator.
+
+Being tailor-made to be pleasant to interact with, Vulpoids naturally excel at social interaction. Profectos are intelligent enough to actually leverage this to their advantage, using their people-pleasing abilities to broker deals and assuage concerns as capably as any politician. 
+
+Under a Profecto administrator the population is happier and trade flows more freely, all while requiring less intervention from faction leadership.",501
+,,,,,,,,,,,,,,,
+Profectos: Laisa,laisa_codex,codex_unlockable,Exodyne Biotech,,100000,1,0,,graphics/icons/cargo/vulpoids/vulpoid_laisa.png,,,com.fs.starfarer.api.campaign.impl.items.GenericSpecialItemPlugin,,"The first and only Profecto Vulpoid created aboard the Rellrait, and acting captain of the vessel for two centuries. She stewarded the remaining Vulpoid population and upheld her orders to maintain the research facilities for the eventual return of Exodyne's science teams, a duty placed upon her by executives who were yet to realize the full scope of the Collapse.
+
+The subsequent cycles cut off from human contact resulted in the development of a distinctive personality, TODO
+
+TODO: DETAILS ABOUT HER SKILLS. ALSO NEED TO LINK THEM.",0
 ,,,,,,,,,,,,,,,
 Nanofiltration Core,air_filter_core,"pather8, codex_unlockable",Eridani-Utopia Terraforming,,300000,1000,1,EXTREME,graphics/icons/cargo/Climate_Control_Matrix.png,ui_cargo_special_ultratech_pickup,ui_cargo_special_ultratech_drop,com.fs.starfarer.api.campaign.impl.items.GenericSpecialItemPlugin,population,"A cutting-edge piece of Domain-era terraforming technology. Uses highly sophisticated nanites suspended by exotic fields to generate a nanofog, which is able to manipulate atmospheric conditions planet-wide. It can neutralize toxic gasses, influence weather patterns, and even recapture industrial pollutants.
 
 At its full potential, this could have converted even a marginally habitable world into one that rivalled the likes of Gilead and old Mairaath. Unfortunately, the lack of supporting technology and technical expertise in the Sector means its effects cannot be made persistent, and can lead to the formation of cascading storm systems if the demand for volatiles and transplutonics is not met.",138
 ,,,,,,,,,,,,,,,
-Vulpoid Data (Grade I),vulpoid_data1,codex_unlockable,,,10000,1000,0,,graphics/icons/cargo/vulpoid_data1.png,ui_chip_pickup,ui_modspec_drop,vulpoids.campaign.impl.items.VulpoidDataPlugin,1,"This TriPad contains an assortment of multimedia data concerning Vulpoids. The content is interesting by virtue of the subject matter, but hardly groundbreaking.",499.1
+Vulpoid Data (Grade I),vulpoid_data1,codex_unlockable,,,10000,1000,0,,graphics/icons/cargo/vulpoid_data1.png,ui_chip_pickup,"A Profecto Vulpoid staying in a stateroom aboard a fleet.
+TODO - DETAILS
+While Vulpoids should technically have no issue staying in a crew berth, ",vulpoids.campaign.impl.items.VulpoidDataPlugin,1,"This TriPad contains an assortment of multimedia data concerning Vulpoids. The content is interesting by virtue of the subject matter, but hardly groundbreaking.",499.1
 Vulpoid Data (Grade II),vulpoid_data2,codex_unlockable,,,40000,1000,0,,graphics/icons/cargo/vulpoid_data2.png,ui_chip_pickup,ui_modspec_drop,vulpoids.campaign.impl.items.VulpoidDataPlugin,2,"This TriPad contains an assortment of multimedia data concerning Vulpoids. The content is deserving of attention from anyone interested in the subject, and perhaps those merely curious as well.",499.2
 Vulpoid Data (Grade III),vulpoid_data3,codex_unlockable,,,75000,1000,0,,graphics/icons/cargo/vulpoid_data3.png,ui_chip_pickup,ui_modspec_drop,vulpoids.campaign.impl.items.VulpoidDataPlugin,3,"This TriPad contains an assortment of multimedia data concerning Vulpoids. The content is an excellent viewing for anyone involved in the subject, and a fine way to introduce those looking to enter the scene.",499.3
 Vulpoid Data (Grade IV),vulpoid_data4,codex_unlockable,,,200000,1000,0,,graphics/icons/cargo/vulpoid_data4.png,ui_chip_pickup,ui_modspec_drop,vulpoids.campaign.impl.items.VulpoidDataPlugin,4,"This TriPad contains an assortment of multimedia data concerning Vulpoids. The content is a smash hit for the subject matter, and even those not directly involved in the scene are likely to have heard something about it.",499.4
