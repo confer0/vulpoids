@@ -5,6 +5,11 @@
 	],
 	
 	"graphics": {
+		"misc":{
+			"vulpportraitbase1":"graphics/portraits/vulpoid/base1.png",
+			"vulpportraitbase2":"graphics/portraits/vulpoid/base2.png",
+			"vulpportraitbase3":"graphics/portraits/vulpoid/base3.png",
+		},
 		"industry":{
 			"organfarm":"graphics/icons/industry/organfarm.png",
 			"organfarmvulp":"graphics/icons/industry/organfarmvulp.png",

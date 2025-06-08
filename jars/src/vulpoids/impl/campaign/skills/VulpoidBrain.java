@@ -4,10 +4,10 @@ import com.fs.starfarer.api.Global;
 import com.fs.starfarer.api.campaign.econ.MarketAPI;
 import com.fs.starfarer.api.characters.AdminData;
 import com.fs.starfarer.api.characters.MarketSkillEffect;
-import com.fs.starfarer.api.characters.PersonAPI;
+import com.fs.starfarer.api.impl.campaign.ids.Conditions;
 import com.fs.starfarer.api.impl.campaign.ids.Ranks;
 import com.fs.starfarer.api.impl.campaign.ids.Skills;
-import vulpoids.impl.campaign.VulpoidCreator;
+import vulpoids.characters.VulpoidPerson;
 import vulpoids.impl.campaign.ids.Vulpoids;
 import vulpoids.impl.campaign.intel.misc.AdminGotPlanning;
 
@@ -26,24 +26,28 @@ public class VulpoidBrain {
     public static class ChangePortrait implements MarketSkillEffect {
         @Override
         public void apply(MarketAPI market, String id, float level) {
-            PersonAPI admin = market.getAdmin();
+            VulpoidPerson admin = (VulpoidPerson) market.getAdmin();
             admin.setPostId(Ranks.POST_ADMINISTRATOR);
             market.getMemoryWithoutUpdate().set(Vulpoids.KEY_MARKET_VULPOID_ADMIN, admin);
             market.getMemoryWithoutUpdate().set(Vulpoids.KEY_MARKET_VULPOID_ADMIN_TIMESTAMP, Global.getSector().getClock().getTimestamp());
             //market.getCommDirectory().addPerson(admin, 0);
-            if(VulpoidCreator.marketIsSuitMarket(market)) {
-                admin.setPortraitSprite(VulpoidCreator.setPortraitPropertyAtIndex(admin.getPortraitSprite(), VulpoidCreator.INDEX_CLOTHING, VulpoidCreator.CLOTHING_SUIT));
-                admin.setPortraitSprite(VulpoidCreator.setPortraitPropertyAtIndex(admin.getPortraitSprite(), VulpoidCreator.INDEX_EXPRESSION, VulpoidCreator.EXPRESSION_HELMET));
+            if(market.getPlanetEntity() == null || !market.hasCondition(Conditions.HABITABLE)) {
+                admin.setBackgroundOverride(VulpoidPerson.BACKGROUND_HABITABLE);
+                admin.setTooltipOutfit(VulpoidPerson.OUTFIT_SPACER);
+                admin.setTooltipExpression(VulpoidPerson.EXPRESSION_HELMET);
             }
         }
         @Override
         public void unapply(MarketAPI market, String id) {
-            PersonAPI admin = (PersonAPI)market.getMemoryWithoutUpdate().get(Vulpoids.KEY_MARKET_VULPOID_ADMIN);
+            VulpoidPerson admin = (VulpoidPerson)market.getMemoryWithoutUpdate().get(Vulpoids.KEY_MARKET_VULPOID_ADMIN);
             if(admin != null) {
                 //market.getCommDirectory().removePerson(admin);
-                for(AdminData player_admin : Global.getSector().getCharacterData().getAdmins()) if(player_admin.getPerson().getId().equals(admin.getId())) admin=player_admin.getPerson();
-                admin.setPortraitSprite(VulpoidCreator.setPortraitPropertyAtIndex(admin.getPortraitSprite(), VulpoidCreator.INDEX_CLOTHING, VulpoidCreator.CLOTHING_CLOTHED));
-                admin.setPortraitSprite(VulpoidCreator.setPortraitPropertyAtIndex(admin.getPortraitSprite(), VulpoidCreator.INDEX_EXPRESSION, VulpoidCreator.EXPRESSION_DEFAULT));
+                for(AdminData player_admin : Global.getSector().getCharacterData().getAdmins()) {
+                    if(player_admin.getPerson().getId().equals(admin.getId())) admin=(VulpoidPerson) player_admin.getPerson();
+                }
+                admin.setBackgroundOverride(null);
+                admin.setTooltipOutfit(null);
+                admin.setTooltipExpression(null);
                 String default_post = admin.getMemoryWithoutUpdate().getString(Vulpoids.KEY_DEFAULT_POST);
                 if(default_post != null) admin.setPostId(default_post);
                 else admin.setPostId(null);

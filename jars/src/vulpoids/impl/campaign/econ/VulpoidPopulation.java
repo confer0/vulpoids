@@ -10,11 +10,10 @@ import com.fs.starfarer.api.characters.PersonAPI;
 import com.fs.starfarer.api.combat.MutableStat;
 import com.fs.starfarer.api.impl.campaign.econ.BaseMarketConditionPlugin;
 import com.fs.starfarer.api.impl.campaign.ids.Factions;
-import com.fs.starfarer.api.impl.campaign.ids.MemFlags;
 import com.fs.starfarer.api.impl.campaign.population.PopulationComposition;
 import com.fs.starfarer.api.ui.TooltipMakerAPI;
 import com.fs.starfarer.api.util.Misc;
-import vulpoids.impl.campaign.VulpoidCreator;
+import vulpoids.characters.VulpoidPerson;
 import vulpoids.impl.campaign.econ.impl.VulpoidAgency;
 import vulpoids.impl.campaign.econ.workforces.BaseWorkforce;
 import vulpoids.impl.campaign.ids.Vulpoids;
@@ -155,7 +154,7 @@ public class VulpoidPopulation extends BaseMarketConditionPlugin implements Mark
         if(!market.getMemoryWithoutUpdate().contains(Vulpoids.KEY_WORKFORCES)) market.getMemoryWithoutUpdate().set(Vulpoids.KEY_WORKFORCES, 0);
         market.getMemoryWithoutUpdate().set(Vulpoids.KEY_WORKFORCE_CAP, workforceCap.getModifiedInt());
         if(market.isPlayerOwned()) {
-            PersonAPI vulpoid_comms = VulpoidCreator.createVulpoid();
+            PersonAPI vulpoid_comms = new VulpoidPerson(false);
             vulpoid_comms.setId("vulpoid_rep");
             vulpoid_comms.setName(new FullName("Vulpoid", "", FullName.Gender.FEMALE));
             vulpoid_comms.setPostId("vulp_representative");

@@ -32,8 +32,9 @@ import com.fs.starfarer.api.impl.campaign.ids.Skills;
 import com.fs.starfarer.api.impl.campaign.ids.Stats;
 import com.fs.starfarer.api.impl.codex.CodexDataV2;
 import com.fs.starfarer.api.util.Pair;
+import vulpoids.campaign.impl.items.VulpoidPlugin;
 import vulpoids.campaign.listeners.SaturationBombardmentListener;
-import vulpoids.impl.campaign.VulpoidCreator;
+import vulpoids.characters.VulpoidPerson;
 import vulpoids.impl.campaign.econ.FilteredAir;
 import vulpoids.impl.campaign.econ.LobstersGrowing;
 import vulpoids.impl.campaign.econ.workforces.BaseWorkforce;
@@ -43,6 +44,11 @@ import vulpoids.impl.campaign.intel.events.VulpoidAcceptanceEventIntel;
 public class VulpoidModPlugin extends BaseModPlugin {
     
     @Override
+    public void onApplicationLoad() throws Exception {
+        VulpoidPerson.loadConfigs();
+    }
+    
+    @Override
     public void onGameLoad(boolean newGame) {
         
         if(!Global.getSector().getListenerManager().hasListenerOfClass(SaturationBombardmentListener.class)) {
@@ -50,7 +56,7 @@ public class VulpoidModPlugin extends BaseModPlugin {
         }
         
         ImportantPeopleAPI ip = Global.getSector().getImportantPeople();
-        PersonAPI person;
+        VulpoidPerson person;
         
         String dealmakerParams = Global.getSettings().getSpecialItemSpec(Items.DEALMAKER_HOLOSUITE).getParams();
         if(!dealmakerParams.contains(Vulpoids.INDUSTRY_VULPOIDAGENCY) && Global.getSector().getPlayerFaction().knowsIndustry(Vulpoids.INDUSTRY_VULPOIDAGENCY)) {
@@ -67,16 +73,15 @@ public class VulpoidModPlugin extends BaseModPlugin {
         }
         
         if (ip.getPerson(Vulpoids.PERSON_LAISA) == null) {
-            person = VulpoidCreator.createProfectoVulpoid();
+            person = new VulpoidPerson(true, "laisa");
             person.setId(Vulpoids.PERSON_LAISA);
             person.setFaction(Vulpoids.FACTION_EXODYNE);
             person.setName(new FullName("Exodyne Captain", "", FullName.Gender.FEMALE));
             person.setRankId(null);
             person.setPostId(Ranks.POST_FLEET_COMMANDER);
             person.getRelToPlayer().setRel(-0.1f);
-            VulpoidCreator.setPersonPortraitPropertyAtIndex(person, VulpoidCreator.INDEX_CLIMATE, VulpoidCreator.CLIMATE_LAISA);
-            VulpoidCreator.setPersonPortraitPropertyAtIndex(person, VulpoidCreator.INDEX_CLOTHING, VulpoidCreator.CLOTHING_SUIT);
-            VulpoidCreator.setPersonPortraitPropertyAtIndex(person, VulpoidCreator.INDEX_EXPRESSION, VulpoidCreator.EXPRESSION_OFFICER);
+            person.setOutfit(VulpoidPerson.OUTFIT_SPACER);
+            person.setExpression(VulpoidPerson.EXPRESSION_HELMET);
             person.getStats().setSkillLevel(Vulpoids.SKILL_ADMIN, 0);
             person.getStats().setSkillLevel(Vulpoids.SKILL_OFFICER, 0);
             person.getStats().setSkillLevel(Vulpoids.SKILL_LAISA_ADMIN, 1);
@@ -96,24 +101,37 @@ public class VulpoidModPlugin extends BaseModPlugin {
             //person.getMemoryWithoutUpdate().set(Vulpoids.KEY_OFFICER_PORTRAIT, "graphics/portraits/vulpoid/laisa/laisa_special_admiral.png");
             //person.getMemoryWithoutUpdate().set(Vulpoids.KEY_CARGO_ICON, "graphics/icons/cargo/vulpoids/vulpoid_laisa.png");
             ip.addPerson(person);
+        } else if(!(ip.getPerson(Vulpoids.PERSON_LAISA) instanceof VulpoidPerson)) {
+            person = VulpoidPlugin.jsonToPerson(VulpoidPlugin.personToJson(ip.getPerson(Vulpoids.PERSON_LAISA)));
+            ip.removePerson(Vulpoids.PERSON_LAISA);
+            ip.addPerson(person);
         }
         
         if(ip.getPerson(Vulpoids.PERSON_DUMMY_TERRAN) == null) {
-            person = VulpoidCreator.createVulpoid();
+            person = new VulpoidPerson(false, "terran");
             person.setId(Vulpoids.PERSON_DUMMY_TERRAN);
-            VulpoidCreator.setPersonPortraitPropertyAtIndex(person, VulpoidCreator.INDEX_CLIMATE, VulpoidCreator.CLIMATE_TERRAN);
+            ip.addPerson(person);
+        } else if(!(ip.getPerson(Vulpoids.PERSON_DUMMY_TERRAN) instanceof VulpoidPerson)) {
+            person = VulpoidPlugin.jsonToPerson(VulpoidPlugin.personToJson(ip.getPerson(Vulpoids.PERSON_DUMMY_TERRAN)));
+            ip.removePerson(Vulpoids.PERSON_DUMMY_TERRAN);
             ip.addPerson(person);
         }
         if(ip.getPerson(Vulpoids.PERSON_DUMMY_DESERT) == null) {
-            person = VulpoidCreator.createVulpoid();
-            VulpoidCreator.setPersonPortraitPropertyAtIndex(person, VulpoidCreator.INDEX_CLIMATE, VulpoidCreator.CLIMATE_DESERT);
+            person = new VulpoidPerson(false, "desert");
             person.setId(Vulpoids.PERSON_DUMMY_DESERT);
+            ip.addPerson(person);
+        } else if(!(ip.getPerson(Vulpoids.PERSON_DUMMY_DESERT) instanceof VulpoidPerson)) {
+            person = VulpoidPlugin.jsonToPerson(VulpoidPlugin.personToJson(ip.getPerson(Vulpoids.PERSON_DUMMY_DESERT)));
+            ip.removePerson(Vulpoids.PERSON_DUMMY_DESERT);
             ip.addPerson(person);
         }
         if(ip.getPerson(Vulpoids.PERSON_DUMMY_ARCTIC) == null) {
-            person = VulpoidCreator.createVulpoid();
-            VulpoidCreator.setPersonPortraitPropertyAtIndex(person, VulpoidCreator.INDEX_CLIMATE, VulpoidCreator.CLIMATE_ARCTIC);
+            person = new VulpoidPerson(false, "arctic");
             person.setId(Vulpoids.PERSON_DUMMY_ARCTIC);
+            ip.addPerson(person);
+        } else if(!(ip.getPerson(Vulpoids.PERSON_DUMMY_ARCTIC) instanceof VulpoidPerson)) {
+            person = VulpoidPlugin.jsonToPerson(VulpoidPlugin.personToJson(ip.getPerson(Vulpoids.PERSON_DUMMY_ARCTIC)));
+            ip.removePerson(Vulpoids.PERSON_DUMMY_ARCTIC);
             ip.addPerson(person);
         }
         
@@ -394,10 +412,6 @@ public class VulpoidModPlugin extends BaseModPlugin {
     
     @Override
     public void onAboutToLinkCodexEntries() {
-        
-        // TODO - debug feature, remove.
-        SharedUnlockData.get().reportPlayerAwareOfSpecialItem(Vulpoids.SPECIAL_ITEM_CODEX, false);
-        
         
         CodexDataV2.makeRelated(
                 CodexDataV2.getItemEntryId(Vulpoids.SPECIAL_ITEM_CODEX),

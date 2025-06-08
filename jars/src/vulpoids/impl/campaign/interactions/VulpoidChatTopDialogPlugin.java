@@ -11,7 +11,7 @@ import com.fs.starfarer.api.ui.TooltipMakerAPI;
 import com.fs.starfarer.api.util.Misc;
 import java.awt.Color;
 import vulpoids.campaign.impl.items.VulpoidPlugin;
-import vulpoids.impl.campaign.VulpoidCreator;
+import vulpoids.characters.VulpoidPerson;
 import vulpoids.impl.campaign.ids.Vulpoids;
 
 public class VulpoidChatTopDialogPlugin extends ListBasedInteractionDialogPlugin {
@@ -128,7 +128,7 @@ public class VulpoidChatTopDialogPlugin extends ListBasedInteractionDialogPlugin
                 person = plugin.getPerson();
                 person.getMemoryWithoutUpdate().set("$profectoIsAssigned", plugin.disallowCycleReason()!=null);
             } else {
-                person = VulpoidCreator.createVulpoid();
+                person = new VulpoidPerson(false);
                 person.getMemoryWithoutUpdate().set(Vulpoids.KEY_PROFECTO_ASSIGNMENT, Vulpoids.CARGO_ITEM);
             }
         }

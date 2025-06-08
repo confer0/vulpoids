@@ -24,7 +24,6 @@ import com.fs.starfarer.api.ui.TooltipMakerAPI;
 import com.fs.starfarer.api.util.Misc;
 import com.fs.starfarer.campaign.fleet.CargoData;
 import com.fs.starfarer.campaign.ui.trade.CargoItemStack;
-import com.fs.starfarer.ui.impl.StandardTooltipV2;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -33,7 +32,8 @@ import java.util.Random;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import vulpoids.impl.campaign.VulpoidCreator;
+import vulpoids.characters.VulpoidPerson;
+import vulpoids.impl.campaign.VulpoidPortraitCalculatorComponent;
 import vulpoids.impl.campaign.ids.Vulpoids;
 
 public class VulpoidPlugin extends BaseSpecialItemPlugin {
@@ -57,7 +57,6 @@ public class VulpoidPlugin extends BaseSpecialItemPlugin {
             //json.putOnce("memory", person.getMemoryWithoutUpdate());
             json.put("firstname", person.getName().getFirst());
             json.put("lastname", person.getName().getLast());
-            json.put("portrait", person.getPortraitSprite());
             json.put("postid", person.getPostId());
             json.put("rankid", person.getRankId());
             json.put("relfloat", person.getRelToPlayer().getRel());
@@ -77,33 +76,61 @@ public class VulpoidPlugin extends BaseSpecialItemPlugin {
             json.put("bonusxp", person.getStats().getBonusXp());
             json.put("personality", person.getPersonalityAPI().getId());
             json.put("level", person.getStats().getLevel());
+            
+            if(person instanceof VulpoidPerson vulpoidPerson) {
+                json.put("background", vulpoidPerson.getBackground());
+                json.put("furColor", vulpoidPerson.getFurColor());
+                json.put("hair", vulpoidPerson.getHair());
+                json.put("outfit", vulpoidPerson.getOutfit());
+                json.put("expression", vulpoidPerson.getExpression());
+            } else {
+                // Migrating old single-sprite format to the new multisprite format
+                if(person.getPortraitSprite().startsWith("graphics/portraits/vulpoid/")) {
+                    json.put("background", VulpoidPerson.BACKGROUND_DEFAULT);
+                    String furColor = person.getPortraitSprite().split("/")[3];
+                    json.put("furColor", furColor);
+                    json.put("hair", "laisa");
+                    VulpoidPerson.FurData furData = VulpoidPerson.furColors.get(furColor);
+                    String origOutfit = person.getPortraitSprite().split("/")[4];
+                    switch(origOutfit) {
+                        case "clothed" -> json.put("outfit", furData.defaultUniform);
+                        case "dress" -> json.put("outfit", furData.defaultDress);
+                        case "spacer" -> json.put("outfit", VulpoidPerson.OUTFIT_SPACER);
+                        default -> json.put("outfit", VulpoidPerson.OUTFIT_TOP); // Shouldn't happen, but here as a safeguard.
+                    }
+                    
+                    String expression = person.getPortraitSprite().split("/")[5].replaceAll(".png", "");
+                    if("popsicle".equals(expression)) expression = VulpoidPerson.EXPRESSION_DEFAULT;
+                    if("military".equals(expression)) expression = VulpoidPerson.EXPRESSION_HELMET;
+                    json.put("expression", expression);
+                }
+            }
             return json.toString();
         } catch(JSONException e) {
             throw new RuntimeException("Unable to parse Vulpoid PersonAPI ["+person+"]", e);
         }
     }
     
-    public static PersonAPI jsonToPerson(String jsonStr) {
+    public static VulpoidPerson jsonToPerson(String jsonStr) {
         try {
             JSONObject json = new JSONObject(jsonStr);
-            PersonAPI person = Global.getFactory().createPerson();
-            if(json.has("factionid")) person.setFaction(json.getString("factionid"));
-            if(json.has("id")) person.setId(json.getString("id"));
+            VulpoidPerson vulpoidPerson = new VulpoidPerson(true);
+            if(json.has("factionid")) vulpoidPerson.setFaction(json.getString("factionid"));
+            if(json.has("id")) vulpoidPerson.setId(json.getString("id"));
             if(json.has("memory_keys")) {
                 JSONArray memory_key_array = json.getJSONArray("memory_keys");
                 JSONArray memory_value_array = json.getJSONArray("memory_values");
                 JSONArray memory_expire_array = json.getJSONArray("memory_expiries");
                 for(int i=0; i<memory_key_array.length(); i++) {
-                    person.getMemoryWithoutUpdate().set(memory_key_array.getString(i), memory_value_array.get(i), memory_expire_array.getLong(i));
+                    vulpoidPerson.getMemoryWithoutUpdate().set(memory_key_array.getString(i), memory_value_array.get(i), memory_expire_array.getLong(i));
                 }
             }
-            if(json.has("firstname") && json.has("lastname")) person.setName(new FullName(json.getString("firstname"), json.getString("lastname"), FullName.Gender.FEMALE));
-            if(json.has("portrait")) person.setPortraitSprite(json.getString("portrait"));
-            if(json.has("postid")) person.setPostId(json.getString("postid"));
-            else person.setPostId(null);
-            if(json.has("rankid"))person.setRankId(json.getString("rankid"));
-            else person.setPostId(null);
-            if(json.has("relfloat"))person.getRelToPlayer().setRel((float)json.getDouble("relfloat"));
+            if(json.has("firstname") && json.has("lastname")) vulpoidPerson.setName(new FullName(json.getString("firstname"), json.getString("lastname"), FullName.Gender.FEMALE));
+            if(json.has("postid")) vulpoidPerson.setPostId(json.getString("postid"));
+            else vulpoidPerson.setPostId(null);
+            if(json.has("rankid"))vulpoidPerson.setRankId(json.getString("rankid"));
+            else vulpoidPerson.setPostId(null);
+            if(json.has("relfloat"))vulpoidPerson.getRelToPlayer().setRel((float)json.getDouble("relfloat"));
             if(json.has("skills")) {
                 JSONArray skill_array = json.getJSONArray("skills");
                 JSONArray skill_levels = null;
@@ -111,15 +138,21 @@ public class VulpoidPlugin extends BaseSpecialItemPlugin {
                 for(int i=0; i<skill_array.length(); i++) {
                     int level = 1;
                     if(skill_levels!= null) level = (int) skill_levels.getLong(i);
-                    person.getStats().setSkillLevel(skill_array.getString(i), level);
+                    vulpoidPerson.getStats().setSkillLevel(skill_array.getString(i), level);
                 }
             }
-            if(json.has("xp")) person.getStats().addXP(json.getLong("xp"));
-            if(json.has("bonusxp")) person.getStats().setBonusXp(json.getLong("bonusxp"));
-            if(json.has("personality")) person.setPersonality(json.getString("personality"));
-            if(json.has("level")) person.getStats().setLevel(json.getInt("level"));
-            //for (String tag : (Set<String>)json.getJSONArray("tags")) person.addTag(tag);
-            return person;
+            if(json.has("xp")) vulpoidPerson.getStats().addXP(json.getLong("xp"));
+            if(json.has("bonusxp")) vulpoidPerson.getStats().setBonusXp(json.getLong("bonusxp"));
+            if(json.has("personality")) vulpoidPerson.setPersonality(json.getString("personality"));
+            if(json.has("level")) vulpoidPerson.getStats().setLevel(json.getInt("level"));
+            
+            if(json.has("background")) vulpoidPerson.setBackground(json.getString("background"));
+            if(json.has("furColor")) vulpoidPerson.setFurColor(json.getString("furColor"));
+            if(json.has("hair")) vulpoidPerson.setHair(json.getString("hair"));
+            if(json.has("outfit")) vulpoidPerson.setOutfit(json.getString("outfit"));
+            if(json.has("expression")) vulpoidPerson.setExpression(json.getString("expression"));
+            
+            return vulpoidPerson;
         }  catch(JSONException e) {
             throw new RuntimeException("Unable to parse Vulpoid person json ["+jsonStr+"]", e);
         }
@@ -144,7 +177,7 @@ public class VulpoidPlugin extends BaseSpecialItemPlugin {
     };
     
     
-    PersonAPI person;
+    VulpoidPerson person;
     public PersonAPI getPerson() {
         refreshPerson();  // Just to be safe
         return person;
@@ -160,7 +193,7 @@ public class VulpoidPlugin extends BaseSpecialItemPlugin {
         super.init(stack);
         String jsonStr = stack.getSpecialDataIfSpecial().getData(); 
         if (jsonStr == null) {
-            PersonAPI new_person = VulpoidCreator.createProfectoVulpoid();
+            VulpoidPerson new_person = new VulpoidPerson(true);
             jsonStr = personToJson(new_person);
             stack.getSpecialDataIfSpecial().setData(jsonStr);
         } else if(jsonStr.charAt(0) != '{') {
@@ -188,33 +221,39 @@ public class VulpoidPlugin extends BaseSpecialItemPlugin {
     
     public void resetClothingAndExpressions() {
         switch(getId()) {
-            case Vulpoids.SPECIAL_ITEM_DEFAULT:
-                VulpoidCreator.setPersonPortraitPropertyAtIndex(person, VulpoidCreator.INDEX_CLOTHING, VulpoidCreator.CLOTHING_CLOTHED);
-                VulpoidCreator.setPersonPortraitPropertyAtIndex(person, VulpoidCreator.INDEX_EXPRESSION, VulpoidCreator.EXPRESSION_FROZEN);
-                break;
-            case Vulpoids.SPECIAL_ITEM_EMBARKED:
-                VulpoidCreator.setPersonPortraitPropertyAtIndex(person, VulpoidCreator.INDEX_CLOTHING, VulpoidCreator.CLOTHING_CLOTHED);
-                VulpoidCreator.setPersonPortraitPropertyAtIndex(person, VulpoidCreator.INDEX_EXPRESSION, VulpoidCreator.getPersonDefaultExpression(person));
-                break;
-            case Vulpoids.SPECIAL_ITEM_OFFICER:
-                VulpoidCreator.setPersonPortraitPropertyAtIndex(person, VulpoidCreator.INDEX_CLOTHING, VulpoidCreator.CLOTHING_SUIT);
-                VulpoidCreator.setPersonPortraitPropertyAtIndex(person, VulpoidCreator.INDEX_EXPRESSION, VulpoidCreator.EXPRESSION_OFFICER);
-                break;
-            case Vulpoids.SPECIAL_ITEM_ADMIN:
-                VulpoidCreator.setPersonPortraitPropertyAtIndex(person, VulpoidCreator.INDEX_CLOTHING, VulpoidCreator.CLOTHING_CLOTHED);
-                VulpoidCreator.setPersonPortraitPropertyAtIndex(person, VulpoidCreator.INDEX_EXPRESSION, VulpoidCreator.getPersonDefaultExpression(person));
-                break;
+            case Vulpoids.SPECIAL_ITEM_DEFAULT -> {
+                person.setTooltipOutfit(VulpoidPerson.OUTFIT_CRYO);
+                person.setTooltipExpression(null);
+            }
+            case Vulpoids.SPECIAL_ITEM_EMBARKED -> {
+                person.setTooltipOutfit(null);
+                person.setTooltipExpression(null);
+            }
+            case Vulpoids.SPECIAL_ITEM_OFFICER -> {
+                person.setOutfitOverride(VulpoidPerson.OUTFIT_SPACER);
+                person.setTooltipExpression(VulpoidPerson.EXPRESSION_HELMET);
+            }
+            case Vulpoids.SPECIAL_ITEM_ADMIN -> {
+                person.setOutfitOverride(null);
+                person.setTooltipExpression(null);
+            }
         }
     }
     
     public void setToDefaultExpression() {
-        VulpoidCreator.setPersonPortraitPropertyAtIndex(person, VulpoidCreator.INDEX_EXPRESSION, VulpoidCreator.getPersonDefaultExpression(person));
+        person.setExpression(VulpoidPerson.EXPRESSION_DEFAULT);
+    }
+    
+    private VulpoidPerson vulpoidPersonFromPersonAPI(PersonAPI personapi) {
+        if(personapi instanceof VulpoidPerson) return (VulpoidPerson)personapi;
+        return jsonToPerson(personToJson(personapi));
     }
     
     public void refreshPerson() {
         boolean not_important = true;
         if (Global.getSector().getImportantPeople().getPerson(person.getId()) != null) {
-            person = Global.getSector().getImportantPeople().getPerson(person.getId());
+            person = vulpoidPersonFromPersonAPI(Global.getSector().getImportantPeople().getPerson(person.getId()));
+            
             not_important = false;
         }
         
@@ -224,7 +263,7 @@ public class VulpoidPlugin extends BaseSpecialItemPlugin {
             for (OfficerDataAPI officer : Global.getSector().getPlayerFleet().getFleetData().getOfficersCopy()) {
                 if (officer.getPerson().getId().equals(person.getId())) {
                     found_match = true;
-                    if(not_important) person = officer.getPerson();
+                    if(not_important) person = vulpoidPersonFromPersonAPI(officer.getPerson());
                     break;
                 }
             }
@@ -239,7 +278,7 @@ public class VulpoidPlugin extends BaseSpecialItemPlugin {
             for (AdminData admin : Global.getSector().getCharacterData().getAdmins()) {
                 if (admin.getPerson().getId().equals(person.getId())) {
                     found_match = true;
-                    if(not_important) person = admin.getPerson();
+                    if(not_important) person = vulpoidPersonFromPersonAPI(admin.getPerson());
                     break;
                 }
             }
@@ -301,10 +340,10 @@ public class VulpoidPlugin extends BaseSpecialItemPlugin {
         // CODEX_TOOLTIP_MODE doesn't work here since the icons aren't in the tooltip.
         boolean assume_codex = stack.getCargo() == null;
         SpriteAPI sprite;
-        if (assume_codex) {
-            sprite = Global.getSettings().getSprite(VulpoidCreator.getDefaultIcon());
+        if (assume_codex || person.getFurColor()==null) {
+            sprite = Global.getSettings().getSprite(VulpoidPerson.getCodexIcon());
         } else {
-            sprite = Global.getSettings().getSprite(VulpoidCreator.getIcon(person.getPortraitSprite()));
+            sprite = Global.getSettings().getSprite(person.getInventoryIcon());
         }
         sprite.setAlphaMult(alphaMult);
         sprite.renderWithCorners(blX, blY, tlX, tlY, trX, trY, brX, brY);
@@ -368,13 +407,13 @@ public class VulpoidPlugin extends BaseSpecialItemPlugin {
         
         refreshPerson();
         
-        String original_portrait = person.getPortraitSprite();
-        // If it's default we don't use the default expression, we _want_ them to be locked into the frozen expression.
-        if(!Vulpoids.SPECIAL_ITEM_DEFAULT.equals(getId())) setToDefaultExpression();
+        // This doohickey is needed in order to calculate the portrait of the actively-rendered Vulpoid.
+        // The entire inventory's worth of tooltips are recalculated every frame, not just the active one.
+        // If we didn't do this, then every tooltip would show the portrait of the last Vulpoid in the inventory.
+        tooltip.addCustomDoNotSetPosition(new VulpoidPortraitCalculatorComponent(person));
+        // Since we have the calculator component, we don't need to actually calculate it now.
+        TooltipMakerAPI portrait = tooltip.beginImageWithText(person.getTooltipPortraitSprite(), 128, tooltip.getWidthSoFar(), false);
         
-        TooltipMakerAPI portrait = tooltip.beginImageWithText(person.getPortraitSprite(), 128, tooltip.getWidthSoFar(), false);
-        
-        person.setPortraitSprite(original_portrait);
         
         portrait.addTitle(getName(), body_color);
         portrait.addRelationshipBar(person, pad);

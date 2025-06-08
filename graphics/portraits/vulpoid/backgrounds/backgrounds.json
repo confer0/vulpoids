@@ -1,0 +1,17 @@
+{
+	"default":{
+		"name":"Polarized",
+		"file":"graphics/portraits/vulpoid/backgrounds/default.png",
+		"pickable":true,
+	},
+	"cryosleep":{
+		"name":"Cryosleeping",
+		"file":"graphics/portraits/vulpoid/backgrounds/cryosleep.png",
+		"pickable":false,
+	},
+	"habitable":{
+		"name":"Habitable World",
+		"file":"graphics/portraits/vulpoid/backgrounds/habitable.png",
+		"pickable":false,
+	},
+}
