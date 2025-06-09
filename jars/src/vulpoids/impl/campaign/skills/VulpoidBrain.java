@@ -41,7 +41,6 @@ public class VulpoidBrain {
         }
         @Override
         public void unapply(MarketAPI market, String id) {
-            if(!(market.getAdmin() instanceof VulpoidPerson)) return; // Should never happen, but it's impolite to crash.
             VulpoidPerson admin = (VulpoidPerson)market.getMemoryWithoutUpdate().get(Vulpoids.KEY_MARKET_VULPOID_ADMIN);
             if(admin != null) {
                 //market.getCommDirectory().removePerson(admin);
@@ -49,7 +48,7 @@ public class VulpoidBrain {
                     if(player_admin.getPerson().getId().equals(admin.getId())) admin=(VulpoidPerson) player_admin.getPerson();
                 }
                 admin.setBackgroundOverride(null);
-                admin.setTooltipOutfit(null);
+                admin.setOutfitOverride(null);
                 admin.setTooltipExpression(null);
                 String default_post = admin.getMemoryWithoutUpdate().getString(Vulpoids.KEY_DEFAULT_POST);
                 if(default_post != null) admin.setPostId(default_post);
