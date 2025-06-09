@@ -245,7 +245,7 @@ public class VulpoidPlugin extends BaseSpecialItemPlugin {
     }
     
     private VulpoidPerson vulpoidPersonFromPersonAPI(PersonAPI personapi) {
-        if(personapi instanceof VulpoidPerson) return (VulpoidPerson)personapi;
+        if(personapi instanceof VulpoidPerson vulpoidPerson) return vulpoidPerson;
         return jsonToPerson(personToJson(personapi));
     }
     
@@ -264,6 +264,7 @@ public class VulpoidPlugin extends BaseSpecialItemPlugin {
                 if (officer.getPerson().getId().equals(person.getId())) {
                     found_match = true;
                     if(not_important) person = vulpoidPersonFromPersonAPI(officer.getPerson());
+                    officer.setPerson(person);
                     break;
                 }
             }
@@ -279,12 +280,13 @@ public class VulpoidPlugin extends BaseSpecialItemPlugin {
                 if (admin.getPerson().getId().equals(person.getId())) {
                     found_match = true;
                     if(not_important) person = vulpoidPersonFromPersonAPI(admin.getPerson());
+                    admin.setPerson(person);
                     break;
                 }
             }
             // Cargo check is very important, otherwise Codex creates lots of dummy people.
             // And the null check on cargo is for the main menu.
-            if (!found_match && stack.getCargo()!=null && stack.isInPlayerCargo()) {
+            if (!found_match && stack.getCargo()!=null /*&& stack.isInPlayerCargo()*/) {
                 Global.getSector().getCharacterData().addAdmin(person);
             }
         }

@@ -18,8 +18,6 @@ import com.fs.starfarer.api.campaign.econ.MarketAPI;
 import com.fs.starfarer.api.characters.FullName;
 import com.fs.starfarer.api.characters.ImportantPeopleAPI;
 import com.fs.starfarer.api.characters.MarketConditionSpecAPI;
-import com.fs.starfarer.api.characters.PersonAPI;
-import com.fs.starfarer.api.impl.SharedUnlockData;
 import com.fs.starfarer.api.impl.campaign.econ.impl.BoostIndustryInstallableItemEffect;
 import com.fs.starfarer.api.impl.campaign.ids.Commodities;
 import com.fs.starfarer.api.impl.campaign.ids.Conditions;

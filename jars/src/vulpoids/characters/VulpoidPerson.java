@@ -208,6 +208,8 @@ public class VulpoidPerson extends Person {
         PORTRAIT_INDEX += 1;
         PORTRAIT_INDEX %= PORTRAITS.length;
         
+        // For some deranged reason, this is required in order to be able to properly assign market admins. O_o
+        setPortraitSprite(PORTRAIT);
         
         
         String backgroundToUse = backgroundOverride;

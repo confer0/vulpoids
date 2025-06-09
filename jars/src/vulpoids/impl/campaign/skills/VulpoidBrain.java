@@ -26,19 +26,22 @@ public class VulpoidBrain {
     public static class ChangePortrait implements MarketSkillEffect {
         @Override
         public void apply(MarketAPI market, String id, float level) {
+            if(!(market.getAdmin() instanceof VulpoidPerson)) return; // Should never happen, but it's impolite to crash.
             VulpoidPerson admin = (VulpoidPerson) market.getAdmin();
             admin.setPostId(Ranks.POST_ADMINISTRATOR);
             market.getMemoryWithoutUpdate().set(Vulpoids.KEY_MARKET_VULPOID_ADMIN, admin);
             market.getMemoryWithoutUpdate().set(Vulpoids.KEY_MARKET_VULPOID_ADMIN_TIMESTAMP, Global.getSector().getClock().getTimestamp());
             //market.getCommDirectory().addPerson(admin, 0);
             if(market.getPlanetEntity() == null || !market.hasCondition(Conditions.HABITABLE)) {
-                admin.setBackgroundOverride(VulpoidPerson.BACKGROUND_HABITABLE);
-                admin.setTooltipOutfit(VulpoidPerson.OUTFIT_SPACER);
+                admin.setOutfitOverride(VulpoidPerson.OUTFIT_SPACER);
                 admin.setTooltipExpression(VulpoidPerson.EXPRESSION_HELMET);
+            } else {
+                admin.setBackgroundOverride(VulpoidPerson.BACKGROUND_HABITABLE);
             }
         }
         @Override
         public void unapply(MarketAPI market, String id) {
+            if(!(market.getAdmin() instanceof VulpoidPerson)) return; // Should never happen, but it's impolite to crash.
             VulpoidPerson admin = (VulpoidPerson)market.getMemoryWithoutUpdate().get(Vulpoids.KEY_MARKET_VULPOID_ADMIN);
             if(admin != null) {
                 //market.getCommDirectory().removePerson(admin);
