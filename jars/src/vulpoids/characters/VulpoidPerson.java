@@ -121,6 +121,7 @@ public class VulpoidPerson extends Person {
                 furData = furColors.get(furColor);
             } while(furData.unique);
         } else {
+            furColor = presetFurColor;
             furData = furColors.get(furColor);
         }
         setBackground(furData.defaultBackground);
