@@ -2,12 +2,15 @@
 	"id":"laisa_officer",
 	"governingAptitude":"combat",
 	"compressHullmods":false,
-	"scope":"PILOTED_SHIP",
+	"scope":"NONE",
 	"effectGroups":[
 		{
 			"requiredSkillLevel":1,
 			"effectBasedOnLevel":false,
 			"effects":[
+				{"type":"CHARACTER_STATS", "script":"vulpoids.impl.campaign.skills.VulpoidOfficer$SkillPicks"},
+				{"type":"CHARACTER_STATS", "script":"vulpoids.impl.campaign.skills.VulpoidOfficer$MakeSkillsElite"},
+				{"type":"SHIP", "script":"vulpoids.impl.campaign.skills.LaisaOfficer$SkillDesc"},
 				{"type":"SHIP", "script":"vulpoids.impl.campaign.skills.LaisaOfficer$Level1"},
 				{"type":"SHIP", "script":"vulpoids.impl.campaign.skills.LaisaOfficer$Level2"},
 				{"type":"SHIP", "script":"vulpoids.impl.campaign.skills.LaisaOfficer$Level3"},

@@ -2173,6 +2173,10 @@ vulpChat_greetingFailsafe,VulpoidChatGreeting,,FireAll VulpoidChatTopLevelOption
 ,,,,,,,
 vulpChatAssignment_inquireOptionDefault,VulpoidChatTopLevelOptions,,,,vulpChatAssignment_inquire:Discuss assignment,,
 ,,,,,,,
+vulpChatAssignment_changeOutfitOption,VulpoidChatTopLevelOptions,,,,vulpChatAssignment_changeOutfit:Change outfits,,
+vulpChatAssignment_changeOutfit,DialogOptionSelected,$option == vulpChatAssignment_changeOutfit,"OpenListBasedDialog changeOutfit VulpoidChatTopLevelOptions
+SetVulpoidProperty expression default",You and $personName move over to the forge-wardrobe and begin reviewing the available patterns.,,,
+,,,,,,,
 ,,,,,,,
 vulpChatAssignment_addPopulationOption,VulpoidChatTopLevelOptions,"$vulp_profectoAssignment == vulpoids
 VulpoidPopulation getUpgradeableColony",,,vulpChatAssignment_addPopulation:Distribute Vulpoids to $vulp_upgradeableMarketName,,
@@ -2197,8 +2201,8 @@ $vulp_researchCompletionDay > 0",SetOptionColor vulpChatAssignment_devFinishRese
 vulpChatAssignment_devFinishResearch,DialogOptionSelected,$option == vulpChatAssignment_devFinishResearch,"$vulp_researchCompletionDay = 0
 DismissDialog",,,,
 ,,,,,,,
-#vulpChatAssignment_levelDownOfficerOption,VulpoidChatTopLevelOptions,$vulp_profectoAssignment == special_vulpoid_officer,,,vulpChatAssignment_levelDownOfficer:Retrain a skill,# TODO,
-,,,,,,,
+vulpChatAssignment_officerRetrainOption,VulpoidChatTopLevelOptions,$vulp_profectoAssignment == special_vulpoid_officer,,,vulpChatAssignment_officerRetrain:Retrain officer,,
+vulpChatAssignment_officerRetrain,DialogOptionSelected,$option == vulpChatAssignment_officerRetrain,FireAll VulpoidOfficerRetrainOptions,,,,
 ,,,,,,,
 ,,,,,,,
 vulpChatSurroundingsOption,VulpoidChatTopLevelOptions,,,,vulpChatSurroundings:Socialize about surroundings,,
@@ -2239,6 +2243,13 @@ vulpChatAssignment_inquireOfficer,DialogOptionSelected,"$option == vulpChatAssig
 $vulp_profectoAssignment == special_vulpoid_officer",SetVulpoidProperty expression default,"""Command is going smoothly. The crew love me, of course, but it's hard having to send them into danger.""",,"# TODO - use a command to reference the commanded ship, if any. Have callouts for unassigned, assigned civ, assigned combat, zig, etc.",
 vulpChatAssignment_inquireAdmin,DialogOptionSelected,"$option == vulpChatAssignment_inquire
 $vulp_profectoAssignment == special_vulpoid_admin",SetVulpoidProperty expression default,"""Colony administration is going nicely! I might make an in-person visit some time, see if the rec facilities are up to standard.""",,"# TODO - use a command to reference the administrated colony, if any",
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
 ,,,,,,,
 ,,,,,,,
 ,,,,,,,
@@ -2458,13 +2469,47 @@ AddRemoveAnyItem SPECIAL vulpoid_data5 $name 1","She passes you a datapad as she
 ""This has been an incredible experience for me. Thank you very much for the chance to make this happen, I'm overjoyed with the result!""",vulpChat_researchCompleteFinish:Continue,,
 ,,,,,,,
 ,,,,,,,
+# Officer Retraining Options,,,,,,,
+vulpChatAssignment_officerSetPersonalityOption,VulpoidOfficerRetrainOptions,,,,vulpChatAssignment_officerSetPersonality:Change command personality,,
+vulpChatAssignment_officerSetPersonality,DialogOptionSelected,$option == vulpChatAssignment_officerSetPersonality,"FireAll VulpoidOfficerPersonalityOptions
+SetVulpoidProperty expression default",,,,
 ,,,,,,,
+vulpChatAssignment_officerSetPersonalityTimidOption,VulpoidOfficerPersonalityOptions,,,,vulpChatAssignment_officerSetPersonalityTimid:Timid,,
+vulpChatAssignment_officerSetPersonalityTimidOptionDisable,VulpoidOfficerPersonalityOptions,"$personality == ""timid""","SetEnabled vulpChatAssignment_officerSetPersonalityTimid false
+SetTextHighlights timid","""I'm currently taking a pretty timid approach, avoiding combat as much as possible. Do you want me to try engaging at all?""",,,
+vulpChatAssignment_officerSetPersonalityTimid,DialogOptionSelected,$option == vulpChatAssignment_officerSetPersonalityTimid,"SetPersonPersonality ""timid""
+UpdateMemory
+FireAll VulpoidOfficerRetrainOptions","""As you say, $playerSirOrMadam. I'll keep my ship and crew clear of the fight.""",,,
+vulpChatAssignment_officerSetPersonalityCautiousOption,VulpoidOfficerPersonalityOptions,,,,vulpChatAssignment_officerSetPersonalityCautious:Cautious,,
+vulpChatAssignment_officerSetPersonalityCautiousOptionDisable,VulpoidOfficerPersonalityOptions,"$personality == ""cautious""","SetEnabled vulpChatAssignment_officerSetPersonalityCautious false
+SetTextHighlights cautious","""I'm currently staying cautious, trying to hold at the edge of enemy weapons range. Do you want me to press forward at all, or to just avoid combat altogether?""",,,
+vulpChatAssignment_officerSetPersonalityCautious,DialogOptionSelected,$option == vulpChatAssignment_officerSetPersonalityCautious,"SetPersonPersonality ""cautious""
+UpdateMemory
+FireAll VulpoidOfficerRetrainOptions","""Roger that, $playerSirOrMadam. I'll aim to maintain position at the edge of enemy weapons range!""",,,
+vulpChatAssignment_officerSetPersonalitySteadyOption,VulpoidOfficerPersonalityOptions,,,,vulpChatAssignment_officerSetPersonalitySteady:Steady,,
+vulpChatAssignment_officerSetPersonalitySteadyOptionDisable,VulpoidOfficerPersonalityOptions,"$personality == ""steady""","SetEnabled vulpChatAssignment_officerSetPersonalitySteady false
+SetTextHighlights steady","""I'm currently holding steady, trying to strike that ideal balance in the flux war. Want to put your thumb on the scales?""",,,
+vulpChatAssignment_officerSetPersonalitySteady,DialogOptionSelected,$option == vulpChatAssignment_officerSetPersonalitySteady,"SetPersonPersonality ""steady""
+UpdateMemory
+FireAll VulpoidOfficerRetrainOptions","""You got it, $playerSirOrMadam. I'll use my best judgement when it comes to engagement range.""",,,
+vulpChatAssignment_officerSetPersonalityAggressiveOption,VulpoidOfficerPersonalityOptions,,,,vulpChatAssignment_officerSetPersonalityAggressive:Aggressive,,
+vulpChatAssignment_officerSetPersonalityAggressiveOptionDisable,VulpoidOfficerPersonalityOptions,"$personality == ""aggressive""","SetEnabled vulpChatAssignment_officerSetPersonalityAggressive false
+SetTextHighlights aggressive","""I'm currently taking an aggressive approach, aiming to bring all my weapons to bear. Do you want me to ease off at all, or to just lock the thrust controls forward?""",,,
+vulpChatAssignment_officerSetPersonalityAggressive,DialogOptionSelected,$option == vulpChatAssignment_officerSetPersonalityAggressive,"SetPersonPersonality ""aggressive""
+UpdateMemory
+FireAll VulpoidOfficerRetrainOptions","""Yes $playerSirOrMadam. I'll make sure that all the guns are blazing!""",,,
+vulpChatAssignment_officerSetPersonalityRecklessOption,VulpoidOfficerPersonalityOptions,,,,vulpChatAssignment_officerSetPersonalityReckless:Reckless,,
+vulpChatAssignment_officerSetPersonalityRecklessOptionDisable,VulpoidOfficerPersonalityOptions,"$personality == ""reckless""","SetEnabled vulpChatAssignment_officerSetPersonalityReckless false
+SetTextHighlights reckless","""I'm currently employing the reckless technique of flying towards the enemy until one of us dies. Perhaps I should place a little more emphasis on my own hull integrity?""",,,
+vulpChatAssignment_officerSetPersonalityReckless,DialogOptionSelected,$option == vulpChatAssignment_officerSetPersonalityReckless,"SetPersonPersonality ""reckless""
+UpdateMemory
+FireAll VulpoidOfficerRetrainOptions","""If you say so, $playerSirOrMadam. I'll make a note to deploy additional damage control teams.""",,,
+vulpChatAssignment_officerSetPersonalityExitOption,VulpoidOfficerPersonalityOptions,,SetShortcut vulpChatAssignment_officerRetrain ESCAPE,,"vulpChatAssignment_officerRetrain:""As you were.""",,
 ,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
+vulpChatAssignment_officerLevelDownOption,VulpoidOfficerRetrainOptions,,,,vulpChatAssignment_officerLevelDown:Retrain a skill,,
+vulpChatAssignment_officerLevelDown,DialogOptionSelected,$option == vulpChatAssignment_officerLevelDown,OpenListBasedDialog forgetSkills VulpoidOfficerRetrainOptions,,,,
+vulpChatAssignment_officerTrainingExitOption,VulpoidOfficerRetrainOptions,,SetShortcut vulpChatAssignment_officerTrainingExit ESCAPE,,vulpChatAssignment_officerTrainingExit:Back,,
+vulpChatAssignment_officerTrainingExit,DialogOptionSelected,$option == vulpChatAssignment_officerTrainingExit,FireAll VulpoidChatTopLevelOptions,,,,
 ,,,,,,,
 ,,,,,,,
 ,,,,,,,

@@ -2,6 +2,7 @@ package vulpoids.plugins;
 
 import com.fs.starfarer.api.BaseModPlugin;
 import com.fs.starfarer.api.Global;
+import com.fs.starfarer.api.campaign.CargoStackAPI;
 import com.fs.starfarer.api.campaign.PlanetAPI;
 
 import com.fs.starfarer.api.impl.campaign.econ.impl.ItemEffectsRepo;
@@ -51,6 +52,16 @@ public class VulpoidModPlugin extends BaseModPlugin {
         
         if(!Global.getSector().getListenerManager().hasListenerOfClass(SaturationBombardmentListener.class)) {
             Global.getSector().getListenerManager().addListener(new SaturationBombardmentListener());
+        }
+        
+        // This mainly serves to address a very specific bug with officers.
+        // If they haven't been refreshed, for some reason they loose their personality.
+        // This causes a game crash if their ship-command portrait is moused over before either
+        // mousing them over in inventory, or opening the officer list. O_o
+        for(CargoStackAPI stack : Global.getSector().getPlayerFleet().getCargo().getStacksCopy()) {
+            if(stack.isSpecialStack() && stack.getPlugin() instanceof VulpoidPlugin) {
+                ((VulpoidPlugin)stack.getPlugin()).refreshPerson();
+            }
         }
         
         ImportantPeopleAPI ip = Global.getSector().getImportantPeople();

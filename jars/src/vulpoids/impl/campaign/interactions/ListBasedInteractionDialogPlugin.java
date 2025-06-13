@@ -19,7 +19,7 @@ import org.lwjgl.input.Keyboard;
 
 public abstract class ListBasedInteractionDialogPlugin implements InteractionDialogPlugin, RuleBasedDialog {
     
-    private static enum OptionId {
+    public static enum OptionId {
         INIT,
         REFRESH,
         NEXT,
@@ -48,6 +48,7 @@ public abstract class ListBasedInteractionDialogPlugin implements InteractionDia
     
     public void init(InteractionDialogAPI dialog, InteractionDialogPlugin backtrack) {
         this.backtrack = backtrack;
+        init(dialog);
     }
     
     

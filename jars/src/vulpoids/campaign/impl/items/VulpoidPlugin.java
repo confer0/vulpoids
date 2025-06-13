@@ -265,6 +265,7 @@ public class VulpoidPlugin extends BaseSpecialItemPlugin {
                     found_match = true;
                     if(not_important) person = vulpoidPersonFromPersonAPI(officer.getPerson());
                     officer.setPerson(person);
+                    person.getStats().refreshCharacterStatsEffects(); // So skill updates kick in automatically!
                     break;
                 }
             }
@@ -637,6 +638,7 @@ public class VulpoidPlugin extends BaseSpecialItemPlugin {
                     CargoItemStack newItem = (CargoItemStack) newCargo.getStacksCopy().get(0);
                     newItem.setCargo(cargoData);
                     stacks.set(i, newItem);
+                    ((VulpoidPlugin)newItem.getPlugin()).refreshPerson();
                 }
             }
         } else {

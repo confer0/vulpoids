@@ -329,13 +329,21 @@ public class VulpoidPerson extends Person {
     
     
     
+    String cachedPersonality = "steady";
+    @Override
     public PersonalityAPI getPersonalityAPI() {
         PersonalityAPI test = super.getPersonalityAPI();
         // TODO - Figure out what causes this, and fix it
-        if(test==null) super.setPersonality("steady");
+        if(test==null) {
+            // I've got no idea why it's _this_ convoluted, but this is what's needed to preserve the personality between reloads.
+            if(cachedPersonality==null) super.setPersonality("steady");
+            else super.setPersonality(cachedPersonality);
+        }
         return super.getPersonalityAPI();
     }
+    @Override
     public void setPersonality(String string) {
+        cachedPersonality = string;
         super.setPersonality(string);
     }
     
