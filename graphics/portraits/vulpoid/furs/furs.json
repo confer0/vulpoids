@@ -30,7 +30,7 @@
 	"diamond":{
 		"name":"Diamond",
 		"directory":"graphics/portraits/vulpoid/furs/diamond",
-		"cargoIcon":"graphics/icons/cargo/vulpoids/vulpoid_shiny.png",
+		"cargoIcon":"graphics/icons/cargo/vulpoids/vulpoid_diamond.png",
 		"unique":false,
 		"defaultBackground":"default",
 		"defaultUniform":"uniform_light/lightblue",
@@ -85,7 +85,7 @@
 	"tenera":{
 		"name":"Tenera",
 		"directory":"graphics/portraits/vulpoid/furs/tenera",
-		"cargoIcon":"graphics/icons/cargo/vulpoids/vulpoid_admiral_base.png",
+		"cargoIcon":"graphics/icons/cargo/vulpoids/vulpoid_tenera.png",
 		"unique":true,
 		"defaultBackground":"default",
 		"defaultUniform":"uniform_heavy/pink",
