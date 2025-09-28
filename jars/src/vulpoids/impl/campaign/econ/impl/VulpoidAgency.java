@@ -6,7 +6,6 @@ import com.fs.starfarer.api.campaign.SpecialItemData;
 import com.fs.starfarer.api.campaign.econ.CommoditySpecAPI;
 import com.fs.starfarer.api.campaign.econ.MarketConditionAPI;
 import com.fs.starfarer.api.impl.campaign.econ.impl.BaseIndustry;
-import static com.fs.starfarer.api.impl.campaign.econ.impl.ItemEffectsRepo.DEALMAKER_INCOME_PERCENT_BONUS;
 import com.fs.starfarer.api.impl.campaign.ids.Items;
 import com.fs.starfarer.api.ui.TooltipMakerAPI;
 import com.fs.starfarer.api.util.Misc;
@@ -53,7 +52,7 @@ public class VulpoidAgency extends BaseIndustry {
         if(vulpImport >= 3 && getPopPlugin()!=null) getPopPlugin().getWorkforceCap().modifyFlat(getId(), 1);
         
         if(getSpecialItem()!=null && getSpecialItem().getId().equals(Items.DEALMAKER_HOLOSUITE)) {
-            market.getIncomeMult().modifyPercent(getId(), DEALMAKER_INCOME_PERCENT_BONUS, Misc.ucFirst(Global.getSettings().getSpecialItemSpec(getSpecialItem().getId()).getName().toLowerCase())+" (VDA)");
+            market.getIncomeMult().modifyPercent(getId(), IMPROVE_BONUS, Misc.ucFirst(Global.getSettings().getSpecialItemSpec(getSpecialItem().getId()).getName().toLowerCase())+" (VDA)");
         }
     }
     

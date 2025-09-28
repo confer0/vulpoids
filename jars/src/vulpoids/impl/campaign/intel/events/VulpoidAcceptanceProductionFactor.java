@@ -10,25 +10,24 @@ import com.fs.starfarer.api.util.Misc;
 import java.awt.Color;
 import vulpoids.impl.campaign.ids.Vulpoids;
 
-public class VulpoidAcceptanceFactor extends BaseEventFactor {
+public class VulpoidAcceptanceProductionFactor extends BaseEventFactor {
     
     protected VulpoidAcceptanceEventIntel intel;
     protected long seed;
     
-    public VulpoidAcceptanceFactor(VulpoidAcceptanceEventIntel intel) {
+    
+    public VulpoidAcceptanceProductionFactor(VulpoidAcceptanceEventIntel intel) {
         this.intel = intel;
     }
     
+    @Override
     public int getProgress(BaseEventIntel intel) {
-        int progress = 0;
-        for (MarketAPI market : Misc.getPlayerMarkets(false)) {
-            int prod = market.getCommodityData(Vulpoids.CARGO_ITEM).getMaxSupply();
-            if (prod<=0) continue;
-            //score += market.getCommodityData(Vulpoids.CARGO_ITEM).getAvailableStat().getModifiedInt();
-            //score += market.getCommodityData(Vulpoids.CARGO_ITEM).getMaxSupply();
-            progress += prod;
-        }
-        return progress;
+        return getProgressForProduction(Vulpoids.getVulpoidPeakProductionAmount());
+    }
+    public int getProgressForProduction(int prod) {
+        if(prod==0) return 0;
+        if(prod>6) prod = 6;
+        return (int) Math.pow(2, prod);
     }
     
     
@@ -43,6 +42,16 @@ public class VulpoidAcceptanceFactor extends BaseEventFactor {
                         "their widespread acceptance. Even if most people don't have reliable access to them, "+
                         "the fact that wealthy people are eager to have them will steer public opinion in its "+
                         "own right.", 0f);
+                int prod = Vulpoids.getVulpoidPeakProductionAmount();
+                String s = "s";
+                if (prod==1) s="";
+                if (prod>=6) {
+                    tooltip.addPara("You're currently producing %s unit"+s+" of Vulpoids.", 0f, Misc.getHighlightColor(), ""+prod);
+                } else {
+                    tooltip.addPara("You're currently producing %s unit"+s+" of Vulpoids. "+
+                            "If production were increased, acceptence would rise to %s per month.",
+                            0f, Misc.getHighlightColor(), ""+prod, "+"+getProgressForProduction(prod+1));
+                }
             }
         };
     }

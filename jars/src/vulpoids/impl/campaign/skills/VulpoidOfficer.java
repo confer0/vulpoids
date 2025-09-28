@@ -33,7 +33,7 @@ public class VulpoidOfficer {
         @Override
         public void unapply(MutableCharacterStatsAPI stats, String id) {}
         @Override
-        public String getEffectDescription(float level) {return null;}
+        public String getEffectDescription(float level) {return "";}  // Needs to be String for Codex.
         @Override
         public String getEffectPerLevelDescription() {return null;}
         @Override
@@ -53,7 +53,7 @@ public class VulpoidOfficer {
         @Override
         public void unapply(MutableCharacterStatsAPI stats, String id) {}
         @Override
-        public String getEffectDescription(float level) {return null;}
+        public String getEffectDescription(float level) {return "";}  // Needs to be String for Codex.
         @Override
         public String getEffectPerLevelDescription() {return null;}
         @Override
@@ -83,7 +83,7 @@ public class VulpoidOfficer {
         @Override
         public void unapply(MutableCharacterStatsAPI stats, String id) {}
         @Override
-        public String getEffectDescription(float level) {return null;}
+        public String getEffectDescription(float level) {return "";}  // Needs to be String for Codex.
         @Override
         public String getEffectPerLevelDescription() {return null;}
         @Override

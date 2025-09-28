@@ -51,7 +51,6 @@ public class VulpoidPopulation extends BaseCommandPlugin {
                 for(SectorEntityToken entity: entities) {
                     if(Misc.getDistance(entity, playerFleet)>250f+entity.getRadius()+playerFleet.getRadius()) return false;
                     if(entity.getMarket()!=null && entity.getMarket().isPlayerOwned()) {
-                        if(entity.getMarket().getMemoryWithoutUpdate().contains(MemFlags.RECENTLY_BOMBARDED)) return false;
                         int vulpsToUpgrade = 50;
                         if(entity.getMarket().hasCondition(Vulpoids.CONDITION_VULPOID_POPULATION)) {
                             vulpoids.impl.campaign.econ.VulpoidPopulation cond = (vulpoids.impl.campaign.econ.VulpoidPopulation) entity.getMarket().getCondition(Vulpoids.CONDITION_VULPOID_POPULATION).getPlugin();

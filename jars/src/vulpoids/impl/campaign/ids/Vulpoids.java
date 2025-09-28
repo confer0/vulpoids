@@ -1,8 +1,20 @@
 package vulpoids.impl.campaign.ids;
 
+import com.fs.starfarer.api.Global;
+import com.fs.starfarer.api.campaign.SpecialItemData;
 import com.fs.starfarer.api.campaign.econ.Industry;
+import com.fs.starfarer.api.campaign.econ.InstallableIndustryItemPlugin;
 import com.fs.starfarer.api.campaign.econ.MarketAPI;
+import com.fs.starfarer.api.impl.campaign.econ.impl.BaseInstallableItemEffect;
+import com.fs.starfarer.api.impl.campaign.econ.impl.InstallableItemEffect;
+import com.fs.starfarer.api.impl.campaign.econ.impl.ItemEffectsRepo;
+import static com.fs.starfarer.api.impl.campaign.econ.impl.ItemEffectsRepo.DEALMAKER_INCOME_PERCENT_BONUS;
 import com.fs.starfarer.api.impl.campaign.ids.Industries;
+import com.fs.starfarer.api.impl.campaign.ids.Items;
+import com.fs.starfarer.api.ui.LabelAPI;
+import com.fs.starfarer.api.ui.TooltipMakerAPI;
+import com.fs.starfarer.api.util.Misc;
+import vulpoids.impl.campaign.econ.impl.VulpoidAgency;
 
 public class Vulpoids {
     public static final String MOD_ID = "vulpoids";
@@ -79,6 +91,34 @@ public class Vulpoids {
     public static final String RANK_PROFECTO = "vulp_profecto";
     
     
+    public static void updateVanillaItemsIfApplicable() {
+        String dealmakerParams = Global.getSettings().getSpecialItemSpec(Items.DEALMAKER_HOLOSUITE).getParams();
+        if(!dealmakerParams.contains(Vulpoids.INDUSTRY_VULPOIDAGENCY) && Global.getSector().getPlayerFaction().knowsIndustry(Vulpoids.INDUSTRY_VULPOIDAGENCY)) {
+            dealmakerParams += ", "+Vulpoids.INDUSTRY_VULPOIDAGENCY;
+            Global.getSettings().getSpecialItemSpec(Items.DEALMAKER_HOLOSUITE).setParams(dealmakerParams);
+            final InstallableItemEffect oldEffect = ItemEffectsRepo.ITEM_EFFECTS.get(Items.DEALMAKER_HOLOSUITE);
+            ItemEffectsRepo.ITEM_EFFECTS.put(Items.DEALMAKER_HOLOSUITE, new BaseInstallableItemEffect(Items.DEALMAKER_HOLOSUITE) {
+                @Override
+                public void apply(Industry industry) {oldEffect.apply(industry);}
+                @Override
+                public void unapply(Industry industry) {oldEffect.unapply(industry);}
+                @Override
+                protected void addItemDescriptionImpl(Industry industry, TooltipMakerAPI text, SpecialItemData data, InstallableIndustryItemPlugin.InstallableItemDescriptionMode mode, String pre, float pad) {
+                    oldEffect.addItemDescription(industry, text, data, mode);
+                    if (text.getPrev() instanceof LabelAPI label && (
+                            ("Colony's income increased by "+(int)DEALMAKER_INCOME_PERCENT_BONUS+"%.").equals(label.getText()) ||
+                            (Misc.ucFirst(spec.getName().toLowerCase())+". Colony's income increased by "+(int)DEALMAKER_INCOME_PERCENT_BONUS+"%.").equals(label.getText())
+                            )) {
+                        label.setText("Colony's income increased by "+(int)DEALMAKER_INCOME_PERCENT_BONUS+"% in Commerce, or "+(int)VulpoidAgency.IMPROVE_BONUS+"% in a VDA.");
+                        label.setHighlight((int)DEALMAKER_INCOME_PERCENT_BONUS+"%", (int)VulpoidAgency.IMPROVE_BONUS+"%");
+                    } else {
+                        text.addPara("In a Vulpoid Distribution Agency, income increased by %s", pad, Misc.getHighlightColor(), (int)VulpoidAgency.IMPROVE_BONUS+"%");
+                    }
+                }
+            });
+        }
+    }
+    
     public static Industry getFarming(MarketAPI market) {
         Industry industry = null;
         industry = market.getIndustry(Industries.FARMING);
@@ -104,5 +144,15 @@ public class Vulpoids {
         if(industry==null) industry = market.getIndustry("benefication");
         
         return industry;
+    }
+    
+    public static int getVulpoidPeakProductionAmount() {
+        int amount = 0;
+        for (MarketAPI market : Misc.getPlayerMarkets(false)) {
+            int prod = market.getCommodityData(Vulpoids.CARGO_ITEM).getMaxSupply();
+            if (prod<=0) continue;
+            amount = Math.max(amount, prod);
+        }
+        return amount;
     }
 }

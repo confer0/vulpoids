@@ -109,7 +109,7 @@ public class VulpoidAcceptanceEventIntel extends BaseEventIntel {
         //addFactor(new TTCRTradeFleetsDestroyedFactorHint());
         //addFactor(new TTCRIndustryDisruptedFactorHint());
         
-        addFactor(new VulpoidAcceptanceFactor(this));
+        addFactor(new VulpoidAcceptanceProductionFactor(this));
         //addActivity(new VulpoidAcceptanceFactor(this), new VulpoidAcceptanceCause(this));
     }
     

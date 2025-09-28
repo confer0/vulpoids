@@ -26,6 +26,8 @@ import java.util.Map;
 import org.lwjgl.util.vector.Vector2f;
 import vulpoids.impl.campaign.econ.VulpoidPopulation;
 import vulpoids.impl.campaign.ids.Vulpoids;
+import vulpoids.impl.campaign.intel.events.VulpoidAcceptanceEventIntel;
+import vulpoids.impl.campaign.intel.events.VulpoidAcceptanceProductionMissionFactor;
 
 public class VulpoidProductionMission extends HubMissionWithBarEvent implements EconomyTickListener, TooltipMakerAPI.TooltipCreator {
 
@@ -39,6 +41,8 @@ public class VulpoidProductionMission extends HubMissionWithBarEvent implements 
     public static int TIMEOUT_DAYS = 40;
 
     public static float REWARD_MULT_WHEN_PRODUCING_ALREADY = 0.2f;
+    
+    public VulpoidAcceptanceProductionMissionFactor acceptanceFactor;
 
     public static enum Stage {
         WAITING,
@@ -172,10 +176,21 @@ public class VulpoidProductionMission extends HubMissionWithBarEvent implements 
             addPotentialContacts(dialog);
             if(!getPerson().getMarket().hasCondition(Vulpoids.CONDITION_VULPOID_POPULATION)) getPerson().getMarket().addCondition(Vulpoids.CONDITION_VULPOID_POPULATION);
             getPerson().getMarket().getMemoryWithoutUpdate().set("$vulpProductionQuantity", needed);
+            if (acceptanceFactor != null) {
+                VulpoidAcceptanceEventIntel.get().addFactor(acceptanceFactor);
+            }
         }
         if (next == Stage.FAILED) {
             // Unset this here, since you failed to provide enough to get the desired growth.
             getPerson().getMarket().getMemoryWithoutUpdate().unset("$vulpProductionQuantity");
+            if (acceptanceFactor != null) {
+                VulpoidAcceptanceEventIntel.get().removeFactor(acceptanceFactor);
+            }
+        }
+        if (next == Stage.COMPLETED) {
+            if (acceptanceFactor != null) {
+                VulpoidAcceptanceEventIntel.get().removeFactor(acceptanceFactor);
+            }
         }
     }
 

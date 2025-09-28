@@ -6,6 +6,7 @@ import com.fs.starfarer.api.characters.PersonalityAPI;
 import com.fs.starfarer.api.graphics.SpriteAPI;
 import com.fs.starfarer.api.impl.campaign.ids.Factions;
 import com.fs.starfarer.api.impl.campaign.ids.MemFlags;
+import com.fs.starfarer.api.util.Misc;
 import com.fs.starfarer.rpg.Person;
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -91,24 +92,16 @@ public class VulpoidPerson extends Person {
     private String tooltipExpression = null;
     
     public VulpoidPerson(boolean profecto) {
-        super();
-        setUpVulpoid(null);
-        if(profecto) setUpProfecto();
-    }
-    public VulpoidPerson(String personalityId, boolean profecto) {
-        super(personalityId);
-        setUpVulpoid(null);
-        if(profecto) setUpProfecto();
-    }
-    public VulpoidPerson(boolean profecto, String presetFurColor) {
-        super();
-        setUpVulpoid(presetFurColor);
-        if(profecto) setUpProfecto();
+        this(null, profecto, null);
     }
     public VulpoidPerson(String personalityId, boolean profecto, String presetFurColor) {
         super(personalityId);
         setUpVulpoid(presetFurColor);
         if(profecto) setUpProfecto();
+        // For some reason, there's some logic inside administrators and officers that check if the portrait sprite is not null.
+        // This is decoupled from the actual getPortraitSprite method, so we have to set it.
+        // Without this, colony admins can't be assigned, and NPC officers (like Laisa) don't appear properly.
+        setPortraitSprite("");
     }
     
     private void setUpVulpoid(String presetFurColor) {
@@ -148,6 +141,24 @@ public class VulpoidPerson extends Person {
         getRelToPlayer().setRel(0.5f);
     }
     
+    
+    public float getOfficerSalary() {
+        /*int officerBase = Global.getSettings().getInt("officerSalaryBase");
+        int officerPerLevel = Global.getSettings().getInt("officerSalaryPerLevel");
+
+        float payMult = 0.5f;
+
+        float salary = (officerBase + this.getStats().getLevel() * officerPerLevel) * payMult;
+        return salary;*/
+        return Misc.getOfficerSalary(this);
+    }
+    public float getAdminSalary() {
+        /*int tier = 0;//(int) this.getMemoryWithoutUpdate().getFloat("$ome_adminTier");
+        String salaryKey = "adminSalaryTier" + tier;
+        float s = Global.getSettings().getInt(salaryKey);
+        return s;*/
+        return Misc.getAdminSalary(this);
+    }
     
     public void setBackground(String s) {background = s;}
     public String getBackground() {return background;}
@@ -208,9 +219,6 @@ public class VulpoidPerson extends Person {
         String PORTRAIT = PORTRAITS[PORTRAIT_INDEX];
         PORTRAIT_INDEX += 1;
         PORTRAIT_INDEX %= PORTRAITS.length;
-        
-        // For some deranged reason, this is required in order to be able to properly assign market admins. O_o
-        setPortraitSprite(PORTRAIT);
         
         
         String backgroundToUse = backgroundOverride;
@@ -345,6 +353,18 @@ public class VulpoidPerson extends Person {
     public void setPersonality(String string) {
         cachedPersonality = string;
         super.setPersonality(string);
+    }
+    // This issue came up with Laisa. When she's been spawned in, her personality is null for some reason.
+    // That then PREVENTS THE GAME FROM SAVING. Which is a bit of an issue.
+    // So I need to reference obfuscated code. :/
+    // It'd also crash the game when it tries to deploy her ship.
+    // Interestingly, opening comms with her seems to fix it... but the saving issue is a bit critical.
+    @Override
+    public com.fs.starfarer.rpg.A getPersonality() {
+        if (super.getPersonality() == null) {
+            setPersonality(getPersonalityAPI().getId());
+        }
+        return super.getPersonality();
     }
     
     

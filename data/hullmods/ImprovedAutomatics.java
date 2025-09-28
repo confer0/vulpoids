@@ -10,17 +10,17 @@ import com.fs.starfarer.api.impl.hullmods.BaseLogisticsHullMod;
 
 public class ImprovedAutomatics extends BaseLogisticsHullMod {
 
-	public static float CREW_MULT = 0.25f;
-	public static float SUPPLY_USE_MULT = 2f;
+	public static float CREW_PERC = -50f;
+	public static float CREW_LOSS_MULT = 0.25f;
 	
 	public void applyEffectsBeforeShipCreation(HullSize hullSize, MutableShipStatsAPI stats, String id) {
-		stats.getMinCrewMod().modifyMult(id, CREW_MULT);
-		stats.getSuppliesPerMonth().modifyMult(id, SUPPLY_USE_MULT);
+		stats.getMinCrewMod().modifyPercent(id, CREW_PERC);
+		stats.getCrewLossMult().modifyMult(id, CREW_LOSS_MULT);
 	}
 	
 	public String getDescriptionParam(int index, HullSize hullSize) {
-		if (index == 0) return "" + (int) Math.round((1f - CREW_MULT) * 100f) + "%";
-		if (index == 1) return "" + (int)((SUPPLY_USE_MULT - 1f) * 100f) + "%";
+		if (index == 0) return "" + (int) Math.round((CREW_PERC)) + "%";
+		if (index == 1) return "" + (int)((1-CREW_LOSS_MULT) * 100f) + "%";
 		return null;
 	}
 

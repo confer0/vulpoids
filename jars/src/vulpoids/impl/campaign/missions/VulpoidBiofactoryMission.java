@@ -483,9 +483,7 @@ public class VulpoidBiofactoryMission extends HubMissionWithSearch implements Fl
                 new VulpoidAcceptanceEventIntel(null, true);
                 
                 Global.getSector().getPlayerFaction().addKnownIndustry(Vulpoids.INDUSTRY_VULPOIDAGENCY);
-                String dealmakerParams = Global.getSettings().getSpecialItemSpec(Items.DEALMAKER_HOLOSUITE).getParams();
-                dealmakerParams += ", "+Vulpoids.INDUSTRY_VULPOIDAGENCY;
-                Global.getSettings().getSpecialItemSpec(Items.DEALMAKER_HOLOSUITE).setParams(dealmakerParams);
+                Vulpoids.updateVanillaItemsIfApplicable();
                 
                 return true;
         }

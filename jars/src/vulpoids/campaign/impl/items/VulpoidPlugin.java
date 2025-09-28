@@ -19,6 +19,7 @@ import com.fs.starfarer.api.characters.PersonAPI;
 import com.fs.starfarer.api.fleet.FleetMemberAPI;
 import com.fs.starfarer.api.graphics.SpriteAPI;
 import com.fs.starfarer.api.impl.campaign.ids.Skills;
+import com.fs.starfarer.api.impl.codex.CodexDataV2;
 import com.fs.starfarer.api.ui.Alignment;
 import com.fs.starfarer.api.ui.TooltipMakerAPI;
 import com.fs.starfarer.api.util.Misc;
@@ -28,7 +29,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Random;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -391,6 +391,8 @@ public class VulpoidPlugin extends BaseSpecialItemPlugin {
 
     @Override
     public void createTooltip(TooltipMakerAPI tooltip, boolean expanded, CargoTransferHandlerAPI transferHandler, Object stackSource) {
+        tooltip.setCodexEntryId(CodexDataV2.getItemEntryId(Vulpoids.SPECIAL_ITEM_CODEX));
+        
         float pad = 3f;
         float opad = 10f;
         
@@ -420,7 +422,7 @@ public class VulpoidPlugin extends BaseSpecialItemPlugin {
         
         portrait.addTitle(getName(), body_color);
         portrait.addRelationshipBar(person, pad);
-        switch (getId()) {
+        /*switch (getId()) {
             case Vulpoids.SPECIAL_ITEM_DEFAULT:
                 portrait.addPara("Profecto Vulpoids are a rare, highly intelligent mutation. They're roughly equivalent to "+
                         "beta-level AI, and are quite capable of masquerading as human to inspectors. Worth fortunes to the "+
@@ -469,7 +471,34 @@ public class VulpoidPlugin extends BaseSpecialItemPlugin {
                 case Vulpoids.SPECIAL_ITEM_OFFICER: tooltip.addPara("Available as an officer. Will expect pay - in credits, not just the usual headpats - even if not currently commanding a ship.", opad); break;
                 case Vulpoids.SPECIAL_ITEM_ADMIN: tooltip.addPara("Available as an administrator. Will expect pay - in credits, not just the usual headpats - even if not currently administrating a colony.", opad); break;
             }
+        }*/
+        String assignment_title = "Assignment";
+        switch(getId()) {
+            case Vulpoids.SPECIAL_ITEM_DEFAULT: assignment_title = "Stored in Cryosleep"; break;
+            case Vulpoids.SPECIAL_ITEM_EMBARKED: assignment_title = "Embarked on Fleet"; break;
+            case Vulpoids.SPECIAL_ITEM_OFFICER: assignment_title = "Serving as Officer"; break;
+            case Vulpoids.SPECIAL_ITEM_ADMIN: assignment_title = "Serving as Administrator"; break;
         }
+        portrait.addSectionHeading(assignment_title, text_color, body_color, Alignment.MID, opad);
+        switch(getId()) {
+            case Vulpoids.SPECIAL_ITEM_DEFAULT -> { 
+                portrait.addPara("Stored in suspended animation for commercial transport. Can be sold or stored, but will not escape if the fleet is destroyed.", opad);
+            }
+            case Vulpoids.SPECIAL_ITEM_EMBARKED -> {
+                portrait.addPara("Formally embarked with an executive suite. Her escape pod will follow yours if the fleet is lost.", opad);
+            }
+            case Vulpoids.SPECIAL_ITEM_OFFICER -> {
+                portrait.addPara("Available as an officer, and will expect pay like one - in credits, not just the usual headpats.", opad);
+            }
+            case Vulpoids.SPECIAL_ITEM_ADMIN -> {
+                portrait.addPara("Available as an administrator, and will expect pay like one - in credits, not just the usual headpats.", opad);
+            }
+        }
+        String assignment_text = disallowCycleReason();
+        if (assignment_text != null) {
+            portrait.addPara(assignment_text, opad);
+        }
+        tooltip.addImageWithText(opad);
         
         ArrayList<SkillLevelAPI> skills = new ArrayList(person.getStats().getSkillsCopy());
         Collections.sort(skills, new Comparator<SkillLevelAPI>() {
@@ -484,16 +513,12 @@ public class VulpoidPlugin extends BaseSpecialItemPlugin {
         TooltipMakerAPI skillTooltip = tooltip.beginSubTooltip(tooltip.getWidthSoFar());
         
         TooltipMakerAPI officerTooltip = skillTooltip.beginSubTooltip(tooltip.getWidthSoFar()/2-opad);
-        Color highlight_color = text_color;
-        if(Vulpoids.SPECIAL_ITEM_OFFICER.equals(getId())) highlight_color = Misc.getHighlightColor();
-        officerTooltip.addSectionHeading("Combat Skills", highlight_color, body_color, Alignment.MID, 0);
+        officerTooltip.addSectionHeading("Combat Skills", text_color, body_color, Alignment.MID, 0);
         addSkillsToTooltip(officerTooltip, skills, true, false, opad);
         skillTooltip.endSubTooltip();
         
         TooltipMakerAPI adminTooltip = skillTooltip.beginSubTooltip(tooltip.getWidthSoFar()/2-opad);
-        highlight_color = text_color;
-        if(Vulpoids.SPECIAL_ITEM_ADMIN.equals(getId())) highlight_color = Misc.getHighlightColor();
-        adminTooltip.addSectionHeading("Industrial Skills", highlight_color, body_color, Alignment.MID, 0);
+        adminTooltip.addSectionHeading("Industrial Skills", text_color, body_color, Alignment.MID, 0);
         addSkillsToTooltip(adminTooltip, skills, false, true, opad);
         skillTooltip.endSubTooltip();
         

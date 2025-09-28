@@ -34,6 +34,7 @@ import com.fs.starfarer.api.util.Pair;
 import vulpoids.campaign.impl.items.VulpoidPlugin;
 import vulpoids.campaign.listeners.SaturationBombardmentListener;
 import vulpoids.characters.VulpoidPerson;
+import vulpoids.impl.campaign.OfficerCostOverrideScript;
 import vulpoids.impl.campaign.econ.FilteredAir;
 import vulpoids.impl.campaign.econ.LobstersGrowing;
 import vulpoids.impl.campaign.econ.workforces.BaseWorkforce;
@@ -54,6 +55,11 @@ public class VulpoidModPlugin extends BaseModPlugin {
             Global.getSector().getListenerManager().addListener(new SaturationBombardmentListener());
         }
         
+        for(OfficerCostOverrideScript oldScript : Global.getSector().getListenerManager().getListeners(OfficerCostOverrideScript.class)) {
+            Global.getSector().removeListener(oldScript);
+        }
+        Global.getSector().addListener(new OfficerCostOverrideScript());
+        
         // This mainly serves to address a very specific bug with officers.
         // If they haven't been refreshed, for some reason they loose their personality.
         // This causes a game crash if their ship-command portrait is moused over before either
@@ -67,11 +73,15 @@ public class VulpoidModPlugin extends BaseModPlugin {
         ImportantPeopleAPI ip = Global.getSector().getImportantPeople();
         VulpoidPerson person;
         
-        String dealmakerParams = Global.getSettings().getSpecialItemSpec(Items.DEALMAKER_HOLOSUITE).getParams();
-        if(!dealmakerParams.contains(Vulpoids.INDUSTRY_VULPOIDAGENCY) && Global.getSector().getPlayerFaction().knowsIndustry(Vulpoids.INDUSTRY_VULPOIDAGENCY)) {
-            dealmakerParams += ", "+Vulpoids.INDUSTRY_VULPOIDAGENCY;
-            Global.getSettings().getSpecialItemSpec(Items.DEALMAKER_HOLOSUITE).setParams(dealmakerParams);
-        }
+        /*for (PersonDataAPI existingPerson : ip.getPeopleCopy()) {
+            if (existingPerson.getPerson().getMemoryWithoutUpdate().contains(Vulpoids.KEY_IS_VULPOID) &&
+                    !(existingPerson.getPerson() instanceof VulpoidPerson)) {
+                // TODO - TEST
+                ip.addPerson(VulpoidPlugin.jsonToPerson(VulpoidPlugin.personToJson(existingPerson.getPerson())));
+            }
+        }*/
+        
+        Vulpoids.updateVanillaItemsIfApplicable();
         
         // Mod Compatibility - Ashes Of The Domain
         if (Global.getSettings().getModManager().isModEnabled("aotd_vok")) {
@@ -82,7 +92,7 @@ public class VulpoidModPlugin extends BaseModPlugin {
         }
         
         if (ip.getPerson(Vulpoids.PERSON_LAISA) == null) {
-            person = new VulpoidPerson(true, "laisa");
+            person = new VulpoidPerson(null, true, "laisa");
             person.setId(Vulpoids.PERSON_LAISA);
             person.setFaction(Vulpoids.FACTION_EXODYNE);
             person.setName(new FullName("Exodyne Captain", "", FullName.Gender.FEMALE));
@@ -117,7 +127,7 @@ public class VulpoidModPlugin extends BaseModPlugin {
         }
         
         if(ip.getPerson(Vulpoids.PERSON_DUMMY_TERRAN) == null) {
-            person = new VulpoidPerson(false, "terran");
+            person = new VulpoidPerson(null, false, "terran");
             person.setId(Vulpoids.PERSON_DUMMY_TERRAN);
             ip.addPerson(person);
         } else if(!(ip.getPerson(Vulpoids.PERSON_DUMMY_TERRAN) instanceof VulpoidPerson)) {
@@ -126,7 +136,7 @@ public class VulpoidModPlugin extends BaseModPlugin {
             ip.addPerson(person);
         }
         if(ip.getPerson(Vulpoids.PERSON_DUMMY_DESERT) == null) {
-            person = new VulpoidPerson(false, "desert");
+            person = new VulpoidPerson(null, false, "desert");
             person.setId(Vulpoids.PERSON_DUMMY_DESERT);
             ip.addPerson(person);
         } else if(!(ip.getPerson(Vulpoids.PERSON_DUMMY_DESERT) instanceof VulpoidPerson)) {
@@ -135,7 +145,7 @@ public class VulpoidModPlugin extends BaseModPlugin {
             ip.addPerson(person);
         }
         if(ip.getPerson(Vulpoids.PERSON_DUMMY_ARCTIC) == null) {
-            person = new VulpoidPerson(false, "arctic");
+            person = new VulpoidPerson(null, false, "arctic");
             person.setId(Vulpoids.PERSON_DUMMY_ARCTIC);
             ip.addPerson(person);
         } else if(!(ip.getPerson(Vulpoids.PERSON_DUMMY_ARCTIC) instanceof VulpoidPerson)) {
@@ -422,13 +432,15 @@ public class VulpoidModPlugin extends BaseModPlugin {
     @Override
     public void onAboutToLinkCodexEntries() {
         
-        CodexDataV2.makeRelated(
+        
+        
+        /*CodexDataV2.makeRelated(
                 CodexDataV2.getItemEntryId(Vulpoids.SPECIAL_ITEM_CODEX),
                 CodexDataV2.getItemEntryId(Vulpoids.SPECIAL_ITEM_DEFAULT),
                 CodexDataV2.getItemEntryId(Vulpoids.SPECIAL_ITEM_EMBARKED),
                 CodexDataV2.getItemEntryId(Vulpoids.SPECIAL_ITEM_OFFICER),
                 CodexDataV2.getItemEntryId(Vulpoids.SPECIAL_ITEM_ADMIN)
-        );
+        );*/
         CodexDataV2.makeRelated(
                 CodexDataV2.getCommodityEntryId(Vulpoids.CARGO_ITEM),
                 CodexDataV2.getItemEntryId(Vulpoids.SPECIAL_ITEM_CODEX)

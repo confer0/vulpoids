@@ -11,7 +11,7 @@ import com.fs.starfarer.api.ui.TooltipMakerAPI;
 
 public class LaisaOfficer {
     
-    public static float MIN_CREW_MULT = 0.5f;
+    public static float MIN_CREW_PERC = -40f;
     public static float REPAIR_RATE_BONUS = 100f;
     public static float CR_RECOVERY_BONUS = 100f;
     
@@ -36,7 +36,7 @@ public class LaisaOfficer {
     public static class Level1 implements ShipSkillEffect {
         @Override
         public void apply(MutableShipStatsAPI stats, HullSize hullSize, String id, float level) {
-            stats.getMinCrewMod().modifyMult(id, MIN_CREW_MULT);
+            stats.getMinCrewMod().modifyPercent(id, MIN_CREW_PERC);
         }
         @Override
         public void unapply(MutableShipStatsAPI stats, HullSize hullSize, String id) {
@@ -44,7 +44,7 @@ public class LaisaOfficer {
         }
         @Override
         public String getEffectDescription(float level) {
-            return "-" + (int)(MIN_CREW_MULT*100) + "% minimum crew required";
+            return (int)(MIN_CREW_PERC) + "% minimum crew required";
         }
         @Override
         public String getEffectPerLevelDescription() {
