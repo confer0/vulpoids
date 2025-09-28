@@ -8,6 +8,7 @@ import com.fs.starfarer.api.characters.PersonAPI;
 import com.fs.starfarer.api.impl.campaign.ids.Factions;
 import com.fs.starfarer.api.impl.campaign.ids.Ranks;
 import com.fs.starfarer.api.impl.campaign.rulecmd.BaseCommandPlugin;
+import com.fs.starfarer.api.impl.campaign.rulecmd.UpdateMemory;
 import com.fs.starfarer.api.util.Misc;
 import java.util.List;
 import java.util.Map;
@@ -40,6 +41,7 @@ public class VulpoidAcceptance extends BaseCommandPlugin {
                 if ("null".equals(workforce)) return true;
                 MarketAPI market = dialog.getInteractionTarget().getMarket();
                 if(!market.hasCondition(workforce)) market.addCondition(workforce);
+                new UpdateMemory().execute(ruleId, dialog, params, memoryMap); // Ensures that the market condition is recorded in memory.
                 // Does not modify population size, since a production mission will add them over time.
                 return true;
             case "productionContract":
