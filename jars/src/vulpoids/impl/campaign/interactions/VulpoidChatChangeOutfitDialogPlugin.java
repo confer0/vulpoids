@@ -2,6 +2,8 @@
 package vulpoids.impl.campaign.interactions;
 
 import com.fs.starfarer.api.campaign.InteractionDialogAPI;
+import com.fs.starfarer.api.campaign.rules.MemKeys;
+import com.fs.starfarer.api.impl.campaign.rulecmd.FireBest;
 import vulpoids.characters.VulpoidPerson;
 
 public class VulpoidChatChangeOutfitDialogPlugin extends ListBasedInteractionDialogPlugin {
@@ -18,7 +20,12 @@ public class VulpoidChatChangeOutfitDialogPlugin extends ListBasedInteractionDia
             person.setOutfitOverride(null);
         }
     }
+    @Override
+    protected boolean doAddSelectedOptionToDialog(Object entry) {return false;}
+    @Override
     protected void doOnLeave() {
+        getMemoryMap().get(MemKeys.LOCAL).set("$option", "vulpChatAssignment_changeOutfitOnLeave");
+        FireBest.fire(null, dialog, getMemoryMap(), "DialogOptionSelected");
         if(dialog.getInteractionTarget().getActivePerson() instanceof VulpoidPerson person) {
             person.setOutfitOverride(outfitOverride);
         }

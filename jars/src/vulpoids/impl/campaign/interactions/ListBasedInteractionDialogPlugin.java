@@ -98,6 +98,7 @@ public abstract class ListBasedInteractionDialogPlugin implements InteractionDia
     protected String getEntryTooltipString(Object entry) {return null;}
     protected boolean getEntryEnabled(Object entry) {return true;}
     protected String getEntryConfirmation(Object entry) {return null;}
+    protected boolean doAddSelectedOptionToDialog(Object optionData) {return !(optionData instanceof OptionId);}
     
     protected abstract void selectEntry(Object entry);
     
@@ -114,7 +115,7 @@ public abstract class ListBasedInteractionDialogPlugin implements InteractionDia
         }
         
         if (!delegated) {
-            if(text!=null && !(optionData instanceof OptionId)) dialog.addOptionSelectedText(optionData);
+            if(text!=null && doAddSelectedOptionToDialog(optionData)) dialog.addOptionSelectedText(optionData);
             lastNonRuleOption = optionData;
             
             if(optionData instanceof OptionId) {

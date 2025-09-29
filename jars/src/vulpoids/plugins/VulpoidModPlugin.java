@@ -553,6 +553,7 @@ public class VulpoidModPlugin extends BaseModPlugin {
         
         // Skills of the same tier are linked.
         CodexDataV2.makeRelated(
+                CodexDataV2.getItemEntryId(Vulpoids.SPECIAL_ITEM_CODEX),
                 CodexDataV2.getSkillEntryId(Vulpoids.SKILL_ADMIN),
                 CodexDataV2.getSkillEntryId(Vulpoids.SKILL_OFFICER)
         );
@@ -561,6 +562,7 @@ public class VulpoidModPlugin extends BaseModPlugin {
                 CodexDataV2.getSkillEntryId(Vulpoids.SKILL_LAISA_OFFICER)
         );
         // And we're also linking Laisa skills with their non-Laisa equivalent.
+        // They're not linked directly to the Profecto entry though.
         CodexDataV2.makeRelated(
                 CodexDataV2.getSkillEntryId(Vulpoids.SKILL_ADMIN),
                 CodexDataV2.getSkillEntryId(Vulpoids.SKILL_LAISA_ADMIN)

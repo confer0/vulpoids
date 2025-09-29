@@ -1039,11 +1039,13 @@ $global.laisaAdventuring = true","""Thank you, for looking out for me. Take care
 She gives you a peck on the cheek, and you assure her you'll make the accommodations with your purser.",vulp_interrogationLeave:Continue,,
 ,,,,,,,
 # Ending Triggers,,,,,,,
-vulp_interrogationLeaveAndAddEmbarked,DialogOptionSelected,$option == vulp_interrogationLeaveAndAddEmbarked,"AddRemoveAnyItem SPECIAL special_vulpoid_embarked laisa 1
+vulp_interrogationLeaveAndAddEmbarked,DialogOptionSelected,$option == vulp_interrogationLeaveAndAddEmbarked,"SetPersonRank vulp_profecto
+AddRemoveAnyItem SPECIAL special_vulpoid_embarked laisa 1
 SetPersonFaction laisa player
 $option = vulp_interrogationLeave
 FireBest DialogOptionSelected",,,,
-vulp_interrogationLeaveAndAddFrozen,DialogOptionSelected,$option == vulp_interrogationLeaveAndAddFrozen,"AddRemoveAnyItem SPECIAL special_vulpoid laisa 1
+vulp_interrogationLeaveAndAddFrozen,DialogOptionSelected,$option == vulp_interrogationLeaveAndAddFrozen,"SetPersonRank vulp_profecto
+AddRemoveAnyItem SPECIAL special_vulpoid laisa 1
 SetPersonFaction laisa player
 $option = vulp_interrogationLeave
 FireBest DialogOptionSelected",,,,
@@ -2475,6 +2477,7 @@ vulpChatAssignment_inquireOptionDefault,VulpoidChatTopLevelOptions,,,,vulpChatAs
 vulpChatAssignment_changeOutfitOption,VulpoidChatTopLevelOptions,,,,vulpChatAssignment_changeOutfit:Change outfits,,
 vulpChatAssignment_changeOutfit,DialogOptionSelected,$option == vulpChatAssignment_changeOutfit,"OpenListBasedDialog changeOutfit VulpoidChatTopLevelOptions
 SetVulpoidProperty expression default",You and $personName move over to the forge-wardrobe and begin reviewing the available patterns.,,,
+vulpChatAssignment_changeOutfitOnLeave,DialogOptionSelected,$option == vulpChatAssignment_changeOutfitOnLeave,,"Satisfied with her new look, you and $personName return to other matters.",,,
 ,,,,,,,
 ,,,,,,,
 vulpChatAssignment_addPopulationOption,VulpoidChatTopLevelOptions,"$vulp_profectoAssignment == vulpoids

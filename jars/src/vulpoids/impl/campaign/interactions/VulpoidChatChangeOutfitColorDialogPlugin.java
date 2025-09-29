@@ -2,8 +2,6 @@
 package vulpoids.impl.campaign.interactions;
 
 import com.fs.starfarer.api.characters.PersonAPI;
-import com.fs.starfarer.api.characters.SkillSpecAPI;
-import com.fs.starfarer.api.impl.campaign.OfficerLevelupPluginImpl;
 import java.awt.Color;
 import vulpoids.characters.VulpoidPerson;
 
@@ -37,6 +35,8 @@ public class VulpoidChatChangeOutfitColorDialogPlugin extends ListBasedInteracti
     protected Color getEntryColor(Object entry) {
         return(VulpoidPerson.outfits.get(outfitId).colors.get((String)entry).color);
     }
+    @Override
+    protected boolean doAddSelectedOptionToDialog(Object entry) {return false;}
 
     @Override
     protected void selectEntry(Object entry) {
