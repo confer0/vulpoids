@@ -8,4 +8,5 @@ VULPOIDS
 
 -Vulpoid cargo sounds by 北岛瑞月 (Arknights)
 
--Compatible with 0.96a-RC6 and 0.97a-RC6 versions of Starsector
+-Compatible with 0.98a-RC5 version of Starsector
+
