@@ -8,6 +8,7 @@ import com.fs.starfarer.api.campaign.econ.MarketImmigrationModifier;
 import com.fs.starfarer.api.characters.FullName;
 import com.fs.starfarer.api.characters.PersonAPI;
 import com.fs.starfarer.api.combat.MutableStat;
+import com.fs.starfarer.api.impl.SharedUnlockData;
 import com.fs.starfarer.api.impl.campaign.econ.BaseMarketConditionPlugin;
 import com.fs.starfarer.api.impl.campaign.ids.Factions;
 import com.fs.starfarer.api.impl.campaign.population.PopulationComposition;
@@ -215,9 +216,13 @@ public class VulpoidPopulation extends BaseMarketConditionPlugin implements Mark
         if(Global.CODEX_TOOLTIP_MODE) name = "The market";  // Would normally be 'the planet', but I want an upper case 'The', and might as well support space stations.
         float opad = 10f;
         
-        if(population<=3) tooltip.addImage(Global.getSettings().getSpriteName("illustrations", "vulp_pop_low"), opad);
-        else if(population>=6) tooltip.addImage(Global.getSettings().getSpriteName("illustrations", "vulp_pop_high"), opad);
-        else tooltip.addImage(Global.getSettings().getSpriteName("illustrations", "vulp_pop_med"), opad);
+        String illustration_id;
+        if(population<=3) illustration_id = "vulp_pop_low";
+        else if(population>=6) illustration_id = "vulp_pop_high";
+        else illustration_id = "vulp_pop_med";
+        tooltip.addImage(Global.getSettings().getSpriteName("illustrations", illustration_id), opad);
+        SharedUnlockData.get().reportPlayerAwareOfIllustration(illustration_id, true);
+        SharedUnlockData.get().saveIfNeeded();
 
         tooltip.addPara(name+" has a permanent population of Vulpoids, a cute and helpful artificial lifeform. "+
                 "In sufficient quantities, their presence will drive immigration of people hoping for a more "+

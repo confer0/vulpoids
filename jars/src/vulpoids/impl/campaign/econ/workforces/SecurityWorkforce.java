@@ -18,6 +18,8 @@ public class SecurityWorkforce extends BaseWorkforce {
         super.unapply(id);
     }
     @Override
+    public String getTooltipIllustrationId() {return "vulpworkforce_security";}
+    @Override
     protected void createTooltipAfterDescription(TooltipMakerAPI tooltip, boolean expanded) {
         super.createTooltipAfterDescription(tooltip, expanded);
         if(shouldApply()) {

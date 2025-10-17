@@ -140,13 +140,12 @@ public class UtopiaTerraformerIntel extends BaseIntelPlugin {
     
     protected void generate(SectorAPI sector) {
         system = sector.createStarSystem("Deep Space");
-        system.setType(StarSystemType.NEBULA);
         system.setName("Deep Space"); // to get rid of "Star System" at the end of the name
-        //system.setType(StarSystemType.DEEP_SPACE);
+        system.setType(StarSystemType.DEEP_SPACE);
         system.addTag(Tags.THEME_UNSAFE);
         system.addTag(Tags.THEME_HIDDEN);
         system.addTag(Tags.THEME_SPECIAL);
-
+        system.addTag(Tags.SYSTEM_ABYSSAL);
 
         system.setBackgroundTextureFilename("graphics/backgrounds/background5.jpg");
 

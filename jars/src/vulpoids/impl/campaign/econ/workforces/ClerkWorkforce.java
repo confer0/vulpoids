@@ -28,6 +28,8 @@ public class ClerkWorkforce extends BaseWorkforce {
         market.getIncomeMult().unmodifyMult(id);
     }
     @Override
+    public String getTooltipIllustrationId() {return "vulpworkforce_clerk";}
+    @Override
     protected void createTooltipAfterDescription(TooltipMakerAPI tooltip, boolean expanded) {
         super.createTooltipAfterDescription(tooltip, expanded);
         if(shouldApply()) {

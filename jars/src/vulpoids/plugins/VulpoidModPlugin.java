@@ -19,18 +19,20 @@ import com.fs.starfarer.api.campaign.econ.MarketAPI;
 import com.fs.starfarer.api.characters.FullName;
 import com.fs.starfarer.api.characters.ImportantPeopleAPI;
 import com.fs.starfarer.api.characters.MarketConditionSpecAPI;
+import com.fs.starfarer.api.impl.SharedUnlockData;
 import com.fs.starfarer.api.impl.campaign.econ.impl.BoostIndustryInstallableItemEffect;
 import com.fs.starfarer.api.impl.campaign.ids.Commodities;
 import com.fs.starfarer.api.impl.campaign.ids.Conditions;
 import com.fs.starfarer.api.impl.campaign.ids.Industries;
-import com.fs.starfarer.api.impl.campaign.ids.Items;
 import com.fs.starfarer.api.impl.campaign.ids.MemFlags;
-import com.fs.starfarer.api.impl.campaign.ids.Planets;
 import com.fs.starfarer.api.impl.campaign.ids.Ranks;
 import com.fs.starfarer.api.impl.campaign.ids.Skills;
 import com.fs.starfarer.api.impl.campaign.ids.Stats;
 import com.fs.starfarer.api.impl.codex.CodexDataV2;
+import com.fs.starfarer.api.impl.codex.CodexEntryPlugin;
+import com.fs.starfarer.api.impl.codex.CodexEntryV2;
 import com.fs.starfarer.api.util.Pair;
+import java.util.Set;
 import vulpoids.campaign.impl.items.VulpoidPlugin;
 import vulpoids.campaign.listeners.SaturationBombardmentListener;
 import vulpoids.characters.VulpoidPerson;
@@ -46,122 +48,20 @@ public class VulpoidModPlugin extends BaseModPlugin {
     @Override
     public void onApplicationLoad() throws Exception {
         VulpoidPerson.loadConfigs();
-    }
-    
-    @Override
-    public void onGameLoad(boolean newGame) {
         
-        if(!Global.getSector().getListenerManager().hasListenerOfClass(SaturationBombardmentListener.class)) {
-            Global.getSector().getListenerManager().addListener(new SaturationBombardmentListener());
+        for (String id : Vulpoids.farmingIndustryIds) {
+            addSpecialItemIndustry(Vulpoids.MANGONUT_TREE_ITEM, id);
         }
-        
-        for(OfficerCostOverrideScript oldScript : Global.getSector().getListenerManager().getListeners(OfficerCostOverrideScript.class)) {
-            Global.getSector().removeListener(oldScript);
+        for (String id : Vulpoids.heavyIndustryIds) {
+            addSpecialItemIndustry(Vulpoids.MIDAS_NANOFORGE_ITEM, id);
         }
-        Global.getSector().addListener(new OfficerCostOverrideScript());
-        
-        // This mainly serves to address a very specific bug with officers.
-        // If they haven't been refreshed, for some reason they loose their personality.
-        // This causes a game crash if their ship-command portrait is moused over before either
-        // mousing them over in inventory, or opening the officer list. O_o
-        for(CargoStackAPI stack : Global.getSector().getPlayerFleet().getCargo().getStacksCopy()) {
-            if(stack.isSpecialStack() && stack.getPlugin() instanceof VulpoidPlugin) {
-                ((VulpoidPlugin)stack.getPlugin()).refreshPerson();
-            }
-        }
-        
-        ImportantPeopleAPI ip = Global.getSector().getImportantPeople();
-        VulpoidPerson person;
-        
-        /*for (PersonDataAPI existingPerson : ip.getPeopleCopy()) {
-            if (existingPerson.getPerson().getMemoryWithoutUpdate().contains(Vulpoids.KEY_IS_VULPOID) &&
-                    !(existingPerson.getPerson() instanceof VulpoidPerson)) {
-                // TODO - TEST
-                ip.addPerson(VulpoidPlugin.jsonToPerson(VulpoidPlugin.personToJson(existingPerson.getPerson())));
-            }
-        }*/
-        
-        Vulpoids.updateVanillaItemsIfApplicable();
-        
-        // Mod Compatibility - Ashes Of The Domain
-        if (Global.getSettings().getModManager().isModEnabled("aotd_vok")) {
-            addSpecialItemIndustry(Vulpoids.MANGONUT_TREE_ITEM, "subfarming");
-            addSpecialItemIndustry(Vulpoids.MANGONUT_TREE_ITEM, "artifarming");
-            addSpecialItemIndustry(Vulpoids.MIDAS_NANOFORGE_ITEM, "supplyheavy");
-            addSpecialItemIndustry(Vulpoids.MIDAS_NANOFORGE_ITEM, "weaponheavy");
-        }
-        
-        if (ip.getPerson(Vulpoids.PERSON_LAISA) == null) {
-            person = new VulpoidPerson(null, true, "laisa");
-            person.setId(Vulpoids.PERSON_LAISA);
-            person.setFaction(Vulpoids.FACTION_EXODYNE);
-            person.setName(new FullName("Exodyne Captain", "", FullName.Gender.FEMALE));
-            person.setRankId(null);
-            person.setPostId(Ranks.POST_FLEET_COMMANDER);
-            person.getRelToPlayer().setRel(-0.1f);
-            person.setOutfit(VulpoidPerson.OUTFIT_SPACER);
-            person.setExpression(VulpoidPerson.EXPRESSION_HELMET);
-            person.getStats().setSkillLevel(Vulpoids.SKILL_ADMIN, 0);
-            person.getStats().setSkillLevel(Vulpoids.SKILL_OFFICER, 0);
-            person.getStats().setSkillLevel(Vulpoids.SKILL_LAISA_ADMIN, 1);
-            person.getStats().setSkillLevel(Vulpoids.SKILL_LAISA_OFFICER, 1);
-            person.getStats().setLevel(8);
-            person.getStats().setSkillLevel(Skills.INDUSTRIAL_PLANNING, 1);
-            person.getStats().setSkillLevel(Skills.HELMSMANSHIP, 2);
-            person.getStats().setSkillLevel(Skills.COMBAT_ENDURANCE, 2);
-            //person.getStats().setSkillLevel(Skills.DAMAGE_CONTROL, 1);
-            person.getStats().setSkillLevel(Skills.FIELD_MODULATION, 2);
-            person.getStats().setSkillLevel(Skills.TARGET_ANALYSIS, 2);
-            person.getStats().setSkillLevel(Skills.GUNNERY_IMPLANTS, 2);
-            person.getStats().setSkillLevel(Skills.ORDNANCE_EXPERTISE, 2);
-            person.getMemoryWithoutUpdate().set(MemFlags.OFFICER_MAX_LEVEL, 8);
-            person.getMemoryWithoutUpdate().set(MemFlags.OFFICER_MAX_ELITE_SKILLS, 5);
-            //person.getMemoryWithoutUpdate().set(Vulpoids.KEY_DEFAULT_PORTRAIT, "graphics/portraits/vulpoid/laisa/clothed/default.png");
-            //person.getMemoryWithoutUpdate().set(Vulpoids.KEY_OFFICER_PORTRAIT, "graphics/portraits/vulpoid/laisa/laisa_special_admiral.png");
-            //person.getMemoryWithoutUpdate().set(Vulpoids.KEY_CARGO_ICON, "graphics/icons/cargo/vulpoids/vulpoid_laisa.png");
-            ip.addPerson(person);
-        } else if(!(ip.getPerson(Vulpoids.PERSON_LAISA) instanceof VulpoidPerson)) {
-            person = VulpoidPlugin.jsonToPerson(VulpoidPlugin.personToJson(ip.getPerson(Vulpoids.PERSON_LAISA)));
-            ip.removePerson(Vulpoids.PERSON_LAISA);
-            ip.addPerson(person);
-        }
-        
-        if(ip.getPerson(Vulpoids.PERSON_DUMMY_TERRAN) == null) {
-            person = new VulpoidPerson(null, false, "terran");
-            person.setId(Vulpoids.PERSON_DUMMY_TERRAN);
-            ip.addPerson(person);
-        } else if(!(ip.getPerson(Vulpoids.PERSON_DUMMY_TERRAN) instanceof VulpoidPerson)) {
-            person = VulpoidPlugin.jsonToPerson(VulpoidPlugin.personToJson(ip.getPerson(Vulpoids.PERSON_DUMMY_TERRAN)));
-            ip.removePerson(Vulpoids.PERSON_DUMMY_TERRAN);
-            ip.addPerson(person);
-        }
-        if(ip.getPerson(Vulpoids.PERSON_DUMMY_DESERT) == null) {
-            person = new VulpoidPerson(null, false, "desert");
-            person.setId(Vulpoids.PERSON_DUMMY_DESERT);
-            ip.addPerson(person);
-        } else if(!(ip.getPerson(Vulpoids.PERSON_DUMMY_DESERT) instanceof VulpoidPerson)) {
-            person = VulpoidPlugin.jsonToPerson(VulpoidPlugin.personToJson(ip.getPerson(Vulpoids.PERSON_DUMMY_DESERT)));
-            ip.removePerson(Vulpoids.PERSON_DUMMY_DESERT);
-            ip.addPerson(person);
-        }
-        if(ip.getPerson(Vulpoids.PERSON_DUMMY_ARCTIC) == null) {
-            person = new VulpoidPerson(null, false, "arctic");
-            person.setId(Vulpoids.PERSON_DUMMY_ARCTIC);
-            ip.addPerson(person);
-        } else if(!(ip.getPerson(Vulpoids.PERSON_DUMMY_ARCTIC) instanceof VulpoidPerson)) {
-            person = VulpoidPlugin.jsonToPerson(VulpoidPlugin.personToJson(ip.getPerson(Vulpoids.PERSON_DUMMY_ARCTIC)));
-            ip.removePerson(Vulpoids.PERSON_DUMMY_ARCTIC);
-            ip.addPerson(person);
-        }
-        
-        
         
         final int VULPOID_BROKEN_ORGANS = 2;
 
         ItemEffectsRepo.ITEM_EFFECTS.put(Vulpoids.BIOFORGE_ITEM, new BaseInstallableItemEffect(Vulpoids.BIOFORGE_ITEM) {
+            @Override
             public void apply(Industry industry) {
-                if (industry instanceof BaseIndustry) {
-                    BaseIndustry b = (BaseIndustry) industry;
+                if (industry instanceof BaseIndustry b) {
                     int size = b.getMarket().getSize();
                     if(Vulpoids.INDUSTRY_ORGANFARM.equals(b.getId())) {
                         //b.getSupply(Commodities.ORGANS).getQuantity().unmodify();
@@ -196,8 +96,7 @@ public class VulpoidModPlugin extends BaseModPlugin {
             @Override
             public void unapply(Industry industry) {
                 if (industry.getMarket().isPlanetConditionMarketOnly()) industry.getMarket().getMemoryWithoutUpdate().set("$hasDecivBiofactory", true);
-                if (industry instanceof BaseIndustry) {
-                    BaseIndustry b = (BaseIndustry) industry;
+                if (industry instanceof BaseIndustry b) {
                     b.supply(spec.getId(), Commodities.ORGANS, 0, Misc.ucFirst(spec.getName().toLowerCase()));
                     //b.supply(spec.getId(), Commodities.DRUGS, 0, Misc.ucFirst(spec.getName().toLowerCase()));
                     b.getSupply(Vulpoids.CARGO_ITEM).getQuantity().unmodify();
@@ -220,8 +119,6 @@ public class VulpoidModPlugin extends BaseModPlugin {
                 return new String [] {ItemEffectsRepo.HABITABLE};
             }
         });
-        
-        
         
         ItemEffectsRepo.ITEM_EFFECTS.put(Vulpoids.CORRUPT_BIOFORGE_ITEM, new BaseInstallableItemEffect(Vulpoids.CORRUPT_BIOFORGE_ITEM) {
             @Override
@@ -260,8 +157,7 @@ public class VulpoidModPlugin extends BaseModPlugin {
                 FilteredAir plugin = (FilteredAir)industry.getMarket().getCondition(Vulpoids.CONDITION_FILTERED_AIR).getPlugin();
                 if(carryOverPollutionRemovalTimer!=-1) plugin.setPollutionRemovalTimer(carryOverPollutionRemovalTimer);
                 if(plugin.shouldRemovePollution()) industry.getMarket().removeCondition(Conditions.POLLUTION);
-                if(industry instanceof BaseIndustry) {
-                    BaseIndustry b = (BaseIndustry) industry;
+                if(industry instanceof BaseIndustry b) {
                     b.demand(9, Commodities.RARE_METALS, 4, Misc.ucFirst(spec.getName().toLowerCase()));
                     b.demand(9, Commodities.VOLATILES, 4, Misc.ucFirst(spec.getName().toLowerCase()));
                     float rare_hazard = 1f - industry.getMarket().getCommodityData(Commodities.RARE_METALS).getAvailable() / (float)industry.getDemand(Commodities.RARE_METALS).getQuantity().getModifiedInt();
@@ -299,8 +195,7 @@ public class VulpoidModPlugin extends BaseModPlugin {
                 industry.getSupplyBonus().modifyFlat(spec.getId(), MIDAS_NANOFORGE_PROD, Misc.ucFirst(spec.getName().toLowerCase()));
                 industry.getMarket().getStats().getDynamic().getMod(Stats.PRODUCTION_QUALITY_MOD)
                         .modifyFlat("nanoforge", MIDAS_NANOFORGE_QUALITY_BONUS, Misc.ucFirst(spec.getName().toLowerCase()));
-                if(industry instanceof BaseIndustry) {
-                    BaseIndustry b = (BaseIndustry) industry;
+                if(industry instanceof BaseIndustry b) {
                     int size = b.getMarket().getSize();
                     //b.demand(Commodities.METALS, 0);
                     //b.demand(Commodities.RARE_METALS, 0);
@@ -329,8 +224,7 @@ public class VulpoidModPlugin extends BaseModPlugin {
             public void unapply(Industry industry) {
                 industry.getSupplyBonus().modifyFlat(spec.getId(), 0, Misc.ucFirst(spec.getName().toLowerCase()));
                 industry.getMarket().getStats().getDynamic().getMod(Stats.PRODUCTION_QUALITY_MOD).unmodifyFlat("nanoforge");
-                if(industry instanceof BaseIndustry) {
-                    BaseIndustry b = (BaseIndustry) industry;
+                if(industry instanceof BaseIndustry b) {
                     b.getDemand(Commodities.METALS).getQuantity().unmodifyMult(spec.getId());
                     b.getDemand(Commodities.RARE_METALS).getQuantity().unmodifyMult(spec.getId());
                     b.demand(9, Commodities.ORE, 0, null);
@@ -365,8 +259,7 @@ public class VulpoidModPlugin extends BaseModPlugin {
             public void apply(Industry industry) {
                 super.apply(industry);
                 //industry.getSupply(Vulpoids.MANGONUT_ITEM).getQuantity().modifyFlat(spec.getId(), 1, Misc.ucFirst(spec.getName().toLowerCase()));
-                if(industry instanceof BaseIndustry) {
-                    BaseIndustry b = (BaseIndustry) industry;
+                if(industry instanceof BaseIndustry b) {
                     b.supply(Vulpoids.MANGONUT_ITEM, 1);
                     Global.getSector().getMemoryWithoutUpdate().set(Vulpoids.KEY_EXPORTED_MANGONUTS, true);
                 }
@@ -396,7 +289,7 @@ public class VulpoidModPlugin extends BaseModPlugin {
                 
                 if(!industry.getMarket().hasCondition(Conditions.VOLTURNIAN_LOBSTER_PENS)) {
                     PlanetAPI planet = industry.getMarket().getPlanetEntity();
-                    if(planet!=null && (Planets.PLANET_TERRAN.equals(planet.getTypeId()) || Planets.PLANET_WATER.equals(planet.getTypeId()))) {
+                    if(planet!=null && Vulpoids.LOBSTER_SUPPORTING_WORLDS.contains(planet.getTypeId())) {
                         if(industry.getMarket().hasCondition(Vulpoids.CONDITION_LOBSTERS_GROWING)) {
                             LobstersGrowing plugin = (LobstersGrowing) industry.getMarket().getCondition(Vulpoids.CONDITION_LOBSTERS_GROWING).getPlugin();
                             if(plugin.isFinished()) {
@@ -421,6 +314,87 @@ public class VulpoidModPlugin extends BaseModPlugin {
         });
     }
     
+    @Override
+    public void onGameLoad(boolean newGame) {
+        
+        if(!Global.getSector().getListenerManager().hasListenerOfClass(SaturationBombardmentListener.class)) {
+            Global.getSector().getListenerManager().addListener(new SaturationBombardmentListener());
+        }
+        
+        for(OfficerCostOverrideScript oldScript : Global.getSector().getListenerManager().getListeners(OfficerCostOverrideScript.class)) {
+            Global.getSector().removeListener(oldScript);
+        }
+        Global.getSector().addListener(new OfficerCostOverrideScript());
+        
+        ImportantPeopleAPI ip = Global.getSector().getImportantPeople();
+        VulpoidPerson person;
+        
+        
+        if (ip.getPerson(Vulpoids.PERSON_LAISA) == null) {
+            person = new VulpoidPerson(null, true, "laisa");
+            person.setId(Vulpoids.PERSON_LAISA);
+            person.setFaction(Vulpoids.FACTION_EXODYNE);
+            person.setName(new FullName("Exodyne Captain", "", FullName.Gender.FEMALE));
+            person.setRankId(null);
+            person.setPostId(Ranks.POST_FLEET_COMMANDER);
+            person.getRelToPlayer().setRel(-0.1f);
+            person.setOutfit(VulpoidPerson.OUTFIT_SPACER);
+            person.setExpression(VulpoidPerson.EXPRESSION_HELMET);
+            person.getStats().setSkillLevel(Vulpoids.SKILL_ADMIN, 0);
+            person.getStats().setSkillLevel(Vulpoids.SKILL_OFFICER, 0);
+            person.getStats().setSkillLevel(Vulpoids.SKILL_LAISA_ADMIN, 1);
+            person.getStats().setSkillLevel(Vulpoids.SKILL_LAISA_OFFICER, 1);
+            person.getStats().setLevel(8);
+            person.getStats().setSkillLevel(Skills.INDUSTRIAL_PLANNING, 1);
+            person.getStats().setSkillLevel(Skills.HELMSMANSHIP, 2);
+            person.getStats().setSkillLevel(Skills.COMBAT_ENDURANCE, 2);
+            //person.getStats().setSkillLevel(Skills.DAMAGE_CONTROL, 1);
+            person.getStats().setSkillLevel(Skills.FIELD_MODULATION, 2);
+            person.getStats().setSkillLevel(Skills.TARGET_ANALYSIS, 2);
+            person.getStats().setSkillLevel(Skills.GUNNERY_IMPLANTS, 2);
+            person.getStats().setSkillLevel(Skills.ORDNANCE_EXPERTISE, 2);
+            person.getMemoryWithoutUpdate().set(MemFlags.OFFICER_MAX_LEVEL, 8);
+            person.getMemoryWithoutUpdate().set(MemFlags.OFFICER_MAX_ELITE_SKILLS, 5);
+            //person.getMemoryWithoutUpdate().set(Vulpoids.KEY_DEFAULT_PORTRAIT, "graphics/portraits/vulpoid/laisa/clothed/default.png");
+            //person.getMemoryWithoutUpdate().set(Vulpoids.KEY_OFFICER_PORTRAIT, "graphics/portraits/vulpoid/laisa/laisa_special_admiral.png");
+            //person.getMemoryWithoutUpdate().set(Vulpoids.KEY_CARGO_ICON, "graphics/icons/cargo/vulpoids/vulpoid_laisa.png");
+            ip.addPerson(person);
+        } else if(!(ip.getPerson(Vulpoids.PERSON_LAISA) instanceof VulpoidPerson)) {
+            person = VulpoidPlugin.jsonToPerson(VulpoidPlugin.personToJson(ip.getPerson(Vulpoids.PERSON_LAISA)));
+            person.setRankId(Vulpoids.RANK_PROFECTO);  // Fixing a missed command in the rules.
+            ip.removePerson(Vulpoids.PERSON_LAISA);
+            ip.addPerson(person);
+        }
+        
+        if(ip.getPerson(Vulpoids.PERSON_DUMMY_TERRAN) == null) {
+            person = new VulpoidPerson(null, false, "terran");
+            person.setId(Vulpoids.PERSON_DUMMY_TERRAN);
+            ip.addPerson(person);
+        } else if(!(ip.getPerson(Vulpoids.PERSON_DUMMY_TERRAN) instanceof VulpoidPerson)) {
+            person = VulpoidPlugin.jsonToPerson(VulpoidPlugin.personToJson(ip.getPerson(Vulpoids.PERSON_DUMMY_TERRAN)));
+            ip.removePerson(Vulpoids.PERSON_DUMMY_TERRAN);
+            ip.addPerson(person);
+        }
+        if(ip.getPerson(Vulpoids.PERSON_DUMMY_DESERT) == null) {
+            person = new VulpoidPerson(null, false, "desert");
+            person.setId(Vulpoids.PERSON_DUMMY_DESERT);
+            ip.addPerson(person);
+        } else if(!(ip.getPerson(Vulpoids.PERSON_DUMMY_DESERT) instanceof VulpoidPerson)) {
+            person = VulpoidPlugin.jsonToPerson(VulpoidPlugin.personToJson(ip.getPerson(Vulpoids.PERSON_DUMMY_DESERT)));
+            ip.removePerson(Vulpoids.PERSON_DUMMY_DESERT);
+            ip.addPerson(person);
+        }
+        if(ip.getPerson(Vulpoids.PERSON_DUMMY_ARCTIC) == null) {
+            person = new VulpoidPerson(null, false, "arctic");
+            person.setId(Vulpoids.PERSON_DUMMY_ARCTIC);
+            ip.addPerson(person);
+        } else if(!(ip.getPerson(Vulpoids.PERSON_DUMMY_ARCTIC) instanceof VulpoidPerson)) {
+            person = VulpoidPlugin.jsonToPerson(VulpoidPlugin.personToJson(ip.getPerson(Vulpoids.PERSON_DUMMY_ARCTIC)));
+            ip.removePerson(Vulpoids.PERSON_DUMMY_ARCTIC);
+            ip.addPerson(person);
+        }
+    }
+    
     private static void addSpecialItemIndustry(String item, String industry) {
         SpecialItemSpecAPI spec = Global.getSettings().getSpecialItemSpec(item);
         if(!spec.getParams().contains(industry)) {
@@ -432,6 +406,33 @@ public class VulpoidModPlugin extends BaseModPlugin {
     @Override
     public void onAboutToLinkCodexEntries() {
         
+        // Needs to be done here so the codex is ready
+        Vulpoids.updateVanillaItemsIfApplicable();
+        
+        SpecialItemSpecAPI vulpoidCodexItemSpec = Global.getSettings().getSpecialItemSpec(Vulpoids.SPECIAL_ITEM_CODEX);
+        CodexDataV2.getEntry(CodexDataV2.CAT_SPECIAL_ITEMS).addChild(new CodexEntryV2(CodexDataV2.getItemEntryId(Vulpoids.SPECIAL_ITEM_CODEX), vulpoidCodexItemSpec.getName(), vulpoidCodexItemSpec.getIconName(), vulpoidCodexItemSpec) {
+            @Override
+            public void createTitleForList(TooltipMakerAPI info, float width, ListMode mode) {
+                info.addPara(vulpoidCodexItemSpec.getName(), Misc.getBasePlayerColor(), 0f);
+                if (mode == ListMode.RELATED_ENTRIES) {
+                    info.addPara("Special item", Misc.getGrayColor(), 0f);
+                }
+            }
+            @Override
+            public boolean matchesTags(Set<String> tags) {
+                return tags.contains(CodexDataV2.OTHER);
+            }
+            @Override
+            public Set<String> getUnlockRelatedTags() {
+                return vulpoidCodexItemSpec.getTags();
+            }
+            // The easiest way to have it unlock.
+            @Override
+            public boolean isUnlockedIfRequiresUnlock() {
+                return SharedUnlockData.get().isPlayerAwareOfCommodity(Vulpoids.CARGO_ITEM);
+            }
+        });
+        CodexDataV2.rebuildIdToEntryMap();
         
         
         /*CodexDataV2.makeRelated(
@@ -527,11 +528,12 @@ public class VulpoidModPlugin extends BaseModPlugin {
                 CodexDataV2.getItemEntryId(Vulpoids.MIDAS_NANOFORGE_ITEM),
                 CodexDataV2.getCommodityEntryId(Commodities.RARE_ORE)
         );
-        CodexDataV2.makeRelated(
-                CodexDataV2.getItemEntryId(Vulpoids.MIDAS_NANOFORGE_ITEM),
-                CodexDataV2.getIndustryEntryId(Industries.HEAVYINDUSTRY),
-                CodexDataV2.getIndustryEntryId(Industries.ORBITALWORKS)
-        );
+        for (String id : Vulpoids.heavyIndustryIds) {
+            CodexDataV2.makeRelated(
+                    CodexDataV2.getItemEntryId(Vulpoids.MIDAS_NANOFORGE_ITEM),
+                    CodexDataV2.getIndustryEntryId(id)
+            );
+        }
         
         // Organ farms, for some reason, don't auto-link to organs.
         CodexDataV2.makeRelated(
@@ -541,11 +543,13 @@ public class VulpoidModPlugin extends BaseModPlugin {
         );
         
         // Mangonut tree, links to farming and mangonuts. Doing it triangular so that farming gets mangonuts too.
-        CodexDataV2.makeRelated(
-                CodexDataV2.getIndustryEntryId(Industries.FARMING),
+        for (String id : Vulpoids.farmingIndustryIds) {
+            CodexDataV2.makeRelated(
+                CodexDataV2.getIndustryEntryId(id),
                 CodexDataV2.getItemEntryId(Vulpoids.MANGONUT_TREE_ITEM),
                 CodexDataV2.getCommodityEntryId(Vulpoids.MANGONUT_ITEM)
-        );
+            );
+        }
         
         
         // Skills - Setting them as AI-only puts them at the bottom, which is good. But it also auto-links to AI cores.

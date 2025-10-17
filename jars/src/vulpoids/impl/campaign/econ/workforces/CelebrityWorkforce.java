@@ -8,7 +8,6 @@ import com.fs.starfarer.api.impl.campaign.ids.Commodities;
 import com.fs.starfarer.api.impl.campaign.ids.Factions;
 import com.fs.starfarer.api.impl.campaign.ids.Industries;
 import com.fs.starfarer.api.impl.campaign.population.PopulationComposition;
-import com.fs.starfarer.api.impl.codex.CodexDataV2;
 import com.fs.starfarer.api.ui.TooltipMakerAPI;
 import com.fs.starfarer.api.util.Misc;
 
@@ -52,6 +51,8 @@ public class CelebrityWorkforce extends BaseWorkforce implements MarketImmigrati
             population.getDemand(Commodities.DRUGS).getQuantity().unmodifyFlat(id);
         }
     }
+    @Override
+    public String getTooltipIllustrationId() {return "vulpworkforce_celebrity";}
     @Override
     protected void createTooltipAfterDescription(TooltipMakerAPI tooltip, boolean expanded) {
         super.createTooltipAfterDescription(tooltip, expanded);

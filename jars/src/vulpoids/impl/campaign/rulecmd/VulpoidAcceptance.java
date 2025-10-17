@@ -27,7 +27,7 @@ public class VulpoidAcceptance extends BaseCommandPlugin {
             case "officialStance":
                 if (VulpoidAcceptanceEventIntel.get()==null) return false;
                 return VulpoidAcceptanceEventIntel.get().getProgress() >= VulpoidAcceptanceEventIntel.PROGRESS_SANCTIONS_START;
-            case "sanctionEnded":
+            case "sanctionsEnded":
                 if (VulpoidAcceptanceEventIntel.get()==null) return false;
                 return VulpoidAcceptanceEventIntel.get().getProgress() >= VulpoidAcceptanceEventIntel.PROGRESS_SANCTIONS_END;
             case "donate":

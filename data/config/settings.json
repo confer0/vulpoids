@@ -59,6 +59,20 @@
 			
 			"laisa_hug1":"graphics/illustrations/laisa_hug1.png",
 			"laisa_hug2":"graphics/illustrations/laisa_hug2.png",
+			
+			"vulpworkforce_placeholder":"graphics/illustrations/vulpoid_placeholder.png",
+			"vulpworkforce_celebrity":"graphics/illustrations/vulpoid_celebrities.png",
+			"vulpworkforce_clerk":"graphics/illustrations/vulpoid_clerks.png",
+			"vulpworkforce_cult":"graphics/illustrations/vulpoid_cult.png",
+			"vulpworkforce_estateservant":"graphics/illustrations/vulpoid_placeholder.png",
+			"vulpworkforce_farmer":"graphics/illustrations/vulpoid_farmers.png",
+			"vulpworkforce_maintenance":"graphics/illustrations/vulpoid_maintenance.png",
+			"vulpworkforce_miner":"graphics/illustrations/vulpoid_placeholder.png",
+			"vulpworkforce_ranger":"graphics/illustrations/vulpoid_rangers.png",
+			"vulpworkforce_security":"graphics/illustrations/vulpoid_placeholder.png",
+			"vulpworkforce_servant":"graphics/illustrations/vulpoid_placeholder.png",
+			"vulpworkforce_shipbreaker":"graphics/illustrations/vulpoid_shipbreakers.png",
+			"vulpworkforce_trader":"graphics/illustrations/vulpoid_customs.png",
 		},
 		"cargo":{
 			"vulp_lock_icon":"graphics/icons/cargo/vulpoids/vulpoid_locked_icon.png",

@@ -36,6 +36,8 @@ public class ServantWorkforce extends BaseWorkforce {
         if(mining!=null) mining.getDemand(Commodities.DRUGS).getQuantity().unmodifyFlat(id);
     }
     @Override
+    public String getTooltipIllustrationId() {return "vulpworkforce_servant";}
+    @Override
     protected void createTooltipAfterDescription(TooltipMakerAPI tooltip, boolean expanded) {
         super.createTooltipAfterDescription(tooltip, expanded);
         if(shouldApply()) {

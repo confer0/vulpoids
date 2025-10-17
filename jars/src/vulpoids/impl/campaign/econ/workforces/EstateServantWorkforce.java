@@ -8,4 +8,6 @@ public class EstateServantWorkforce extends BaseWorkforce {
     public String[] getRequirements() {
         return new String[]{"old-money aristocracy"};
     }
+    @Override
+    public String getTooltipIllustrationId() {return "vulpworkforce_estateservant";}
 }

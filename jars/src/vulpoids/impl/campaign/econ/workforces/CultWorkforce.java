@@ -2,7 +2,9 @@ package vulpoids.impl.campaign.econ.workforces;
 
 import com.fs.starfarer.api.Global;
 import com.fs.starfarer.api.campaign.RepLevel;
+import com.fs.starfarer.api.impl.campaign.ids.Conditions;
 import com.fs.starfarer.api.impl.campaign.ids.Factions;
+import com.fs.starfarer.api.impl.codex.CodexDataV2;
 import com.fs.starfarer.api.ui.TooltipMakerAPI;
 import com.fs.starfarer.api.util.Misc;
 
@@ -18,6 +20,14 @@ public class CultWorkforce extends BaseWorkforce {
     public boolean isAvailableToPlayer() {
         return Global.getSector().getPlayerMemoryWithoutUpdate().getBoolean("$unlockedVulpoidCults");
     }
+    
+    @Override
+    public String[] getRequirements() {
+        // Note: Workforce still operates even if the Luddic Majority is suppressed.
+        // These are cults, after all. Underground operations will still suit them fine, as long as the Faithful is still present at all.
+        return new String[]{LUDDIC_MAJORITY};
+    }
+    
     @Override
     public void apply(String id) {
         super.apply(id);
@@ -46,6 +56,8 @@ public class CultWorkforce extends BaseWorkforce {
     @Override
     public boolean isTransient() {return false;}
     @Override
+    public String getTooltipIllustrationId() {return "vulpworkforce_cult";}
+    @Override
     protected void createTooltipAfterDescription(TooltipMakerAPI tooltip, boolean expanded) {
         super.createTooltipAfterDescription(tooltip, expanded);
         if(shouldApply()) {
@@ -68,5 +80,13 @@ public class CultWorkforce extends BaseWorkforce {
                 }
             }
         }
+    }
+    @Override
+    public void linkCodexEntries() {
+        super.linkCodexEntries();
+        CodexDataV2.makeRelated(
+                CodexDataV2.getConditionEntryId(condition.getId()),
+                CodexDataV2.getConditionEntryId(Conditions.LUDDIC_MAJORITY)
+        );
     }
 }

@@ -2,7 +2,6 @@ package vulpoids.characters;
 
 import com.fs.starfarer.api.Global;
 import com.fs.starfarer.api.characters.FullName;
-import com.fs.starfarer.api.characters.PersonalityAPI;
 import com.fs.starfarer.api.graphics.SpriteAPI;
 import com.fs.starfarer.api.impl.campaign.ids.Factions;
 import com.fs.starfarer.api.impl.campaign.ids.MemFlags;
@@ -91,11 +90,14 @@ public class VulpoidPerson extends Person {
     private String expression = EXPRESSION_DEFAULT;
     private String tooltipExpression = null;
     
+    private String localPersonalityId;
+    
     public VulpoidPerson(boolean profecto) {
-        this(null, profecto, null);
+        this("steady", profecto, null);
     }
     public VulpoidPerson(String personalityId, boolean profecto, String presetFurColor) {
         super(personalityId);
+        localPersonalityId = personalityId;
         setUpVulpoid(presetFurColor);
         if(profecto) setUpProfecto();
         // For some reason, there's some logic inside administrators and officers that check if the portrait sprite is not null.
@@ -168,7 +170,14 @@ public class VulpoidPerson extends Person {
     public String getFurColor() {return furColor;}
     public void setHair(String s) {hair = s;}
     public String getHair() {return hair;}
-    public void setOutfit(String s) {outfit = s;}
+    public void setOutfit(String s) {
+        if(s == null) {outfit = s;}  // Deliberately not catching this. I want it to be visible if a null gets passed.
+        else outfit = switch (s) {
+            case "defaultUniform" -> furColors.get(furColor).defaultUniform;
+            case "defaultDress" -> furColors.get(furColor).defaultDress;
+            default -> s;
+        };
+    }
     public String getOutfit() {return outfit;}
     public void setOutfitOverride(String s) {outfitOverride = s;}
     public String getOutfitOverride() {return outfitOverride;}
@@ -336,36 +345,40 @@ public class VulpoidPerson extends Person {
     
     
     
-    
-    String cachedPersonality = "steady";
-    @Override
-    public PersonalityAPI getPersonalityAPI() {
-        PersonalityAPI test = super.getPersonalityAPI();
-        // TODO - Figure out what causes this, and fix it
-        if(test==null) {
-            // I've got no idea why it's _this_ convoluted, but this is what's needed to preserve the personality between reloads.
-            if(cachedPersonality==null) super.setPersonality("steady");
-            else super.setPersonality(cachedPersonality);
-        }
-        return super.getPersonalityAPI();
-    }
     @Override
     public void setPersonality(String string) {
-        cachedPersonality = string;
+        localPersonalityId = string;
         super.setPersonality(string);
     }
-    // This issue came up with Laisa. When she's been spawned in, her personality is null for some reason.
-    // That then PREVENTS THE GAME FROM SAVING. Which is a bit of an issue.
-    // So I need to reference obfuscated code. :/
-    // It'd also crash the game when it tries to deploy her ship.
-    // Interestingly, opening comms with her seems to fix it... but the saving issue is a bit critical.
-    @Override
-    public com.fs.starfarer.rpg.A getPersonality() {
-        if (super.getPersonality() == null) {
-            setPersonality(getPersonalityAPI().getId());
+    // Okay. Here's the entire process and how to work around it.
+    // In com.fs.starfarer.campaign.save.CampaignGameManager.XStream(), the XStream system is set up.
+    // It maps Java classes to JSON file formats, with specific parameters.
+    // It does NOT, however, save transient variables like the PersonalityAPI. Only the personalityId.
+    // When the game loads the JSON it does NOT call a constructor. XStream does everything using reflection, so it can even access private fields.
+    // That includes readResolve() here - it calls that once it's done, and THAT'S what locks in the vanilla PersonalityAPI.
+    // Now, I CAN'T use reflection here, since it gets called inside a script and that's not allowed.
+    // So the list of things I can't utilize:
+    // -super.readResolve(), which would let me just do things normally.
+    // -super.personalityId,  which would let me call setPersonality with the id loaded from save. But it's private, so I can't reach it.
+    // -getPersonalityAPI(), since it will return null as long as the PersonalityAPI hasn't been initialized by readResolve().
+    // To get out of this catch-22, I need something extra.
+    // localPersonalityId is like personalityId, but local!
+    // That means it gets saved and loaded by XStream, and is accessible from inside this class.
+    // So I can use that to store the personalityId, then use setPersonality() to update the PersonalityAPI.
+    // Praise Ludd.
+    public Object readResolve() {
+        // This _ought_ to be impossible, and only comes up for me because of trans-version testing.
+        // But I'm including it in the hopes that I will never return to this region of code again.
+        if (localPersonalityId==null) {
+            // This is even more likely to never happen. I cannot imagine what would need to be the case to make this happen.
+            if (getPersonalityAPI()!=null) localPersonalityId = getPersonalityAPI().getId();
+            // Of the things that should never happen, this is more likely.
+            else localPersonalityId = "steady";
         }
-        return super.getPersonality();
+        super.setPersonality(localPersonalityId);
+        return this;
     }
+    
     
     
     public static class BackgroundData {

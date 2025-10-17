@@ -39,6 +39,12 @@ import vulpoids.impl.campaign.ids.Vulpoids;
 public class VulpoidPlugin extends BaseSpecialItemPlugin {
     
     public static String personToJson(PersonAPI person) {
+        // I'd tried to give XStream a try here, but it didn't seem to play nice.
+        // First of all, by default it tried to save the ENTIRE GAME.
+        // That happened because the Person market and fleet fields have reference trees out to the entire Sector.
+        // XStream.omitField fixed that, but then I started getting a java.lang.NoClassDefFoundError: org/xmlpull/v1/XmlPullParserException
+        // Between that and some other sketchy behaviour, plus the need to migrate existing Profectos?
+        // I'm sticking with my hack solution for now - I know how it works.
         try {
             JSONObject json = new JSONObject();
             json.put("factionid", person.getFaction().getId());

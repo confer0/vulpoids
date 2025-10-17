@@ -1,19 +1,28 @@
 package vulpoids.impl.campaign.ids;
 
 import com.fs.starfarer.api.Global;
+import com.fs.starfarer.api.campaign.CampaignClockAPI;
+import com.fs.starfarer.api.campaign.CargoStackAPI;
 import com.fs.starfarer.api.campaign.SpecialItemData;
 import com.fs.starfarer.api.campaign.econ.Industry;
 import com.fs.starfarer.api.campaign.econ.InstallableIndustryItemPlugin;
 import com.fs.starfarer.api.campaign.econ.MarketAPI;
+import com.fs.starfarer.api.campaign.rules.MemoryAPI;
 import com.fs.starfarer.api.impl.campaign.econ.impl.BaseInstallableItemEffect;
 import com.fs.starfarer.api.impl.campaign.econ.impl.InstallableItemEffect;
 import com.fs.starfarer.api.impl.campaign.econ.impl.ItemEffectsRepo;
 import static com.fs.starfarer.api.impl.campaign.econ.impl.ItemEffectsRepo.DEALMAKER_INCOME_PERCENT_BONUS;
 import com.fs.starfarer.api.impl.campaign.ids.Industries;
 import com.fs.starfarer.api.impl.campaign.ids.Items;
+import com.fs.starfarer.api.impl.campaign.ids.Planets;
+import com.fs.starfarer.api.impl.campaign.intel.bases.PirateBaseManager;
+import com.fs.starfarer.api.impl.codex.CodexDataV2;
+import com.fs.starfarer.api.loading.IndustrySpecAPI;
 import com.fs.starfarer.api.ui.LabelAPI;
 import com.fs.starfarer.api.ui.TooltipMakerAPI;
 import com.fs.starfarer.api.util.Misc;
+import java.util.ArrayList;
+import vulpoids.campaign.impl.items.VulpoidPlugin;
 import vulpoids.impl.campaign.econ.impl.VulpoidAgency;
 
 public class Vulpoids {
@@ -90,10 +99,33 @@ public class Vulpoids {
     public static final String RANK_SERVANT = "vulp_servant";
     public static final String RANK_PROFECTO = "vulp_profecto";
     
+    public static final ArrayList<String> LOBSTER_SUPPORTING_WORLDS = new ArrayList<>() {{
+        add(Planets.PLANET_TERRAN);
+        add(Planets.PLANET_WATER);
+        //add("jungle");  // Too hot
+        //add(Planets.TUNDRA);  // Too cold
+        //add(Planets.PLANET_TERRAN_ECCENTRIC);  // Not enough water
+        
+        // Unknown Skies
+        add("US_continent");
+        add("US_terran");
+        add("US_water");
+        add("US_waterB");
+        add("US_waterAtoll");
+        add("US_waterIsle");
+        //add("US_waterHycean");  // Not habitable enough
+    }};
+    
     
     public static void updateVanillaItemsIfApplicable() {
-        String dealmakerParams = Global.getSettings().getSpecialItemSpec(Items.DEALMAKER_HOLOSUITE).getParams();
-        if(!dealmakerParams.contains(Vulpoids.INDUSTRY_VULPOIDAGENCY) && Global.getSector().getPlayerFaction().knowsIndustry(Vulpoids.INDUSTRY_VULPOIDAGENCY)) {
+        updateDealmaker();
+    }
+    private static void updateDealmaker() {
+        if(CodexDataV2.hasUnlockedEntry(CodexDataV2.getIndustryEntryId(Vulpoids.INDUSTRY_VULPOIDAGENCY))) {
+            String dealmakerParams = Global.getSettings().getSpecialItemSpec(Items.DEALMAKER_HOLOSUITE).getParams();
+            
+            CodexDataV2.makeRelated(CodexDataV2.getIndustryEntryId(Vulpoids.INDUSTRY_VULPOIDAGENCY), CodexDataV2.getItemEntryId(Items.DEALMAKER_HOLOSUITE));
+            
             dealmakerParams += ", "+Vulpoids.INDUSTRY_VULPOIDAGENCY;
             Global.getSettings().getSpecialItemSpec(Items.DEALMAKER_HOLOSUITE).setParams(dealmakerParams);
             final InstallableItemEffect oldEffect = ItemEffectsRepo.ITEM_EFFECTS.get(Items.DEALMAKER_HOLOSUITE);
@@ -119,32 +151,145 @@ public class Vulpoids {
         }
     }
     
-    public static Industry getFarming(MarketAPI market) {
-        Industry industry = null;
-        industry = market.getIndustry(Industries.FARMING);
-        if(industry==null) industry = market.getIndustry(Industries.AQUACULTURE);
+    public static boolean anyVulpoidWantsToTalk() {
+        // Initial condition, calling to interrogate Laisa.
+        if (!Global.getSector().getMemoryWithoutUpdate().contains("$vulp_didInterrogation")) return true;
         
-        // Ashes Of The Domain
-        if(industry==null) industry = market.getIndustry("monoculture");
-        if(industry==null) industry = market.getIndustry("artifarming");
-        if(industry==null) industry = market.getIndustry("subfarming");
-        if(industry==null) industry = market.getIndustry("fishery");
-        
-        return industry;
+        for (CargoStackAPI stack : Global.getSector().getPlayerFleet().getCargo().getStacksCopy()) {
+            if (stack.getPlugin() instanceof VulpoidPlugin plugin) {
+                if (vulpoidWantsToTalk(plugin)) return true;
+            }
+        }
+        return false;
+    }
+    public static boolean vulpoidWantsToTalk(VulpoidPlugin plugin) {
+        // Finished research project
+        MemoryAPI memory = plugin.getPerson().getMemoryWithoutUpdate();
+        if(memory.contains(Vulpoids.KEY_RESEARCH_PROJECT) && memory.contains(Vulpoids.KEY_RESEARCH_COMPLETION_DAY)) {
+            // Originally used $global.daysSinceStart, but that's not actually set while in the overworld!
+            // Turns out, CoreCampaignPluginImpl actually just sets it from this fella.
+            // Don't know why we can't just store the timestamp in the clock, but as long as it works.
+            if(PirateBaseManager.getInstance().getUnadjustedDaysSinceStart() >= memory.getFloat(Vulpoids.KEY_RESEARCH_COMPLETION_DAY)) return true;
+        }
+        return false;
     }
     
-    public static Industry getMining(MarketAPI market) {
-        Industry industry = null;
-        industry = market.getIndustry(Industries.MINING);
+    public static Industry getFarming(MarketAPI market, boolean allowAquaculture) {
+        for (String id : farmingIndustryIds) {
+            if (market.hasIndustry(id)) return market.getIndustry(id);
+        }
+        if (allowAquaculture) {
+            for (String id : aquacultureIndustryIds) {
+                if (market.hasIndustry(id)) return market.getIndustry(id);
+            }
+        }
+        return null;
+    }
+    public static ArrayList<String> aquacultureIndustryIds = new ArrayList<>() {{
+        add(Industries.AQUACULTURE);
         
         // Ashes Of The Domain
-        if(industry==null) industry = market.getIndustry("extractive");
-        if(industry==null) industry = market.getIndustry("fracking");
-        if(industry==null) industry = market.getIndustry("sublimation");
-        if(industry==null) industry = market.getIndustry("benefication");
+        add("fishery");
         
-        return industry;
+        // Compatibility Failover
+        for (IndustrySpecAPI spec : Global.getSettings().getAllIndustrySpecs()) {
+            if (spec.hasTag("aquaculture")) {
+                if (!contains(spec.getId())) add(spec.getId());
+            }
+        }
+    }};
+    public static ArrayList<String> farmingIndustryIds = new ArrayList<>() {{
+        add(Industries.FARMING);
+        
+        // Ashes Of The Domain
+        add("monoculture");
+        add("artifarming");
+        add("subfarming");
+        
+        // Compatibility Failover
+        for (IndustrySpecAPI spec : Global.getSettings().getAllIndustrySpecs()) {
+            if (spec.hasTag("farming")) {
+                if (!contains(spec.getId())) add(spec.getId());
+            }
+        }
+        // Apparently the vanilla aquaculture is tagged as pure farming lol.
+        // Well, that's why we test.
+        for (String aquaId : aquacultureIndustryIds) {
+            remove(aquaId);
+        }
+    }};
+    
+    public static Industry getMining(MarketAPI market) {
+        for (String id : miningIndustryIds) {
+            if (market.hasIndustry(id)) return market.getIndustry(id);
+        }
+        return null;
     }
+    public static ArrayList<String> miningIndustryIds = new ArrayList<>() {{
+        add(Industries.MINING);
+        
+        // Ashes Of The Domain
+        add("extractive");
+        add("fracking");
+        //add("sublimation");
+        //add("benefication");
+        add("mining_megaplex");
+        
+        // Compatibility Failover
+        for (IndustrySpecAPI spec : Global.getSettings().getAllIndustrySpecs()) {
+            if (spec.hasTag("mining")) {
+                if (!contains(spec.getId())) add(spec.getId());
+            }
+        }
+    }};
+    
+    public static Industry getLightIndustry(MarketAPI market) {
+        for (String id : lightIndustryIds) {
+            if (market.hasIndustry(id)) return market.getIndustry(id);
+        }
+        return null;
+    }
+    public static ArrayList<String> lightIndustryIds = new ArrayList<>() {{
+        add(Industries.LIGHTINDUSTRY);
+        
+        // Ashes Of The Domain
+        add("lightproduction");
+        add("hightech");
+        add("druglight");
+        add("consumerindustry");
+        
+        // Compatibility Failover
+        for (IndustrySpecAPI spec : Global.getSettings().getAllIndustrySpecs()) {
+            if (spec.hasTag("lightindustry")) {
+                if (!contains(spec.getId())) add(spec.getId());
+            }
+        }
+    }};
+    
+    public static Industry getHeavyIndustry(MarketAPI market) {
+        for (String id : heavyIndustryIds) {
+            if (market.hasIndustry(id)) return market.getIndustry(id);
+        }
+        return null;
+    }
+    public static ArrayList<String> heavyIndustryIds = new ArrayList<>() {{
+        add(Industries.HEAVYINDUSTRY);
+        add(Industries.ORBITALWORKS);
+        
+        // Ashes Of The Domain
+        add("supplyheavy");
+        //add("weaponheavy");
+        add("triheavy");
+        add("hegeheavy");
+        add("stella_manufactorium");
+        
+        // Compatibility Failover
+        for (IndustrySpecAPI spec : Global.getSettings().getAllIndustrySpecs()) {
+            if (spec.hasTag("heavyindustry")) {
+                if (!contains(spec.getId())) add(spec.getId());
+            }
+        }
+    }};
     
     public static int getVulpoidPeakProductionAmount() {
         int amount = 0;

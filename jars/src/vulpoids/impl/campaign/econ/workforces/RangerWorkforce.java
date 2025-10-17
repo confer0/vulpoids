@@ -23,6 +23,8 @@ public class RangerWorkforce extends BaseWorkforce {
         market.getHazard().unmodify(id);
     }
     @Override
+    public String getTooltipIllustrationId() {return "vulpworkforce_ranger";}
+    @Override
     protected void createTooltipAfterDescription(TooltipMakerAPI tooltip, boolean expanded) {
         super.createTooltipAfterDescription(tooltip, expanded);
         if(shouldApply()) {
@@ -30,11 +32,13 @@ public class RangerWorkforce extends BaseWorkforce {
             tooltip.addPara("%s hazard rating", opad, Misc.getHighlightColor(), (HAB_BONUS*100)+"%");
         }
     }
+    @Override
     public boolean isAvailableToPlayer() {
         return false;
     }
     @Override
     public void linkCodexEntries() {
+        super.linkCodexEntries();
         CodexDataV2.makeRelated(
                     CodexDataV2.getConditionEntryId(condition.getId()),
                     CodexDataV2.getPlanetEntryId(Planets.BARREN_DESERT)

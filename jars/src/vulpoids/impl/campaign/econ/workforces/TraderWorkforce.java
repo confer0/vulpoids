@@ -20,6 +20,8 @@ public class TraderWorkforce extends BaseWorkforce {
         market.getIncomeMult().unmodifyPercent(id);
     }
     @Override
+    public String getTooltipIllustrationId() {return "vulpworkforce_trader";}
+    @Override
     protected void createTooltipAfterDescription(TooltipMakerAPI tooltip, boolean expanded) {
         super.createTooltipAfterDescription(tooltip, expanded);
         if(shouldApply()) {
@@ -30,6 +32,7 @@ public class TraderWorkforce extends BaseWorkforce {
     }
     @Override
     public void linkCodexEntries() {
+        super.linkCodexEntries();
         CodexDataV2.makeRelated(
                     CodexDataV2.getConditionEntryId(condition.getId()),
                     CodexDataV2.getIndustryEntryId(Industries.SPACEPORT)

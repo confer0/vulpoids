@@ -297,11 +297,11 @@ Suddenly, the comms are filled with the sounds of human...
 vulp_exploreWreck6,DialogOptionSelected,$option == vulp_exploreWreck6,"SetImportantVulpoidName vulp_dummy_terran ""Opposition Crew?""
 SetImportantVulpoidName vulp_dummy_desert ""Opposition Crew?""
 SetImportantVulpoidName vulp_dummy_arctic ""Opposition Crew?""
-SetVulpoidProperty outfit vulp_dummy_terran ""uniform_light/green""
+SetVulpoidProperty outfit vulp_dummy_terran defaultUniform
 SetVulpoidProperty expression vulp_dummy_terran ""default""
-SetVulpoidProperty outfit vulp_dummy_desert ""uniform_heavy/red""
+SetVulpoidProperty outfit vulp_dummy_desert defaultUniform
 SetVulpoidProperty expression vulp_dummy_desert ""default""
-SetVulpoidProperty outfit vulp_dummy_arctic ""uniform_heavy/lightblue""
+SetVulpoidProperty outfit vulp_dummy_arctic defaultUniform
 SetVulpoidProperty expression vulp_dummy_arctic ""default""
 ShowPersonVisual true vulp_dummy_terran
 ShowSecondPerson vulp_dummy_arctic
@@ -1050,7 +1050,7 @@ SetPersonFaction laisa player
 $option = vulp_interrogationLeave
 FireBest DialogOptionSelected",,,,
 vulp_interrogationLeave,DialogOptionSelected,$option == vulp_interrogationLeave,"HideVisual
-SetVulpoidProperty outfit laisa ""uniform_light/blue""
+SetVulpoidProperty outfit laisa defaultUniform
 $global.vulp_didInterrogation = true
 $global.vulp_didInterrogationForMission = true
 Call $global.vulpFactory_ref updateStage","Returning to the bridge, you double-check the override codes you received from Laisa. Once input into the Rellrait's computers, you should have access to both the ship itself, and the bioforge.",defaultLeave:Leave,,
@@ -1308,7 +1308,7 @@ VulpoidAcceptance officialStance
 !$askedAboutVulpoids",,,vulpAcceptance_arroyoOffer:Offer to sell some Vulpoids,,
 vulpAcceptance_arroyoOffer,DialogOptionSelected,$option == vulpAcceptance_arroyoOffer,$askedAboutVulpoids = true,"You begin a sales pitch, but Arroyo cuts you off with a gold-ringed finger.
 
-""Rest assured, I'm well aware of them already. Got a servant for myself actually, it need some training but I've been quite satisfied.""","vulpAcceptance_arroyoOffer1:""Have you considered a bulk purchase?""",,
+""Rest assured, I'm well aware of them already. Got a servant for myself actually, it'll need some training but I've been quite satisfied.""","vulpAcceptance_arroyoOffer1:""Have you considered a bulk purchase?""",,
 vulpAcceptance_arroyoOffer1,DialogOptionSelected,$option == vulpAcceptance_arroyoOffer1,,"""You mean as employees? Sorry, corporate non-compete on that front. The only AIs I'm allowed to employ commercially are Tri-Tachyon branded ones.""
 
 He barks out a laugh. ""I'm sure you can imagine why that might be an issue!""",vulpAcceptance_arroyoOffer2:Continue,,
@@ -1518,7 +1518,7 @@ vulpAcceptance_eventideOffer,DialogOptionSelected,$option == vulpAcceptance_even
 vulpAcceptance_eventideComeToArrangement:""They are now, but perhaps an arrangement could be found?""
 vulpAcceptance_eventideButWhatIfNot:""Yeah, but what if they weren't?""",,
 vulpAcceptance_eventideNoToFace_vulps,DialogOptionSelected,"PlayerHasCargo vulpoids
-$option == vulpAcceptance_eventideNoToFace",,"You gesture over a Vulpoid brought to the bridge for precisely this eventuality. She waves cheerily at the holodisplay before a quick nudge reminds her of the plan. Looking directly at the holorec, she unleashes the widest, cutest puppy-dog eyes the Sector has ever seen.
+$option == vulpAcceptance_eventideNoToFace",,"You gesture over a Vulpoid brought to the bridge for precisely this eventuality. She waves cheerily at the holodisplay before a quick nudge reminds her of the plan. Looking directly at the holo-imager, she unleashes the widest, cutest puppy-dog eyes the Sector has ever seen.
 
 To $hisOrHer credit, the $post does an exemplary job of keeping form. But a trembling lip and watery eyes betray the truth - no heart can go untouched by the sight.",vulpAcceptance_eventideNoToFace_vulps2:Continue,,
 vulpAcceptance_eventideNoToFace_vulps2,DialogOptionSelected,$option == vulpAcceptance_eventideNoToFace_vulps2,,"The $post opens $hisOrHer mouth to speak, loses nerve for a moment, and steels $himOrHerself.
@@ -2346,7 +2346,7 @@ $personName licks $hisOrHer lips uncomfortably. ""Good deal. I'm looking forward
 kpVulpoid,KPFindGifts,"PlayerHasCargo vulpoids 1000
 $kpNumGifts < 5
 $kpNumGifts++",,,kpVulpoid:A thousand Vulpoids,,
-kpVulpoidSel,DialogOptionSelected,$option == kpVulpoid,"SetVulpoidProperty outfit vulp_dummy_terran dress
+kpVulpoidSel,DialogOptionSelected,$option == kpVulpoid,"SetVulpoidProperty outfit vulp_dummy_terran defaultDress
 SetVulpoidProperty expression vulp_dummy_terran default 
 SetImportantVulpoidName vulp_dummy_terran ""Vulpoids""
 ShowThirdPerson vulp_dummy_terran
@@ -2365,7 +2365,7 @@ $kpNumGifts++",,,kpVulpoidShiny:A Profecto Vulpoid,,
 kpVulpoidShinyPick,DialogOptionSelected,$option == kpVulpoidShiny,"VulpoidPicker selectRemoveVulpoid ""Select a Vulpoid to offer as tribute to Kanta""
 $vulpoidselectedoption = kanta",,,,
 kpVulpoidShinySel,VulpoidSelected,$vulpoidselectedoption == kanta,"SetVulpoidProperty expression $global.selectedVulpoid fear
-SetVulpoidProperty outfit clothed
+SetVulpoidProperty outfit $global.selectedVulpoid defaultUniform
 ShowThirdPersonFromMemory $global.selectedVulpoid
 AdjustRepPerson $global.selectedVulpoid INHOSPITABLE -200","$global.selectedVulpoidName is brought into the court, and Cydonia immediately begins circling around her like a fighter on an attack run, studying her from every angle. Kanta quietly nods along as $global.selectedVulpoidName fearfully elaborates on her rarity, and gives benchmarks for her cognitive ability.
 
@@ -2375,7 +2375,7 @@ kpVulpoidShinySel1,DialogOptionSelected,$option == kpVulpoidShiny1,,"After a bri
 The 'doctor' flinches at this accusation, but his excitement is still evident as he directs the Profecto towards his laboratory.",kpVulpoidShinyLeave:Continue,,
 kpVulpoidShinyLeave,DialogOptionSelected,$option == kpVulpoidShinyLeave,"HideThirdPerson
 SetVulpoidProperty expression $global.selectedVulpoid angry
-SetVulpoidProperty outfit $global.selectedVulpoid clothed
+SetVulpoidProperty outfit $global.selectedVulpoid defaultUniform
 MovePersonFromMemoryToMarket $global.selectedVulpoid
 SetPersonFaction $global.selectedVulpoid pirates
 SetPersonRank $global.selectedVulpoid vulp_testSubject
@@ -2648,7 +2648,7 @@ $player.metMacario",SetVulpoidProperty expression angry,"""Dolos Macario is a pi
 
 ""Actually, scratch that. Not that I don't trust you, but there's literally nothing you could do that'd make him less curious.""",,,
 # Lobster Completed,,,,,,,
-vulpChat_researchComplete_lobster,VulpoidResearchComplete,$vulp_researchProject == lobster,,"$name enters, wearing a ridiculous lobster-themed hat. ""Hello $playerSirOrMadam! DonÂt mind the hat, I was just wrapping something up.""
+vulpChat_researchComplete_lobster,VulpoidResearchComplete,$vulp_researchProject == lobster,,"$name enters, wearing a ridiculous lobster-themed hat. ""Hello $playerSirOrMadam! Don't mind the hat, I was just wrapping something up.""
 
 ""And speaking of wrapped up, I've finally got a decent lead on the Volturnian Bioforge! Well, decent might be a bit strong... How about some good news, bad news?""","vulpChat_researchComplete_lobster1:""Alright, let's hear the good news.""",,
 vulpChat_researchComplete_lobster1,DialogOptionSelected,$option == vulpChat_researchComplete_lobster1,,"""So the good news is, I've pretty well confirmed that the bioforge is still on Volturn! It was hosted in a subsurface facility, and remained there through the course of the Askonia Crisis. We find that facility, we get the forge.""","vulpChat_researchComplete_lobster2:""And the bad news?""",,
@@ -3497,7 +3497,7 @@ vulpChatGift_lobsterProfecto,DialogOptionSelected,$option == vulpChatGift_lobste
 AdjustRepActivePerson COOPERATIVE 5","""A Volturnian lobster! Thank you, $playerSirOrMadam!""
 
 $name carefully lifts the lobster from its tank, examining it from all angles. Its claws dangle gently, unconcerned about the Vulpoid holding it.","vulpChatGift_lobsterProfecto1:""Have you thought of a name?""",,
-vulpChatGift_lobsterProfecto1,DialogOptionSelected,$option == vulpChatGift_lobsterProfecto1,,"""I think they seem like aÂ $lobsterName."" $name says, watching the lobster as if it'll provide feedback. ""Yes, $lobsterName it is!""
+vulpChatGift_lobsterProfecto1,DialogOptionSelected,$option == vulpChatGift_lobsterProfecto1,,"""I think they seem like a... $lobsterName."" $name says, watching the lobster as if it'll provide feedback. ""Yes, $lobsterName it is!""
 
 ""Thank you again $playerSirOrMadam. I'll be sure to take great care of them.""","vulpChatGift_lobsterEnd:""I'm sure you will.""",,
 ,,,,,,,
@@ -4178,7 +4178,7 @@ $vulp_profectoAssignment == vulpoids score:100","SetVulpoidProperty expression c
 ExitRulesToPlugin","""It looks like it sucks down there. Maybe I could help, somehow?""",,,
 vulpChatSurroundings_madeiraOption,VulpoidChatSurroundingsOptions,$topic.id == madeira score:1000,,,vulpChatSurroundings_madeira:Madeira,,madeira
 vulpChatSurroundings_madeira,DialogOptionSelected,$option == vulpChatSurroundings_madeira,"SetVulpoidProperty expression default
-ExitRulesToPlugin","""Madeira has a pretty comfortable position. It's able to mine most of the volatiles it needs for fuel production itself, all on a habitable world. The Domain doesnÂt normally go for that, but the lack of ores and arable land was probably enough to convince them it wouldn't get uppity.""",,,
+ExitRulesToPlugin","""Madeira has a pretty comfortable position. It's able to mine most of the volatiles it needs for fuel production itself, all on a habitable world. The Domain doesn't normally go for that, but the lack of ores and arable land was probably enough to convince them it wouldn't get uppity.""",,,
 vulpChatSurroundings_madeiraDummy,DialogOptionSelected,"$option == vulpChatSurroundings_madeira
 $vulp_profectoAssignment == vulpoids score:100","SetVulpoidProperty expression default
 ExitRulesToPlugin","""This moon is so pretty! It's got auroras, and glowing plants, and a big blue ball in the sky!""",,,

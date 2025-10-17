@@ -3,7 +3,6 @@ package vulpoids.impl.campaign.abilities;
 import com.fs.starfarer.api.Global;
 import com.fs.starfarer.api.campaign.CargoStackAPI;
 import com.fs.starfarer.api.campaign.InteractionDialogAPI;
-import com.fs.starfarer.api.campaign.rules.MemoryAPI;
 import com.fs.starfarer.api.impl.campaign.abilities.BaseDurationAbility;
 import com.fs.starfarer.api.ui.TooltipMakerAPI;
 import com.fs.starfarer.api.util.Misc;
@@ -31,21 +30,9 @@ public class ChatAbility extends BaseDurationAbility {
         }
         return false;
     }
-    protected boolean vulpWantsToTalk() {
-        if (!Global.getSector().getMemoryWithoutUpdate().contains("$vulp_didInterrogation")) return true;
-        for (CargoStackAPI stack : Global.getSector().getPlayerFleet().getCargo().getStacksCopy()) {
-            if(stack.getPlugin() instanceof VulpoidPlugin) {
-                MemoryAPI memory = ((VulpoidPlugin)stack.getPlugin()).getPerson().getMemoryWithoutUpdate();
-                if(memory.contains(Vulpoids.KEY_RESEARCH_PROJECT) && memory.contains(Vulpoids.KEY_RESEARCH_COMPLETION_DAY)) {
-                    if(Global.getSector().getMemoryWithoutUpdate().getFloat("$daysSinceStart") >= memory.getFloat(Vulpoids.KEY_RESEARCH_COMPLETION_DAY)) return true;
-                }
-            }
-        }
-        return false;
-    }
     @Override
     public Color getCooldownColor() {
-        if (vulpWantsToTalk()) {
+        if (Vulpoids.anyVulpoidWantsToTalk()) {
             Color color = Misc.getNegativeHighlightColor();
             return Misc.scaleAlpha(color, Global.getSector().getCampaignUI().getSharedFader().getBrightness() * 0.5f);
         }
@@ -53,12 +40,12 @@ public class ChatAbility extends BaseDurationAbility {
     }
     @Override
     public float getCooldownFraction() {
-        if (vulpWantsToTalk()) return 0f;
+        if (Vulpoids.anyVulpoidWantsToTalk()) return 0f;
         return super.getCooldownFraction();
     }
     @Override
     public boolean isCooldownRenderingAdditive() {
-        return vulpWantsToTalk();
+        return Vulpoids.anyVulpoidWantsToTalk();
     }
     
     @Override

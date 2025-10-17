@@ -1,7 +1,6 @@
 package vulpoids.impl.campaign.econ.workforces;
 
 import com.fs.starfarer.api.campaign.econ.Industry;
-import com.fs.starfarer.api.impl.campaign.ids.Industries;
 import com.fs.starfarer.api.impl.codex.CodexDataV2;
 import com.fs.starfarer.api.ui.TooltipMakerAPI;
 import com.fs.starfarer.api.util.Misc;
@@ -29,6 +28,8 @@ public class MinerWorkforce extends BaseWorkforce {
         }
     }
     @Override
+    public String getTooltipIllustrationId() {return "vulpworkforce_miner";}
+    @Override
     protected void createTooltipAfterDescription(TooltipMakerAPI tooltip, boolean expanded) {
         super.createTooltipAfterDescription(tooltip, expanded);
         if(shouldApply()) {
@@ -40,27 +41,12 @@ public class MinerWorkforce extends BaseWorkforce {
     }
     @Override
     public void linkCodexEntries() {
-        CodexDataV2.makeRelated(
+        super.linkCodexEntries();
+        for (String id : Vulpoids.miningIndustryIds) {
+            CodexDataV2.makeRelated(
                     CodexDataV2.getConditionEntryId(condition.getId()),
-                    CodexDataV2.getIndustryEntryId(Industries.MINING)
+                    CodexDataV2.getIndustryEntryId(id)
             );
-        
-        // Ashes Of The Domain
-        CodexDataV2.makeRelated(
-                    CodexDataV2.getConditionEntryId(condition.getId()),
-                    CodexDataV2.getIndustryEntryId("extractive")
-            );
-        CodexDataV2.makeRelated(
-                    CodexDataV2.getConditionEntryId(condition.getId()),
-                    CodexDataV2.getIndustryEntryId("fracking")
-            );
-        CodexDataV2.makeRelated(
-                    CodexDataV2.getConditionEntryId(condition.getId()),
-                    CodexDataV2.getIndustryEntryId("sublimation")
-            );
-        CodexDataV2.makeRelated(
-                    CodexDataV2.getConditionEntryId(condition.getId()),
-                    CodexDataV2.getIndustryEntryId("benefication")
-            );
+        }
     }
 }

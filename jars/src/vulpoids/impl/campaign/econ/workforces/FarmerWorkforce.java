@@ -2,7 +2,6 @@
 package vulpoids.impl.campaign.econ.workforces;
 
 import com.fs.starfarer.api.campaign.econ.Industry;
-import com.fs.starfarer.api.impl.campaign.ids.Industries;
 import com.fs.starfarer.api.impl.codex.CodexDataV2;
 import com.fs.starfarer.api.ui.TooltipMakerAPI;
 import com.fs.starfarer.api.util.Misc;
@@ -15,7 +14,8 @@ public class FarmerWorkforce extends BaseWorkforce {
     public void apply(String id) {
         super.apply(id);
         if(shouldApply()) {
-            Industry industry = Vulpoids.getFarming(market);
+            // TODO - dynamically rename to fishers on aquaculture?
+            Industry industry = Vulpoids.getFarming(market, true);
             if(industry!=null) {
                 industry.getSupplyBonusFromOther().modifyFlat(id, PROD_BONUS, getName());
             }
@@ -24,11 +24,13 @@ public class FarmerWorkforce extends BaseWorkforce {
     @Override
     public void unapply(String id) {
         super.unapply(id);
-        Industry industry = Vulpoids.getFarming(market);
+        Industry industry = Vulpoids.getFarming(market, true);
         if(industry!=null) {
             industry.getSupplyBonusFromOther().unmodifyFlat(id);
         }
     }
+    @Override
+    public String getTooltipIllustrationId() {return "vulpworkforce_farmer";}
     @Override
     protected void createTooltipAfterDescription(TooltipMakerAPI tooltip, boolean expanded) {
         super.createTooltipAfterDescription(tooltip, expanded);
@@ -39,31 +41,18 @@ public class FarmerWorkforce extends BaseWorkforce {
     }
     @Override
     public void linkCodexEntries() {
-        CodexDataV2.makeRelated(
+        super.linkCodexEntries();
+        for (String id : Vulpoids.farmingIndustryIds) {
+            CodexDataV2.makeRelated(
                     CodexDataV2.getConditionEntryId(condition.getId()),
-                    CodexDataV2.getIndustryEntryId(Industries.FARMING)
+                    CodexDataV2.getIndustryEntryId(id)
             );
-        CodexDataV2.makeRelated(
+        }
+        for (String id : Vulpoids.aquacultureIndustryIds) {
+            CodexDataV2.makeRelated(
                     CodexDataV2.getConditionEntryId(condition.getId()),
-                    CodexDataV2.getIndustryEntryId(Industries.AQUACULTURE)
+                    CodexDataV2.getIndustryEntryId(id)
             );
-        
-        // Ashes Of The Domain
-        CodexDataV2.makeRelated(
-                    CodexDataV2.getConditionEntryId(condition.getId()),
-                    CodexDataV2.getIndustryEntryId("monoculture")
-            );
-        CodexDataV2.makeRelated(
-                    CodexDataV2.getConditionEntryId(condition.getId()),
-                    CodexDataV2.getIndustryEntryId("artifarming")
-            );
-        CodexDataV2.makeRelated(
-                    CodexDataV2.getConditionEntryId(condition.getId()),
-                    CodexDataV2.getIndustryEntryId("subfarming")
-            );
-        CodexDataV2.makeRelated(
-                    CodexDataV2.getConditionEntryId(condition.getId()),
-                    CodexDataV2.getIndustryEntryId("fishery")
-            );
+        }
     }
 }
