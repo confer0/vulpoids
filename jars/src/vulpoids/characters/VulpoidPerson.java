@@ -6,6 +6,7 @@ import com.fs.starfarer.api.graphics.SpriteAPI;
 import com.fs.starfarer.api.impl.campaign.ids.Factions;
 import com.fs.starfarer.api.impl.campaign.ids.MemFlags;
 import com.fs.starfarer.api.util.Misc;
+import com.fs.starfarer.campaign.rules.Memory;
 import com.fs.starfarer.rpg.Person;
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -366,7 +367,7 @@ public class VulpoidPerson extends Person {
     // That means it gets saved and loaded by XStream, and is accessible from inside this class.
     // So I can use that to store the personalityId, then use setPersonality() to update the PersonalityAPI.
     // Praise Ludd.
-    public Object readResolve() {
+    public void validatePersonality() {
         // This _ought_ to be impossible, and only comes up for me because of trans-version testing.
         // But I'm including it in the hopes that I will never return to this region of code again.
         if (localPersonalityId==null) {
@@ -376,16 +377,21 @@ public class VulpoidPerson extends Person {
             else localPersonalityId = "steady";
         }
         super.setPersonality(localPersonalityId);
+    }
+    public Object readResolve() {
+        validatePersonality();
         return this;
     }
     public Object writeReplace() {
         // Being ABSOLUTELY sure this thing can't break.
-        if (localPersonalityId==null) {
-            if (getPersonalityAPI()!=null) localPersonalityId = getPersonalityAPI().getId();
-            else localPersonalityId = "steady";
-        }
-        super.setPersonality(localPersonalityId);
+        validatePersonality();
         return this;
+    }
+    @Override
+    public Memory getMemory() {
+        // :) :) :) :) :)
+        validatePersonality();
+        return super.getMemory();
     }
     
     
