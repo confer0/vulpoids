@@ -409,6 +409,7 @@ public class VulpoidModPlugin extends BaseModPlugin {
         // Needs to be done here so the codex is ready
         Vulpoids.updateVanillaItemsIfApplicable();
         
+        CodexDataV2.getEntry(CodexDataV2.CAT_SPECIAL_ITEMS).getChildren().remove(CodexDataV2.getEntry(CodexDataV2.getItemEntryId(Vulpoids.SPECIAL_ITEM_CODEX)));
         SpecialItemSpecAPI vulpoidCodexItemSpec = Global.getSettings().getSpecialItemSpec(Vulpoids.SPECIAL_ITEM_CODEX);
         CodexDataV2.getEntry(CodexDataV2.CAT_SPECIAL_ITEMS).addChild(new CodexEntryV2(CodexDataV2.getItemEntryId(Vulpoids.SPECIAL_ITEM_CODEX), vulpoidCodexItemSpec.getName(), vulpoidCodexItemSpec.getIconName(), vulpoidCodexItemSpec) {
             @Override

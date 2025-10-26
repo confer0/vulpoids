@@ -378,7 +378,15 @@ public class VulpoidPerson extends Person {
         super.setPersonality(localPersonalityId);
         return this;
     }
-    
+    public Object writeReplace() {
+        // Being ABSOLUTELY sure this thing can't break.
+        if (localPersonalityId==null) {
+            if (getPersonalityAPI()!=null) localPersonalityId = getPersonalityAPI().getId();
+            else localPersonalityId = "steady";
+        }
+        super.setPersonality(localPersonalityId);
+        return this;
+    }
     
     
     public static class BackgroundData {

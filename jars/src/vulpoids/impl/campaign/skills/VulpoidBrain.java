@@ -41,8 +41,8 @@ public class VulpoidBrain {
         }
         @Override
         public void unapply(MarketAPI market, String id) {
-            VulpoidPerson admin = (VulpoidPerson)market.getMemoryWithoutUpdate().get(Vulpoids.KEY_MARKET_VULPOID_ADMIN);
-            if(admin != null) {
+            Object presumedAdmin = market.getMemoryWithoutUpdate().get(Vulpoids.KEY_MARKET_VULPOID_ADMIN);
+            if(presumedAdmin instanceof VulpoidPerson admin) {
                 //market.getCommDirectory().removePerson(admin);
                 for(AdminData player_admin : Global.getSector().getCharacterData().getAdmins()) {
                     if(player_admin.getPerson().getId().equals(admin.getId())) admin=(VulpoidPerson) player_admin.getPerson();
