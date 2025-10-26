@@ -1,0 +1,12 @@
+{
+	"masterVersionFile":"https://raw.githubusercontent.com/confer0/vulpoids/main/vulpoids.version",
+	"modName":"Vulpoids",
+	"modThreadId":29929,
+	"modVersion":
+	{
+		"major":0,
+		"minor":10,
+		"patch":"0"
+	},
+	"starsectorVersion":"0.98a-RC8",
+}

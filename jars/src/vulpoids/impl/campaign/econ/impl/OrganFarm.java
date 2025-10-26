@@ -18,7 +18,10 @@ import vulpoids.impl.campaign.intel.misc.ShinyProducedIntel;
 
 public class OrganFarm extends BaseIndustry {
     
-    public static float SHINY_VULPOIDS_PER_DAY = 0.5f/365f;
+    // At prod 3, takes 16 months. At prod 6, takes 8 months.
+    public static float SHINY_VULPOIDS_PER_DAY = 0.25f/365f;
+    // +-10% variance turns 16 into 14.4-17.6, and 8 into 7.2-8.8
+    public static float SHINY_VULPOID_DELAY_VARIANCE = 0.1f;
     protected float shiny_vulpoid_production_buffer = 0;
     protected final float PATHER_INTEREST = 2f;
     
@@ -32,9 +35,9 @@ public class OrganFarm extends BaseIndustry {
         if (special != null && market.isPlayerOwned()) {
             float days = Misc.getDays(amount);
             if(Vulpoids.BIOFORGE_ITEM.equals(special.getId())) {
-                shiny_vulpoid_production_buffer += days * SHINY_VULPOIDS_PER_DAY * Math.max(0, getSupply(Vulpoids.CARGO_ITEM).getQuantity().getModifiedInt());
+                shiny_vulpoid_production_buffer += days * SHINY_VULPOIDS_PER_DAY * Math.min(6, Math.max(0, getSupply(Vulpoids.CARGO_ITEM).getQuantity().getModifiedInt()));
                 while(shiny_vulpoid_production_buffer >= 1) {
-                    shiny_vulpoid_production_buffer -= 1;
+                    shiny_vulpoid_production_buffer -= 1 + (2*Math.random()-1)*SHINY_VULPOID_DELAY_VARIANCE;
                     market.getSubmarket(Submarkets.SUBMARKET_STORAGE).getCargo().addSpecial(new SpecialItemData(Vulpoids.SPECIAL_ITEM_DEFAULT, null), 1);
                     Global.getSector().getIntelManager().addIntel(new ShinyProducedIntel(market));
                 }
