@@ -297,7 +297,7 @@ public class VulpoidPerson extends Person {
     So now we don't need to maintain a list in the settings file!
     */
     public BufferedImage getBufferedImage(String sprite_id) {
-        //if (bufferedImageCache.containsKey(sprite_id)) return bufferedImageCache.get(sprite_id);
+        if (bufferedImageCache.containsKey(sprite_id)) return bufferedImageCache.get(sprite_id);
         SpriteAPI sprite = Global.getSettings().getSprite(sprite_id);
         int texture_id = sprite.getTextureId();
         
