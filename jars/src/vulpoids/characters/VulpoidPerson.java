@@ -255,12 +255,14 @@ public class VulpoidPerson extends Person {
         if(outfitData==null) outfitData = getOutfitData(OUTFIT_TOP);
         BufferedImage outfitImage = loadAndGetBufferedImage(outfitData.file);
         
-        Graphics2D g2d = backgroundImage.createGraphics();
+        BufferedImage canvas = new BufferedImage(backgroundImage.getWidth(), backgroundImage.getHeight(), BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2d = canvas.createGraphics();
+        g2d.drawImage(backgroundImage, null, 0, 0);
         g2d.drawImage(hairImage, null, 0, 0);
         g2d.drawImage(expressionImage, null, 0, 0);
         g2d.drawImage(outfitImage, null, 0, 0);
         
-        writeBufferedImage(backgroundImage, PORTRAIT);
+        writeBufferedImage(canvas, PORTRAIT);
         
         
         return PORTRAIT;
@@ -295,7 +297,7 @@ public class VulpoidPerson extends Person {
     So now we don't need to maintain a list in the settings file!
     */
     public BufferedImage getBufferedImage(String sprite_id) {
-        if (bufferedImageCache.containsKey(sprite_id)) return bufferedImageCache.get(sprite_id);
+        //if (bufferedImageCache.containsKey(sprite_id)) return bufferedImageCache.get(sprite_id);
         SpriteAPI sprite = Global.getSettings().getSprite(sprite_id);
         int texture_id = sprite.getTextureId();
         
