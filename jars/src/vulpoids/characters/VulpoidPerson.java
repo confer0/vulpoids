@@ -287,12 +287,15 @@ public class VulpoidPerson extends Person {
         return getBufferedImage(name);
     }
     
+    // Optimization recommended by Genir - TY for helping fix my mess! :)
+    public static transient HashMap<String, BufferedImage> bufferedImageCache = new HashMap<>();
     /*
     Loads the given file path into a buffered image.
     If the image hasn't already been loaded by Starsector, it also loads it on the fly.
     So now we don't need to maintain a list in the settings file!
     */
     public BufferedImage getBufferedImage(String sprite_id) {
+        if (bufferedImageCache.containsKey(sprite_id)) return bufferedImageCache.get(sprite_id);
         SpriteAPI sprite = Global.getSettings().getSprite(sprite_id);
         int texture_id = sprite.getTextureId();
         
@@ -320,6 +323,7 @@ public class VulpoidPerson extends Person {
                 image.setRGB(x, y, (a<<24) | (r<<16) | (g<<8) | b);
             }
         }
+        bufferedImageCache.put(sprite_id, image);
         return image;
     }
     
