@@ -25,8 +25,22 @@ import org.lwjgl.opengl.GL11;
 import vulpoids.impl.campaign.ids.Vulpoids;
 
 public class VulpoidPerson extends Person {
-    public final String[] PORTRAITS = {"graphics/portraits/vulpoid/base1.png", "graphics/portraits/vulpoid/base2.png", "graphics/portraits/vulpoid/base3.png"};
-    // Using this as a trick to allow three different portraits to be rendered in the same frame.
+    // Wasn't static before, whoops! Transient keeps it from bricking saves when loaded.
+    public final transient static String[] PORTRAITS = {
+        "graphics/portraits/vulpoid/base1.png",
+        "graphics/portraits/vulpoid/base2.png",
+        "graphics/portraits/vulpoid/base3.png",
+        "graphics/portraits/vulpoid/base4.png",
+        "graphics/portraits/vulpoid/base5.png",
+        "graphics/portraits/vulpoid/base6.png",
+        "graphics/portraits/vulpoid/base7.png",
+        "graphics/portraits/vulpoid/base8.png",
+        "graphics/portraits/vulpoid/base9.png",
+        "graphics/portraits/vulpoid/base10.png",
+    };
+    // Using this as a trick to allow ten different portraits to be rendered in the same frame.
+    // Three's the max for dialogs, but you could end up with a lot of officers!
+    // Since the base game limit is 8, I'm going to cut it at 10. Could always add more.
     public static int PORTRAIT_INDEX = 0;
     
     public static final String BACKGROUND_DEFAULT = "default";

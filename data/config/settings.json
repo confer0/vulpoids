@@ -9,6 +9,13 @@
 			"vulpportraitbase1":"graphics/portraits/vulpoid/base1.png",
 			"vulpportraitbase2":"graphics/portraits/vulpoid/base2.png",
 			"vulpportraitbase3":"graphics/portraits/vulpoid/base3.png",
+			"vulpportraitbase4":"graphics/portraits/vulpoid/base4.png",
+			"vulpportraitbase5":"graphics/portraits/vulpoid/base5.png",
+			"vulpportraitbase6":"graphics/portraits/vulpoid/base6.png",
+			"vulpportraitbase7":"graphics/portraits/vulpoid/base7.png",
+			"vulpportraitbase8":"graphics/portraits/vulpoid/base8.png",
+			"vulpportraitbase9":"graphics/portraits/vulpoid/base9.png",
+			"vulpportraitbase10":"graphics/portraits/vulpoid/base10.png",
 		},
 		"industry":{
 			"organfarm":"graphics/icons/industry/organfarm.png",
