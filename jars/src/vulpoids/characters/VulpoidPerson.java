@@ -320,7 +320,17 @@ public class VulpoidPerson extends Person {
         int width = GL11.glGetTexLevelParameteri(GL11.GL_TEXTURE_2D, 0, GL11.GL_TEXTURE_WIDTH);
         int height = GL11.glGetTexLevelParameteri(GL11.GL_TEXTURE_2D, 0, GL11.GL_TEXTURE_HEIGHT);
         int channels = 4;
-        if(format == GL11.GL_RGB) channels = 3;
+        if(format == GL11.GL_RGB) {
+            // TODO - check for other types like RGB8?
+            // Does this bit even ever get called?
+            channels = 3;
+            format = GL11.GL_RGB;
+        } else {
+            // Some OS's will have formats like RGBA8.
+            // I need to use the base RGBA format to fill the buffer though.
+            // Otherwise the buffer will end up as all zeros, and therefore transparent.
+            format = GL11.GL_RGBA;
+        }
         
         ByteBuffer buffer = BufferUtils.createByteBuffer(width*height*channels);
         BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
